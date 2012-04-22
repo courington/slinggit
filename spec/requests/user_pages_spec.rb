@@ -4,9 +4,10 @@ describe "UserPages" do
 
   subject { page }
 
+  #  I'll need to clean this up a little bit, but for now we're ok.
   describe "index" do
 
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:admin) }
 
     before do
       sign_in user
@@ -47,8 +48,8 @@ describe "UserPages" do
         it { should_not have_link('delete', href: user_path(admin)) }
       end
     end
-    
-    
+
+
   end
 
   describe "profile page" do
