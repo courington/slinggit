@@ -10,4 +10,10 @@ FactoryGirl.define do
     end
 
   end
+
+  factory :post do
+    content "Lorem ipsum"
+    user
+  end
+
 end
