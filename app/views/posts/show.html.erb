@@ -1,8 +1,11 @@
 <% provide(:title, @post.content) %>
 <div class="row">
 
-  <div class="span8">
+  <div class="span6 offset3 well">
+    <h3><%= @post.hashtag_prefix %></h3> 
     <h3><%= @post.content %></h3>  
+    <%= image_tag @post.photo.url %>
+    <h3><%= @post.price %></h3> 
   </div>
 
 </div>

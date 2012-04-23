@@ -1,12 +1,20 @@
+<%= link_to(post_path(post)) do %>
 <li>
   <span class="content"><%= post.content %></span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(post.created_at) %> ago.
   </span>
+  <span class="timestamp">
+    Updated <%= time_ago_in_words(post.updated_at) %> ago.
+  </span>
   <% if current_user?(post.user) %>
+  <div class="pull-right">
     <%= link_to "delete", post, method:  :delete,
                                 confirm: "Delete Post?",
                                 title:   post.content %>
+    <span> | </span>
     <%= link_to "edit", edit_post_path(post) %>
+  </div>  
   <% end %>
 </li>
+<% end %>

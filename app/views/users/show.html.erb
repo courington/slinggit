@@ -11,13 +11,28 @@
   </aside>
 
   <div class="span8">
-    <% if @user.posts.any? %>
-      <h3>Posts (<%= @user.posts.count %>)</h3>
-      <ol class="posts">
-        <%= render @posts %>
-      </ol>
-      <%= will_paginate @posts %>
-    <% end %>
+    <div class="row">
+      <div class="span8">
+        <div class="form-actions">
+        <section id="post-button-bar">
+          <%= link_to "Create Post", new_post_path, class: "btn btn-medium" %>
+        </section>  
+      </div>
+      </div>  
+    </div>
+    <div class="row">
+      <div class="span8">
+        <section id="user-posts">
+          <% if @user.posts.any? %>
+            <h3>Posts (<%= @user.posts.count %>)</h3>
+            <ol class="posts">
+              <%= render @posts %>
+            </ol>
+            <%= will_paginate @posts %>
+          <% end %>
+        </section>
+      </div>  
+    </div>
   </div>
 
 </div>

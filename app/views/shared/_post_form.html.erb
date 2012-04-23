@@ -1,7 +1,43 @@
-<%= form_for(@post) do |f| %>
+<%= form_for @post do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new post..." %>
-  </div>
-  <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+  <fieldset>
+  	<legend>
+  		Create a new post.
+  	</legend>
+  	<div class="clearfix-placeholder"></div>
+	<div class="control-group">
+		<%= f.label :hashtag_prefix, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
+        <div class="controls">
+        	<div class="input-append">	
+        	  <%= f.text_field :hashtag_prefix, class: "input-large", placeholder: "#" %>
+        	  <span class="add-on">forsale</span>
+        	</div>  
+        </div>
+    </div>
+    <div class="control-group">
+    	<%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
+    	<div class="controls">
+    		<%= f.text_area :content, class: "input-xlarge", rows: "3", placeholder: "Something short and sweet..." %>
+    	</div>	
+    </div>	
+    <div class="control-group">
+    	<%= f.label :price, class: "control-label", for: "post_price" %>
+  		<div class="controls">
+	  		<div class="input-append">
+	  			<%= f.text_field :price, class: "input-large" %>
+	  			<span class="add-on">.00</span>
+	  		</div>	
+  		</div>
+    </div>
+    <div class="control-group">
+    	<%= f.label :photo, "Item Photo", class: "control-label", for: "post_photo" %>
+    	<div class="controls">
+    		<%= f.file_field :photo %>
+    	</div>
+    </div>	
+
+    <div class="form-actions">
+    	<%= f.submit "Post Item", class: "btn btn-medium btn-primary" %>
+    </div>
+  </fieldset>
 <% end %>

@@ -3,25 +3,62 @@
 
 <div class="row">
   <div class="span6 offset3">
-  <%= form_for(@user) do |f| %>
+  <%= form_for @user do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+      <fieldset>
+        <legend>
+          User Info
+        </legend>
+        <div class="clearfix-placeholder"></div>
+        <div class="control-group">
+          <%= f.label :name, class: "control-label", for: "user_name" %>
+          <div class="controls">
+            <%= f.text_field :name, class: "input-xlarge" %>
+          </div>
+        </div>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+        <div class="control-group">
+          <%= f.label :email, class: "control-label", for: "user_email" %>
+          <div class="controls">
+            <%= f.text_field :email, class: "input-xlarge" %>
+          </div>
+        </div>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
+        <div class="control-group">
+          <%= f.label :password, class: "control-label", for: "user_password" %>
+          <div class="controls">
+            <%= f.password_field :password, class: "input-xlarge" %>
+          </div>
+        </div>
 
-      <%= f.label :password_confirmation, "Confirm Password" %>
-      <%= f.password_field :password_confirmation %>
+        <div class="control-group">
+          <%= f.label :password_confirmation, "Confirm Password", class: "control-label", for: "user_password_confirmation" %>
+          <div class="controls">
+            <%= f.password_field :password_confirmation, class: "input-xlarge" %>
+          </div>
+        </div>
 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+        <div class="form-actions">
+          <%= f.submit "Save changes", class: "btn btn-medium" %>
+        </div>  
+
+      </fieldset>  
+      
     <% end %>
 
-    <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails">change</a>
+    <fieldset>
+        <legend>
+          Gravatar
+        </legend>
+        <div class="thumbnail">
+          <%= gravatar_for @user %>
+          <div class="caption">
+            <p style="padding-top: 20px; padding-bottom: 20px; ">
+              <a href="http://gravatar.com/emails">change</a>
+            </p>  
+          </div>
+        </div>  
+  </fieldset>
   </div>
 </div>

@@ -13,6 +13,11 @@ $grayMediumLight: #eaeaea;
   box-sizing: border-box;
 }
 
+/* HACK */
+
+.clearfix-placeholder{
+  height: 20px;
+}
 
 /* universal */
 
@@ -145,8 +150,8 @@ aside {
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
-  width: 100%;
-  padding: 10px;
+  //width: 100%;
+  //padding: 10px;
   height: auto;
   margin-bottom: 15px;
   @include box_sizing;
@@ -181,6 +186,8 @@ input, textarea, select, .uneditable-input {
   }
 }
 
+/* user show */
+
 
 /* posts */
 
@@ -188,9 +195,22 @@ input, textarea, select, .uneditable-input {
   list-style: none;
   margin: 10px 0 0 0;
 
+  a{
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
+    &:hover {
+      cursor: pointer;
+      background-color: #f8f8f8;
+      text-decoration: none;
+    }
   }
 }
 .content {
