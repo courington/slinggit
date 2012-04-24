@@ -41,3 +41,9 @@
     </div>
   </fieldset>
 <% end %>
+
+<% if current_user.twitter_authorized? %>
+  <div class="alert alert-success">
+    <h4 class="alert-heading">Hi <%= @client.user.name %>!</h4>
+    You are currently authorized as <b><%= @client.user.screen_name %></b>.  A posted item will show up in your twitter feed. 
+<% end %>

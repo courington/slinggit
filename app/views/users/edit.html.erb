@@ -39,6 +39,11 @@
           </div>
         </div>
 
+        <% if !session['access_secret'].nil? && !session['access_token'].nil?%>
+          <%= f.hidden_field :twitter_atoken, value: session['access_token'] %>
+          <%= f.hidden_field :twitter_asecret, value: session['access_secret'] %>
+        <% end %>  
+
         <div class="form-actions">
           <%= f.submit "Save changes", class: "btn btn-medium" %>
         </div>  
@@ -51,9 +56,19 @@
         <legend>
           Twitter
         </legend>
-        <div class="form-actions">
-          <%= link_to "Twitter sign in", new_twittersession_path, class: "btn btn-medium btn-info" %>
-        </div>
+        <% if !@user.twitter_authorized? && !session['access_secret'].nil? && !session['access_token'].nil? %>
+          <div class="alert alert-block">
+            <h4 class="alert-heading">Almost there!</h4>
+            You'll still need to save your changes.
+        <% elsif !@user.twitter_authorized? && session['access_secret'].nil? && session['access_token'].nil? %>
+          <div class="form-actions">
+            <%= link_to "Twitter sign in", new_twittersession_path, class: "btn btn-medium btn-info" %>
+          </div>
+        <% elsif @user.twitter_authorized? %>
+          <div class="alert alert-success">
+            <h4 class="alert-heading">Hi <%= @client.user.name %>!</h4>
+            You are currently authorized as <b><%= @client.user.screen_name %></b> 
+        <% end %>  
     </fieldset>
 
     <fieldset>

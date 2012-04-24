@@ -10,12 +10,22 @@ class PostsController < ApplicationController
   end	
 
   def new
-  	@post = current_user.posts.build if signed_in?
+    if signed_in?
+  	  @post = current_user.posts.build 
+      @twitterclient = client if current_user.twitter_authorized?
+    end  
   end
 
   def create
     @post = current_user.posts.build(params[:post])
     if @post.save
+      # I'm pretty sure this will need to be reworked with some rescue methods.
+      if current_user.twitter_authorized?
+        @twitterclient = client
+        @twitterclient.update("##{@post.hashtag_prefix}forsale #{@post.content} - #{@post.price} | #{Rails.root}#{post_path(@post)}")
+        @slinggitclient = slinggit_client
+        @slinggitclient.retweet(@twitterclient.user_timeline.first.id)
+      end
       flash[:success] = "Post successfully created!"
       redirect_to current_user
     else

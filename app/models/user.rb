@@ -15,7 +15,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret
   has_secure_password
   has_many :posts, dependent: :destroy
 
@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
 
+
+  def twitter_authorized?
+    !twitter_atoken.blank? && !twitter_asecret.blank?
+  end
 
   private
 

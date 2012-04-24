@@ -29,6 +29,7 @@ class UsersController < ApplicationController
 
   def edit
     # @user = User.find(params[:id]) !Not needed because of :correct_user before_filter
+    @twitterclient = client if @user.twitter_authorized?
   end
 
   def update
@@ -36,6 +37,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
+      reset_session
       redirect_to @user
     else
       render 'edit'
