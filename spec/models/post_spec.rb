@@ -13,6 +13,7 @@
 #  photo_updated_at   :datetime
 #  hashtag_prefix     :string(255)
 #  price              :decimal(8, 2)
+#  open               :boolean         default(TRUE)
 #
 
 require 'spec_helper'

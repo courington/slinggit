@@ -3,6 +3,9 @@ SlinggitWebapp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :posts, only: [:new, :create, :destroy, :edit, :show, :update]
 
+  # get 'sessions/callback', :to => 'sessions#callback', :as => 'callback'
+  resources :twittersessions
+
   root to: 'static_pages#home'
 
   match '/signup',  to: 'users#new'
