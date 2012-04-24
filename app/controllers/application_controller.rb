@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   		# Dev
   		# @slinggit_client ||= Twitter::Client.new(:oauth_token => "561831843-mHAqcKLJfFyCSQOXvlyH5fCvHRlRhRqMFDPNMS9h", :oauth_token_secret => "T7yvd3FfhpVJacLS6zjFO3yrXl8HDurhfXLq3AQL8")
   		# Prod
-  		@slinggit_client ||= Twitter::Client.new(:oauth_token => "561831843-lep99bHrV4mbMR18OnNbp2aQLfiw4ITD0Cqm60", :oauth_token_secret => "da9VsPgCQhKVPJM9A2qHAPbfV8v1FYNrnGjVIHncL4")
+  		@slinggit_client ||= Twitter::Client.new(:oauth_token => "561831843-vpq6NXNaQ8FGXR07D8GETEO6WxxkMKGbHMZ7qefk", :oauth_token_secret => "fEvbYhkf8PKHs8CeXGE7JhB2lf39NSKKDDTA4y0U0s")
   	end
 
 end

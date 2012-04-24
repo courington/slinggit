@@ -15,5 +15,5 @@ end
 #asecret = "T7yvd3FfhpVJacLS6zjFO3yrXl8HDurhfXLq3AQL8"
 
 #Prod
-#atoken = "561831843-lep99bHrV4mbMR18OnNbp2aQLfiw4ITD0Cqm60"
-#asecret = "da9VsPgCQhKVPJM9A2qHAPbfV8v1FYNrnGjVIHncL4"
+#atoken = "561831843-vpq6NXNaQ8FGXR07D8GETEO6WxxkMKGbHMZ7qefk"
+#asecret = "fEvbYhkf8PKHs8CeXGE7JhB2lf39NSKKDDTA4y0U0s"
