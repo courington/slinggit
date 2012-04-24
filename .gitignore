@@ -8,6 +8,10 @@
 /log/*.log
 /tmp
 
+# Ignore sample photos
+public/assets/posts/
+sampleimages/
+
 # Ignore other unneeded files.
 doc/
 *.swp

@@ -2,14 +2,29 @@
 <h1>Update your post</h1>
 
 <div class="row">
-  <div class="span6 offset3">
+
+  <div class="span6 offset3 well">
+  	<h3><%= @post.hashtag_prefix %></h3> 
+    <h3><%= @post.content %></h3>  
+    <%= image_tag @post.photo.url %>
+    <h3><%= @post.price %></h3>
+
     <%= form_for(@post) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :content %>
-      <%= f.text_field :content %>
-
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+      <% if @post.open? %>
+      	<%= f.hidden_field :open, value: false %>
+      	<div class="form-actions">
+      		<%= f.submit "Close", class: "btn btn-medium btn-danger" %>
+      	</div>
+      <% else %>
+      	<%= f.hidden_field :open, value: true %>
+      	<div class="form-actions">
+      		<%= f.submit "Reopen", class: "btn btn-medium btn-success" %>
+      	</div>
+      <% end %>
+	
     <% end %>
   </div>
+
 </div>

@@ -11,19 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120422200519) do
+ActiveRecord::Schema.define(:version => 20120424041149) do
 
   create_table "posts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "hashtag_prefix"
     t.decimal  "price",              :precision => 8, :scale => 2
+    t.boolean  "open",                                             :default => true
   end
 
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"

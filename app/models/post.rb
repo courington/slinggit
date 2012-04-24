@@ -16,11 +16,12 @@
 #
 
 class Post < ActiveRecord::Base
-  attr_accessible :content, :photo, :hashtag_prefix, :price
+  attr_accessible :content, :photo, :hashtag_prefix, :price, :open
   
   belongs_to :user
-  has_attached_file :photo, url: "/assets/posts/:id/:style/:basename.:extension",
-  							path: ":rails_root/public/assets/posts/:id/:style/:basename.:extension"
+  has_attached_file :photo, styles: { :medium => "300x300>" },
+                    url: "/assets/posts/:id/:style/:basename.:extension",
+  							    path: ":rails_root/public/assets/posts/:id/:style/:basename.:extension"
 
   validates :content, presence: true, length: { maximum: 100 }
   validates :user_id, presence: true

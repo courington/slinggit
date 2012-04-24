@@ -18,8 +18,12 @@ namespace :db do
 
     users = User.all(limit: 6)
     50.times do
+      hashtag_prefix = "Bike"
       content = Faker::Lorem.sentence(3)
-      users.each { |user| user.posts.create!(content: content) }
+      price = 20
+      photo = File.open(Dir.glob(File.join(Rails.root, 'sampleimages', '*')).sample)
+      users.each { |user| user.posts.create!(hashtag_prefix: hashtag_prefix, photo: photo,
+                                             content: content, price: price) }
     end
   end
 end
