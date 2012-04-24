@@ -6,6 +6,11 @@
     <h3><%= @post.content %></h3>  
     <%= image_tag @post.photo.url %>
     <h3><%= @post.price %></h3> 
+    <% if @post.open? %>
+    	<span class="label label-success">Open</span>
+  	<% else %>  
+    	<span class="label label">Closed</span>
+  	<% end %>
   </div>
 
 </div>
