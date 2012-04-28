@@ -1,49 +1,63 @@
+<script>
+    $(document).ready(function () {
+        $('#twitterBTN').click(function (e) {
+            e.preventDefault();
+            $('#twitter_authenticate').val(true)
+            $('form').submit();
+        });
+    });
+</script>
+
+
 <%= provide(:title, 'Sign up') %>
 <h1>Sign up</h1>
 
 <div class="row">
   <div class="span6 offset3">
     <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+        <%= render 'shared/error_messages', object: f.object %>
 
-      <fieldset>
-        <legend>
-          Create your profile
-        </legend>
-        <div class="clearfix-placeholder"></div>
-        <div class="control-group">
-          <%= f.label :name, class: "control-label", for: "user_name" %>
-          <div class="controls">
-            <%= f.text_field :name, class: "input-xlarge" %>
-          </div>  
-        </div>  
+        <fieldset>
+          <legend>
+            Create your profile
+          </legend>
+          <div class="clearfix-placeholder"></div>
+          <div class="control-group">
+            <%= f.label :name, class: "control-label", for: "user_name" %>
+            <div class="controls">
+              <%= f.text_field :name, class: "input-xlarge" %>
+            </div>
+          </div>
 
-        <div class="control-group">
-          <%= f.label :email, class: "control-label", for: "user_email" %>
-          <div class="controls">
-            <%= f.text_field :email, class: "input-xlarge" %>
-          </div>  
-        </div> 
+          <div class="control-group">
+            <%= f.label :email, class: "control-label", for: "user_email" %>
+            <div class="controls">
+              <%= f.text_field :email, class: "input-xlarge" %>
+            </div>
 
-        <div class="control-group">
-          <%= f.label :password, class: "control-label", for: "user_password" %>
-          <div class="controls">
-            <%= f.password_field :password, class: "input-xlarge" %>
-          </div>  
-        </div> 
+            <div class="form-actions">
+              <%= f.submit "Authenticate with Twitter", class: "btn btn-medium btn-info", onclick: "javascript:void(0)", id: 'twitterBTN' %>
+              <%= f.submit "no thanks", class: "btn" %>
+            </div>
+          </div>
 
-        <div class="control-group">
-          <%= f.label :password_confirmation, "Confirmation", class: "control-label", for: "user_password_confirmation" %>
-          <div class="controls">
-            <%= f.password_field :password_confirmation, class: "input-xlarge" %>
-          </div>  
-        </div> 
+          <%= hidden_field_tag :twitter_authenticate, false %>
 
-        <div class="form-actions">
-          <%= f.submit "Create my profile", class: "btn btn-medium btn-success" %>
-        </div>  
+          <!--<div class="control-group">-->
+          <!--<%= f.label :password, class: "control-label", for: "user_password" %>-->
+          <!--<div class="controls">-->
+          <!--<%= f.password_field :password, class: "input-xlarge" %>-->
+          <!--</div>  -->
+          <!--</div> -->
 
-      </fieldset>  
+          <!--<div class="control-group">-->
+          <!--<%= f.label :password_confirmation, "Confirmation", class: "control-label", for: "user_password_confirmation" %>-->
+          <!--<div class="controls">-->
+          <!--<%= f.password_field :password_confirmation, class: "input-xlarge" %>-->
+          <!--</div>  -->
+          <!--</div> -->
+
+        </fieldset>
 
     <% end %>
   </div>
