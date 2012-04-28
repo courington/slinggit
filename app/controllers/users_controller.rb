@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update]
-  before_filter :correct_user,   only: [:edit, :update]
-  before_filter :admin_user,     only: [:index, :destroy]
-  
+  before_filter :correct_user, only: [:edit, :update]
+  before_filter :admin_user, only: [:index, :destroy]
+
   def index
     @users = User.paginate(page: params[:page])
   end
@@ -13,11 +13,14 @@ class UsersController < ApplicationController
   end
 
   def new
-  	@user = User.new
+    @user = User.new
   end
 
   def create
     @user = User.new(params[:user])
+    #if not params[:twitter_authenticate].blank?
+    #
+    #end
     if @user.save
       sign_in @user
       flash[:success] = "Welcome SlingGit.  Time to start slingin!"
@@ -53,13 +56,13 @@ class UsersController < ApplicationController
 
   private
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
-    end
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_path) unless current_user?(@user)
+  end
 
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
+  end
 
 end
