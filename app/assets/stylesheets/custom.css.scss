@@ -1,4 +1,34 @@
 @import "bootstrap";
+@import "bootstrap-responsive";
+
+/* OVERWRITE BOOTSTRAP STYLES */
+@media all and (max-width: 767px) {
+	body {
+   	padding-left: 0px;
+   	padding-right: 0px;
+ 	}
+	header.navbar-fixed-top {
+	margin-left: 0;
+	margin-right: 0;
+	}
+	.row {
+	margin-left: 25%;
+	}
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+  width:100%;
+	position: relative;
+}
+.navbar ul.nav.pull-right {
+  float: left;
+}
+.footer nav > ul {
+	float:left;
+}
+.container > .row {
+	margin-left: 0;
+}
+/* END */
 
 /* variables */
 
@@ -23,10 +53,6 @@ $grayMediumLight: #eaeaea;
 
 html {
   overflow-y: scroll;
-}
-
-body {
-  padding-top: 60px;
 }
 
 section {
@@ -238,5 +264,5 @@ aside {
   float: left;
   width: 100%;
   margin-top: 45px;
-  @include box_sizing;
+  @include box_sizing;	
 }

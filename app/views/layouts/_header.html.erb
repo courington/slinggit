@@ -1,8 +1,15 @@
 <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	    </a>
+	<h3>
       <%= link_to "slinggit", root_path, id: "logo" %>
-      <nav>
+	</h3>
+      <nav class="nav-collapse">
         <ul class="nav pull-right">
           <li class="<%= 'active' if current_page?(root_path) %>" >
             <%= link_to "Home", root_path %>
