@@ -21,7 +21,7 @@ require 'spec_helper'
 describe Post do
 
   let(:user) { FactoryGirl.create(:user) }
-  before { @post = user.posts.build(content: "Lorem ipsum") }
+  before { @post = user.posts.build(content: "Lorem ipsum", hashtag_prefix: "bike", price: 20) }
 
   subject { @post }
 

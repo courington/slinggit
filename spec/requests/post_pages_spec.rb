@@ -24,7 +24,7 @@ describe "PostPages" do
 
     describe "with valid information" do
 
-      before { fill_in 'post_content', with: "Lorem ipsum" }
+      before { fill_in_post }
       it "should create a post" do
         expect { click_button "Post" }.should change(Post, :count).by(1)
       end
