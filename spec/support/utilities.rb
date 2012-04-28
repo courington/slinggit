@@ -15,3 +15,9 @@ def sign_in(user)
   # Sign in when not using Capybara as well.
   cookies[:remember_token] = user.remember_token
 end
+
+def fill_in_post
+  fill_in 'post_content', with: "Lorem ipsum"
+  fill_in 'post_hashtag_prefix', with: "bike"
+  fill_in 'post_price',  with: 20
+end  
