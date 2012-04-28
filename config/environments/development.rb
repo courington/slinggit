@@ -35,5 +35,5 @@ SlinggitWebapp::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  PROD_ENV  = false
+  PROD_ENV = false
 end

@@ -4,6 +4,8 @@ SlinggitWebapp::Application.routes.draw do
   resources :posts, only: [:new, :create, :destroy, :edit, :show, :update]
 
   match '/twitter_callback', :to => 'twittersessions#callback', :as => 'callback'
+  match '/twittersessions/signin', :to => 'twittersessions#signin', :via => :get
+  
   resources :twittersessions
 
   root to: 'static_pages#home'

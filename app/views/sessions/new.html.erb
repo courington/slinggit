@@ -21,7 +21,8 @@
         </div>
 
         <div class="form-actions">
-           <%= f.submit "Sign in", class: "btn btn-meduim btn-primary" %>
+           <%= f.submit "Sign in", class: "btn btn-meduim btn-primary" %><span> Or </span>
+           <%= link_to "Sign in with Twitter", {:controller => :twittersessions, :action => :signin}, class: "btn btn-medium btn-info" %>
         </div>  
 
       </fieldset>   

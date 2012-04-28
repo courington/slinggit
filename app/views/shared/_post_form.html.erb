@@ -1,49 +1,50 @@
 <%= form_for @post do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  <fieldset>
-  	<legend>
-  		Create a new post.
-  	</legend>
-  	<div class="clearfix-placeholder"></div>
-	<div class="control-group">
-		<%= f.label :hashtag_prefix, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <fieldset>
+      <legend>
+        Create a new post.
+      </legend>
+      <div class="clearfix-placeholder"></div>
+      <div class="control-group">
+        <%= f.label :hashtag_prefix, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
         <div class="controls">
-        	<div class="input-append">	
-        	  <%= f.text_field :hashtag_prefix, class: "input-large", placeholder: "#" %>
-        	  <span class="add-on">forsale</span>
-        	</div>  
+          <div class="input-append">
+            <%= f.text_field :hashtag_prefix, class: "input-large", placeholder: "#" %>
+            <span class="add-on">forsale</span>
+          </div>
         </div>
-    </div>
-    <div class="control-group">
-    	<%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
-    	<div class="controls">
-    		<%= f.text_area :content, class: "input-xlarge", rows: "3", placeholder: "Something short and sweet..." %>
-    	</div>	
-    </div>	
-    <div class="control-group">
-    	<%= f.label :price, class: "control-label", for: "post_price" %>
-  		<div class="controls">
-	  		<div class="input-append">
-	  			<%= f.text_field :price, class: "input-large" %>
-	  			<span class="add-on">.00</span>
-	  		</div>	
-  		</div>
-    </div>
-    <div class="control-group">
-    	<%= f.label :photo, "Item Photo", class: "control-label", for: "post_photo" %>
-    	<div class="controls">
-    		<%= f.file_field :photo %>
-    	</div>
-    </div>	
+      </div>
+      <div class="control-group">
+        <%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
+        <div class="controls">
+          <%= f.text_area :content, class: "input-xlarge", rows: "3", placeholder: "Something short and sweet..." %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :price, class: "control-label", for: "post_price" %>
+        <div class="controls">
+          <div class="input-append">
+            <%= f.text_field :price, class: "input-large" %>
+            <span class="add-on">.00</span>
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :photo, "Item Photo", class: "control-label", for: "post_photo" %>
+        <div class="controls">
+          <%= f.file_field :photo %>
+        </div>
+      </div>
 
-    <div class="form-actions">
-    	<%= f.submit "Post Item", class: "btn btn-medium btn-primary" %>
-    </div>
-  </fieldset>
+      <div class="form-actions">
+        <%= f.submit "Post Item", class: "btn btn-medium btn-primary" %>
+      </div>
+    </fieldset>
 <% end %>
 
 <% if current_user.twitter_authorized? %>
-  <div class="alert alert-success">
-    <h4 class="alert-heading">Hi <%= @client.user.name %>!</h4>
-    You are currently authorized as <b><%= @client.user.screen_name %></b>.  A posted item will show up in your twitter feed. 
+    <div class="alert alert-success"></div>
+    <h4 class="alert-heading">Hi <%= client.user.name %>!</h4>
+    You are currently authorized as
+    <b><%= client.user.screen_name %></b>.  A posted item will show up in your twitter feed.
 <% end %>

@@ -10,4 +10,9 @@ module ApplicationHelper
     end
   end
 
+  def client
+    @client ||= Twitter::Client.new(:oauth_token => current_user.twitter_atoken, :oauth_token_secret => current_user.twitter_asecret)
+  end
+
 end
+
