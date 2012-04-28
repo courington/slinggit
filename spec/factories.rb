@@ -13,6 +13,8 @@ FactoryGirl.define do
 
   factory :post do
     content "Lorem ipsum"
+    hashtag_prefix "bike"
+    price 20
     user
   end
 
