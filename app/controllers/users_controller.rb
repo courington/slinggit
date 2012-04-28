@@ -18,15 +18,35 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    #if not params[:twitter_authenticate].blank?
-    #
-    #end
-    if @user.save
-      sign_in @user
-      flash[:success] = "Welcome SlingGit.  Time to start slingin!"
-      redirect_to @user
+
+    #user has chosen to twitter authenticate --
+    #verify name and email are present and not taken
+    if not params[:twitter_authenticate].blank?
+      if params[:user][:name].blank?
+        @user.errors.messages[:name] = ["can't be blank"]
+      end
+      if params[:user][:email].blank?
+        @user.errors.messages[:email] = ["can't be blank"]
+      else
+        if User.exists?(:email => params[:user][:email])
+          @user.errors.messages[:email] = ["has already been registered"]
+        end
+      end
+
+      if @user.errors.blank?
+        session[:twitter_user] = @user
+        #redirect_to_twitter
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      if @user.save
+        sign_in @user
+        flash[:success] = "Welcome SlingGit.  Time to start slingin!"
+        redirect_to @user
+      else
+        render 'new'
+      end
     end
   end
 
@@ -52,7 +72,6 @@ class UsersController < ApplicationController
     flash[:success] = "User destroyed."
     redirect_to users_path
   end
-
 
   private
 

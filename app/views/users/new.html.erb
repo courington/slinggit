@@ -45,7 +45,7 @@
             <div class="form-actions" id="form_signUpActions">
               <%= f.submit "Authenticate with Twitter", class: "btn btn-medium btn-info", onclick: "javascript:void(0)", id: 'twitterBTN' %>
               <%= f.submit "no thanks", class: "btn", onclick: "javascript:void(0)", id: 'nothanksBTN' %>
-              <%= hidden_field_tag :twitter_authenticate, false %>
+              <%= hidden_field_tag :twitter_authenticate, nil %>
             </div>
           </div>
 
