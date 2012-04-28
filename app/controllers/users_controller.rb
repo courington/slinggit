@@ -13,12 +13,18 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if not cookies[:twitter_user_name].blank? and not cookies[:twitter_user_email].blank?
+      @user = User.new(
+          :name => cookies[:twitter_user_name],
+          :email => cookies[:twitter_user_email]
+      )
+    else
+      @user = User.new
+    end
   end
 
   def create
     @user = User.new(params[:user])
-
     #user has chosen to twitter authenticate --
     #verify name and email are present and not taken
     if not params[:twitter_authenticate].blank?
@@ -34,14 +40,20 @@ class UsersController < ApplicationController
       end
 
       if @user.errors.blank?
-        session[:twitter_user] = @user
-        #redirect_to_twitter
+        cookies.permanent[:twitter_user_name] = @user.name
+        cookies.permanent[:twitter_user_email] = @user.email
+        setup_twitter_call
       else
         render 'new'
       end
     else
+      if not session['access_token'].blank? and not session['access_secret'].blank?
+        @user.twitter_atoken = session['access_token']
+        @user.twitter_asecret = session['access_secret']
+      end
       if @user.save
         sign_in @user
+        reset_twitter_session_and_cookies
         flash[:success] = "Welcome SlingGit.  Time to start slingin!"
         redirect_to @user
       else
@@ -60,7 +72,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
-      reset_session 
+      reset_session
       redirect_to @user
     else
       render 'edit'
@@ -81,7 +93,7 @@ class UsersController < ApplicationController
   end
 
   def admin_user
-    redirect_to(root_path) unless current_user.admin?
+    redirect_to(root_path) unless not current_user.blank? and current_user.admin?
   end
 
 end
