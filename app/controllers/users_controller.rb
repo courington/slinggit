@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
-      reset_session
+      reset_session 
       redirect_to @user
     else
       render 'edit'
