@@ -28,7 +28,7 @@ class Post < ActiveRecord::Base
   validates :user_id, presence: true
   validates :hashtag_prefix, presence: true, length: {maximum: 10 }
   validates :price, presence: true, :format => { :with => /^\d+??(?:\.\d{0,2})?$/ }, :numericality => {:greater_than_or_equal_to => 0.01}
-  validates_attachment_presence :photo
+  # validates_attachment_presence :photo
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
   default_scope order: 'posts.updated_at DESC'
