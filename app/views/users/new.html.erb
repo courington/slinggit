@@ -1,61 +1,3 @@
-<script>
-    $(document).ready(function () {
-        $('#user_name').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
-        $('#user_email').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
-        $('#user_password').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
-        $('#user_password_confirmation').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
-
-        $('#signUpPasswordFields').hide();
-        $('#form_signUpActions').show();
-
-        <% if session[:twitter_permission_granted] %>
-        $('#signUpPasswordFields').show();
-        $('#form_signUpActions').hide();
-        $('#profileCreateHeader').html('You are authenticated with Twitter');
-        <% elsif session[:no_thanks]%>
-        $('#signUpPasswordFields').show();
-        $('#form_signUpActions').hide();
-        <% end %>
-
-        $('#noThanksBTN').click(function (e) {
-            e.preventDefault();
-            $('#form_signUpActions').hide();
-            $('#signUpPasswordFields').show();
-            hideErrorsAndNotifications();
-            $.ajax({
-                url:"<%= url_for :controller => :users, :action => :set_no_thanks %>"
-            })
-        })
-
-        $('#twitterBTN').click(function (e) {
-            e.preventDefault();
-            $('#twitter_authenticate').val(true)
-            $('form').submit();
-        });
-
-        $('#signUpStartOverLink').click(function (e) {
-            e.preventDefault();
-            $('#signUpPasswordFields').hide();
-            $('#form_signUpActions').show();
-            $('#user_name').val('');
-            $('#user_email').val('');
-            $('#profileCreateHeader').html('Create your profile');
-            hideErrorsAndNotifications();
-            $.ajax({
-                url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
-            })
-        });
-    });
-
-    function hideErrorsAndNotifications() {
-        $('#error_explanation').hide();
-        $('.field_with_errors').removeClass('field_with_errors')
-        $('.alert').hide();
-        $("html, body").animate({ scrollTop:0 }, "slow");
-    }
-
-</script>
-
 <%= provide(:title, 'Sign up') %>
 <h1>Sign up</h1>
 
@@ -116,3 +58,61 @@
     <% end %>
   </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#user_name').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+        $('#user_email').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+        $('#user_password').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+        $('#user_password_confirmation').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+
+        $('#signUpPasswordFields').hide();
+        $('#form_signUpActions').show();
+
+        <% if session[:twitter_permission_granted] %>
+        $('#signUpPasswordFields').show();
+        $('#form_signUpActions').hide();
+        $('#profileCreateHeader').html('You are authenticated with Twitter');
+        <% elsif session[:no_thanks]%>
+        $('#signUpPasswordFields').show();
+        $('#form_signUpActions').hide();
+        <% end %>
+
+        $('#noThanksBTN').click(function (e) {
+            e.preventDefault();
+            $('#form_signUpActions').hide();
+            $('#signUpPasswordFields').show();
+            hideErrorsAndNotifications();
+            $.ajax({
+                url:"<%= url_for :controller => :users, :action => :set_no_thanks %>"
+            })
+        })
+
+        $('#twitterBTN').click(function (e) {
+            e.preventDefault();
+            $('#twitter_authenticate').val(true)
+            $('form').submit();
+        });
+
+        $('#signUpStartOverLink').click(function (e) {
+            e.preventDefault();
+            $('#signUpPasswordFields').hide();
+            $('#form_signUpActions').show();
+            $('#user_name').val('');
+            $('#user_email').val('');
+            $('#profileCreateHeader').html('Create your profile');
+            hideErrorsAndNotifications();
+            $.ajax({
+                url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
+            })
+        });
+    });
+
+    function hideErrorsAndNotifications() {
+        $('#error_explanation').hide();
+        $('.field_with_errors').removeClass('field_with_errors')
+        $('.alert').hide();
+        $("html, body").animate({ scrollTop:0 }, "slow");
+    }
+
+</script>
