@@ -18,4 +18,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def setup_twitter_call
+    request_token = oauth_consumer.get_request_token(:oauth_callback => callback_url)
+    session['rtoken'] = request_token.token
+    session['rsecret'] = request_token.secret
+    redirect_to request_token.authorize_url
+  end
+
+  def oauth_consumer
+    @oauth_consumer ||= OAuth::Consumer.new(Twitter.consumer_key, Twitter.consumer_secret, :site => 'http://api.twitter.com', :request_endpoint => 'http://api.twitter.com', :sign_in => true)
+  end
+
+  def reset_twitter_session_and_cookies
+    session.delete('access_token')
+    session.delete('access_secret')
+    cookies.delete(:twitter_user_name)
+    cookies.delete(:twitter_user_email)
+  end
+
 end
