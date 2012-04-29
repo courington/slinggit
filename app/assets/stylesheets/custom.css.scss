@@ -1,18 +1,28 @@
 @import "bootstrap";
-@import "bootstrap-responsive";
+/*@import "bootstrap-responsive";*/
 
 /* OVERWRITE BOOTSTRAP STYLES */
 @media all and (max-width: 767px) {
-	body {
-   	padding-left: 0px;
-   	padding-right: 0px;
- 	}
-	header.navbar-fixed-top {
-	margin-left: 0;
-	margin-right: 0;
+	header.navbar-fixed-top .navbar-inner {
+	padding: 4px 2.5%;
+	width: 105%;
+	margin: 0 auto;
 	}
-	.row {
-	margin-left: 25%;
+	.container, .navbar-fixed-top .container,
+	.navbar-fixed-bottom .container {
+	width: 90%;
+	margin:0 auto;
+	}
+	.container > .row {
+	margin-left: 0;
+	}
+	.container > .row > .offset3,
+	.container > .row > .span6 {
+	margin-left: 0;
+	width:100%;
+	}
+	footer {
+	margin: 45px 0 0 0;
 	}
 }
 .navbar-fixed-top, .navbar-fixed-bottom {
@@ -24,9 +34,6 @@
 }
 .footer nav > ul {
 	float:left;
-}
-.container > .row {
-	margin-left: 0;
 }
 /* END */
 
@@ -52,7 +59,7 @@ $grayMediumLight: #eaeaea;
 /* universal */
 
 html {
-  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 section {
@@ -106,7 +113,7 @@ p {
   color: #fff;
   //text-transform: uppercase;
   letter-spacing: -1px;
-  padding-top: 9px;
+  padding-top: 0px;
   font-weight: bold;
   line-height: 1;
   &:hover {
