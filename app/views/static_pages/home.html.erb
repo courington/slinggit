@@ -4,8 +4,9 @@
   <% if current_user.blank? %>
       <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
   <% elsif not @twitterclient.blank? %>
-      Welcome back <%= current_user.name %>! You are currently connected to your
-      <b><%= @twitterclient.user.screen_name %></b> Twitter account.
+      <p>Welcome back <%= current_user.name %>! You are currently connected to your
+      <b><%= @twitterclient.user.screen_name %></b> Twitter account.</p>
+      <p>Got some old junk laying around?  <%= link_to "Slinggit", new_post_path, class: "btn btn-large btn-primary" %></p>
   <% end %>
 </div>
 
