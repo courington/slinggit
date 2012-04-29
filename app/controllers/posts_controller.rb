@@ -23,8 +23,8 @@ class PostsController < ApplicationController
       if current_user.twitter_authorized?
         @twitterclient = client
         @twitterclient.update("##{@post.hashtag_prefix}forsale #{@post.content} - #{@post.price} | #{Rails.root}#{post_path(@post)}")
-        @slinggitclient = slinggit_client
-        @slinggitclient.retweet(@twitterclient.user_timeline.first.id)
+        #@slinggitclient = slinggit_client
+        #@slinggitclient.retweet(@twitterclient.user_timeline.first.id)
       end
       flash[:success] = "Post successfully created!"
       redirect_to current_user
