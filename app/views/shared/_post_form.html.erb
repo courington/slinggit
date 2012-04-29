@@ -29,10 +29,11 @@
           </div>
         </div>
       </div>
-      <div class="control-group">
+      <div id="photoControlGroup" class="control-group">
         <%= f.label :photo, "Item Photo", class: "control-label", for: "post_photo" %>
         <div class="controls">
-          <%= f.file_field :photo %>
+          <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
+          <a href="#" id="fileSelect">Select a photo</a>
         </div>
       </div>
 
