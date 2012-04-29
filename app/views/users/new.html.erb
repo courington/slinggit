@@ -1,5 +1,10 @@
 <script>
     $(document).ready(function () {
+        $('#user_name').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+        $('#user_email').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+        $('#user_password').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+        $('#user_password_confirmation').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+
         $('#signUpPasswordFields').hide();
         $('#form_signUpActions').show();
 
@@ -46,7 +51,6 @@
         $('#error_explanation').hide();
         $('.field_with_errors').removeClass('field_with_errors')
         $('.alert').hide();
-
     }
 
 </script>
