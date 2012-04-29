@@ -16,7 +16,7 @@
             e.preventDefault();
             $('#form_signUpActions').hide();
             $('#signUpPasswordFields').show();
-            hideErrors();
+            hideErrorsAndNotifications();
             $.ajax({
                 url:"<%= url_for :controller => :users, :action => :set_no_thanks %>"
             })
@@ -35,16 +35,18 @@
             $('#user_name').val('');
             $('#user_email').val('');
             $('#profileCreateHeader').html('Create your profile');
-            hideErrors();
+            hideErrorsAndNotifications();
             $.ajax({
                 url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
             })
         });
     });
 
-    function hideErrors() {
+    function hideErrorsAndNotifications() {
         $('#error_explanation').hide();
         $('.field_with_errors').removeClass('field_with_errors')
+        $('.alert').hide();
+
     }
 
 </script>
