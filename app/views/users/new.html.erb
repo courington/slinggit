@@ -140,6 +140,7 @@
             $('#user_name').val('');
             $('#user_email').val('');
             $('#profileCreateHeader').html('Create your profile');
+            $('#emailSuggestion').remove();
             hideErrorsAndNotifications();
             $.ajax({
                 url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
@@ -151,7 +152,6 @@
         $('#error_explanation').hide();
         $('.field_with_errors').removeClass('field_with_errors')
         $('.alert').hide();
-        $('#emailSuggestion').remove();
         $("html, body").animate({ scrollTop:0 }, "fast");
     }
 
