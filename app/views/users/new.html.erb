@@ -62,10 +62,10 @@
 
 <script>
     $(document).ready(function () {
-        $('#user_name').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
-        $('#user_email').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
-        $('#user_password').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
-        $('#user_password_confirmation').keyup(hideErrorsAndNotifications).keydown(hideErrorsAndNotifications).change((hideErrorsAndNotifications));
+        $('#user_name').keyup(hideErrorsAndNotifications);
+        $('#user_email').keyup(hideErrorsAndNotifications);
+        $('#user_password').keyup(hideErrorsAndNotifications);
+        $('#user_password_confirmation').keyup(hideErrorsAndNotifications);
 
         $('#user_email').keyup(function () {
             email_address = $('#user_email').val();
@@ -75,12 +75,16 @@
                     type:"POST",
                     url:"<%= url_for :controller => :users, :action => :verify_email_availability %>",
                     data:{email:email_address}
-                }).done(function(response) {
-                    if (response == 'unavailable') {
-                        $('#emailAvailabilityNotification').html('<div id="error_explanation"><ul><li>* That email has already been registered.  <a href="#">forgot password?</a></li></ul></div>')
-                        $('#emailAvailabilityNotification').show();
-                    }
-                });
+                }).done(function (response) {
+                            if (response == 'unavailable') {
+                                $('#user_email')
+                                $('#emailAvailabilityNotification').html('<div id="error_explanation"><ul><li>* That email has already been registered.  <a href="#">forgot password?</a></li></ul></div>')
+                                $('#emailAvailabilityNotification').show();
+                            } else {
+                                $('#emailAvailabilityNotification').html('');
+                                $('#emailAvailabilityNotification').hide();
+                            }
+                        });
             }
         });
 
@@ -123,7 +127,6 @@
             $('#user_email').val('');
             $('#profileCreateHeader').html('Create your profile');
             hideErrorsAndNotifications();
-            $("html, body").animate({ scrollTop:0 }, "slow");
             $.ajax({
                 url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
             })
@@ -134,6 +137,7 @@
         $('#error_explanation').hide();
         $('.field_with_errors').removeClass('field_with_errors')
         $('.alert').hide();
+        $("html, body").animate({ scrollTop:0 }, "fast");
     }
 
 </script>
