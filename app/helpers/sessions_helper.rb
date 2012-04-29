@@ -3,6 +3,17 @@ module SessionsHelper
   def sign_in(user)
     cookies.permanent[:remember_token] = user.remember_token
     current_user = user
+    if not request.blank?
+      UserLogin.create(
+          :user_id => current_user.id,
+          :user_agent => "#{request.user_agent}",
+          :ip_address => "#{request.remote_ip}",
+          :url_referrer => "#{request.referrer}",
+          :login_source => "#{request.parameters[:controller]}/#{request.parameters[:action]}",
+          :session_json => "#{request.env['rack.session'].to_json}",
+          :paramaters_json => "#{request.filtered_parameters.to_json}"
+      )
+    end
   end
 
   def sign_out
@@ -19,7 +30,7 @@ module SessionsHelper
   def current_user=(user)
     @current_user = user
   end
-  
+
   # Get current user
   def current_user
     @current_user ||= user_from_remember_token
@@ -48,13 +59,13 @@ module SessionsHelper
 
   private
 
-    def user_from_remember_token
-      remember_token = cookies[:remember_token]
-      User.find_by_remember_token(remember_token) unless remember_token.nil?
-    end
+  def user_from_remember_token
+    remember_token = cookies[:remember_token]
+    User.find_by_remember_token(remember_token) unless remember_token.nil?
+  end
 
-    def clear_return_to
-      session.delete(:return_to)
-    end
+  def clear_return_to
+    session.delete(:return_to)
+  end
 
 end
