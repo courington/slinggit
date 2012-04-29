@@ -1,20 +1,25 @@
 <script>
     $(document).ready(function () {
-        <% if not cookies[:twitter_user_name].blank? and not cookies[:twitter_user_email].blank? %>
-        $('#signUpInitialFields').show();
+        $('#signUpPasswordFields').hide();
+        $('#form_signUpActions').show();
+
+        <% if session[:twitter_permission_granted] %>
         $('#signUpPasswordFields').show();
         $('#form_signUpActions').hide();
         $('#profileCreateHeader').html('You are authenticated with Twitter');
-        <% else %>
-        $('#signUpPasswordFields').hide();
-        $('#form_signUpActions').show();
-        $('#twitterAuthenticatedNotice').hide();
+        <% elsif session[:no_thanks]%>
+        $('#signUpPasswordFields').show();
+        $('#form_signUpActions').hide();
         <% end %>
 
-        $('#nothanksBTN').click(function (e) {
+        $('#noThanksBTN').click(function (e) {
             e.preventDefault();
             $('#form_signUpActions').hide();
             $('#signUpPasswordFields').show();
+            hideErrors();
+            $.ajax({
+                url:"<%= url_for :controller => :users, :action => :set_no_thanks %>"
+            })
         })
 
         $('#twitterBTN').click(function (e) {
@@ -22,7 +27,26 @@
             $('#twitter_authenticate').val(true)
             $('form').submit();
         });
+
+        $('#signUpStartOverLink').click(function (e) {
+            e.preventDefault();
+            $('#signUpPasswordFields').hide();
+            $('#form_signUpActions').show();
+            $('#user_name').val('');
+            $('#user_email').val('');
+            $('#profileCreateHeader').html('Create your profile');
+            hideErrors();
+            $.ajax({
+                url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
+            })
+        });
     });
+
+    function hideErrors() {
+        $('#error_explanation').hide();
+        $('.field_with_errors').removeClass('field_with_errors')
+    }
+
 </script>
 
 <%= provide(:title, 'Sign up') %>
@@ -55,11 +79,10 @@
 
             <div class="form-actions" id="form_signUpActions">
               <%= f.submit "Authenticate with Twitter", class: "btn btn-medium btn-info", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-              <%= f.submit "no thanks", class: "btn", onclick: "javascript:void(0)", id: 'nothanksBTN' %>
+              <%= f.submit "no twitter account", class: "btn", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
               <%= hidden_field_tag :twitter_authenticate, nil %>
             </div>
           </div>
-
 
           <div id=signUpPasswordFields>
             <div class="control-group">
@@ -77,6 +100,7 @@
             </div>
 
             <%= f.submit "Create my account", class: "btn btn-medium btn-info" %>
+            <%= link_to 'start over', nil, :onclick => "javascript:void(0)", :id => 'signUpStartOverLink' %>
 
           </div>
 

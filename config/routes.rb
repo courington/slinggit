@@ -1,21 +1,26 @@
 SlinggitWebapp::Application.routes.draw do
+  #ajax methods
+  match 'users/set_no_thanks', :to => 'users#set_no_thanks', via: :get
+  match 'users/reset_page_session', :to => 'users#reset_page_session', via: :get
+
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :posts, only: [:new, :create, :destroy, :edit, :show, :update]
 
   match '/twitter_callback', :to => 'twittersessions#callback', :as => 'callback'
-  match '/twittersessions/signin', :to => 'twittersessions#signin', :via => :get
-  
+  match '/twitter_signup_callback', :to => 'users#twitter_signup_callback'
+
   resources :twittersessions
 
   root to: 'static_pages#home'
 
-  match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
+  match '/signup', to: 'users#new'
+  match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
-  match '/about',   to: 'static_pages#about'
+  match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -13,36 +13,21 @@ class UsersController < ApplicationController
   end
 
   def new
-    if not cookies[:twitter_user_name].blank? and not cookies[:twitter_user_email].blank?
-      @user = User.new(
-          :name => cookies[:twitter_user_name],
-          :email => cookies[:twitter_user_email]
-      )
-    else
+    if session[:user].blank?
       @user = User.new
+      reset_session
+    else
+      @user = session[:user]
+      session.delete(:user)
     end
   end
 
   def create
     @user = User.new(params[:user])
-    #user has chosen to twitter authenticate --
-    #verify name and email are present and not taken
     if not params[:twitter_authenticate].blank?
-      if params[:user][:name].blank?
-        @user.errors.messages[:name] = ["can't be blank"]
-      end
-      if params[:user][:email].blank?
-        @user.errors.messages[:email] = ["can't be blank"]
-      else
-        if User.exists?(:email => params[:user][:email])
-          @user.errors.messages[:email] = ["has already been registered"]
-        end
-      end
-
-      if @user.errors.blank?
-        cookies.permanent[:twitter_user_name] = @user.name
-        cookies.permanent[:twitter_user_email] = @user.email
-        setup_twitter_call
+      success = validate_pre_twitter_data
+      if success
+        setup_twitter_call(url_for(:controller => :users, :action => :twitter_signup_callback, :name => @user.name, :email => @user.email))
       else
         render 'new'
       end
@@ -50,10 +35,11 @@ class UsersController < ApplicationController
       if not session['access_token'].blank? and not session['access_secret'].blank?
         @user.twitter_atoken = session['access_token']
         @user.twitter_asecret = session['access_secret']
+        session.delete('access_token')
+        session.delete('access_secret')
       end
       if @user.save
         sign_in @user
-        reset_twitter_session_and_cookies
         flash[:success] = "Welcome SlingGit.  Time to start slingin!"
         redirect_to @user
       else
@@ -85,6 +71,43 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def twitter_signup_callback
+    rtoken = session['rtoken']
+    rsecret = session['rsecret']
+
+    reset_session #start new
+
+    if not params[:name].blank? and not params[:email].blank?
+      session[:user] = User.new(
+          :name => params[:name],
+          :email => params[:email]
+      )
+    end
+    if not params[:denied].blank?
+      flash[:success] = "You can always add your twitter account later!"
+      redirect_to new_user_path
+    else
+      request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
+      access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+      session['access_token'] = access_token.token
+      session['access_secret'] = access_token.secret
+      session[:twitter_permission_granted] = true
+      flash[:success] = "Your Twitter account has been authorized.  One last step, please provide a Slinggit password."
+      redirect_to new_user_path
+    end
+  end
+
+  def set_no_thanks
+    session[:no_thanks] = true
+    render :text => '', :status => 200
+  end
+
+  def reset_page_session
+    session.delete(:twitter_permission_granted)
+    session.delete(:no_thanks)
+    render :text => '', :status => 200
+  end
+
   private
 
   def correct_user
@@ -94,6 +117,32 @@ class UsersController < ApplicationController
 
   def admin_user
     redirect_to(root_path) unless not current_user.blank? and current_user.admin?
+  end
+
+  def validate_pre_twitter_data
+    #This validates all possible errors for user name and email after the user clicks authenticate with twitter
+    #on the sign up page
+
+    if params[:user][:name].blank?
+      @user.errors.messages[:name] = ["can't be blank"]
+    end
+    if params[:user][:email].blank?
+      @user.errors.messages[:email] = ["can't be blank"]
+    else
+      if not params[:user][:email] =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+        @user.errors.messages[:email] = ["is invalid"]
+      else
+        if User.exists?(:email => params[:user][:email])
+          @user.errors.messages[:email] = ["has already been registered"]
+        end
+      end
+    end
+
+    if @user.errors.messages.blank?
+      return true
+    else
+      return false
+    end
   end
 
 end
