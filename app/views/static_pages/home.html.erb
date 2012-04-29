@@ -3,10 +3,13 @@
   <h1>slinggit</h1>
   <% if current_user.blank? %>
       <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-  <% elsif not @twitterclient.blank? %>
-      <p>Welcome back <%= current_user.name %>! You are currently connected to your
-      <b><%= @twitterclient.user.screen_name %></b> Twitter account.</p>
-      <p>Got some old junk laying around?  <%= link_to "Slinggit", new_post_path, class: "btn btn-large btn-primary" %></p>
+  <% elsif not current_user.blank? %>
+      <p>Welcome back <%= current_user.name %>!</p>
+      <% if not @twitterclient.blank? %>
+          <p>You are currently connected to your<b><%= @twitterclient.user.screen_name %></b> Twitter account.</p>
+      <% end %>
+      <p>Got some old junk laying
+        around?  <%= link_to "Slinggit", new_post_path, class: "btn btn-large btn-primary" %></p>
   <% end %>
 </div>
 
