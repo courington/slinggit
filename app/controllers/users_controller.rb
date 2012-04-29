@@ -109,6 +109,16 @@ class UsersController < ApplicationController
     render :text => '', :status => 200
   end
 
+  def verify_email_availability
+    if request.post?
+      if User.exists?(:email => params[:email])
+        render :text => 'unavailable', :status => 200
+      else
+        render :text => 'available', :status => 200
+      end
+    end
+  end
+
   private
 
   def correct_user

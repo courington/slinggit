@@ -2,6 +2,7 @@ SlinggitWebapp::Application.routes.draw do
   #ajax methods
   match 'users/set_no_thanks', :to => 'users#set_no_thanks', via: :get
   match 'users/reset_page_session', :to => 'users#reset_page_session', via: :get
+  match 'users/verify_email_availability', :to => 'users#verify_email_availability', via: :post
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
