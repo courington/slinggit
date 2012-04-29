@@ -84,7 +84,8 @@ class UsersController < ApplicationController
       )
     end
     if not params[:denied].blank?
-      flash[:success] = "You can always add your twitter account later!"
+      flash[:success] = "You can always add your twitter account later!  For now, all we need is a Slinggit password to get you started."
+      session[:no_thanks] = true
       redirect_to new_user_path
     else
       request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
