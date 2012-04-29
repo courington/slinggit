@@ -2,10 +2,25 @@
 /*@import "bootstrap-responsive";*/
 
 /* OVERWRITE BOOTSTRAP STYLES */
+/*@media all and (max-width:480px){
+
+}*/
 @media all and (max-width: 767px) {
+	.hero-unit {
+	padding: 30px;
+	}
+	[class*="span"] {
+	margin-left: 0;
+	}
+	.span8 {
+	width:100%;
+	}
+	.row {
+	margin-left: 0;
+	}
 	header.navbar-fixed-top .navbar-inner {
 	padding: 4px 2.5%;
-	width: 105%;
+	width: 100%;
 	margin: 0 auto;
 	}
 	.container, .navbar-fixed-top .container,
@@ -25,16 +40,14 @@
 	margin: 45px 0 0 0;
 	}
 }
-.navbar-fixed-top, .navbar-fixed-bottom {
-  width:100%;
+	.navbar-fixed-top, .navbar-fixed-bottom {
+	width: 100%;
 	position: relative;
-}
-.navbar ul.nav.pull-right {
-  float: left;
-}
-.footer nav > ul {
-	float:left;
-}
+	margin-bottom: 1.6em;
+	}
+	.footer nav > ul {
+	float: left;
+	}
 /* END */
 
 /* variables */
