@@ -42,4 +42,15 @@ SlinggitWebapp::Application.configure do
     BCrypt::Engine::DEFAULT_COST = BCrypt::Engine::MIN_COST
   end
 
+  PROD_ENV = false
+
+  #  Our consumer key and secret for our twitter app (DEV)
+  config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
+  config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
+
+  # @slinggit's authentication token and password, generated from the above consumer
+  # key and secret.
+  config.slinggit_client_atoken = '561831843-mHAqcKLJfFyCSQOXvlyH5fCvHRlRhRqMFDPNMS9h'
+  config.slinggit_client_asecret = 'T7yvd3FfhpVJacLS6zjFO3yrXl8HDurhfXLq3AQL8'
+
 end

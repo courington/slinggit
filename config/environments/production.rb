@@ -66,4 +66,13 @@ SlinggitWebapp::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   PROD_ENV = true
+
+  #  Our consumer key and secret for our twitter app (PROD)
+  config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
+  config.twitter_consumer_secret = 'rwN7VmydrgRlRdb0kev1XxRi30YSpXHI7oXQEpPgUE'
+
+  # @slinggit's authentication token and password, generated from the above consumer
+  # key and secret.
+  config.slinggit_client_atoken = '561831843-vpq6NXNaQ8FGXR07D8GETEO6WxxkMKGbHMZ7qefk'
+  config.slinggit_client_asecret = 'fEvbYhkf8PKHs8CeXGE7JhB2lf39NSKKDDTA4y0U0s'
 end

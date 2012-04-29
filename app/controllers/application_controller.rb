@@ -6,16 +6,14 @@ class ApplicationController < ActionController::Base
   private
 
   def client
-    @client ||= Twitter::Client.new(:oauth_token => current_user.twitter_atoken, :oauth_token_secret => current_user.twitter_asecret)
+    debugger
+    @client ||= Twitter::Client.new(oauth_token: current_user.twitter_atoken, oauth_token_secret: current_user.twitter_asecret)
   end
 
-  # This is terrrible, but I just need it to work for now!
+  # May need to refactor how we're setting up the slinggit client in order to handle authentication
+  # coming back from twitter.  For instance if we were to change settings in our twitter app, this would break.
   def slinggit_client
-    if PROD_ENV
-      @slinggit_client ||= Twitter::Client.new(:oauth_token => "561831843-vpq6NXNaQ8FGXR07D8GETEO6WxxkMKGbHMZ7qefk", :oauth_token_secret => "fEvbYhkf8PKHs8CeXGE7JhB2lf39NSKKDDTA4y0U0s")
-    else
-      @slinggit_client ||= Twitter::Client.new(:oauth_token => "561831843-mHAqcKLJfFyCSQOXvlyH5fCvHRlRhRqMFDPNMS9h", :oauth_token_secret => "T7yvd3FfhpVJacLS6zjFO3yrXl8HDurhfXLq3AQL8")
-    end
+    @slinggit_client ||= Twitter::Client.new(oauth_token: Rails.configuration.slinggit_client_atoken, oauth_token_secret: Rails.configuration.slinggit_client_asecret)
   end
 
   def setup_twitter_call(callback_uri = callback_url)
@@ -26,7 +24,8 @@ class ApplicationController < ActionController::Base
   end
 
   def oauth_consumer
-    @oauth_consumer ||= OAuth::Consumer.new(Twitter.consumer_key, Twitter.consumer_secret, :site => 'http://api.twitter.com', :request_endpoint => 'http://api.twitter.com', :sign_in => true)
+    debugger
+    @oauth_consumer ||= OAuth::Consumer.new(Twitter.consumer_key, Twitter.consumer_secret, site: 'http://api.twitter.com', request_endpoint: 'http://api.twitter.com', sign_in: true)
   end
 
 end

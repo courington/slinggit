@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424165427) do
+ActiveRecord::Schema.define(:version => 20120429165341) do
+
+  create_table "api_accounts", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "api_id"
+    t.string   "api_id_hash"
+    t.string   "api_source"
+    t.string   "oauth_token"
+    t.string   "oauth_secret"
+    t.string   "real_name"
+    t.string   "user_name"
+    t.string   "image_url"
+    t.string   "description"
+    t.string   "language"
+    t.string   "location"
+    t.string   "status"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "posts", :force => true do |t|
     t.string   "content"
@@ -25,10 +43,25 @@ ActiveRecord::Schema.define(:version => 20120424165427) do
     t.string   "hashtag_prefix"
     t.decimal  "price",              :precision => 8, :scale => 2
     t.boolean  "open",                                             :default => true
+    t.integer  "api_account_id"
+    t.string   "post_id"
+    t.string   "last_result"
   end
 
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
+
+  create_table "user_logins", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "user_agent"
+    t.string   "ip_address"
+    t.string   "url_referrer"
+    t.string   "login_source"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.string   "session_json",    :limit => 500
+    t.string   "paramaters_json", :limit => 500
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

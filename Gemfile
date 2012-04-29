@@ -31,6 +31,7 @@ group :test, :development do
   gem 'guard-rspec', '0.5.5'
   gem 'guard-spork', '0.3.2'
   gem 'spork', '0.9.0'
+  gem 'ruby-debug19'
 end
 
 group :test do
@@ -44,8 +45,6 @@ group :production do
   gem 'pg', '0.12.2'
 end
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
