@@ -1,0 +1,40 @@
+<!-- I know this is bad but I always put my css in the file until Im finished then I move it for quick editing -->
+<style type="text/css">
+    .apiInformationColumn {
+        float: left;
+        font-size: 15px;
+        padding-bottom: 50px;
+        padding-left: 121px;
+    }
+
+    .apiHeaderColumn {
+        padding-left: 5%;
+        width: 20%;
+        float: left;
+        text-emphasis: #40e0d0;
+        border-style: none;
+    }
+
+    .footer {
+        padding-top: 120px;
+    }
+
+</style>
+<% provide(:title, 'Twitter Accounts') %>
+<h2>Manage Your Twitter Accounts</h2>
+<header>
+  <legend class="apiHeaderColumn">Source</legend>
+  <legend class="apiHeaderColumn">Account Name</legend>
+  <legend class="apiHeaderColumn">Description</legend>
+  <legend class="apiHeaderColumn">Status</legend>
+</header>
+<article>
+  <div>
+    <% @api_accounts.each do |api_account| %>
+        <div class="apiInformationColumn"><%= api_account.api_source %></div>
+        <div class="apiInformationColumn"><%= api_account.user_name %></div>
+        <div class="apiInformationColumn"><%= api_account.description %></div>
+        <div class="apiInformationColumn"><%= api_account.status %></div>
+    <% end %>
+  </div>
+</article>

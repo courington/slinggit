@@ -7,6 +7,7 @@ SlinggitWebapp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :posts, only: [:new, :create, :destroy, :edit, :show, :update]
+  resources :networks, only: [:index, :create, :destroy]
 
   match '/twitter_callback', :to => 'twittersessions#callback', :as => 'callback'
   match '/twitter_signup_callback', :to => 'users#twitter_signup_callback'
