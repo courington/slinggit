@@ -8,6 +8,30 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def create_api_account(options = {})
+    if not options.blank?
+      case options[:source]
+        when :twitter
+          ApiAccount.create(
+              :user_id => options[:user_object].id,
+              :api_id => options[:api_object].user['id'],
+              :api_source => 'twitter',
+              :oauth_token => options[:api_object].oauth_token,
+              :oauth_secret => options[:api_object].oauth_token_secret,
+              :real_name => options[:api_object].user['name'],
+              :user_name => options[:api_object].user['screen_name'],
+              :image_url => options[:api_object].user['profile_image_url'],
+              :description => options[:api_object].user['description'],
+              :language => options[:api_object].user['lang'],
+              :location => options[:api_object].user['location'],
+              :status => 'active'
+          )
+        else
+          #do nothing
+      end
+    end
+  end
+
   def client
     @client ||= Twitter::Client.new(oauth_token: current_user.twitter_atoken, oauth_token_secret: current_user.twitter_asecret)
   end

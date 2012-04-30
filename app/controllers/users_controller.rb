@@ -32,13 +32,19 @@ class UsersController < ApplicationController
         render 'new'
       end
     else
-      if not session['access_token'].blank? and not session['access_secret'].blank?
-        @user.twitter_atoken = session['access_token']
-        @user.twitter_asecret = session['access_secret']
-        session.delete('access_token')
-        session.delete('access_secret')
-      end
       if @user.save
+
+        if not session['access_token'].blank? and not session['access_secret'].blank?
+          client = Twitter::Client.new(oauth_token: session['access_token'], oauth_token_secret: session['access_secret'])
+          create_api_account(:source => :twitter, :user_object => @user, :api_object => client)
+
+          #TODO remove this line when moving directly to ApiAccounts
+          @user.update_attributes(:twitter_atoken => session['access_token'], :twitter_asecret => session['access_secret'])
+
+          session.delete('access_token')
+          session.delete('access_secret')
+        end
+
         sign_in @user
         flash[:success] = "Welcome SlingGit.  Time to start slingin!"
         redirect_to @user
@@ -136,7 +142,16 @@ class UsersController < ApplicationController
 
     if params[:user][:name].blank?
       @user.errors.messages[:name] = ["can't be blank"]
+    else
+      if not params[:user][:name] =~ /^[a-z0-9_-]+$/i
+        @user.errors.messages[:name] = ["can only contain letters, numbers, underscores and dashes"]
+      else
+        if User.exists?(:name => params[:user][:name])
+          @user.errors.messages[:name] = ["has already been registered"]
+        end
+      end
     end
+
     if params[:user][:email].blank?
       @user.errors.messages[:email] = ["can't be blank"]
     else
