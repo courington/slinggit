@@ -60,8 +60,22 @@
   </div>
 </div>
 
+<style type="text/css">
+    #emailSuggestion {
+        float: right;
+        position: inherit;
+    }
+</style>
+
+<%= javascript_include_tag 'jquery.mailcheck.min' %>
 <script>
     $(document).ready(function () {
+        //Check email address after page comes back from twitter and also on blur
+        checkEmailAddress($('#user_email'));
+        $('#user_email').on('blur', function () {
+            checkEmailAddress($(this));
+        });
+
         $('#user_name').keyup(hideErrorsAndNotifications);
         $('#user_email').keyup(hideErrorsAndNotifications);
         $('#user_password').keyup(hideErrorsAndNotifications);
@@ -126,6 +140,7 @@
             $('#user_name').val('');
             $('#user_email').val('');
             $('#profileCreateHeader').html('Create your profile');
+            $('#emailSuggestion').remove();
             hideErrorsAndNotifications();
             $.ajax({
                 url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
@@ -138,6 +153,25 @@
         $('.field_with_errors').removeClass('field_with_errors')
         $('.alert').hide();
         $("html, body").animate({ scrollTop:0 }, "fast");
+    }
+
+    function swapEmailWithSuggested() {
+        $('#user_email').val($('#emailSuggestionReplaceLink').text());
+        $('#emailSuggestion').remove();
+    }
+
+    function checkEmailAddress(domElement) {
+        var domains = ['hotmail.com', 'gmail.com', 'aol.com', 'msn.com', 'yahoo.com', 'pixorial.com', 'slinggit.com'];
+        $(domElement).mailcheck({
+            domains:domains, // optional
+            suggested:function (element, suggestion) {
+                $('#emailSuggestion').remove();
+                $('#user_email').parent().append("<span id='emailSuggestion'>Did you mean <a href='#' onclick='swapEmailWithSuggested()' id='emailSuggestionReplaceLink'>" + suggestion.full + "</a></span>");
+            },
+            empty:function (element) {
+                $('#emailSuggestion').remove();
+            }
+        });
     }
 
 </script>
