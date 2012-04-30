@@ -38,12 +38,12 @@ SlinggitWebapp::Application.configure do
   PROD_ENV = false
 
   #  Our consumer key and secret for our twitter app (DEV)
-  config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
-  config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
+  #config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
+  #config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
 
   # Prod credentials.  Only here right now for error testing.
-  # config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
-  # config.twitter_consumer_secret = 'rwN7VmydrgRlRdb0kev1XxRi30YSpXHI7oXQEpPgUE'
+   config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
+   config.twitter_consumer_secret = 'rwN7VmydrgRlRdb0kev1XxRi30YSpXHI7oXQEpPgUE'
 
   # @slinggit's authentication token and password, generated from the above consumer
   # key and secret.
