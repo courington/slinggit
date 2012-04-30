@@ -20,10 +20,13 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
 
   #before_validation :check_for_existing_values
-  before_save { |user| user.email = email.downcase }
+  before_save { |user| user.email = email.downcase, user.name = name.downcase }
   before_save :create_remember_token
 
+  # Allows letters, numbers and underscore
+  VALID_USERNAME_REGEX = /\A[a-z0-9_]{,20}\z/i
   validates :name, presence: true, length: { maximum: 50 },
+                   format: { with: VALID_USERNAME_REGEX },
                    uniqueness: { case_sensitive: false }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
