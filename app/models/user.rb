@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :posts, dependent: :destroy
 
-  #before_validation :check_for_existing_values
   before_save { |user| user.email = email.downcase, user.name = name.downcase }
   before_save :create_remember_token
 
@@ -37,13 +36,7 @@ class User < ActiveRecord::Base
 
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
-  end
-
-  protected
-
-    def check_for_existing_values
-
-    end  
+  end 
 
   private
 
