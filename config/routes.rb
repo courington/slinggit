@@ -10,6 +10,9 @@ SlinggitWebapp::Application.routes.draw do
 
   match '/twitter_callback', :to => 'twittersessions#callback', :as => 'callback'
   match '/twitter_signup_callback', :to => 'users#twitter_signup_callback'
+  match '/reauthorize_twitter', to: 'twittersessions#reauthorize'
+  match '/create_reauthorization', to: 'twittersessions#create_reauthorization'
+  match '/reauthorize_callback', to: 'twittersessions#reauthorize_callback'
 
   resources :twittersessions
 
