@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id              :integer         not null, primary key
-#  user_name            :string(255)
+#  name            :string(255)
 #  email           :string(255)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
@@ -19,24 +19,24 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :posts, dependent: :destroy
 
-  before_save { |user| user.email = email.downcase }
+  before_save { |user| user.email = email.downcase, user.name = name.downcase }
   before_save :create_remember_token
 
+  # Allows letters, numbers and underscore
+  VALID_USERNAME_REGEX = /\A[a-z0-9_]{,20}\z/i
+  validates :name, presence: true, length: { maximum: 50 },
+                   format: { with: VALID_USERNAME_REGEX },
+                   uniqueness: { case_sensitive: false }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-
-  validates_format_of :name, :with =>  /^[a-z0-9_-]+$/i, :message => 'can only contain letters, numbers, underscores and dashes'
-  validates_uniqueness_of :name, :case_sensitive => false
-  validates_length_of :name, :maximum => 50
-
   validates :password, length: { minimum: 6 }
-  validates_presence_of :password_confirmation
+  validates :password_confirmation, presence: true
 
 
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
-  end
+  end 
 
   private
 

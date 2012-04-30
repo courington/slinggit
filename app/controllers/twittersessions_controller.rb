@@ -36,8 +36,8 @@ class TwittersessionsController < ApplicationController
     access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
     email = params[:email]
     user = User.find_by_email(email)
-    #this won't work as is.. fixing it now
-    #user.update_attributes(twitter_atoken: access_token.token, twitter_asecret: access_token.secret)
+    user.update_column(:twitter_atoken, access_token.token)
+    user.update_column(:twitter_asecret, access_token.secret)
     debugger
     redirect_to current_user
   end 
