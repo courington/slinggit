@@ -21,4 +21,25 @@ class TwittersessionsController < ApplicationController
     end
   end
 
+  # this is the redirect for reauthorization
+  def reauthorize
+  end 
+
+  # form action
+  def create_reauthorization
+    setup_twitter_call(url_for(controller: :twittersessions, action: :reauthorize_callback, email: current_user.email))
+  end  
+
+  # reauth callback
+  def reauthorize_callback
+    request_token = OAuth::RequestToken.new(oauth_consumer, session['rtoken'], session['rsecret'])
+    access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+    email = params[:email]
+    user = User.find_by_email(email)
+    #this won't work as is.. fixing it now
+    #user.update_attributes(twitter_atoken: access_token.token, twitter_asecret: access_token.secret)
+    debugger
+    redirect_to current_user
+  end 
+
 end
