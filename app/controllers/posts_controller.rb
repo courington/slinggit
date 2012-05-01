@@ -1,32 +1,30 @@
 class PostsController < ApplicationController
-  before_filter :signed_in_user, only: [:create, :destroy, :edit]
-  before_filter :correct_user,   only: [:destroy, :edit, :update]
+  before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
+  before_filter :correct_user, only: [:destroy, :edit, :update]
+  before_filter :load_api_accounts, :only => [:new, :create]
 
   def index
   end
 
   def show
-  	@post = Post.find(params[:id])
+    @post = Post.find(params[:id])
     @comments = @post.comments.paginate(page: params[:page])
-  end	
+  end
 
   def new
     if signed_in?
-  	  @post = current_user.posts.build 
-      @twitterclient = client if current_user.twitter_authorized?
-    end  
+      @post = Post.new
+    end
   end
 
   def create
     @post = current_user.posts.build(params[:post])
+    if not params[:twitter_accounts].blank?
+      #TODO rework this into the form
+      @post.recipient_api_account_ids = params[:twitter_accounts].map { |x| x.first }.join(',')
+    end
     if @post.save
-      # I'm pretty sure this will need to be reworked with some rescue methods.
-      if current_user.twitter_authorized?
-        @twitterclient = client
-        @twitterclient.update("##{@post.hashtag_prefix}forsale #{@post.content} - #{@post.price} | #{Rails.root}#{post_path(@post)}")
-        #@slinggitclient = slinggit_client
-        #@slinggitclient.retweet(@twitterclient.user_timeline.first.id)
-      end
+      @post.do_post
       flash[:success] = "Post successfully created!"
       redirect_to current_user
     else
@@ -35,11 +33,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-  	# Don't need to find Post here because of correct_user filter
-  end	
+    # Don't need to find Post here because of correct_user filter
+  end
 
   def update
-  	# Don't need to find Post here because of correct_user filter
+    # Don't need to find Post here because of correct_user filter
     if @post.update_attributes(params[:post])
       flash[:success] = "Prost updated"
       redirect_to current_user
@@ -55,8 +53,12 @@ class PostsController < ApplicationController
 
   private
 
-    def correct_user
-      @post = current_user.posts.find_by_id(params[:id])
-      redirect_to current_user if @post.nil?
-    end
+  def correct_user
+    @post = current_user.posts.find_by_id(params[:id])
+    redirect_to current_user if @post.nil?
+  end
+
+  def load_api_accounts
+    @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ?', current_user.id, 'twitter'])
+  end
 end

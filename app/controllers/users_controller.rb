@@ -37,10 +37,6 @@ class UsersController < ApplicationController
         if not session['access_token'].blank? and not session['access_secret'].blank?
           client = Twitter::Client.new(oauth_token: session['access_token'], oauth_token_secret: session['access_secret'])
           create_api_account(:source => :twitter, :user_object => @user, :api_object => client)
-
-          #TODO remove this line when moving directly to ApiAccounts
-          @user.update_attributes(:twitter_atoken => session['access_token'], :twitter_asecret => session['access_secret'])
-
           session.delete('access_token')
           session.delete('access_secret')
         end

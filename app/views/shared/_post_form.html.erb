@@ -30,7 +30,7 @@
         </div>
       </div>
       <div id="photoControlGroup" class="control-group">
-        <%= f.label :photo, "Item Photo", class: "control-label", for: "post_photo" %>
+        <%= f.label :photo, "Item Photo (optional)", class: "control-label", for: "post_photo" %>
         <div class="controls">
           <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
           <a href="#" id="fileSelect">Select a photo</a>
@@ -38,14 +38,12 @@
       </div>
 
       <div class="form-actions">
+        <span>Select Twitter accounts to post on</span><br/>
+        <%= check_box_tag "twitter_accounts[0]", 'post', true %> Slinggit<br/>
+        <% @twitter_accounts.each do |twitter_account| %>
+            <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %> <%= twitter_account.user_name %><br/>
+        <% end %><br/><br/>
         <%= f.submit "Post Item", class: "btn btn-medium btn-primary" %>
       </div>
     </fieldset>
-<% end %>
-
-<% if current_user.twitter_authorized? %>
-    <div class="alert alert-success"></div>
-    <h4 class="alert-heading">Hi <%= client.user.name %>!</h4>
-    You are currently authorized as
-    <b><%= client.user.screen_name %></b>.  A posted item will show up in your twitter feed.
 <% end %>

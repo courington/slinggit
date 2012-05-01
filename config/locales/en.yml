@@ -7,3 +7,5 @@
      attributes:
        user:
          name: "User Name"
+       post:
+         recipient_api_account_ids: "Twitter accounts"

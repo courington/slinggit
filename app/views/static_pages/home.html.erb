@@ -5,9 +5,7 @@
       <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
   <% elsif not current_user.blank? %>
       <p>Welcome back <%= current_user.name %>!</p>
-      <% if not @twitterclient.blank? %>
-          <p>You are currently connected to your<b><%= @twitterclient.user.screen_name %></b> Twitter account.</p>
-      <% end %>
+
       <p>Got some old junk laying
         around?  <%= link_to "Slinggit", new_post_path, class: "btn btn-large btn-primary" %></p>
   <% end %>
@@ -16,15 +14,8 @@
 <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
     $(document).ready(function () {
-        <% if not @twitterclient.blank? %>
-        $('#twtr-widget-2').css('float', 'right')
-        $('#twtr-widget-1').css('float', 'left')
-        $('.footer').css('padding-top', '330px')
-        <% else %>
         $('#twtr-widget-1').css('padding-left', '270px')
         $('.footer').css('padding-top', '50px')
-        <% end %>
-
     });
 
     new TWTR.Widget({
@@ -52,33 +43,5 @@
             behavior:'all'
         }
     }).render().setUser('slinggit').start();
-
-    <% if not @twitterclient.blank? %>
-    new TWTR.Widget({
-        version:2,
-        type:'profile',
-        rpp:4,
-        interval:30000,
-        width:400,
-        height:200,
-        theme:{
-            shell:{
-                background:'#333333',
-                color:'#ffffff'
-            },
-            tweets:{
-                background:'#000000',
-                color:'#ffffff',
-                links:'#4aed05'
-            }
-        },
-        features:{
-            scrollbar:false,
-            loop:true,
-            live:true,
-            behavior:'all'
-        }
-    }).render().setUser('<%= @twitterclient.user.screen_name %>').start();
-    <% end %>
 
 </script>
