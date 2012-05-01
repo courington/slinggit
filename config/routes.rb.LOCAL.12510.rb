@@ -26,7 +26,6 @@ SlinggitWebapp::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
 
-<<<<<<< HEAD
   # Nested route for comments.  I'm a bit worried that I'm defining resource :posts twice,
   # the other above, but couldn't find documentation on how to combine the two so that posts
   # can keep the only contraint.  Not entirely sure I'll need this yet.
@@ -34,19 +33,6 @@ SlinggitWebapp::Application.routes.draw do
     resources :comments
   end
 
-=======
-  ##MOBILE CONTROLLER##
-  get "mobile/user_signup"
-  get "mobile/user_login"
-  get "mobile/user_logout"
-  get "mobile/user_login_status"
-  get "mobile/get_user_twiiter_post_data"
-  get "mobile/get_slinggit_twitter_post_data"
-  get "mobile/get_user_api_accounts"
-  post "mobile/create_twitter_post"
-  delete "mobile/delete_twitter_post"
-  put "mobile/update_twitter_post"
->>>>>>> 0657e98154adecd7cf94159061dde58da01b557a
 
 
   # The priority is based upon order of creation:
