@@ -30,20 +30,19 @@
 </header>
 <article>
   <div>
-    <% @api_accounts.each do |api_account| %>
-        <div class="apiInformationColumn"><%= api_account.api_source %></div>
-        <div class="apiInformationColumn"><%= api_account.user_name %></div>
-        <div class="apiInformationColumn"><%= api_account.description %></div>
-        <div class="apiInformationColumn"><%= api_account.status %></div>
+    <% if not @api_accounts.blank? %>
+        <% @api_accounts.each do |api_account| %>
+            <div class="apiInformationColumn"><%= api_account.api_source %></div>
+            <div class="apiInformationColumn"><%= api_account.user_name %></div>
+            <div class="apiInformationColumn"><%= api_account.description %></div>
+            <div class="apiInformationColumn"><%= api_account.status %></div>
+        <% end %>
+    <% else %>
+        You don't currently have any attached Twitter accounts.
     <% end %>
   </div>
 </article>
 
-<fieldset>
-  <legend>
-    Add Twitter Account
-  </legend>
-  <div class="form-actions">
-    <%= link_to "Twitter sign in", new_twittersession_path, class: "btn btn-medium btn-info" %>
-  </div>
-</fieldset>
+<div class="form-actions">
+  <%= link_to "Add Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info" %>
+</div>
