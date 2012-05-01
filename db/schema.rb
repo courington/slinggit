@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120501051343) do
+ActiveRecord::Schema.define(:version => 20120501094023) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -42,21 +42,30 @@ ActiveRecord::Schema.define(:version => 20120501051343) do
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "mobile_sessions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "unique_identifier"
+    t.string   "mobile_auth_token"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "posts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at",                                                         :null => false
-    t.datetime "updated_at",                                                         :null => false
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "hashtag_prefix"
-    t.decimal  "price",              :precision => 8, :scale => 2
-    t.boolean  "open",                                             :default => true
+    t.decimal  "price",                     :precision => 8, :scale => 2
+    t.boolean  "open",                                                    :default => true
     t.integer  "api_account_id"
     t.string   "post_id"
     t.string   "last_result"
+    t.string   "recipient_api_account_ids"
   end
 
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
@@ -77,14 +86,13 @@ ActiveRecord::Schema.define(:version => 20120501051343) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "password_digest"
     t.string   "remember_token"
-    t.boolean  "admin",                 :default => false
+    t.boolean  "admin",           :default => false
     t.string   "twitter_atoken"
     t.string   "twitter_asecret"
-    t.string   "mobile_remember_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
