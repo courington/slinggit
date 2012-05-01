@@ -4,12 +4,12 @@
         float: left;
         font-size: 15px;
         padding-bottom: 50px;
-        padding-left: 121px;
+        padding-left: 90px;
     }
 
     .apiHeaderColumn {
         padding-left: 5%;
-        width: 20%;
+        width: 14%;
         float: left;
         text-emphasis: #40e0d0;
         border-style: none;
@@ -27,6 +27,7 @@
   <legend class="apiHeaderColumn">Account Name</legend>
   <legend class="apiHeaderColumn">Description</legend>
   <legend class="apiHeaderColumn">Status</legend>
+  <legend class="apiHeaderColumn">Actions</legend>
 </header>
 <article>
   <div>
@@ -36,6 +37,7 @@
             <div class="apiInformationColumn"><%= api_account.user_name %></div>
             <div class="apiInformationColumn"><%= api_account.description %></div>
             <div class="apiInformationColumn"><%= api_account.status %></div>
+            <div class="apiInformationColumn"><%= link_to "delete", nil, :id => "apiAccountDelete_#{api_account.id}" %></div>
         <% end %>
     <% else %>
         You don't currently have any attached Twitter accounts.
@@ -44,5 +46,13 @@
 </article>
 
 <div class="form-actions">
-  <%= link_to "Add Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info" %>
+  <% if @api_accounts.blank? %>
+      <%= link_to "Add Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info" %>
+  <% else %>
+      <%= link_to "Add Another Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info" %>
+  <% end %>
 </div>
+
+<script type="text/javascript">
+   $('[id=^apiAccountDelete_]')
+</script>
