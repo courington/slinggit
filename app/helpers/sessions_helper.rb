@@ -3,17 +3,7 @@ module SessionsHelper
   def sign_in(user)
     cookies.permanent[:remember_token] = user.remember_token
     current_user = user
-    if not request.blank?
-      UserLogin.create(
-          :user_id => current_user.id,
-          :user_agent => "#{request.user_agent}",
-          :ip_address => "#{request.remote_ip}",
-          :url_referrer => "#{request.referrer}",
-          :login_source => "#{request.parameters[:controller]}/#{request.parameters[:action]}",
-          :session_json => "#{request.env['rack.session'].to_json}",
-          :paramaters_json => "#{request.filtered_parameters.to_json}"
-      )
-    end
+    log_user_login
   end
 
   def sign_out

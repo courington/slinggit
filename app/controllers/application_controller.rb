@@ -8,6 +8,21 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def log_user_login(user = nil)
+    if not request.blank?
+      user = current_user || user
+      UserLogin.create(
+          :user_id => user.id,
+          :user_agent => "#{request.user_agent}",
+          :ip_address => "#{request.remote_ip}",
+          :url_referrer => "#{request.referrer}",
+          :login_source => "#{request.parameters[:controller]}/#{request.parameters[:action]}",
+          :session_json => "#{request.env['rack.session'].to_json}",
+          :paramaters_json => "#{request.filtered_parameters.to_json}"
+      )
+    end
+  end
+
   def create_api_account(options = {})
     if not options.blank?
       case options[:source]
