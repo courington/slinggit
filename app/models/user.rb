@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret
   has_secure_password
   has_many :posts, dependent: :destroy
+  # not making comments dependent: :destroy because we may still want comments associated with posts
+  # even if the user is destroyed.  If this is wrong, let's change it.
+  has_many :comments 
 
   before_save { |user| user.email = email.downcase, user.name = name.downcase }
   before_save :create_remember_token

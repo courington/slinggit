@@ -1,16 +1,88 @@
 <% provide(:title, @post.content) %>
 <div class="row">
 
-  <div class="span6 offset3 well">
-    <h3><%= @post.hashtag_prefix %></h3> 
-    <h3><%= @post.content %></h3>  
-    <%= image_tag @post.photo.url %>
-    <h3><%= @post.price %></h3> 
-    <% if @post.open? %>
-    	<span class="label label-success">Open</span>
-  	<% else %>  
-    	<span class="label label">Closed</span>
-  	<% end %>
-  </div>
+  <div class="span8 offset2 well-white">
 
-</div>
+    <div class="row">
+      <div class="span8">
+
+        <div class="row">
+
+          <h2><%= @post.hashtag_prefix %></h2> 
+          <hr>
+
+        </div> <!-- row 1 end --> 
+
+        <div class="row">
+
+          <div class="span4"> 
+            <div class="thumbnail">
+              <% if @post.photo_file_name.blank? %>
+                <%= image_tag "http://placehold.it/300x300" %>
+              <% else %>
+                <%= image_tag @post.photo.url(:medium) %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="span4"> 
+            <dl class="dl-horizontal" style="font-size: 16px;"> <!-- inline style! -->
+              <dt>Location:</dt>
+              <dd>Placeholder</dd>
+              <dt>Price:</dt>
+              <dd><%= @post.price %></dd>
+              <dt>Interest:</dt>
+              <dd><%= @post.comments.count %></dd>
+              <dt>Status:</dt>
+              <dd>
+                <% if @post.open? %>
+                  <span class="label label-success">Open</span>
+                <% else %>  
+                  <span class="label label">Closed</span>
+                <% end %>
+              </dd>
+              <dt>Description</dt>
+              <dd><%= @post.content %></dd>
+            </dl>
+          </div>
+
+        </div> <!-- row 2 end --> 
+
+        <br>
+
+        <div class="row">
+          <%= form_for([@post, @post.comments.build]) do |f| %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+
+            <fieldset>
+              <div class="control group">
+                <div class="controls">
+                  <%= f.text_area :body, class: "input-xlarge", rows: "3", style: "width:100%" %> <!-- inline style! -->
+                </div>  
+              </div>
+
+              <div class="form-actions">
+                <%= f.submit "Reply to Post", class: "btn btn-inverse" %>
+              </div>
+
+            </fieldset>
+
+          <% end %>
+        </div> <!-- row 3 end --> 
+
+        <div class="row">
+          <% if @comments.any? %>
+            <ol class="comments">
+              <%= render @comments %>
+            </ol>
+            <%= will_paginate @comments %>
+          <% end %>  
+        </div> <!-- row 4 end --> 
+
+      </div><!-- span end --> 
+    </div><!-- row end --> 
+ 
+
+  </div><!-- span8 offset2 end -->
+
+</div><!-- row end --> 
