@@ -16,4 +16,5 @@
 //= require underscore
 //= require backbone
 //= require json2
+//= require jquery.mailcheck.min
 //= require_tree .
