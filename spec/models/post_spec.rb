@@ -14,6 +14,9 @@
 #  hashtag_prefix     :string(255)
 #  price              :decimal(8, 2)
 #  open               :boolean         default(TRUE)
+#  api_account_id     :integer
+#  post_id            :string(255)
+#  last_result        :string(255)
 #
 
 require 'spec_helper'

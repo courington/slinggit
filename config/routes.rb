@@ -26,6 +26,13 @@ SlinggitWebapp::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
 
+  # Nested route for comments.  I'm a bit worried that I'm defining resource :posts twice,
+  # the other above, but couldn't find documentation on how to combine the two so that posts
+  # can keep the only contraint.  Not entirely sure I'll need this yet.
+  resources :posts do
+    resources :comments
+  end
+
   ##MOBILE CONTROLLER##
   get "mobile/user_signup"
   get "mobile/user_login"

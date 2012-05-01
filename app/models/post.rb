@@ -14,13 +14,18 @@
 #  hashtag_prefix     :string(255)
 #  price              :decimal(8, 2)
 #  open               :boolean         default(TRUE)
+#  api_account_id     :integer
+#  post_id            :string(255)
+#  last_result        :string(255)
 #
 
 class Post < ActiveRecord::Base
   attr_accessible :content, :photo, :hashtag_prefix, :price, :open
   
   belongs_to :user
-  has_attached_file :photo, styles: { :medium => "300x300>" },
+  has_many :comments, dependent: :destroy
+
+  has_attached_file :photo, styles: { :medium => "300x300#" },
                     url: "/assets/posts/:id/:style/:basename.:extension",
   							    path: ":rails_root/public/assets/posts/:id/:style/:basename.:extension"
 
