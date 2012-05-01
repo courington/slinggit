@@ -26,6 +26,18 @@ SlinggitWebapp::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
 
+  ##MOBILE CONTROLLER##
+  get "mobile/user_signup"
+  get "mobile/user_login"
+  get "mobile/user_logout"
+  get "mobile/user_login_status"
+  get "mobile/get_user_twiiter_post_data"
+  get "mobile/get_slinggit_twitter_post_data"
+  get "mobile/get_user_api_accounts"
+  post "mobile/create_twitter_post"
+  delete "mobile/delete_twitter_post"
+  put "mobile/update_twitter_post"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
