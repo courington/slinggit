@@ -1,27 +1,43 @@
 <% provide(:title, "Edit post") %> 
 <h1>Update your post</h1>
-
 <div class="row">
+  <div class="span8 offset2 well-white">
 
-  <div class="span6 offset3 well">
-  	<h3><%= @post.hashtag_prefix %></h3> 
-    <h3><%= @post.content %></h3>  
-    <%= image_tag @post.photo.url %>
-    <h3><%= @post.price %></h3>
-    
-    <%= form_for(@post) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      <div class="form-actions">
-      <% if @post.open? %>
-      	<%= f.hidden_field :open, value: false %>
-      	<%= f.submit "Close", class: "btn btn-medium btn-danger" %>
-      <% else %>
-      	<%= f.hidden_field :open, value: true %>
-      	<%= f.submit "Reopen", class: "btn btn-medium btn-success" %>	
-      <% end %>
-     </div>
-    <% end %>
-    		
-  </div>
+    <div class="row">
+      <div class="span8">
 
-</div>
+        <%= form_for(@post) do |f| %>
+          <div class="row">
+
+          </div> <!-- row 1 end --> 
+
+          <div class="row">
+
+          </div> <!-- row 2 end -->
+        <% end %>
+
+
+      	<h3><%= @post.hashtag_prefix %></h3> 
+        <h3><%= @post.content %></h3>  
+        <%= image_tag @post.photo.url(:medium) %>
+        <h3><%= @post.price %></h3>
+        
+        <%= form_for(@post) do |f| %>
+          <%= render 'shared/error_messages', object: f.object %>
+          <div class="form-actions">
+          <% if @post.open? %>
+          	<%= f.hidden_field :open, value: false %>
+          	<%= f.submit "Close", class: "btn btn-medium btn-danger" %>
+          <% else %>
+          	<%= f.hidden_field :open, value: true %>
+          	<%= f.submit "Reopen", class: "btn btn-medium btn-success" %>	
+          <% end %>
+         </div>
+        <% end %>
+        		
+
+      </div><!-- span end --> 
+    </div><!-- row end --> 
+
+  </div><!-- span8 offset2 end -->
+</div> <!-- row end --> 
