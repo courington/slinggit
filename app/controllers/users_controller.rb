@@ -57,8 +57,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # @user = User.find(params[:id]) !Not needed because of :correct_user before_filter
-    @twitterclient = client if @user.twitter_authorized?
   end
 
   def update

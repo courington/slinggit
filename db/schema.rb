@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502042359) do
+ActiveRecord::Schema.define(:version => 20120502094048) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(:version => 20120502042359) do
     t.string   "language"
     t.string   "location"
     t.string   "status"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.boolean  "primary_account", :default => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.boolean  "primary_account"
   end
 
   create_table "comments", :force => true do |t|
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20120502042359) do
     t.integer  "user_id"
     t.string   "unique_identifier"
     t.string   "mobile_auth_token"
+    t.string   "active"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
@@ -96,8 +97,5 @@ ActiveRecord::Schema.define(:version => 20120502042359) do
     t.string   "twitter_atoken"
     t.string   "twitter_asecret"
   end
-
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end
