@@ -20,10 +20,10 @@ class NetworksController < ApplicationController
       if not params[:api_account_id].blank?
         api_account_id = params[:api_account_id].split('_').last
         if new_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND id = ?', current_user.id, api_account_id.to_i])
-          if old_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND primary_account = "t"', current_user.id])
-            old_primary_account.primary_account = "f"
+          if old_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND primary_account = 0', current_user.id])
+            old_primary_account.primary_account = 0
             if old_primary_account.save
-              new_primary_account.primary_account = "t"
+              new_primary_account.primary_account = 1
               if new_primary_account.save
                 render :text => "#{api_account_id}", :status => 200
               end
@@ -31,7 +31,7 @@ class NetworksController < ApplicationController
               render :text => 'error', :status => 500
             end
           else
-            new_primary_account.primary_account = "t"
+            new_primary_account.primary_account = 1
             if new_primary_account.save
               render :text => "#{api_account_id}", :status => 200
             else
