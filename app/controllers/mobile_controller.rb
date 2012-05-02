@@ -77,14 +77,14 @@ class MobileController < ApplicationController
           mobile_auth_token = create_or_update_mobile_auth_token(user.id)
           render :text => success_response(
               :mobile_auth_token => mobile_auth_token
-          )
+          ), :content_type => 'application/json'
         else
           render :text => error_responce(
               :error_location => 'user_login',
               :error_reason => 'password authentication failed',
               :error_code => '403',
-              :friendly_error => 'Incorrect email and or password.', :content_type => 'application/json'
-          )
+              :friendly_error => 'Incorrect email and or password.'
+          ), :content_type => 'application/json'
         end
       else
         render :text => error_responce(
@@ -92,7 +92,7 @@ class MobileController < ApplicationController
             :error_reason => 'missing required_paramater - password',
             :error_code => '403',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
+        ), :content_type => 'application/json'
       end
     else
       render :text => error_responce(
@@ -100,7 +100,7 @@ class MobileController < ApplicationController
           :error_reason => 'missing required_paramater - email',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
+      ), :content_type => 'application/json'
     end
   end
 
@@ -110,14 +110,14 @@ class MobileController < ApplicationController
         mobile_session.update_attribute(:mobile_auth_token, nil)
         render :text => success_response(
             :logged_in => false
-        )
+        ), :content_type => 'application/json'
       else
         render :text => error_responce(
             :error_location => 'user_logout',
             :error_reason => 'not found - mobile_session',
             :error_code => '404',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
+        ), :content_type => 'application/json'
       end
     else
       render :text => error_responce(
@@ -125,7 +125,7 @@ class MobileController < ApplicationController
           :error_reason => 'missing required_paramater - mobile_auth_token',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
+      ), :content_type => 'application/json'
     end
   end
 
@@ -134,11 +134,11 @@ class MobileController < ApplicationController
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, params[:mobile_auth_token]])
         render :text => success_response(
             :logged_in => true
-        )
+        ), :content_type => 'application/json'
       else
         render :text => success_response(
             :logged_in => false
-        )
+        ), :content_type => 'application/json'
       end
     else
       render :text => error_responce(
@@ -146,7 +146,7 @@ class MobileController < ApplicationController
           :error_reason => 'missing required_paramater - mobile_auth_token',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
+      ), :content_type => 'application/json'
     end
   end
 
@@ -162,7 +162,7 @@ class MobileController < ApplicationController
           :error_reason => 'missing required_paramater - request_data',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
+      ), :content_type => 'application/json'
     end
   end
 
@@ -223,7 +223,7 @@ class MobileController < ApplicationController
           :error_reason => 'missing required_paramater - state',
           :error_code => '401',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
+      ), :content_type => 'application/json'
       return
     else
       @state = params[:state]
@@ -237,7 +237,7 @@ class MobileController < ApplicationController
           :error_reason => 'bad request format',
           :error_code => '400',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
+      ), :content_type => 'application/json'
       return
     end
   end
@@ -250,7 +250,7 @@ class MobileController < ApplicationController
             :error_reason => 'post_data is not a valid json string',
             :error_code => '400',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
+        ), :content_type => 'application/json'
       end
     end
   end
