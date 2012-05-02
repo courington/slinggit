@@ -2,8 +2,8 @@
 <style type="text/css">
     .apiInformationColumn {
         float: left;
-        font-size: 15px;
-        padding-bottom: 50px;
+        font-size: 14px;
+        padding-bottom: 20px;
         padding-left: 90px;
     }
 
@@ -17,6 +17,12 @@
 
     .footer {
         padding-top: 120px;
+    }
+
+    #addTwitterbutton {
+        left: -650px;
+        margin-top: 80px;
+        position: relative;
     }
 
 </style>
@@ -38,10 +44,11 @@
             <div class="apiInformationColumn"><%= api_account.description %></div>
             <div class="apiInformationColumn"><%= api_account.status %></div>
             <div class="apiInformationColumn">
-              <% if not api_account.primary %>
-                  <%= link_to "set primary", nil, :id => "apiAccountPrimary_#{api_account.id}" %> |
-              <% end %>
-              <%= link_to "delete", nil, :id => "apiAccountDelete_#{api_account.id}" %></div>
+              <%- if not api_account.primary_account %>
+                  <%= link_to "[set primary]", nil, :id => "apiAccountPrimary_#{api_account.id}" %>
+              <%- end %>
+              <%= link_to "[delete]", nil, :id => "apiAccountDelete_#{api_account.id}" %></div>
+
         <% end %>
     <% else %>
         You don't currently have any attached Twitter accounts.
@@ -51,22 +58,30 @@
 
 <div class="form-actions">
   <% if @api_accounts.blank? %>
-      <%= link_to "Add Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info" %>
+      <%= link_to "Add Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info", :id => 'addTwitterbutton' %>
   <% else %>
-      <%= link_to "Add Another Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info" %>
+      <%= link_to "Add Another Twitter Account", new_twittersession_path, class: "btn btn-medium btn-info", :id => 'addTwitterbutton' %>
   <% end %>
 </div>
 
 <script type="text/javascript">
     $("[id^=apiAccountPrimary_]").each(function (key) {
-        this.preventDefault();
-        $.ajax({
-            type:"POST",
-            url:"<%= url_for :controller => :networks, :action => :set_primary_account %>",
-            data:{api_account_id:this.id}
-        }).done(function (response) {
-
-                });
+        $('#' + this.id).click(function (e) {
+            var clickedTarge = e.target;
+            e.preventDefault();
+            $.ajax({
+                type:"POST",
+                url:"<%= url_for :controller => :networks, :action => :set_primary_account %>",
+                data:{api_account_id:this.id}
+            }).done(function (response) {
+                if (response != "error") {
+                    $("[id^=apiAccountPrimary_]").each(function (key) {
+                       this.text = '[set primary]';
+                    });
+                    $('#apiAccountPrimary_' + response).text('')
+                }
+            });
+        })
     })
 </script>
 

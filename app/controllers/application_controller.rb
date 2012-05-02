@@ -25,6 +25,11 @@ class ApplicationController < ActionController::Base
 
   def create_api_account(options = {})
     if not options.blank?
+      if ApiAccount.exists?(['customer_id = ? AND primary_account = "t"'])
+        primary_account = "f"
+      else
+        primary_account = "t"
+      end
       case options[:source]
         when :twitter
           ApiAccount.create(
@@ -39,6 +44,7 @@ class ApplicationController < ActionController::Base
               :description => options[:api_object].user['description'],
               :language => options[:api_object].user['lang'],
               :location => options[:api_object].user['location'],
+              :primary_account => primary_account,
               :status => 'active'
           )
         else
@@ -62,6 +68,15 @@ class ApplicationController < ActionController::Base
     reset_session
     flash[:warning] = "Whoops! Looks like we need you to reauthorize your Twitter account."
     redirect_to reauthorize_twitter_path
+  end
+
+  def valid_json?(json_string)
+    begin
+      JSON.parse(json_string)
+      return true
+    rescue Exception => e
+      return false
+    end
   end
 
 end
