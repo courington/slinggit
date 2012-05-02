@@ -37,7 +37,7 @@ SlinggitWebapp::Application.routes.draw do
 
   ##MOBILE CONTROLLER##
   post "mobile/user_signup"
-  get "mobile/user_login"
+  post "mobile/user_login"
   post "mobile/user_logout"
   post "mobile/user_login_status"
   post "mobile/get_user_twiiter_post_data"
@@ -46,6 +46,18 @@ SlinggitWebapp::Application.routes.draw do
   post "mobile/create_twitter_post"
   post "mobile/delete_twitter_post"
   post "mobile/update_twitter_post"
+
+  #TODO remove this before launch, for testing in browser only
+  get "mobile/user_signup"
+  get "mobile/user_login"
+  get "mobile/user_logout"
+  get "mobile/user_login_status"
+  get "mobile/get_user_twiiter_post_data"
+  get "mobile/get_slinggit_twitter_post_data"
+  get "mobile/get_user_api_accounts"
+  get "mobile/create_twitter_post"
+  get "mobile/delete_twitter_post"
+  get "mobile/update_twitter_post"
 
 
   # The priority is based upon order of creation:

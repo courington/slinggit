@@ -23,23 +23,25 @@ class TwittersessionsController < ApplicationController
 
   # this is the redirect for reauthorization
   def reauthorize
-  end 
+  end
 
   # form action
   def create_reauthorization
     setup_twitter_call(url_for(controller: :twittersessions, action: :reauthorize_callback, email: current_user.email))
-  end  
+  end
 
   # reauth callback
   def reauthorize_callback
     request_token = OAuth::RequestToken.new(oauth_consumer, session['rtoken'], session['rsecret'])
     access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
-    email = params[:email]
-    user = User.find_by_email(email)
-    user.update_column(:twitter_atoken, access_token.token)
-    user.update_column(:twitter_asecret, access_token.secret)
-    debugger
+    if not params[:email].blank?
+      user = User.find_by_email(params[:email])
+      if not user.blank?
+        client = Twitter::Client.new(oauth_token: access_token.token, oauth_token_secret: access_token.secret)
+        update_api_account(:source => :twitter, :user_object => user, :api_object => client)
+      end
+    end
     redirect_to current_user
-  end 
+  end
 
 end

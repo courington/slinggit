@@ -7,6 +7,13 @@
         padding-left: 90px;
     }
 
+    .apiInformationActions {
+        float: left;
+        font-size: 14px;
+        padding-bottom: 20px;
+        padding-left: 90px;
+    }
+
     .apiHeaderColumn {
         padding-left: 5%;
         width: 14%;
@@ -26,6 +33,7 @@
 
 </style>
 <% provide(:title, 'Twitter Accounts') %>
+<h2>CHASE HELP ME WITH THIS PAGE ITS DRIVING ME BONKERS</h2>
 <h2>Manage Your Twitter Accounts</h2>
 <header>
   <legend class="apiHeaderColumn">Source</legend>
@@ -38,15 +46,14 @@
   <div>
     <% if not @api_accounts.blank? %>
         <% @api_accounts.each do |api_account| %>
-            <div class="apiInformationColumn"><%= api_account.api_source %></div>
-            <div class="apiInformationColumn"><%= api_account.user_name %></div>
-            <div class="apiInformationColumn"><%= api_account.description %></div>
-            <div class="apiInformationColumn"><%= api_account.status %></div>
-            <div class="apiInformationColumn">
-              <%- if not api_account.primary_account %>
-                  <%= link_to "[set primary]", nil, :id => "apiAccountPrimary_#{api_account.id}" %>
-              <%- end %>
-              <%= link_to "[delete]", nil, :id => "apiAccountDelete_#{api_account.id}" %></div>
+            <div class="apiInformationColumn" id="twitterAccountSource_<%= api_account.id.to_s %>"><%= api_account.api_source %></div>
+            <div class="apiInformationColumn" id="twitterAccountUserName_<%= api_account.id.to_s %>"><%= api_account.user_name %></div>
+            <div class="apiInformationColumn" id="twitterAccountDescription_<%= api_account.id.to_s %>"><%= api_account.description %></div>
+            <div class="apiInformationColumn" id="twitterAccountStatus_<%= api_account.id.to_s %>"><%= api_account.status %></div>
+            <div class="apiInformationActions">
+              <%= link_to api_account.status == 'primary' ? "" : "[set primary]", nil, :id => "apiAccountPrimary_#{api_account.id}" %>
+              <%= link_to "[delete]", nil, :id => "apiAccountDelete_#{api_account.id}" %>
+            </div>
 
         <% end %>
     <% else %>
@@ -73,14 +80,15 @@
                 url:"<%= url_for :controller => :networks, :action => :set_primary_account %>",
                 data:{api_account_id:this.id}
             }).done(function (response) {
-                if (response != "error") {
-                    $("[id^=apiAccountPrimary_]").each(function (key) {
-                       this.text = '[set primary]';
+                        if (response != "error") {
+                            new_old = response.split("_")
+                            $('#apiAccountPrimary_' + new_old[0]).hide();
+                            $('#twitterAccountStatus_' + new_old[0]).text('primary')
+
+                            $('#apiAccountPrimary_' + new_old[1]).show();
+                            $('#twitterAccountStatus_' + new_old[1]).text('active')
+                        }
                     });
-                    $('#apiAccountPrimary_' + response).text('')
-                }
-            });
         })
     })
 </script>
-

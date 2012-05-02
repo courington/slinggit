@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
       case options[:source]
         when :twitter
           if not ApiAccount.first(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s], :select => 'id')
-            primary_account = 1
-            if ApiAccount.first(:conditions => ['user_id = ? AND primary_account = "1"', options[:user_object].id], :select => 'id')
-              primary_account = 0
+            status = 'primary'
+            if ApiAccount.first(:conditions => ['user_id = ? AND status = "primary"', options[:user_object].id], :select => 'id')
+              status = 'active'
             end
 
             ApiAccount.create(
@@ -45,8 +45,26 @@ class ApplicationController < ActionController::Base
                 :description => options[:api_object].user['description'],
                 :language => options[:api_object].user['lang'],
                 :location => options[:api_object].user['location'],
-                :primary_account => primary_account,
-                :status => 'active'
+                :status => status
+            )
+          end
+        else
+          #do nothing
+      end
+    end
+  end
+
+  def update_api_account(options = {})
+    if not options.blank?
+      case options[:source]
+        when :twitter
+          if api_account = ApiAccount.first(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s], :select => 'id')
+            api_account.update_attributes(
+                :oauth_token => options[:api_object].oauth_token,
+                :oauth_secret => options[:api_object].oauth_token_secret,
+                :image_url => options[:api_object].user['profile_image_url'],
+                :description => options[:api_object].user['description'],
+                :location => options[:api_object].user['location'],
             )
           end
         else
