@@ -27,7 +27,12 @@ class ApplicationController < ActionController::Base
     if not options.blank?
       case options[:source]
         when :twitter
-          if not ApiAccount.exists?(['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
+          if not ApiAccount.first(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s], :select => 'id')
+            primary_account = 1
+            if ApiAccount.first(:conditions => ['user_id = ? AND primary_account = "1"', options[:user_object].id])
+              primary_account = 0
+            end
+
             ApiAccount.create(
                 :user_id => options[:user_object].id,
                 :api_id => options[:api_object].user['id'],
@@ -40,7 +45,7 @@ class ApplicationController < ActionController::Base
                 :description => options[:api_object].user['description'],
                 :language => options[:api_object].user['lang'],
                 :location => options[:api_object].user['location'],
-                :primary_account => ApiAccount.exists?(['user_id = ? AND primary_account = "1"', options[:user_object].id])? "0" : "1",
+                :primary_account => primary_account,
                 :status => 'active'
             )
           end
