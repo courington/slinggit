@@ -50,8 +50,8 @@
 
         <br>
 
-        <% if signed_in? %>
         <div class="row">
+        <% if signed_in? %>
           <%= form_for([@post, @post.comments.build]) do |f| %>
             <%= f.hidden_field :user_id, value: current_user.id %>
 
@@ -69,8 +69,14 @@
             </fieldset>
 
           <% end %>
-        </div> <!-- row 3 end --> 
+        <% else %>
+          <div class="alert alert-info-black">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading"><%= link_to "Sign in", signin_path %> to reply to this post</h4>
+            <p>New to slinggit? <%= link_to "Sign up now!", signup_path %>. Or you can always reply to [primary_handle] via Twitter</p>
+          </div>
         <% end %>
+        </div> <!-- row 3 end --> 
 
         <div class="row">
           <% if @comments.any? %>

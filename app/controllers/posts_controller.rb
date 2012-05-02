@@ -9,6 +9,11 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @comments = @post.comments.paginate(page: params[:page])
+    # Since we give an non-singed in user the option to sign in, we
+    # want to return them to the post after signin.
+    unless signed_in?
+        store_location
+    end    
   end
 
   def new
