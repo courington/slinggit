@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502032335) do
+ActiveRecord::Schema.define(:version => 20120502042359) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(:version => 20120502032335) do
     t.string   "language"
     t.string   "location"
     t.string   "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.boolean  "primary"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.boolean  "primary_account"
   end
 
   create_table "comments", :force => true do |t|

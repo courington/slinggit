@@ -25,11 +25,6 @@ class ApplicationController < ActionController::Base
 
   def create_api_account(options = {})
     if not options.blank?
-      if ApiAccount.exists?(['customer_id = ? AND primary_account = "t"'])
-        primary_account = "f"
-      else
-        primary_account = "t"
-      end
       case options[:source]
         when :twitter
           ApiAccount.create(
@@ -44,7 +39,7 @@ class ApplicationController < ActionController::Base
               :description => options[:api_object].user['description'],
               :language => options[:api_object].user['lang'],
               :location => options[:api_object].user['location'],
-              :primary_account => primary_account,
+              :primary_account => ApiAccount.exists?(['user_id = ? AND primary_account = "t"'], options[:user_object].id) ? "f" : "t",
               :status => 'active'
           )
         else
