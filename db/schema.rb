@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(:version => 20120502042359) do
     t.string   "language"
     t.string   "location"
     t.string   "status"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "primary",      :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "primary_account", :default => false
   end
 
   create_table "comments", :force => true do |t|
