@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     if not options.blank?
       case options[:source]
         when :twitter
-          if not ApiAccount.exists?(['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id']])
+          if not ApiAccount.exists?(['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
             ApiAccount.create(
                 :user_id => options[:user_object].id,
                 :api_id => options[:api_object].user['id'],
