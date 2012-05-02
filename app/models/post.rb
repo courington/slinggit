@@ -31,7 +31,8 @@ class Post < ActiveRecord::Base
   validates_presence_of :recipient_api_account_ids, :message => "must have at least one selected"
   validates :content, presence: true, length: {maximum: 100}
   validates :user_id, presence: true
-  validates :hashtag_prefix, presence: true, length: {maximum: 10}
+  VALID_HASHTAG_REGEX = /\A[a-z0-9_]{,20}\z/i
+  validates :hashtag_prefix, presence: true, length: {maximum: 10}, format: {with: VALID_HASHTAG_REGEX}
   validates :price, presence: true, :format => {:with => /^\d+??(?:\.\d{0,2})?$/}, :numericality => {:greater_than_or_equal_to => 0.01}
   # validates_attachment_presence :photo
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
