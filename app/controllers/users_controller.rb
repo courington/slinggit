@@ -15,7 +15,13 @@ class UsersController < ApplicationController
   def new
     if session[:user].blank?
       @user = User.new
+      # CMK: storing return_url here, prior to session reset, so that we can return
+      # the use back to, say, a post if it's not nil.
+      return_url = session[:return_to]
       reset_session
+      if return_url
+        session[:return_to] = return_url
+      end
     else
       @user = session[:user]
       session.delete(:user)
@@ -27,23 +33,23 @@ class UsersController < ApplicationController
     if not params[:twitter_authenticate].blank?
       success = validate_pre_twitter_data
       if success
-        setup_twitter_call(url_for(:controller => :users, :action => :twitter_signup_callback, :name => @user.name, :email => @user.email))
+        # CMK: so I added :return_url to parameters, so that we can have that after
+        # twitter authentication, in order to redirect the use back to, say, a post.
+        setup_twitter_call(url_for(:controller => :users, :action => :twitter_signup_callback, :name => @user.name, :email => @user.email, :return_url => session[:return_to]))
       else
         render 'new'
       end
     else
       if @user.save
-
         if not session['access_token'].blank? and not session['access_secret'].blank?
           client = Twitter::Client.new(oauth_token: session['access_token'], oauth_token_secret: session['access_secret'])
           create_api_account(:source => :twitter, :user_object => @user, :api_object => client)
           session.delete('access_token')
           session.delete('access_secret')
         end
-
         sign_in @user
         flash[:success] = "Welcome SlingGit.  Time to start slingin!"
-        redirect_to @user
+        redirect_back_or @user
       else
         render 'new'
       end
@@ -88,6 +94,8 @@ class UsersController < ApplicationController
     if not params[:denied].blank?
       flash[:success] = "You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started."
       session[:no_thanks] = true
+      # CMK: storing return url so that we can return a user to a post if he was to signin there
+      session[:return_to] = params[:return_url]
       redirect_to new_user_path
     else
       request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
@@ -95,6 +103,8 @@ class UsersController < ApplicationController
       session['access_token'] = access_token.token
       session['access_secret'] = access_token.secret
       session[:twitter_permission_granted] = true
+      # CMK: storing return url so that we can return a user to a post if he was to signin there
+      session[:return_to] = params[:return_url]
       flash[:success] = "Your Twitter account has been authorized.  One last step, please provide a Slinggit password."
       redirect_to new_user_path
     end

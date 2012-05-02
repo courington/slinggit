@@ -289,6 +289,12 @@ aside {
   background-color: white;
 }
 
+.alert-info-black{
+  @extend .alert;
+  @extend .alert-info;
+  color: #000;
+}
+
 .debug_dump {
   clear: both;
   float: left;
