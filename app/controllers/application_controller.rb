@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
         when :twitter
           if not ApiAccount.first(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s], :select => 'id')
             primary_account = 1
-            if ApiAccount.first(:conditions => ['user_id = ? AND primary_account = "1"', options[:user_object].id])
+            if ApiAccount.first(:conditions => ['user_id = ? AND primary_account = "1"', options[:user_object].id], :select => 'id')
               primary_account = 0
             end
 

@@ -37,7 +37,7 @@ SlinggitWebapp::Application.routes.draw do
 
   ##MOBILE CONTROLLER##
   post "mobile/user_signup"
-  post "mobile/user_login"
+  get "mobile/user_login"
   post "mobile/user_logout"
   post "mobile/user_login_status"
   post "mobile/get_user_twiiter_post_data"

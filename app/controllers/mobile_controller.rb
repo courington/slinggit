@@ -1,6 +1,7 @@
 class MobileController < ApplicationController
-  before_filter :require_post
+  #before_filter :require_post
   before_filter :set_state
+  before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
   ERROR_STATUS = "error"
   SUCCESS_STATUS = "success"
@@ -70,7 +71,7 @@ class MobileController < ApplicationController
   def user_login
     if not params[:email].blank?
       if not params[:password].blank?
-        user = User.first(:conditions => ['email = ?', params[:email]])
+        user = User.first(:conditions => ["email = '#{params[:email]}'"])
         if user && user.authenticate(params[:password])
           log_user_login(user)
           mobile_auth_token = create_or_update_mobile_auth_token(user.id)
@@ -82,7 +83,7 @@ class MobileController < ApplicationController
               :error_location => 'user_login',
               :error_reason => 'password authentication failed',
               :error_code => '403',
-              :friendly_error => 'Incorrect email and or password.'
+              :friendly_error => 'Incorrect email and or password.', :content_type => 'application/json'
           )
         end
       else
@@ -150,9 +151,26 @@ class MobileController < ApplicationController
   end
 
   def create_twitter_post
+    if not params[:post_data].blank?
+      decoded_post_data =  ActiveSupport::JSON.decode(params[:post_data])
+      if not decoded_post_data['content'].blank?
+      else
+      end
+    else
+      render :text => error_responce(
+          :error_location => 'create_twitter_post',
+          :error_reason => 'missing required_paramater - request_data',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
-  def delete_twitter_post
+  def resubmit_twitter_post
+
+  end
+
+  def close_twitter_post
   end
 
   def update_twitter_post
@@ -196,6 +214,8 @@ class MobileController < ApplicationController
     }.to_json
   end
 
+  #----BEFORE FILTERS----#
+
   def set_state
     if params[:state].blank?
       render :text => error_responce(
@@ -221,4 +241,19 @@ class MobileController < ApplicationController
       return
     end
   end
+
+  def validate_request_data_is_valid_json
+    if not params[:post_data].blank?
+      if not params[:post_data].valid_json?
+        render :text => error_responce(
+            :error_location => 'global',
+            :error_reason => 'post_data is not a valid json string',
+            :error_code => '400',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    end
+  end
+
+
 end
