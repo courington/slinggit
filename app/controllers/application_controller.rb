@@ -27,20 +27,23 @@ class ApplicationController < ActionController::Base
     if not options.blank?
       case options[:source]
         when :twitter
-          ApiAccount.create(
-              :user_id => options[:user_object].id,
-              :api_id => options[:api_object].user['id'],
-              :api_source => 'twitter',
-              :oauth_token => options[:api_object].oauth_token,
-              :oauth_secret => options[:api_object].oauth_token_secret,
-              :real_name => options[:api_object].user['name'],
-              :user_name => options[:api_object].user['screen_name'],
-              :image_url => options[:api_object].user['profile_image_url'],
-              :description => options[:api_object].user['description'],
-              :language => options[:api_object].user['lang'],
-              :location => options[:api_object].user['location'],
-              :status => 'active'
-          )
+          if not ApiAccount.exists?(['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id']])
+            ApiAccount.create(
+                :user_id => options[:user_object].id,
+                :api_id => options[:api_object].user['id'],
+                :api_source => 'twitter',
+                :oauth_token => options[:api_object].oauth_token,
+                :oauth_secret => options[:api_object].oauth_token_secret,
+                :real_name => options[:api_object].user['name'],
+                :user_name => options[:api_object].user['screen_name'],
+                :image_url => options[:api_object].user['profile_image_url'],
+                :description => options[:api_object].user['description'],
+                :language => options[:api_object].user['lang'],
+                :location => options[:api_object].user['location'],
+                :primary_account => ApiAccount.exists?(['user_id = ? AND primary_account = "t"'], options[:user_object].id) ? "f" : "t",
+                :status => 'active'
+            )
+          end
         else
           #do nothing
       end
@@ -62,6 +65,15 @@ class ApplicationController < ActionController::Base
     reset_session
     flash[:warning] = "Whoops! Looks like we need you to reauthorize your Twitter account."
     redirect_to reauthorize_twitter_path
+  end
+
+  def valid_json?(json_string)
+    begin
+      JSON.parse(json_string)
+      return true
+    rescue Exception => e
+      return false
+    end
   end
 
 end

@@ -3,6 +3,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/set_no_thanks', :to => 'users#set_no_thanks', via: :get
   match 'users/reset_page_session', :to => 'users#reset_page_session', via: :get
   match 'users/verify_email_availability', :to => 'users#verify_email_availability', via: :post
+  match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
+  match 'networks/delete_account', :to => 'networks#delete_account', via: :post
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
@@ -34,16 +36,16 @@ SlinggitWebapp::Application.routes.draw do
   end
 
   ##MOBILE CONTROLLER##
-  get "mobile/user_signup"
-  get "mobile/user_login"
-  get "mobile/user_logout"
-  get "mobile/user_login_status"
-  get "mobile/get_user_twiiter_post_data"
-  get "mobile/get_slinggit_twitter_post_data"
-  get "mobile/get_user_api_accounts"
+  post "mobile/user_signup"
+  post "mobile/user_login"
+  post "mobile/user_logout"
+  post "mobile/user_login_status"
+  post "mobile/get_user_twiiter_post_data"
+  post "mobile/get_slinggit_twitter_post_data"
+  post "mobile/get_user_api_accounts"
   post "mobile/create_twitter_post"
-  delete "mobile/delete_twitter_post"
-  put "mobile/update_twitter_post"
+  post "mobile/delete_twitter_post"
+  post "mobile/update_twitter_post"
 
 
   # The priority is based upon order of creation:
