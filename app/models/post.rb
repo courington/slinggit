@@ -56,14 +56,14 @@ class Post < ActiveRecord::Base
           twitter_client = Twitter::Client.new(oauth_token: api_account.oauth_token, oauth_token_secret: api_account.oauth_secret)
         end
         if not twitter_client.blank?
-          twitter_client.update("##{self.hashtag_prefix}forsale #{self.content} - #{self.price} | Slinggit")
+          tweet_constructor(twitter_client)
         end
       end
     end
   end
 
   # Logic for constructing twitter message.
-  def tweet_constructor
-
+  def tweet_constructor(client)
+    client.update("##{self.hashtag_prefix}forsale #{self.content} - #{self.price} | Slinggit")
   end 
 end
