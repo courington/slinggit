@@ -5,6 +5,7 @@
         Create a new post.
       </legend>
       <div class="clearfix-placeholder"></div>
+
       <div class="control-group">
         <%= f.label :hashtag_prefix, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
         <div class="controls">
@@ -14,12 +15,21 @@
           </div>
         </div>
       </div>
+
+      <div class="control-group">
+        <%= f.label :location, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
+        <div class="controls">
+          <%= f.text_field :location, class: "input-large", placeholder: "City, State, or Zip" %>
+        </div>
+      </div>
+
       <div class="control-group">
         <%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
         <div class="controls">
           <%= f.text_area :content, class: "input-xlarge", rows: "3", placeholder: "Something short and sweet..." %>
         </div>
       </div>
+
       <div class="control-group">
         <%= f.label :price, class: "control-label", for: "post_price" %>
         <div class="controls">
@@ -29,6 +39,7 @@
           </div>
         </div>
       </div>
+
       <div id="photoControlGroup" class="control-group">
         <%= f.label :photo, "Item Photo (optional)", class: "control-label", for: "post_photo" %>
         <div class="controls">

@@ -2,22 +2,23 @@
 #
 # Table name: api_accounts
 #
-#  id           :integer         not null, primary key
-#  user_id      :integer
-#  api_id       :string(255)
-#  api_id_hash  :string(255)
-#  api_source   :string(255)
-#  oauth_token  :string(255)
-#  oauth_secret :string(255)
-#  real_name    :string(255)
-#  user_name    :string(255)
-#  image_url    :string(255)
-#  description  :string(255)
-#  language     :string(255)
-#  location     :string(255)
-#  status       :string(255)
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
+#  id              :integer         not null, primary key
+#  user_id         :integer
+#  api_id          :string(255)
+#  api_id_hash     :string(255)
+#  api_source      :string(255)
+#  oauth_token     :string(255)
+#  oauth_secret    :string(255)
+#  real_name       :string(255)
+#  user_name       :string(255)
+#  image_url       :string(255)
+#  description     :string(255)
+#  language        :string(255)
+#  location        :string(255)
+#  status          :string(255)
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  primary_account :boolean         default(FALSE)
 #
 
 class ApiAccount < ActiveRecord::Base

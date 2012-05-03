@@ -9,7 +9,6 @@
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
-#  mobile_remember_token  :string(255)
 #  admin           :boolean         default(FALSE)
 #  twitter_atoken  :string(255)
 #  twitter_asecret :string(255)
