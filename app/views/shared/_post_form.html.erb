@@ -1,3 +1,10 @@
+<style type="text/css">
+    img.obj{
+      width: 300px;
+    }
+
+</style>
+
 <%= form_for @post do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <fieldset>
@@ -42,7 +49,7 @@
 
       <div id="photoControlGroup" class="control-group">
         <%= f.label :photo, "Item Photo (optional)", class: "control-label", for: "post_photo" %>
-        <div class="controls">
+        <div class="controls thumbnail">
           <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
           <a href="#" id="fileSelect">Select a photo</a>
         </div>
