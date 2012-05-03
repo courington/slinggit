@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502094048) do
+ActiveRecord::Schema.define(:version => 20120503044148) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -68,8 +68,10 @@ ActiveRecord::Schema.define(:version => 20120502094048) do
     t.string   "post_id"
     t.string   "last_result"
     t.string   "recipient_api_account_ids"
+    t.string   "location"
   end
 
+  add_index "posts", ["location"], :name => "index_posts_on_location"
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
 
