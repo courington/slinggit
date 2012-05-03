@@ -1,3 +1,7 @@
+<div class="alert alert-error">
+  You cannot edit a closed post.  To edit it, reopen it first.
+</div>
+
 <div class="span4"> 
   <div class="thumbnail">
     <% if @post.photo_file_name.blank? %>
@@ -8,42 +12,14 @@
   </div>
 </div>
 
-<%= form_for(@post) do |f| %>
-<%= render 'shared/error_messages', object: f.object %>
 <div class="span4">
 
-  <div class="control-group">
-    <%= f.label :hashtag_prefix, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
-    <div class="controls">
-      <div class="input-append">
-        <span><%= @post.hashtag_prefix %></span>
-        <span class="add-on">forsale</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
-    <div class="controls">
-      <%= f.text_area :content, class: "input-xlarge", rows: "3" %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :price, class: "control-label", for: "post_price" %>
-    <div class="controls">
-      <div class="input-append">
-        <%= f.text_field :price, class: "input-large" %>
-        <span class="add-on">.00</span>
-      </div>
-    </div>
-  </div>
+  <%= render 'posts/post_sidebar' %>
 
 </div> <!-- span 4 end --> 
 
 <div class="span8">  
   <div class="form-actions">
-    <%= f.submit "Update Post", class: "btn btn-inverse" %>
     <!-- A nested form feels wrong for some reason, but it's working.  We'll keep an eye on it. -->
     <%= form_for(@post) do |f| %> <!-- begining of nexted form -->
       <% if @post.open? %>
@@ -56,4 +32,3 @@
     <% end %> <!-- end of nexted form -->
   </div> 
 </div> <!-- span 8 end -->
-<% end %>

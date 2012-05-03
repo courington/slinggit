@@ -1,0 +1,18 @@
+<dl class="dl-horizontal" style="font-size: 16px;"> <!-- inline style! -->
+  <dt>Location:</dt>
+  <dd>Placeholder</dd>
+  <dt>Price:</dt>
+  <dd><%= @post.price %></dd>
+  <dt>Interested:</dt>
+  <dd><%= @post.comments.count('user_id', :distinct => true) %></dd>
+  <dt>Status:</dt>
+  <dd>
+    <% if @post.open? %>
+      <span class="label label-success">Open</span>
+    <% else %>  
+      <span class="label label">Closed</span>
+    <% end %>
+  </dd>
+  <dt>Description</dt>
+  <dd><%= @post.content %></dd>
+</dl>
