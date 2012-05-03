@@ -29,7 +29,6 @@ class PostsController < ApplicationController
       params.delete(:twitter_accounts)
       twitter_accounts.each do |id, value|
         @post = current_user.posts.build(params[:post].merge!(:last_result => 'no_attempt'))
-        @post.host_machine = request.env['HTTP_HOST']
         @post.api_account_id = id.to_i
         @post.open = true;
         @post.status = 'active'
