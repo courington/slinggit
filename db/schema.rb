@@ -78,8 +78,11 @@ ActiveRecord::Schema.define(:version => 20120503085009) do
     t.integer  "api_account_id"
     t.string   "post_id"
     t.string   "last_result"
+    t.string   "recipient_api_account_ids"
+    t.string   "location"
   end
 
+  add_index "posts", ["location"], :name => "index_posts_on_location"
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
 

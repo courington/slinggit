@@ -2,21 +2,23 @@
 #
 # Table name: posts
 #
-#  id                 :integer         not null, primary key
-#  content            :string(255)
-#  user_id            :integer
-#  created_at         :datetime        not null
-#  updated_at         :datetime        not null
-#  photo_file_name    :string(255)
-#  photo_content_type :string(255)
-#  photo_file_size    :integer
-#  photo_updated_at   :datetime
-#  hashtag_prefix     :string(255)
-#  price              :decimal(8, 2)
-#  open               :boolean         default(TRUE)
-#  api_account_id     :integer
-#  post_id            :string(255)
-#  last_result        :string(255)
+#  id                        :integer         not null, primary key
+#  content                   :string(255)
+#  user_id                   :integer
+#  created_at                :datetime        not null
+#  updated_at                :datetime        not null
+#  photo_file_name           :string(255)
+#  photo_content_type        :string(255)
+#  photo_file_size           :integer
+#  photo_updated_at          :datetime
+#  hashtag_prefix            :string(255)
+#  price                     :decimal(8, 2)
+#  open                      :boolean         default(TRUE)
+#  api_account_id            :integer
+#  post_id                   :string(255)
+#  last_result               :string(255)
+#  recipient_api_account_ids :string(255)
+#  location                  :string(255)
 #
 
 require 'spec_helper'

@@ -20,8 +20,7 @@
 
 <div class="span8">  
   <div class="form-actions">
-    <!-- A nested form feels wrong for some reason, but it's working.  We'll keep an eye on it. -->
-    <%= form_for(@post) do |f| %> <!-- begining of nexted form -->
+    <%= form_for(@post) do |f| %>
       <% if @post.open? %>
         <%= f.hidden_field :open, value: false %>
         <%= f.submit "Close", class: "btn btn-medium btn-danger pull-right" %>
@@ -29,6 +28,6 @@
         <%= f.hidden_field :open, value: true %>
         <%= f.submit "Reopen", class: "btn btn-medium btn-success pull-right" %> 
       <% end %>
-    <% end %> <!-- end of nexted form -->
+    <% end %> <!-- end of nested form -->
   </div> 
 </div> <!-- span 8 end -->
