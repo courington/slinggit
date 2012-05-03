@@ -39,13 +39,14 @@ class PostsController < ApplicationController
 
   def edit
     # Don't need to find Post here because of correct_user filter
+    store_location if !@post.open?
   end
 
   def update
     # Don't need to find Post here because of correct_user filter
     if @post.update_attributes(params[:post])
       flash[:success] = "Prost updated"
-      redirect_to current_user
+      redirect_back_or current_user
     else
       render 'edit'
     end
