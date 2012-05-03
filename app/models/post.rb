@@ -61,4 +61,9 @@ class Post < ActiveRecord::Base
       end
     end
   end
+
+  # Logic for constructing twitter message.
+  def tweet_constructor
+
+  end 
 end
