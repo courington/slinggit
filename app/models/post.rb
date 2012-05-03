@@ -64,6 +64,7 @@ class Post < ActiveRecord::Base
 
   # Logic for constructing twitter message.
   def tweet_constructor(client)
+    #TODO need to add the url to the post to the tweet
     client.update("##{self.hashtag_prefix}forsale ##{self.location} #{self.content} - #{self.price} | Slinggit")
   end 
 end
