@@ -24,29 +24,28 @@ class PostsController < ApplicationController
 
   def create
     posts_to_perform = []
-    if not params[:twitter_accounts].blank?
-      twitter_accounts = params[:twitter_accounts]
-      params.delete(:twitter_accounts)
-      twitter_accounts.each do |id, value|
-        @post = current_user.posts.build(params[:post].merge!(:last_result => 'no_attempt'))
-        @post.api_account_id = id.to_i
-        @post.open = true;
-        @post.status = 'active'
-        if not @post.save
-          render 'new'
-          return
-        else
-          posts_to_perform << @post
+    twitter_accounts = params[:twitter_accounts]
+    params.delete(:twitter_accounts)
+
+    @post = current_user.posts.build(params[:post])
+    if not @post.save
+      render 'new'
+      return
+    else
+      if not twitter_accounts.blank?
+        twitter_accounts.each do |id, value|
+          TwitterPost.create(
+              :user_id => @post.user_id,
+              :api_account_id => id.to_i,
+              :post_id => @post.id,
+              :content => @post.content
+          ).do_post
         end
       end
-    end
 
-    posts_to_perform.each do |post|
-      post.do_post
+      flash[:success] = "Post successfully created!"
+      redirect_to current_user
     end
-
-    flash[:success] = "Post(s) successfully created!"
-    redirect_to current_user
   end
 
   def edit

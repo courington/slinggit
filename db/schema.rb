@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503085009) do
+ActiveRecord::Schema.define(:version => 20120503193839) do
 
   create_table "api_account_post_statuses", :force => true do |t|
     t.integer  "user_id"
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(:version => 20120503085009) do
   end
 
   create_table "posts", :force => true do |t|
-    t.string   "status"
     t.string   "content"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -74,15 +73,25 @@ ActiveRecord::Schema.define(:version => 20120503085009) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "hashtag_prefix"
-    t.decimal  "price",              :precision => 8, :scale => 2
+    t.decimal  "price",                     :precision => 8, :scale => 2
     t.boolean  "open"
-    t.integer  "api_account_id"
-    t.string   "post_id"
-    t.string   "last_result"
     t.string   "location"
+    t.string   "recipient_api_account_ids"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"
+
+  create_table "twitter_posts", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "api_account_id"
+    t.integer  "post_id"
+    t.string   "content"
+    t.string   "twitter_post_id"
+    t.string   "status",          :default => "new"
+    t.string   "last_result",     :default => "no attempt"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
 
   create_table "user_logins", :force => true do |t|
     t.integer  "user_id"
