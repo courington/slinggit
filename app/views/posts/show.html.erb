@@ -52,23 +52,36 @@
 
         <div class="row">
         <% if signed_in? %>
-          <%= form_for([@post, @post.comments.build]) do |f| %>
-            <%= f.hidden_field :user_id, value: current_user.id %>
 
-            <fieldset>
-              <div class="control group">
-                <div class="controls">
-                  <%= f.text_area :body, class: "input-xlarge", rows: "3", style: "width:100%" %> <!-- inline style! -->
-                </div>  
+          <% if @post.open? %>
+
+            <%= form_for([@post, @post.comments.build]) do |f| %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+
+              <fieldset>
+                <div class="control group">
+                  <div class="controls">
+                    <%= f.text_area :body, class: "input-xlarge", rows: "3", style: "width:100%" %> <!-- inline style! -->
+                  </div>  
+                </div>
+
+                <div class="form-actions">
+                  <%= f.submit "Reply to Post", class: "btn btn-inverse" %>
+                </div>
+
+              </fieldset>
+
+              <% end %><!-- form end -->
+
+          <% else %>
+
+              <div class="alert alert-error">
+                <h4 class="alert-heading">Post Closed</h4>
+                Oh snap, it appears this item is no longer for sale.
               </div>
 
-              <div class="form-actions">
-                <%= f.submit "Reply to Post", class: "btn btn-inverse" %>
-              </div>
+          <% end %>  
 
-            </fieldset>
-
-          <% end %>
         <% else %>
           <div class="alert alert-info-black">
             <a class="close" data-dismiss="alert" href="#">×</a>
