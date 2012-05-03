@@ -64,6 +64,6 @@ class Post < ActiveRecord::Base
 
   # Logic for constructing twitter message.
   def tweet_constructor(client)
-    client.update("##{self.hashtag_prefix}forsale #{self.content} - #{self.price} | Slinggit")
+    client.update("##{self.hashtag_prefix}forsale ##{self.location} #{self.content} - #{self.price} | Slinggit")
   end 
 end
