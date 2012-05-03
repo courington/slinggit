@@ -28,7 +28,7 @@
       <div class="span8">
         <section id="user-posts">
           <% if @user.posts.any? %>
-            <h3>Posts (<%= @user.posts.count %>)</h3>
+            <h3>Posts (<%= @posts.count %>)</h3>
             <ol class="posts">
               <%= render @posts %>
             </ol>

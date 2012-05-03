@@ -3,9 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
-  # Catch Unauthorized error and ask the user to reauthenticate
-  rescue_from Twitter::Error::Unauthorized, with: :ask_to_reauthenticate
-
   private
 
   def log_user_login(user = nil)

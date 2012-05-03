@@ -8,8 +8,31 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @posts = @user.posts.paginate(page: params[:page])
+    @user = User.first(:conditions => ['id = ?', params[:id]])
+    if not @user.blank?
+      @posts = @user.posts.paginate(page: params[:page])
+      @posts = @posts.delete_if { |x| x.api_account_id == 0 or x.status == 'deleted' }
+
+      if signed_in? and current_user.id == params[:id].to_i
+        failed_count = 0
+        @posts.each do |post|
+          if post.post_id.blank? and post.last_result.include? 'Unauthorized' and not post.status != 'active_retry'
+            failed_count += 1
+            post.status = 'active_retry'
+            post.save
+          end
+        end
+        if failed_count > 0
+          flash.now[:error] = "#{failed_count} of your Twitter accounts were unable to receive a tweet.  Please reauthenticate those accounts with Slinggit from the Twitter Accounts page."
+        end
+      end
+    else
+      if signed_in?
+        redirect_to current_user
+      else
+        redirect_to new_user_path
+      end
+    end
   end
 
   def new

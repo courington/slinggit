@@ -23,6 +23,22 @@ class TwittersessionsController < ApplicationController
 
   # this is the redirect for reauthorization
   def reauthorize
+    api_account_post_status = ApiAccountPostStatus.first(:conditions => ['host_machine = ? AND user_id = ? AND status = "processing"', request.env['HTTP_HOST'], current_user.id])
+    if api_account_post_status
+      @api_account = ApiAccount.first(:conditions => ['id = ? AND user_id = ?', api_account_post_status.triggering_api_account_id, current_user.id])
+      if @api_account.blank?
+        if api_account_post_status.triggering_api_account_id.blank? or api_account_post_status.triggering_api_account_id == '0'
+          #because the slinggit account comes last, that means the rest posted, display success message
+          flash[:success] = "Your items were successfully posted on your twitter accounts."
+        else
+          flash[:error] = "An unexpected error has occured.  Please contact customer service with error code tw-30-re"
+        end
+        redirect_to current_user
+      end
+    else
+      flash[:error] = "One or more of your selected twitter accounts failed to receive our post.  Please be sure you have not removed permission for Slinggit to post to your accounts."
+      redirect_to current_user
+    end
   end
 
   # form action

@@ -12,8 +12,8 @@ class PostsController < ApplicationController
     # Since we give an non-singed in user the option to sign in, we
     # want to return them to the post after signin.
     unless signed_in?
-        store_location
-    end    
+      store_location
+    end
   end
 
   def new
@@ -23,18 +23,31 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build(params[:post])
+    posts_to_perform = []
     if not params[:twitter_accounts].blank?
-      #TODO rework this into the form
-      @post.recipient_api_account_ids = params[:twitter_accounts].map { |x| x.first }.join(',')
+      twitter_accounts = params[:twitter_accounts]
+      params.delete(:twitter_accounts)
+      twitter_accounts.each do |id, value|
+        @post = current_user.posts.build(params[:post].merge!(:last_result => 'no_attempt'))
+        @post.host_machine = request.env['HTTP_HOST']
+        @post.api_account_id = id.to_i
+        @post.open = true;
+        @post.status = 'active'
+        if not @post.save
+          render 'new'
+          return
+        else
+          posts_to_perform << @post
+        end
+      end
     end
-    if @post.save
-      @post.do_post
-      flash[:success] = "Post successfully created!"
-      redirect_to current_user
-    else
-      render 'new'
+
+    posts_to_perform.each do |post|
+      post.do_post
     end
+
+    flash[:success] = "Post(s) successfully created!"
+    redirect_to current_user
   end
 
   def edit
@@ -52,7 +65,8 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy
+    @post.status = 'deleted'
+    @post.save
     redirect_back_or current_user
   end
 
@@ -66,4 +80,5 @@ class PostsController < ApplicationController
   def load_api_accounts
     @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ?', current_user.id, 'twitter'])
   end
+
 end
