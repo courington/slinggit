@@ -22,7 +22,7 @@
 #
 
 class Post < ActiveRecord::Base
-  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :price, :open, :api_account, :post_id, :last_result
+  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open, :api_account, :post_id, :last_result
 
   belongs_to :user
   has_many :comments, dependent: :destroy
