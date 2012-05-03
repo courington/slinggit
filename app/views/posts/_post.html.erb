@@ -14,10 +14,6 @@
     <span class="label label">Closed</span>
   <% end %>  
   <% if current_user?(post.user) %>
-    <%= link_to "delete", post, method:  :delete,
-                                confirm: "Delete Post?",
-                                title:   post.content %>
-    <span> | </span>
     <%= link_to "edit", edit_post_path(post) %>
   <% end %>
   </div>  
