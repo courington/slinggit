@@ -10,6 +10,7 @@ class TwitterPost < ActiveRecord::Base
   attr_accessible :user_id, :api_account_id, :post_id, :content
   belongs_to :api_account
   belongs_to :post
+
   def do_post
     self.update_attribute(:status, 'processing')
 
