@@ -155,8 +155,8 @@ class UsersController < ApplicationController
     if params[:user][:name].blank?
       @user.errors.messages[:name] = ["can't be blank"]
     else
-      if not params[:user][:name] =~ /\A[a-z0-9_]{,20}\z/i
-        @user.errors.messages[:name] = ["can only contain letters, numbers, underscores and dashes"]
+      if not params[:user][:name] =~ /\A[a-z0-9_-]{,20}\z/i
+        @user.errors.messages[:name] = ["can only contain letters, numbers, underscores and dashes and cannot be more than 20 characters."]
       else
         if User.exists?(:name => params[:user][:name])
           @user.errors.messages[:name] = ["has already been registered"]

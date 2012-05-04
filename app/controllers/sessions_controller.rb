@@ -1,4 +1,8 @@
 class SessionsController < ApplicationController
+  def index
+    @mobile_sessions = MobileSession.all(:conditions => ['customer_id = ? AND mobile_auth_token IS NOT NULL'])
+  end
+
   def new
   end
 

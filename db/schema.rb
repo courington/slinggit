@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20120503193839) do
 
-  create_table "api_account_post_statuses", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "host_machine"
-    t.integer  "triggering_api_account_id"
-    t.string   "attempted_post_source"
-    t.integer  "attempted_post_id"
-    t.string   "remaining_recipient_api_account_ids"
-    t.string   "status"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
-  end
-
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
     t.string   "api_id"
@@ -39,8 +27,9 @@ ActiveRecord::Schema.define(:version => 20120503193839) do
     t.string   "language"
     t.string   "location"
     t.string   "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.string   "reauth_required", :default => "no"
   end
 
   create_table "comments", :force => true do |t|
@@ -66,20 +55,22 @@ ActiveRecord::Schema.define(:version => 20120503193839) do
   create_table "posts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "hashtag_prefix"
     t.decimal  "price",                     :precision => 8, :scale => 2
-    t.boolean  "open"
+    t.boolean  "open",                                                    :default => true
     t.string   "location"
     t.string   "recipient_api_account_ids"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"
+  add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
+  add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
 
   create_table "twitter_posts", :force => true do |t|
     t.integer  "user_id"
