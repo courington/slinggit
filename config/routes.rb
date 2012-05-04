@@ -9,7 +9,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
 
   resources :users
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [:new, :create, :destroy, :index]
   resources :posts, only: [:new, :create, :destroy, :edit, :show, :update]
   resources :networks, only: [:index, :create, :destroy]
 

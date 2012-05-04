@@ -27,15 +27,15 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li class="<%= 'active' if current_page?(current_user) %>">
-                    <%= link_to "Profile", current_user %>
+                    <%= link_to "Posts", current_user %>
                   </li>
                   <li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
-                    <%= link_to "Settings", edit_user_path(current_user) %>
+                    <%= link_to "Profile", edit_user_path(current_user) %>
                   </li>
                   <li class="<%= 'active' if current_page?(networks_path) %>">
                     <%= link_to "Twitter Accounts", networks_path %>
                   </li>
-                  <li class="<%= 'active' if current_page?(networks_path) %>">
+                  <li class="<%= 'active' if current_page?(sessions_path) %>">
                     <%= link_to "Active Sessions", sessions_path %>
                   </li>
                   <li class="divider"></li>

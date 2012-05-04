@@ -1,6 +1,8 @@
 class MobileController < ApplicationController
   #before_filter :require_post
   before_filter :set_state
+  before_filter :set_device_name
+  before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
   ERROR_STATUS = "error"
@@ -14,18 +16,27 @@ class MobileController < ApplicationController
           email = params[:email].downcase
           if not User.exists?(['email = ?', email])
             if not User.exists?(['name = ?', user_name])
-              user = User.create(
+              user = User.new(
                   :name => params[:user_name],
                   :email => params[:email],
                   :password => params[:password],
                   :password_confirmation => params[:password]
               )
 
-              log_user_login(user)
-              mobile_auth_token = create_or_update_mobile_auth_token(user.id)
-              render :text => success_response(
-                  :mobile_auth_token => mobile_auth_token
-              )
+              if user.save
+                log_user_login(user)
+                mobile_auth_token = create_or_update_mobile_auth_token(user.id)
+                render :text => success_response(
+                    :mobile_auth_token => mobile_auth_token
+                )
+              else
+                render :text => error_responce(
+                    :error_location => 'user_signup',
+                    :error_reason => 'invalide - email',
+                    :error_code => '409',
+                    :friendly_error => 'The email address entered is invalid.'
+                )
+              end
             else
               render :text => error_responce(
                   :error_location => 'user_signup',
@@ -152,7 +163,7 @@ class MobileController < ApplicationController
 
   def create_twitter_post
     if not params[:post_data].blank?
-      decoded_post_data =  ActiveSupport::JSON.decode(params[:post_data])
+      decoded_post_data = ActiveSupport::JSON.decode(params[:post_data])
       if not decoded_post_data['content'].blank?
       else
       end
@@ -192,9 +203,12 @@ class MobileController < ApplicationController
       mobile_session.update_attribute(:mobile_auth_token, Digest::SHA1.hexdigest("#{Time.now.to_i}-#{user_id}"))
     else
       mobile_session = MobileSession.create(
-          :user_id => user_id,
+          :user_id => user_id.to_i,
           :unique_identifier => @state,
-          :mobile_auth_token => Digest::SHA1.hexdigest("#{Time.now.to_i}-#{user_id}")
+          :device_name => @device_name,
+          :ip_address => request.blank? ? 'remote_application' : request.remote_ip,
+          :mobile_auth_token => Digest::SHA1.hexdigest("#{Time.now.to_i}-#{user_id}"),
+          :options => @options
       )
     end
     return mobile_session.mobile_auth_token
@@ -227,6 +241,26 @@ class MobileController < ApplicationController
       return
     else
       @state = params[:state]
+    end
+  end
+
+  def set_device_name
+    if params[:device_name].blank?
+      render :text => error_responce(
+          :error_location => 'global',
+          :error_reason => 'missing required_paramater - device_name',
+          :error_code => '401',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      ), :content_type => 'application/json'
+      return
+    else
+      @device_name = params[:device_name]
+    end
+  end
+
+  def set_options
+    if params[:options].blank?
+      @options = params[:options]
     end
   end
 

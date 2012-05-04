@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503193839) do
+ActiveRecord::Schema.define(:version => 20120504062942) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -48,8 +48,11 @@ ActiveRecord::Schema.define(:version => 20120503193839) do
     t.integer  "user_id"
     t.string   "unique_identifier"
     t.string   "mobile_auth_token"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.string   "device_name"
+    t.string   "ip_address"
+    t.string   "options",           :limit => 1000
   end
 
   create_table "posts", :force => true do |t|

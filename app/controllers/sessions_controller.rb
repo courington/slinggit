@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
+  before_filter :signed_in_user, :only => [:index]
   def index
-    @mobile_sessions = MobileSession.all(:conditions => ['customer_id = ? AND mobile_auth_token IS NOT NULL'])
+    @mobile_sessions = MobileSession.all(:conditions => ['user_id = ? AND mobile_auth_token IS NOT NULL', current_user.id])
   end
 
   def new
