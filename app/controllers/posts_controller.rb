@@ -23,7 +23,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    posts_to_perform = []
+    recipient_api_account_ids = []
     twitter_accounts = params[:twitter_accounts]
     params.delete(:twitter_accounts)
 
@@ -34,12 +34,17 @@ class PostsController < ApplicationController
     else
       if not twitter_accounts.blank?
         twitter_accounts.each do |id, value|
+          recipient_api_account_ids << id
           TwitterPost.create(
               :user_id => @post.user_id,
               :api_account_id => id.to_i,
               :post_id => @post.id,
               :content => @post.content
           ).do_post
+        end
+
+        if not recipient_api_account_ids.blank?
+          @post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids)
         end
       end
 

@@ -5,6 +5,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/verify_email_availability', :to => 'users#verify_email_availability', via: :post
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
+  match 'networks/add_api_account', :to => 'networks#add_api_account' , via: :get
+  match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]

@@ -71,4 +71,26 @@ class NetworksController < ApplicationController
 
   end
 
+  def add_api_account
+    setup_twitter_call(url_for :controller => :networks, :action => :twitter_callback)
+  end
+
+  def twitter_callback
+    if not params[:denied].blank?
+      flash[:success] = "In order to add a Twitter account, we need you to accept the permissions presented by Twitter.  You can always try again."
+      redirect_to :action => :index
+    else
+      request_token = OAuth::RequestToken.new(oauth_consumer, session['rtoken'], session['rsecret'])
+      access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+      client = Twitter::Client.new(oauth_token: access_token.token, oauth_token_secret: access_token.secret)
+      success, result = create_api_account(:source => :twitter, :user_object => current_user, :api_object => client)
+      if success
+        flash[:success] = "Your Twitter account has been added.  You may now make posts that tweet to this account."
+      else
+        flash[:error] = result
+      end
+      redirect_to :action => :index
+    end
+  end
+
 end

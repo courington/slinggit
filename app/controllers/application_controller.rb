@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
               status = 'active'
             end
 
-            ApiAccount.create(
+            api_account = ApiAccount.create(
                 :user_id => options[:user_object].id,
                 :api_id => options[:api_object].user['id'],
                 :api_source => 'twitter',
@@ -42,8 +42,12 @@ class ApplicationController < ActionController::Base
                 :description => options[:api_object].user['description'],
                 :language => options[:api_object].user['lang'],
                 :location => options[:api_object].user['location'],
+                :reauth_required => 'no',
                 :status => status
             )
+            return [true, api_account]
+          else
+            return [false, "You have alraedy connected that Twitter account."]
           end
         else
           #do nothing

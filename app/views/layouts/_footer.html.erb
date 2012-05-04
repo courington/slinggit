@@ -5,8 +5,12 @@
   </small>
   <nav>
     <ul>
-      <li><%= link_to "About",  about_path %></li>
+      <li><%= link_to "About", about_path %></li>
       <li><%= link_to "Contact", contact_path %></li>
     </ul>
+    <% if signed_in? %>
+        <span id="footerLoggedInUser"><%= "#{current_user.email}" %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
+    <% else %>
+    <% end %>
   </nav>
 </footer>

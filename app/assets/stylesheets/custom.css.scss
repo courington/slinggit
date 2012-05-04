@@ -1,4 +1,5 @@
 @import "bootstrap";
+
 /*@import "bootstrap-responsive";*/
 
 /* OVERWRITE BOOTSTRAP STYLES */
@@ -6,48 +7,59 @@
 
 }*/
 @media all and (max-width: 767px) {
-	.hero-unit {
-	padding: 30px;
-	}
-	[class*="span"] {
-	margin-left: 0;
-	}
-	.span8 {
-	width:100%;
-	}
-	.row {
-	margin-left: 0;
-	}
-	header.navbar-fixed-top .navbar-inner {
-	padding: 4px 2.5%;
-	width: 100%;
-	margin: 0 auto;
-	}
-	.container, .navbar-fixed-top .container,
-	.navbar-fixed-bottom .container {
-	width: 90%;
-	margin:0 auto;
-	}
-	.container > .row {
-	margin-left: 0;
-	}
-	.container > .row > .offset3,
-	.container > .row > .span6 {
-	margin-left: 0;
-	width:100%;
-	}
-	footer {
-	margin: 45px 0 0 0;
-	}
+  .hero-unit {
+    padding: 30px;
+  }
+
+  [class*="span"] {
+    margin-left: 0;
+  }
+
+  .span8 {
+    width: 100%;
+  }
+
+  .row {
+    margin-left: 0;
+  }
+
+  header.navbar-fixed-top .navbar-inner {
+    padding: 4px 2.5%;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .container, .navbar-fixed-top .container,
+  .navbar-fixed-bottom .container {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .container > .row {
+    margin-left: 0;
+  }
+
+  .container > .row > .offset3,
+  .container > .row > .span6 {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  footer {
+    margin: 45px 0 0 0;
+  }
 }
-	.navbar-fixed-top, .navbar-fixed-bottom {
-	width: 100%;
-	position: relative;
-	margin-bottom: 1.6em;
-	}
-	.footer nav > ul {
-	float: left;
-	}
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+  width: 100%;
+  position: relative;
+  margin-bottom: 1.6em;
+}
+
+.footer nav > ul {
+  float: left;
+}
+
 /* END */
 
 /* variables */
@@ -55,17 +67,16 @@
 $lightGray: #999;
 $grayMediumLight: #eaeaea;
 
-
 /* Mixins */
 @mixin box_sizing {
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 /* HACK */
 
-.clearfix-placeholder{
+.clearfix-placeholder {
   height: 20px;
 }
 
@@ -87,7 +98,7 @@ textarea {
   text-align: center;
   h1 {
     margin-bottom: 10px;
-  }  
+  }
 }
 
 /* typography */
@@ -144,12 +155,12 @@ footer {
   color: $lightGray;
   a {
     color: #555;
-    &:hover { 
+    &:hover {
       color: #222;
     }
-  }  
-  small { 
-    float: left; 
+  }
+  small {
+    float: left;
   }
   ul {
     float: right;
@@ -158,9 +169,15 @@ footer {
       float: left;
       margin-left: 10px;
     }
+    span {
+      float: right;
+    }
   }
 }
 
+#footerLoggedInUser{
+  float:right;
+}
 
 /* sidebar */
 
@@ -191,7 +208,6 @@ aside {
   margin-right: 10px;
 }
 
-
 /* forms */
 
 input, textarea, select, .uneditable-input {
@@ -204,7 +220,7 @@ input, textarea, select, .uneditable-input {
 }
 
 #error_explanation {
-  color:#f00;
+  color: #f00;
   ul {
     list-style: none;
     margin: 0 0 18px 0;
@@ -214,8 +230,7 @@ input, textarea, select, .uneditable-input {
 .field_with_errors {
   @extend .control-group;
   @extend .error;
- }
-
+}
 
 /* users index */
 
@@ -234,14 +249,13 @@ input, textarea, select, .uneditable-input {
 
 /* user show */
 
-
 /* posts */
 
 .posts, .comments {
   list-style: none;
   margin: 10px 0 0 0;
 
-  a{
+  a {
     text-decoration: none;
     &:hover {
       cursor: pointer;
@@ -264,16 +278,20 @@ input, textarea, select, .uneditable-input {
     }
   }
 }
+
 .content {
   display: block;
 }
+
 .timestamp {
   color: $grayLight;
 }
+
 .gravatar {
   float: left;
   margin-right: 10px;
 }
+
 aside {
   textarea {
     height: 100px;
@@ -281,15 +299,14 @@ aside {
   }
 }
 
-
 /* miscellaneous */
 
-.well-white{
+.well-white {
   @extend .well;
   background-color: white;
 }
 
-.alert-info-black{
+.alert-info-black {
   @extend .alert;
   @extend .alert-info;
   color: #000;
@@ -300,5 +317,5 @@ aside {
   float: left;
   width: 100%;
   margin-top: 45px;
-  @include box_sizing;	
+  @include box_sizing;
 }
