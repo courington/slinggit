@@ -196,6 +196,10 @@ class MobileController < ApplicationController
   def get_user_api_accounts
   end
 
+  def searc_posts
+
+  end
+
   private
 
   def create_or_update_mobile_auth_token(user_id)

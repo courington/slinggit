@@ -1,0 +1,68 @@
+<!-- I know this is bad but I always put my css in the file until Im finished then I move it for quick editing -->
+<style type="text/css">
+    .apiInformationColumn {
+        float: left;
+        font-size: 14px;
+        padding-bottom: 20px;
+        padding-left: 90px;
+    }
+
+    .apiInformationActions {
+        float: left;
+        font-size: 14px;
+        padding-bottom: 20px;
+        padding-left: 90px;
+    }
+
+    .apiHeaderColumn {
+        padding-left: 5%;
+        width: 14%;
+        float: left;
+        text-emphasis: #40e0d0;
+        border-style: none;
+    }
+
+    .footer {
+        padding-top: 120px;
+    }
+
+    table thead th, #account-actions {
+        white-space: nowrap;
+    }
+
+        /*
+        #addTwitterbutton {
+            margin-top: 80px;
+            position: relative;
+        }
+        */
+
+</style>
+<% provide(:title, 'Active Sessions') %>
+<h2>Manage Your Active Sessions For Each Device</h2>
+
+<table class="table table-striped">
+  <thead>
+  <th>Source</th>
+  <th>Device</th>
+  <th>IP Addres</th>
+  <th>Initiated</th>
+  <th>Actions</th>
+
+  </thead>
+  <tbody>
+  <% if not @mobile_sessions.blank? %>
+      <% @mobile_sessions.each do |mobile_session| %>
+          <tr>
+            <td id="sessionSource<%= mobile_session.id.to_s %>">Mobile</td>
+            <td id="sessionDevice<%= mobile_session.id.to_s %>"><%= mobile_session.device_name %></td>
+            <td id="sessionIpAddres<%= mobile_session.id.to_s %>"><%= mobile_session.ip_address %></td>
+            <td id="sessionInitiated<%= mobile_session.id.to_s %>"><%= mobile_session.updated_at.strftime('%m/%d/%Y') %></td>
+            <td id="account-actions">
+              <%= link_to "Sign Out", nil, :id => "logOut_#{mobile_session.id}" %>
+            </td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>
