@@ -38,6 +38,9 @@ SlinggitWebapp::Application.routes.draw do
     resources :comments
   end
 
+  ##TEST CONTROLLER##
+  get "test/db_view"
+
   ##MOBILE CONTROLLER##
   post "mobile/user_signup"
   post "mobile/user_login"
