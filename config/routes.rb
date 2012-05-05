@@ -5,7 +5,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/verify_email_availability', :to => 'users#verify_email_availability', via: :post
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
-  match 'networks/add_api_account', :to => 'networks#add_api_account' , via: :get
+  match 'networks/add_api_account', :to => 'networks#add_api_account', via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
   match 'sessions/sign_out_of_device', :to => 'sessions#sign_out_of_device', via: :post
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
@@ -50,12 +50,12 @@ SlinggitWebapp::Application.routes.draw do
   post "mobile/user_login"
   post "mobile/user_logout"
   post "mobile/user_login_status"
-  post "mobile/get_user_twiiter_post_data"
-  post "mobile/get_slinggit_twitter_post_data"
+  post "mobile/get_user_post_data"
+  post "mobile/get_slinggit_post_data"
   post "mobile/get_user_api_accounts"
-  post "mobile/create_twitter_post"
-  post "mobile/delete_twitter_post"
-  post "mobile/update_twitter_post"
+  post "mobile/create_post"
+  post "mobile/close_post"
+  post "mobile/update_post"
   post "mobile/get_slinggit_post_data"
 
   #TODO remove this before launch, for testing in browser only
@@ -63,11 +63,11 @@ SlinggitWebapp::Application.routes.draw do
   get "mobile/user_login"
   get "mobile/user_logout"
   get "mobile/user_login_status"
-  get "mobile/get_user_twitter_post_data"
-  get "mobile/get_slinggit_twitter_post_data"
+  get "mobile/get_user_post_data"
+  get "mobile/get_slinggit_post_data"
   get "mobile/get_user_api_accounts"
   get "mobile/create_post"
-  get "mobile/delete_post"
+  get "mobile/close_post"
   get "mobile/update_post"
   get "mobile/get_slinggit_post_data"
 

@@ -240,10 +240,10 @@ class MobileController < ApplicationController
   def resubmit_network_post
   end
 
-  def close_twitter_post
+  def close_post
   end
 
-  def update_twitter_post
+  def update_post
   end
 
   def get_user_twiiter_post_data
