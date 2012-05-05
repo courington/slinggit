@@ -1,4 +1,4 @@
-class PostHistoryTable < ActiveRecord::Migration
+class FixScrewUpWithHistoriesTable < ActiveRecord::Migration
   def up
     if not ActiveRecord::Base.connection.table_exists? 'post_histories'
       create_table :post_histories do |t|
