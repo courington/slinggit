@@ -207,6 +207,7 @@ class MobileController < ApplicationController
               :price => post.price.to_i,
               :location => post.location,
               :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
+              :image_uri => 'http://netobjects.com/assets/images/icon-image-bank.png',
               :created_at_date => post.created_at.strftime("%m-%d-%Y"),
               :created_at_time => post.created_at.strftime("%H:%M")
           }
