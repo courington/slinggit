@@ -290,19 +290,29 @@ class MobileController < ApplicationController
   private
 
   def create_or_update_mobile_auth_token(user_id)
-    if mobile_session = MobileSession.first(:conditions => ['user_id = ? AND unique_identifier = ?', user_id, @state])
-      mobile_session.update_attribute(:mobile_auth_token, Digest::SHA1.hexdigest("#{Time.now.to_i}-#{user_id}"))
+    if not @state.blank?
+      if mobile_session = MobileSession.first(:conditions => ['user_id = ? AND unique_identifier = ?', user_id, @state])
+        mobile_session.update_attribute(:mobile_auth_token, Digest::SHA1.hexdigest("#{Time.now.to_i}-#{user_id}"))
+      else
+        mobile_session = MobileSession.create(
+            :user_id => user_id.to_i,
+            :unique_identifier => @state,
+            :device_name => @device_name,
+            :ip_address => request.blank? ? 'remote_application' : request.remote_ip,
+            :mobile_auth_token => Digest::SHA1.hexdigest("#{Time.now.to_i}-#{user_id}"),
+            :options => @options
+        )
+      end
+      return mobile_session.mobile_auth_token
     else
-      mobile_session = MobileSession.create(
-          :user_id => user_id.to_i,
-          :unique_identifier => @state,
-          :device_name => @device_name,
-          :ip_address => request.blank? ? 'remote_application' : request.remote_ip,
-          :mobile_auth_token => Digest::SHA1.hexdigest("#{Time.now.to_i}-#{user_id}"),
-          :options => @options
+      render_error_response(
+          :error_location => 'global',
+          :error_reason => 'missing required_paramater - state validation error',
+          :error_code => '401',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
+      return
     end
-    return mobile_session.mobile_auth_token
   end
 
   #-----RENDERS-----#

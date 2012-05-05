@@ -30,6 +30,10 @@
         white-space: nowrap;
     }
 
+    #signOutOfallAccounts {
+        float: left;
+    }
+
         /*
         #addTwitterbutton {
             margin-top: 80px;
@@ -67,19 +71,25 @@
   <% else %>
       <tr>
         <td> You don't have any active mobile sessions.</td>
-        <td> </td>
-        <td> </td>
-        <td> </td>
-        <td> </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
   <% end %>
   </tbody>
 </table>
 
+<%= link_to "Sign Out Of All Sessions", nil, :id => "sessionLogOut_all" %>
+
 <script type="text/javascript">
+    remove_all = false
     $("[id^=sessionLogOut_]").each(function (key) {
         $('#' + this.id).click(function (e) {
             e.preventDefault();
+            if (this.id.split('_')[1] == 'all') {
+                remove_all = true;
+            }
             triggering_session = e;
             $.ajax({
                 type:"POST",
@@ -87,8 +97,15 @@
                 data:{mobile_session_id:this.id}
             }).success(
                     function (response) {
-                        $('#' + triggering_session.currentTarget.parentElement.parentElement.id).hide();
                         $('#sessionDeleteResult').html('<div class="alert alert-success">' + response + '</div>')
+                        if (remove_all) {
+                            $("[id^=sessionContainer_]").each(function () {
+                                $('#' + this.id).hide();
+                            })
+                        } else {
+                            $('#' + triggering_session.currentTarget.parentElement.parentElement.id).hide();
+                        }
+
 
                     }).error(function (response) {
                         steve = response

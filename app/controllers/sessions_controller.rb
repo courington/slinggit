@@ -27,11 +27,18 @@ class SessionsController < ApplicationController
   def sign_out_of_device
     if not params[:mobile_session_id].blank?
       mobile_session_id = params[:mobile_session_id].split('_').last
-      if mobile_session = MobileSession.first(:conditions => ['user_id = ? AND id = ?', current_user.id, mobile_session_id])
-        mobile_session.update_attribute(:mobile_auth_token, nil)
-        render :text => "#{mobile_session.device_name} is not longer signed in.", :status => 200
+      if mobile_session_id == 'all'
+        MobileSession.all(:conditions => ['user_id = ?', current_user.id]).each do |mobile_session|
+          mobile_session.update_attribute(:mobile_auth_token, nil)
+        end
+        render :text => "You have signed out of all mobile devices.", :status => 200
       else
-        render :text => 'not found', :status => 500
+        if mobile_session = MobileSession.first(:conditions => ['user_id = ? AND id = ?', current_user.id, mobile_session_id])
+          mobile_session.update_attribute(:mobile_auth_token, nil)
+          render :text => "#{mobile_session.device_name} is not longer signed in.", :status => 200
+        else
+          render :text => 'not found', :status => 500
+        end
       end
     end
   end
