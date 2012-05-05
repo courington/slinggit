@@ -44,6 +44,7 @@
                   </li>
                 </ul>
               </li>
+              <span id="quickSearchField"><%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search' %></span>
           <% else %>
               <li class="<%= 'active' if current_page?(signin_path) %>">
                 <%= link_to "Sign in", signin_path %>
@@ -54,3 +55,16 @@
     </div>
   </div>
 </header>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#quickSearch').keypress(function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                document.location.href = "/posts/list/" + $('#quickSearch').val();
+            }
+        });
+    });
+
+</script>

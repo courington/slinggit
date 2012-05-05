@@ -145,6 +145,12 @@ p {
   }
 }
 
+#quickSearchField {
+  float: right;
+  top: 7px;
+  position: relative;;
+}
+
 /* footer */
 
 footer {
@@ -174,8 +180,8 @@ footer {
   }
 }
 
-#footerLoggedInUser{
-  float:right;
+#footerLoggedInUser {
+  float: right;
 }
 
 /* sidebar */

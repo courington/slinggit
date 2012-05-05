@@ -80,7 +80,9 @@
   </tbody>
 </table>
 
-<%= link_to "Sign Out Of All Sessions", nil, :id => "sessionLogOut_all" %>
+<% if not @mobile_sessions.blank? %>
+    <%= link_to "Sign Out Of All Sessions", nil, :id => "sessionLogOut_all" %>
+<% end %>
 
 <script type="text/javascript">
     remove_all = false

@@ -85,4 +85,11 @@ class PostsController < ApplicationController
     @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ?', current_user.id, 'twitter'])
   end
 
+  def list
+    if not params[:search_term].blank?
+      #this needs refactored for pagination
+      @posts = Post.all(:conditions => ["content like ? OR hashtag_prefix like ?", params[:search_term]])
+    end
+  end
+
 end
