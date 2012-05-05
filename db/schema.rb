@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20120505132925) do
     t.string   "options",           :limit => 1000
   end
 
-  create_table "post_histories", :force => true do |t|
+  create_table "post_history", :force => true do |t|
     t.string   "content"
     t.datetime "created_at"
     t.string   "hashtag_prefix"

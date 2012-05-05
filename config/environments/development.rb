@@ -43,11 +43,17 @@ SlinggitWebapp::Application.configure do
   #config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
 
   # Prod credentials.  Only here right now for error testing.
-   config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
-   config.twitter_consumer_secret = 'rwN7VmydrgRlRdb0kev1XxRi30YSpXHI7oXQEpPgUE'
+   config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
+   config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
 
   # @slinggit's authentication token and password, generated from the above consumer
+  # Probably won't need this again in dev, but just commenting out for now.
   # key and secret.
-  config.slinggit_client_atoken = '561831843-mHAqcKLJfFyCSQOXvlyH5fCvHRlRhRqMFDPNMS9h'
-  config.slinggit_client_asecret = 'T7yvd3FfhpVJacLS6zjFO3yrXl8HDurhfXLq3AQL8'
+  # config.slinggit_client_atoken = '561831843-mHAqcKLJfFyCSQOXvlyH5fCvHRlRhRqMFDPNMS9h'
+  # config.slinggit_client_asecret = 'T7yvd3FfhpVJacLS6zjFO3yrXl8HDurhfXLq3AQL8'
+
+  # @gitnsling_test's authentication token and password, generated from the above consumer
+  # key and secret.
+  config.slinggit_client_atoken = '571885574-lYr8br0gkmLOaPSB5GRxGssQhpVlxZavksjFFWbQ'
+  config.slinggit_client_asecret = 't6dzy6YrrG0I0STKvRRCyAqWrVqZiRNfqfzWNGbdxYI'
 end
