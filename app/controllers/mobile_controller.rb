@@ -30,7 +30,7 @@ class MobileController < ApplicationController
                     :mobile_auth_token => mobile_auth_token
                 )
               else
-                render_error_reponse(
+                render_error_response(
                     :error_location => 'user_signup',
                     :error_reason => 'invalide - email',
                     :error_code => '409',
@@ -38,7 +38,7 @@ class MobileController < ApplicationController
                 )
               end
             else
-              render_error_reponse(
+              render_error_response(
                   :error_location => 'user_signup',
                   :error_reason => 'unavailable - user_name',
                   :error_code => '409',
@@ -46,7 +46,7 @@ class MobileController < ApplicationController
               )
             end
           else
-            render_error_reponse(
+            render_error_response(
                 :error_location => 'user_signup',
                 :error_reason => 'unavailable - email',
                 :error_code => '409',
@@ -54,7 +54,7 @@ class MobileController < ApplicationController
             )
           end
         else
-          render_error_reponse(
+          render_error_response(
               :error_location => 'user_signup',
               :error_reason => 'missing required_paramater - password',
               :error_code => '403',
@@ -62,7 +62,7 @@ class MobileController < ApplicationController
           )
         end
       else
-        render_error_reponse(
+        render_error_response(
             :error_location => 'user_signup',
             :error_reason => 'missing required_paramater - email',
             :error_code => '403',
@@ -70,7 +70,7 @@ class MobileController < ApplicationController
         )
       end
     else
-      render_error_reponse(
+      render_error_response(
           :error_location => 'user_signup',
           :error_reason => 'missing required_paramater - user_name',
           :error_code => '403',
@@ -90,7 +90,7 @@ class MobileController < ApplicationController
               :mobile_auth_token => mobile_auth_token
           )
         else
-          render_error_reponse(
+          render_error_response(
               :error_location => 'user_login',
               :error_reason => 'password authentication failed',
               :error_code => '403',
@@ -98,7 +98,7 @@ class MobileController < ApplicationController
           )
         end
       else
-        render_error_reponse(
+        render_error_response(
             :error_location => 'user_login',
             :error_reason => 'missing required_paramater - password',
             :error_code => '403',
@@ -106,7 +106,7 @@ class MobileController < ApplicationController
         )
       end
     else
-      render_error_reponse(
+      render_error_response(
           :error_location => 'user_login',
           :error_reason => 'missing required_paramater - email',
           :error_code => '403',
@@ -123,7 +123,7 @@ class MobileController < ApplicationController
             :logged_in => false
         )
       else
-        render_error_reponse(
+        render_error_response(
             :error_location => 'user_logout',
             :error_reason => 'not found - mobile_session',
             :error_code => '404',
@@ -131,7 +131,7 @@ class MobileController < ApplicationController
         )
       end
     else
-      render_error_reponse(
+      render_error_response(
           :error_location => 'user_logout',
           :error_reason => 'missing required_paramater - mobile_auth_token',
           :error_code => '403',
@@ -152,7 +152,7 @@ class MobileController < ApplicationController
         )
       end
     else
-      render_error_reponse(
+      render_error_response(
           :error_location => 'user_login_status',
           :error_reason => 'missing required_paramater - mobile_auth_token',
           :error_code => '403',
@@ -168,7 +168,7 @@ class MobileController < ApplicationController
       else
       end
     else
-      render_error_reponse(
+      render_error_response(
           :error_location => 'create_twitter_post',
           :error_reason => 'missing required_paramater - request_data',
           :error_code => '403',
@@ -227,7 +227,7 @@ class MobileController < ApplicationController
     }.to_json, :content_type => 'application/json'
   end
 
-  def render_error_responce(options = {})
+  def render_error_response(options = {})
     render :text => {
         :status => ERROR_STATUS,
         :result => options
