@@ -40,6 +40,7 @@ SlinggitWebapp::Application.routes.draw do
 
   ##TEST CONTROLLER##
   get "test/db_view"
+  match "test/delete_db_view_data/(:id)", to: 'test#delete_db_view_data#id', via: :get
 
   ##MOBILE CONTROLLER##
   post "mobile/user_signup"
