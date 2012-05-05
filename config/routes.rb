@@ -7,6 +7,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
   match 'networks/add_api_account', :to => 'networks#add_api_account' , via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
+  match 'sessions/sign_out_of_device', :to => 'sessions#sign_out_of_device', via: :post
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy, :index]

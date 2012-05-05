@@ -36,6 +36,7 @@ SlinggitWebapp::Application.configure do
   config.assets.debug = true
 
   PROD_ENV = false
+  BASEURL = "localhost:3000"
 
   #  Our consumer key and secret for our twitter app (DEV)
   #config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'

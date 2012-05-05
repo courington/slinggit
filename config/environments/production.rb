@@ -66,6 +66,7 @@ SlinggitWebapp::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   PROD_ENV = true
+  BASEURL = "localhost:3000"
 
   #  Our consumer key and secret for our twitter app (PROD)
   config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'

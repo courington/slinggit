@@ -55,6 +55,7 @@ class UsersController < ApplicationController
           session.delete('access_token')
           session.delete('access_secret')
         end
+        UserMailer.welcome_email(@user).deliver
         sign_in @user
         flash[:success] = "Welcome SlingGit.  Time to start slingin!"
         redirect_back_or @user
