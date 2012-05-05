@@ -238,12 +238,12 @@ class MobileController < ApplicationController
 
   def set_state
     if params[:state].blank?
-      render :text => error_responce(
+      render_error_responce(
           :error_location => 'global',
           :error_reason => 'missing required_paramater - state',
           :error_code => '401',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      ), :content_type => 'application/json'
+      )
       return
     else
       @state = params[:state]
@@ -252,12 +252,12 @@ class MobileController < ApplicationController
 
   def set_device_name
     if params[:device_name].blank?
-      render :text => error_responce(
+      render_error_responce(
           :error_location => 'global',
           :error_reason => 'missing required_paramater - device_name',
           :error_code => '401',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      ), :content_type => 'application/json'
+      )
       return
     else
       @device_name = params[:device_name]
@@ -272,12 +272,12 @@ class MobileController < ApplicationController
 
   def require_post
     if not request.post?
-      render :text => error_responce(
+      render_error_responce(
           :error_location => 'global',
           :error_reason => 'bad request format',
           :error_code => '400',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      ), :content_type => 'application/json'
+      )
       return
     end
   end
@@ -285,15 +285,17 @@ class MobileController < ApplicationController
   def validate_request_data_is_valid_json
     if not params[:post_data].blank?
       if not params[:post_data].valid_json?
-        render :text => error_responce(
+        render_error_responce(
             :error_location => 'global',
             :error_reason => 'post_data is not a valid json string',
             :error_code => '400',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        ), :content_type => 'application/json'
+        )
       end
     end
   end
+
+
 
 
 end
