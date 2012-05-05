@@ -29,7 +29,7 @@ class Post < ActiveRecord::Base
   belongs_to :user
   has_many :comments, dependent: :destroy
 
-  has_attached_file :photo, styles: {:medium => "300x300#"},
+  has_attached_file :photo, styles: {:medium => "300x300#", :search => '80x80#'},
                     url: "/assets/posts/:id/:style/:basename.:extension",
                     path: ":rails_root/public/assets/posts/:id/:style/:basename.:extension"
   VALID_LOCATION_REGEX = /\A[a-z0-9]{,20}\z/i #We may want to force either numbers or letters at a later date
