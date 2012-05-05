@@ -1,6 +1,6 @@
 class PostHistoryTable < ActiveRecord::Migration
   def up
-    create_table :post_history do |t|
+    create_table :post_histories do |t|
       t.integer :id
       t.string :content
       t.datetime :created_at
@@ -19,6 +19,6 @@ class PostHistoryTable < ActiveRecord::Migration
   end
 
   def down
-    drop_table :post_history
+    drop_table :post_histories
   end
 end
