@@ -14,7 +14,7 @@
 <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
     $(document).ready(function () {
-        <% if signed_in? %>
+        <% if signed_in? and not @primary_twitter_account.blank?  %>
         $('#twtr-widget-1').css('float', 'left');
         $('#twtr-widget-2').css('float', 'right');
         $('.footer').css('padding-top', '355px');
@@ -50,7 +50,7 @@
             behavior:'all'
         }
     }).render().setUser('slinggit').start();
-    <% if signed_in? %>
+    <% if signed_in? and not @primary_twitter_account.blank? %>
     new TWTR.Widget({
         version:2,
         type:'profile',
