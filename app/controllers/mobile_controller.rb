@@ -1,8 +1,8 @@
 class MobileController < ApplicationController
-  before_filter :require_post
-  before_filter :set_state
-  before_filter :set_device_name
-  before_filter :set_options
+  #before_filter :require_post
+  #before_filter :set_state
+  #before_filter :set_device_name
+  #before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
   ERROR_STATUS = "error"
@@ -195,8 +195,30 @@ class MobileController < ApplicationController
       if not params[:limit].blank?
         search_term = params[:search_term]
         user_name = params[:user_name]
+        posts = []
+        if not user_name.blank?
+          if user = User.first(:conditions => ['name = ? AND status != "deleted"', user_name])
+            if not search_term.blank?
+              posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ?) AND user_id = ?", "%#{search_term}%", "%#{search_term}%", user.id], :offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+            else
+              posts = Post.all(:conditions => ["user_id = #{user.id}"], :offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+            end
+          else
+            render_error_response(
+                :error_location => 'get_slinggit_post_data',
+                :error_reason => "user not found - #{params[:user_name]}",
+                :error_code => '404',
+                :friendly_error => 'That user no longer has any open items for sale.'
+            )
+            return
+          end
+        elsif not search_term.blank?
+          posts = Post.all(:conditions => ["content like '%#{search_term}%' OR hashtag_prefix like '%#{search_term}%'"], :offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+        else
+          posts = Post.all(:offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+        end
 
-        posts = Post.all(:offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+
         posts_array = []
         posts.each do |post|
           posts_array << {
