@@ -17,4 +17,5 @@
 //= require backbone
 //= require json2
 //= require jquery.mailcheck.min
+//= require jquery.tablesorter.min
 //= require_tree .

@@ -20,7 +20,13 @@
   <% if not @posts.blank? %>
       <% @posts.each do |post| %>
           <tr class="postResult" id="postResult_<%= post.id %>">
-            <td><%= image_tag post.photo.url(:medium) %></td>
+            <td>
+              <% if post.photo_file_name.blank? %>
+                <%= image_tag "http://placehold.it/80x80" %>
+              <% else %>
+                <%= image_tag post.photo.url(:search) %>
+              <% end %>
+            </td>
             <td><%= post.hashtag_prefix.titleize %></td>
             <td><%= post.content %></td>
             <td>$<%= "%.0f" % post.price || "no description" %></td>
@@ -33,6 +39,7 @@
 </table>
 
 <script type="text/javascript">
+
     $(document).ready(function () {
         $("[id^=postResult_]").each(function (key) {
             $('#' + this.id).click(function (e) {
@@ -41,6 +48,8 @@
                 document.location.href = "/posts/" + post_id;
             });
         });
+
+        $("table").tablesorter(); 
     });
 
 </script>
