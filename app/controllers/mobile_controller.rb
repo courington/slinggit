@@ -1,7 +1,7 @@
 class MobileController < ApplicationController
   #before_filter :require_post
-  before_filter :set_state
-  before_filter :set_device_name
+  #before_filter :set_state
+  #before_filter :set_device_name
   before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
@@ -178,7 +178,6 @@ class MobileController < ApplicationController
   end
 
   def resubmit_twitter_post
-
   end
 
   def close_twitter_post
@@ -188,9 +187,74 @@ class MobileController < ApplicationController
   end
 
   def get_user_twiiter_post_data
+
   end
 
-  def get_slinggit_twitter_post_data
+  def get_slinggit_post_data
+    if not params[:offset].blank?
+      if not params[:limit].blank?
+        search_term = params[:search_term]
+        user_name = params[:user_name]
+
+        posts = Post.all(:offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+        posts_array = []
+        posts.each do |post|
+          posts_array << {
+              :post_id => post.id.to_s,
+              :open => post.open ? 'true' : 'false',
+              :content => post.content,
+              :hashtag_prefix => post.hashtag_prefix,
+              :price => post.price.to_i,
+              :location => post.location,
+              :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
+              :created_at_date => post.created_at.strftime("%m-%d-%Y"),
+              :created_at_time => post.created_at.strftime("%H:%M")
+          }
+        end
+
+        return_data = {
+            :rows_found => posts.length.to_s,
+            :params_used => {
+                :offset => params[:offset],
+                :limit => params[:limit],
+                :search_term => search_term.blank? ? '' : search_term,
+                :user_name => user_name.blank? ? '' : user_name
+            },
+            :posts => posts_array
+        }
+
+
+        render_success_response(return_data)
+      else
+        render_error_response(
+            :error_location => 'get_slinggit_post_data',
+            :error_reason => 'missing required_paramater - limit',
+            :error_code => '403',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_slinggit_post_data',
+          :error_reason => 'missing required_paramater - offset',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+
+
+    #order by open, created_at desc
+    #start_index required
+    #max_records (required)
+    #search_term (optional)
+    #user_name(optional)
+  end
+
+  def get_user_post_data
+    #order_by open, created_at desc
+    #start_index (required)
+    #max_records (required)
+    #mobile_auth_token (required)
   end
 
   def get_user_api_accounts
@@ -238,7 +302,7 @@ class MobileController < ApplicationController
 
   def set_state
     if params[:state].blank?
-      render_error_responce(
+      render_error_response(
           :error_location => 'global',
           :error_reason => 'missing required_paramater - state',
           :error_code => '401',
@@ -252,7 +316,7 @@ class MobileController < ApplicationController
 
   def set_device_name
     if params[:device_name].blank?
-      render_error_responce(
+      render_error_response(
           :error_location => 'global',
           :error_reason => 'missing required_paramater - device_name',
           :error_code => '401',
@@ -272,7 +336,7 @@ class MobileController < ApplicationController
 
   def require_post
     if not request.post?
-      render_error_responce(
+      render_error_response(
           :error_location => 'global',
           :error_reason => 'bad request format',
           :error_code => '400',
@@ -285,7 +349,7 @@ class MobileController < ApplicationController
   def validate_request_data_is_valid_json
     if not params[:post_data].blank?
       if not params[:post_data].valid_json?
-        render_error_responce(
+        render_error_response(
             :error_location => 'global',
             :error_reason => 'post_data is not a valid json string',
             :error_code => '400',
@@ -294,8 +358,6 @@ class MobileController < ApplicationController
       end
     end
   end
-
-
 
 
 end

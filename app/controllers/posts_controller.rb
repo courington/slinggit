@@ -44,7 +44,7 @@ class PostsController < ApplicationController
         end
 
         if not recipient_api_account_ids.blank?
-          @post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids)
+          @post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
         end
       end
 
