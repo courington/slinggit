@@ -26,11 +26,11 @@ class MobileController < ApplicationController
               if user.save
                 log_user_login(user)
                 mobile_auth_token = create_or_update_mobile_auth_token(user.id)
-                render :text => success_response(
+                render_success_response(
                     :mobile_auth_token => mobile_auth_token
                 )
               else
-                render :text => error_responce(
+                render_error_reponse(
                     :error_location => 'user_signup',
                     :error_reason => 'invalide - email',
                     :error_code => '409',
@@ -38,7 +38,7 @@ class MobileController < ApplicationController
                 )
               end
             else
-              render :text => error_responce(
+              render_error_reponse(
                   :error_location => 'user_signup',
                   :error_reason => 'unavailable - user_name',
                   :error_code => '409',
@@ -46,7 +46,7 @@ class MobileController < ApplicationController
               )
             end
           else
-            render :text => error_responce(
+            render_error_reponse(
                 :error_location => 'user_signup',
                 :error_reason => 'unavailable - email',
                 :error_code => '409',
@@ -54,7 +54,7 @@ class MobileController < ApplicationController
             )
           end
         else
-          render :text => error_responce(
+          render_error_reponse(
               :error_location => 'user_signup',
               :error_reason => 'missing required_paramater - password',
               :error_code => '403',
@@ -62,7 +62,7 @@ class MobileController < ApplicationController
           )
         end
       else
-        render :text => error_responce(
+        render_error_reponse(
             :error_location => 'user_signup',
             :error_reason => 'missing required_paramater - email',
             :error_code => '403',
@@ -70,7 +70,7 @@ class MobileController < ApplicationController
         )
       end
     else
-      render :text => error_responce(
+      render_error_reponse(
           :error_location => 'user_signup',
           :error_reason => 'missing required_paramater - user_name',
           :error_code => '403',
@@ -86,32 +86,32 @@ class MobileController < ApplicationController
         if user && user.authenticate(params[:password])
           log_user_login(user)
           mobile_auth_token = create_or_update_mobile_auth_token(user.id)
-          render :text => success_response(
+          render_success_response(
               :mobile_auth_token => mobile_auth_token
-          ), :content_type => 'application/json'
+          )
         else
-          render :text => error_responce(
+          render_error_reponse(
               :error_location => 'user_login',
               :error_reason => 'password authentication failed',
               :error_code => '403',
               :friendly_error => 'Incorrect email and or password.'
-          ), :content_type => 'application/json'
+          )
         end
       else
-        render :text => error_responce(
+        render_error_reponse(
             :error_location => 'user_login',
             :error_reason => 'missing required_paramater - password',
             :error_code => '403',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        ), :content_type => 'application/json'
+        )
       end
     else
-      render :text => error_responce(
+      render_error_reponse(
           :error_location => 'user_login',
           :error_reason => 'missing required_paramater - email',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      ), :content_type => 'application/json'
+      )
     end
   end
 
@@ -119,45 +119,45 @@ class MobileController < ApplicationController
     if not params[:mobile_auth_token].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, params[:mobile_auth_token]])
         mobile_session.update_attribute(:mobile_auth_token, nil)
-        render :text => success_response(
+        render_success_response(
             :logged_in => false
-        ), :content_type => 'application/json'
+        )
       else
-        render :text => error_responce(
+        render_error_reponse(
             :error_location => 'user_logout',
             :error_reason => 'not found - mobile_session',
             :error_code => '404',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        ), :content_type => 'application/json'
+        )
       end
     else
-      render :text => error_responce(
+      render_error_reponse(
           :error_location => 'user_logout',
           :error_reason => 'missing required_paramater - mobile_auth_token',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      ), :content_type => 'application/json'
+      )
     end
   end
 
   def user_login_status
     if not params[:mobile_auth_token].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, params[:mobile_auth_token]])
-        render :text => success_response(
+        render_success_response(
             :logged_in => true
-        ), :content_type => 'application/json'
+        )
       else
-        render :text => success_response(
+        render_success_response(
             :logged_in => false
-        ), :content_type => 'application/json'
+        )
       end
     else
-      render :text => error_responce(
+      render_error_reponse(
           :error_location => 'user_login_status',
           :error_reason => 'missing required_paramater - mobile_auth_token',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      ), :content_type => 'application/json'
+      )
     end
   end
 
@@ -168,12 +168,12 @@ class MobileController < ApplicationController
       else
       end
     else
-      render :text => error_responce(
+      render_error_reponse(
           :error_location => 'create_twitter_post',
           :error_reason => 'missing required_paramater - request_data',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      ), :content_type => 'application/json'
+      )
     end
   end
 
@@ -196,7 +196,7 @@ class MobileController < ApplicationController
   def get_user_api_accounts
   end
 
-  def searc_posts
+  def search_posts
 
   end
 
@@ -218,18 +218,20 @@ class MobileController < ApplicationController
     return mobile_session.mobile_auth_token
   end
 
-  def success_response(options = {})
-    return {
+  #-----RENDERS-----#
+
+  def render_success_response(options = {})
+    render :text => {
         :status => SUCCESS_STATUS,
         :result => options
-    }.to_json
+    }.to_json, :content_type => 'application/json'
   end
 
-  def error_responce(options = {})
-    return {
+  def render_error_responce(options = {})
+    render :text => {
         :status => ERROR_STATUS,
         :result => options
-    }.to_json
+    }.to_json, :content_type => 'application/json'
   end
 
   #----BEFORE FILTERS----#
