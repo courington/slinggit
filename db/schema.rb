@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120505132925) do
+ActiveRecord::Schema.define(:version => 20120505173422) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -56,6 +56,22 @@ ActiveRecord::Schema.define(:version => 20120505132925) do
   end
 
   create_table "post_histories", :force => true do |t|
+    t.string   "content"
+    t.datetime "created_at"
+    t.string   "hashtag_prefix"
+    t.string   "location"
+    t.boolean  "open"
+    t.string   "photo_content_type"
+    t.string   "photo_file_name"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.decimal  "price"
+    t.string   "recipient_api_account_ids"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  create_table "post_history", :force => true do |t|
     t.string   "content"
     t.datetime "created_at"
     t.string   "hashtag_prefix"

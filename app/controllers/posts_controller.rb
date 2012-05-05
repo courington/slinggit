@@ -8,6 +8,10 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    # creating user object to compare against current_user
+    # in order to display edit option.  Dan, if there's a
+    # better way, fell free to change this.
+    @user = User.find(@post.user_id)
     @comments = @post.comments.paginate(page: params[:page])
     # Since we give an non-singed in user the option to sign in, we
     # want to return them to the post after signin.

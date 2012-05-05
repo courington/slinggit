@@ -9,6 +9,11 @@
         <div class="row">
 
           <h2><%= @post.hashtag_prefix %></h2> 
+
+          <% if @user == current_user %>
+            <%= link_to "edit", edit_post_path(@post), class: "btn" %>
+            <span class="pull-right"></span>
+          <% end %>  
           <hr>
 
         </div> <!-- row 1 end --> 
