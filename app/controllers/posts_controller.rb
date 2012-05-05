@@ -7,12 +7,17 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-    @comments = @post.comments.paginate(page: params[:page])
-    # Since we give an non-singed in user the option to sign in, we
-    # want to return them to the post after signin.
-    unless signed_in?
-      store_location
+    @post = Post.first(:conditions => ['id = ?', params[:id]])
+    if not @post.blank?
+      @comments = @post.comments.paginate(page: params[:page])
+      # Since we give an non-singed in user the option to sign in, we
+      # want to return them to the post after signin.
+      unless signed_in?
+        store_location
+      end
+    else
+      flash[:error] = 'Oops, we couldnt find the post you were looking for.'
+      redirect_to :controller => 'static_pages', :action => 'home'
     end
   end
 
@@ -74,22 +79,27 @@ class PostsController < ApplicationController
     redirect_back_or current_user
   end
 
+  def results
+    if not params[:id].blank?
+      @posts = Post.all(:conditions => ["content like ? OR hashtag_prefix like ? OR location like ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%"], :order => 'created_at desc')
+    end
+  end
+
   private
 
   def correct_user
-    @post = current_user.posts.find_by_id(params[:id])
-    redirect_to current_user if @post.nil?
+    if signed_in?
+      @post = Post.first(:conditions => ['user_id = ? AND id = ?', current_user.id, params[:id]])
+      if @post.blank?
+        redirect_to current_user
+      end
+    else
+      redirect_to new_user_path
+    end
   end
 
   def load_api_accounts
     @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ?', current_user.id, 'twitter'])
-  end
-
-  def list
-    if not params[:search_term].blank?
-      #this needs refactored for pagination
-      @posts = Post.all(:conditions => ["content like ? OR hashtag_prefix like ?", params[:search_term]])
-    end
   end
 
 end
