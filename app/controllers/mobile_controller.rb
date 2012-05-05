@@ -1,8 +1,8 @@
 class MobileController < ApplicationController
   #before_filter :require_post
-  before_filter :set_state
-  before_filter :set_device_name
-  before_filter :set_options
+  #before_filter :set_state
+  #before_filter :set_device_name
+  #before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
   ERROR_STATUS = "error"
@@ -161,23 +161,83 @@ class MobileController < ApplicationController
     end
   end
 
-  def create_twitter_post
-    if not params[:post_data].blank?
-      decoded_post_data = ActiveSupport::JSON.decode(params[:post_data])
-      if not decoded_post_data['content'].blank?
+  def create_post
+    if not params[:mobile_auth_token].blank?
+      if not params[:hashtag_prefix].blank?
+        if not params[:content].blank?
+          if not params[:price].blank?
+            if not params[:location].blank?
+              if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', params[:mobile_auth_token]], :select => 'user_id')
+                if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+                  post = Post.create(
+                      :user_id => user.id,
+                      :hashtag_prefix => params[:hashtag_prefix],
+                      :content => params[:content],
+                      :price => params[:price],
+                      :location => params[:location]
+                  )
+                  render_success_response(
+                      :post_id => post.id
+                  )
+                else
+                  render_error_response(
+                      :error_location => 'create_twitter_post',
+                      :error_reason => 'not found - user',
+                      :error_code => '403',
+                      :friendly_error => 'Oops, something went wrong.  Please try again later.'
+                  )
+                end
+              else
+                render_error_response(
+                    :error_location => 'create_twitter_post',
+                    :error_reason => 'not found - mobile_session',
+                    :error_code => '403',
+                    :friendly_error => 'Oops, something went wrong.  Please try again later.'
+                )
+              end
+            else
+              render_error_response(
+                  :error_location => 'create_twitter_post',
+                  :error_reason => 'missing required_paramater - location',
+                  :error_code => '403',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+          else
+            render_error_response(
+                :error_location => 'create_twitter_post',
+                :error_reason => 'missing required_paramater - price',
+                :error_code => '403',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'create_twitter_post',
+              :error_reason => 'missing required_paramater - content',
+              :error_code => '403',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
       else
+        render_error_response(
+            :error_location => 'create_twitter_post',
+            :error_reason => 'missing required_paramater - hashtag_prefix',
+            :error_code => '403',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
       end
     else
       render_error_response(
           :error_location => 'create_twitter_post',
-          :error_reason => 'missing required_paramater - request_data',
+          :error_reason => 'missing required_paramater - mobile_auth_token',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
     end
   end
 
-  def resubmit_twitter_post
+  def resubmit_network_post
   end
 
   def close_twitter_post
@@ -315,7 +375,7 @@ class MobileController < ApplicationController
     end
   end
 
-  #-----RENDERS-----#
+#-----RENDERS-----#
 
   def render_success_response(options = {})
     render :text => {
@@ -331,7 +391,7 @@ class MobileController < ApplicationController
     }.to_json, :content_type => 'application/json'
   end
 
-  #----BEFORE FILTERS----#
+#----BEFORE FILTERS----#
 
   def set_state
     if params[:state].blank?

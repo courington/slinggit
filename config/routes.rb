@@ -63,12 +63,12 @@ SlinggitWebapp::Application.routes.draw do
   get "mobile/user_login"
   get "mobile/user_logout"
   get "mobile/user_login_status"
-  get "mobile/get_user_twiiter_post_data"
+  get "mobile/get_user_twitter_post_data"
   get "mobile/get_slinggit_twitter_post_data"
   get "mobile/get_user_api_accounts"
-  get "mobile/create_twitter_post"
-  get "mobile/delete_twitter_post"
-  get "mobile/update_twitter_post"
+  get "mobile/create_post"
+  get "mobile/delete_post"
+  get "mobile/update_post"
   get "mobile/get_slinggit_post_data"
 
 
