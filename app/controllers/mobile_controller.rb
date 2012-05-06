@@ -1,8 +1,8 @@
 class MobileController < ApplicationController
-  before_filter :require_post
-  before_filter :set_state
-  before_filter :set_device_name
-  before_filter :set_options
+  #before_filter :require_post
+  #before_filter :set_state
+  #before_filter :set_device_name
+  #before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
   ERROR_STATUS = "error"
@@ -169,29 +169,49 @@ class MobileController < ApplicationController
             if not params[:location].blank?
               if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', params[:mobile_auth_token]], :select => 'user_id')
                 if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-                  post = Post.create(
+                  post = Post.new(
                       :user_id => user.id,
                       :hashtag_prefix => params[:hashtag_prefix],
                       :content => params[:content],
                       :price => params[:price],
                       :location => params[:location]
                   )
-                  render_success_response(
-                      :post_id => post.id
-                  )
+                  if post.save
+                    render_success_response(
+                        :post_id => post.id
+                    )
+                  else
+                    if post.errors.messages.length > 0
+                      error_field = post.errors.messages.first.first
+                      error_reason = post.errors.messages.first.last.first
+                      render_error_response(
+                          :error_location => 'create_twitter_post',
+                          :error_reason => "#{error_field} #{error_reason}",
+                          :error_code => '403',
+                          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+                      )
+                    else
+                      render_error_response(
+                          :error_location => 'create_twitter_post',
+                          :error_reason => "unknown error occured",
+                          :error_code => '404',
+                          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+                      )
+                    end
+                  end
                 else
                   render_error_response(
                       :error_location => 'create_twitter_post',
-                      :error_reason => 'not found - user',
-                      :error_code => '403',
+                      :error_reason => 'user not found',
+                      :error_code => '404',
                       :friendly_error => 'Oops, something went wrong.  Please try again later.'
                   )
                 end
               else
                 render_error_response(
                     :error_location => 'create_twitter_post',
-                    :error_reason => 'not found - mobile_session',
-                    :error_code => '403',
+                    :error_reason => 'mobile session not found',
+                    :error_code => '404',
                     :friendly_error => 'Oops, something went wrong.  Please try again later.'
                 )
               end
@@ -454,3 +474,5 @@ class MobileController < ApplicationController
 
 
 end
+
+
