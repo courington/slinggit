@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
         if user = User.first(:conditions => ['name = ?', redirect_info])
           redirect_to :controller => :posts, :action => :show, :id => user.id
         elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info])
+          redirect.update_attribute(:clicks, redirect.clicks += 1)
           redirect_to redirect.target_uri
         else
           flash[:error] = "Darn, we couldn't find what you were looking for.  Try using the quick search feature to find items for sale.'"
