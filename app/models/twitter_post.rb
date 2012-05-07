@@ -28,7 +28,8 @@ class TwitterPost < ActiveRecord::Base
 
       if not twitter_client.blank?
         begin
-          result = twitter_client.update("##{self.post.hashtag_prefix}forsale #{self.post.content} - $#{"%.0f" % self.post.price} | Slinggit")
+          #result = twitter_client.update("##{self.post.hashtag_prefix}forsale #{self.post.content} - $#{"%.0f" % self.post.price} | Slinggit" )
+          result = tweet_constructor(twitter_client)
           self.twitter_post_id = result.attrs['id_str']
           self.last_result = 'successful post'
           self.status = 'done'
@@ -50,7 +51,7 @@ class TwitterPost < ActiveRecord::Base
 # Logic for constructing twitter message.
   def tweet_constructor(client)
     #TODO need to add the url to the post to the tweet
-    client.update("##{self.hashtag_prefix}forsale ##{self.location} #{self.content} - #{self.price} | Slinggit")
+    client.update_with_media("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{self.post.content} - $#{"%.0f" % self.post.price} | slinggit", File.new(self.post.photo.path(:medium)))
   end
 
 end
