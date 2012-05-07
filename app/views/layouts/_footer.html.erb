@@ -1,17 +1,34 @@
 <footer class="footer">
-  <small>
-    <a href="http://slinggit.com/">slinggit</a>
-    by Chris Klein
-  </small>
-  <nav>
-    <ul>
-      <li><%= link_to "About", about_path %></li>
-      <li><%= link_to "Help", help_path %></li>
-      <li><%= link_to "Contact", contact_path %></li>
-    </ul>
-    <% if signed_in? %>
-        <span id="footerLoggedInUser"><%= "#{current_user.email}" %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
-    <% else %>
-    <% end %>
-  </nav>
+	<section class="wrapper">
+		<nav>
+			<ul>
+				<li><%= link_to "About", about_path %></li>
+				<li><%= link_to "Help", help_path %></li>
+				<li><%= link_to "Contact", contact_path %></li>
+			</ul>
+			<% if signed_in? %>
+			<span id="footerLoggedInUser"><%= "# {current_user.email
+		}
+		" %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
+		<% else %>
+		<% end %>
+	</nav>
+	
+	<form>
+		<fieldset>
+			<input type="email" size="100" placeholder="Email Address" name="emailAddress" />
+		</fieldset>
+		<fieldset>
+			<textarea type="text" size="100" placeholder="Message" name="description" /></textarea>
+		</fieldset>
+		<fieldset>
+			<input type="button" for="inputSmall" value="Send" class="submitBTN">
+		</fieldset>
+	</form>
+	
+	<small>
+		Copywrite &copy; 2012 <a href="http://slinggit.com/">slinggit</a>
+	</small>
+</section>
+<!-- <%= debug(params) if Rails.env.development? %> -->
 </footer>

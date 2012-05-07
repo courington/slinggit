@@ -1,16 +1,18 @@
 <% provide(:title, 'Home') %>
-<div class="center hero-unit">
-  <h1>slinggit</h1>
-  <% if current_user.blank? %>
-      <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-  <% elsif not current_user.blank? %>
+<section class="wrapper">
+	
+	<div class="page_col twoCol">
+  	<h1>slinggit</h1>
+  		<% if current_user.blank? %>
+      	<%= link_to "Sign up now!", signup_path, class: "btn_large" %>
+  		<% elsif not current_user.blank? %>
       <p>Welcome back <%= current_user.name %>!</p>
-
       <p>Got some old junk laying
-        around?  <%= link_to "Slinggit", new_post_path, class: "btn btn-large btn-primary" %></p>
-  <% end %>
-</div>
+        around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
+  			<% end %>
+	</div>
 
+<div class="page_col twoCol">
 <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
     $(document).ready(function () {
@@ -19,8 +21,8 @@
         $('#twtr-widget-2').css('float', 'right');
         $('.footer').css('padding-top', '355px');
         <% else %>
-        $('#twtr-widget-1').css('padding-left', '270px');
-        $('.footer').css('padding-left', '50px');
+        $('#twtr-widget-1').css('padding-left', '0');
+        $('.footer').css('padding-left', '0');
         <% end %>
 
     });
@@ -30,17 +32,19 @@
         type:'profile',
         rpp:20,
         interval:300,
-        width:400,
-        height:200,
+        width:'auto',
+        height:'550',
         theme:{
             shell:{
-                background:'#333333',
-                color:'#ffffff'
+//cc: BG is set to $wht
+                background:'rgb(248, 248, 248)',
+//cc: text-color is set to $main-grey
+                color:'rgb(119, 119, 119)'
             },
             tweets:{
-                background:'#000000',
-                color:'#ffffff',
-                links:'#4aed05'
+                background:'rgb(248, 248, 248)',
+                color:'rgb(119, 119, 119)',
+                links:'rgb(119, 119, 119)'
             }
         },
         features:{
@@ -56,8 +60,8 @@
         type:'profile',
         rpp:20,
         interval:300,
-        width:400,
-        height:200,
+        width:'auto',
+        height:'auto',
         theme:{
             shell:{
                 background:'#333333',
@@ -78,3 +82,5 @@
     }).render().setUser('<%= @primary_twitter_account.user_name%>').start();
     <% end %>
 </script>
+</div>
+</section>
