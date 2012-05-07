@@ -3,6 +3,10 @@
 	
 	<div class="page_col twoCol">
   	<h1>slinggit</h1>
+		<form class="page_search">
+		<input type="text" size="100" placeholder="search" name="search" />
+		<input type="button" for="search" value="Submit">
+		</form>
   		<% if current_user.blank? %>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum consequat sapien vel molestie. Aliquam at massa arcu. Mauris volutpat.</p>
       	<%= link_to "Sign up now!", signup_path, class: "btn_large" %>
