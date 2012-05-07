@@ -144,8 +144,10 @@ class MobileController < ApplicationController
   def user_login_status
     if not params[:mobile_auth_token].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, params[:mobile_auth_token]])
+        user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'name')
         render_success_response(
-            :logged_in => true
+            :logged_in => true,
+            :user_name => user.name
         )
       else
         render_success_response(
