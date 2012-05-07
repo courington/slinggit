@@ -1,0 +1,87 @@
+input[type="text"] {
+	width: 33%;
+	padding: .4em .6em;
+	font-size: $font-size;
+	font-family: $main-font;
+	color: $main-grey;
+	border: 1px solid $lt-grey;
+	border-top-left-radius: $radius;
+	border-bottom-left-radius: $radius;
+	box-shadow: $input-txt-shading;
+	@include transition;
+		&:focus {
+		outline: none;
+		box-shadow: $input-focus-shdw;
+		border: 1px solid $main-blue;
+		}
+}
+input[type="password"],
+input[type="email"],
+textarea {
+	width: 33%;
+	padding: .4em .6em;
+	font-size: $font-size;
+	font-family: $main-font;
+	color: $main-grey;
+	border: 1px solid $lt-grey;
+	@include rounded-corners(.5em);
+	box-shadow: $input-txt-shading;
+	@include transition;
+		&:focus {
+		outline: none;
+		box-shadow: $input-focus-shdw;
+		border: 1px solid $main-blue;
+		}
+}
+textarea {
+	resize: none;
+	height:6.3em;
+}
+input[type="button"] {
+	background: $main-green;
+	padding: .4em;
+	font-size: $font-size;
+	font-family: $main-font;
+	color: $wht;
+	border-top-right-radius: $radius;
+	border-bottom-right-radius: $radius;
+	border: 1px solid $main-grey;
+	cursor: pointer;
+	box-shadow: $btn-shading;
+	text-shadow: $btn-txt-shading;
+	@include transition;
+	&:hover,
+	&:focus {
+		box-shadow: $btn-focus;
+		text-shadow: $btn-focus-txt;
+		outline:none;
+	}
+	&:active {
+		box-shadow: $btn-active;
+		text-shadow: $btn-active-txt;
+	}
+}
+input.submitBTN,
+.btn_large {
+	background: $main-green;
+	padding: .4em;
+	font-size: $font-size;
+	font-family: $main-font;
+	color: $wht;
+	@include rounded-corners(.5em);
+	border: 1px solid $main-grey;
+	cursor: pointer;
+	box-shadow: $btn-shading;
+	text-shadow: $btn-txt-shading;
+	@include transition;
+	&:hover,
+	&:focus {
+		box-shadow: $btn-focus;
+		color: darken($wht, 5%);
+		outline:none;
+	}
+	&:active {
+		box-shadow: $btn-active;
+		color: darken($wht, 10%);
+	}
+}

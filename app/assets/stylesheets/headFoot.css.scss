@@ -1,0 +1,130 @@
+// -- SHADOWS -- 
+$head-shadow: 0 1px 1px rgba(0, 0, 0, .5), inset 0 -1px 0 rgba(255, 255, 255, .25), inset 0 3px 13px rgba(0, 0, 0, .15);
+$foot-shadow: 0 -1px 1px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .25), inset 0 -3px 13px rgba(0, 0, 0, .15);
+
+header {
+	width: 100%;
+	overflow: hidden;
+	background: $main-blue;
+	box-shadow: $head-shadow;
+	position:relative;
+	z-index:9999;
+	h1 {
+		text-indent: -99999px;
+	}
+	.logo {
+		display: inline-block;
+		width: 20%;
+		float: left;
+		margin: -1.84em 0 0 0;
+		img {
+			width: 100%;
+			float: left;
+			margin: .2em 0;
+		}
+		small {
+			font-size: 1.2em;
+			color: #F0F0F0;
+			position: relative;
+			top: -1.6em;
+			left: 85%;
+		}
+	}
+	nav {
+		font-size: $font-size;
+		color: $wht;
+		text-shadow: $txt-shdw;
+		float: right;
+		margin: 2.1em 0 0 0;
+		width: 50%;
+		overflow: hidden;
+		ul {
+			width: 100%;
+			overflow: hidden;
+			li {
+				float: left;
+				margin: .5em 1em;
+				width: 10%;
+				&:last-child {
+					width: 50%;
+					float: right;		
+				}
+				a {
+					color: $wht;
+					@include transition;
+					&:hover {
+						color: $main-yellow;
+					}
+				}
+				input[type="text"] {
+					font-size: .8em;
+					@include rounded-corners(.5em);
+					margin-left: 0;
+					margin-top: -1.4em;
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+footer {
+	clear:both;
+	background: $main-grey;
+	min-height: 15em;
+	box-shadow: $foot-shadow;
+		nav {
+			font-size: $font-size;
+			color: $wht;
+			text-shadow: $txt-shdw;
+			margin-top: 1.4em;
+			//border-left: 1px solid #F8F8F8;
+			//box-shadow: inset 1px 0 0 rgba(0, 0, 0, .25);
+			width:30%;
+			float:left;
+			ul {
+				li {
+					margin: .5em 1em;
+					a {
+						color: $wht;
+						@include transition;
+						&:hover {
+							color: $main-yellow;
+						}
+					}	
+				}
+			}
+		}
+		form {
+			width: 45%;
+			float: right;
+			margin:1.4em 0 0 0;
+			fieldset {
+				width: 75%;
+				float: left;
+				&:last-child {
+					width: 20%;
+					float: left;
+				}
+				input[type="email"],
+				textarea {
+					@include rounded-corners(.5em);
+					margin: .2em 0;
+					width: 90%;
+				}
+				input[type="button"] {
+					width: 100%;
+					margin: 5.5em 0 0 0;
+				}
+			}
+		}
+		small {
+			clear: left;
+			display: block;
+			margin: 1.4em;
+			font-size: 1.1em;
+			color: $wht;
+			a {
+				color: $wht;
+			}
+		}
+}
