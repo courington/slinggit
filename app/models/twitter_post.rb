@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: twitter_posts
+#
+#  id              :integer         not null, primary key
+#  user_id         :integer
+#  api_account_id  :integer
+#  post_id         :integer
+#  content         :string(255)
+#  twitter_post_id :string(255)
+#  status          :string(255)     default("new")
+#  last_result     :string(255)     default("no attempt")
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#
+
 #t.id :user_id
 #t.id :api_account_id
 #t.string :post_id

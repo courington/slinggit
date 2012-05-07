@@ -18,7 +18,7 @@
 #  status          :string(255)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
-#  primary_account :boolean         default(FALSE)
+#  reauth_required :string(255)     default("no")
 #
 
 class ApiAccount < ActiveRecord::Base

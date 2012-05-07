@@ -10,8 +10,7 @@
 #  password_digest :string(255)
 #  remember_token  :string(255)
 #  admin           :boolean         default(FALSE)
-#  twitter_atoken  :string(255)
-#  twitter_asecret :string(255)
+#  status          :string(255)     default("active")
 #
 
 class User < ActiveRecord::Base

@@ -8,6 +8,9 @@
 #  mobile_auth_token :string(255)
 #  created_at        :datetime        not null
 #  updated_at        :datetime        not null
+#  device_name       :string(255)
+#  ip_address        :string(255)
+#  options           :string(1000)
 #
 
 class MobileSession < ActiveRecord::Base
