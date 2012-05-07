@@ -87,7 +87,8 @@ class MobileController < ApplicationController
           log_user_login(user)
           mobile_auth_token = create_or_update_mobile_auth_token(user.id)
           render_success_response(
-              :mobile_auth_token => mobile_auth_token
+              :mobile_auth_token => mobile_auth_token,
+              :user_name => user.name
           )
         else
           render_error_response(
