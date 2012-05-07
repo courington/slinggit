@@ -20,6 +20,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def user_name_show
+    user_name = params[:path]
+    if not user_name.blank?
+      @user = User.first(:conditions => ['name = ?', user_name])
+      if not @user.blank?
+        render :show
+      else
+        flash[:error] = "Dang, we couldn't find anyone with the user name #{user_name}'"
+        redirect_to :controller => :static_pages, :action => :home
+      end
+    else
+      redirect_to :controller => :static_pages, :action => :home
+    end
+  end
+
   def new
     if session[:user].blank?
       @user = User.new
