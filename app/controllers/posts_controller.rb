@@ -20,7 +20,7 @@ class PostsController < ApplicationController
         store_location
       end
     else
-      flash[:error] = 'Oops, we couldnt find the post you were looking for.'
+      flash[:error] = 'Oops, we were unable to find the post you were looking for.'
       redirect_to :controller => 'static_pages', :action => 'home'
     end
   end
