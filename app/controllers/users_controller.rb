@@ -25,6 +25,7 @@ class UsersController < ApplicationController
     if not user_name.blank?
       @user = User.first(:conditions => ['name = ?', user_name])
       if not @user.blank?
+        @posts = @user.posts.paginate(page: params[:page])
         render :show
       else
         flash[:error] = "Dang, we couldn't find anyone with the user name #{user_name}'"
