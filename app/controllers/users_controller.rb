@@ -20,26 +20,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def user_name_show
-    user_name = params[:path]
-    if user_name.include? '/'
-      redirect_to '/404.html'
-    else
-      if not user_name.blank?
-        @user = User.first(:conditions => ['name = ?', user_name])
-        if not @user.blank?
-          @posts = @user.posts.paginate(page: params[:page])
-          render :show
-        else
-          flash[:error] = "Dang, we couldn't find anyone with the user name #{user_name}'"
-          redirect_to :controller => :static_pages, :action => :home
-        end
-      else
-        redirect_to :controller => :static_pages, :action => :home
-      end
-    end
-  end
-
   def new
     if session[:user].blank?
       @user = User.new

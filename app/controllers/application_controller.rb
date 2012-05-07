@@ -3,6 +3,25 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
+  def redirect
+    redirect_info = params[:path]
+    if not redirect_info.blank?
+      if redirect_info.include? '/'
+        redirect_to '/404.html'
+      else
+        if user = User.first(:conditions => ['name = ?', redirect_info])
+          redirect_to :controller => :posts, :action => :show, :id => user.id
+        elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info])
+          redirect_to redirect.target_uri
+        else
+          flash[:error] = "Darn, we couldn't find what you were looking for.  Try using the quick search feature to find items for sale.'"
+        end
+      end
+    else
+      redirect_to :controller => :static_pages, :action => :home
+    end
+  end
+
   private
 
   def log_user_login(user = nil)

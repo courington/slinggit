@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120505173422) do
+ActiveRecord::Schema.define(:version => 20120507050116) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -71,22 +71,6 @@ ActiveRecord::Schema.define(:version => 20120505173422) do
     t.integer  "user_id"
   end
 
-  create_table "post_history", :force => true do |t|
-    t.string   "content"
-    t.datetime "created_at"
-    t.string   "hashtag_prefix"
-    t.string   "location"
-    t.boolean  "open"
-    t.string   "photo_content_type"
-    t.string   "photo_file_name"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.decimal  "price"
-    t.string   "recipient_api_account_ids"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
   create_table "posts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
@@ -106,6 +90,15 @@ ActiveRecord::Schema.define(:version => 20120505173422) do
   add_index "posts", ["location"], :name => "index_posts_on_location"
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
+
+  create_table "redirects", :force => true do |t|
+    t.string   "key_code"
+    t.string   "target_uri"
+    t.integer  "clicks"
+    t.boolean  "active",     :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
 
   create_table "twitter_posts", :force => true do |t|
     t.integer  "user_id"

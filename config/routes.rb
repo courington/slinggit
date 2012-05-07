@@ -73,7 +73,7 @@ SlinggitWebapp::Application.routes.draw do
   get "mobile/update_post"
   get "mobile/get_slinggit_post_data"
 
-  match '*path', :to => 'users#user_name_show'
+  match '*path', :to => 'application#redirect'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
