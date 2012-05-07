@@ -4,6 +4,7 @@
 	<div class="page_col twoCol">
   	<h1>slinggit</h1>
   		<% if current_user.blank? %>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum consequat sapien vel molestie. Aliquam at massa arcu. Mauris volutpat.</p>
       	<%= link_to "Sign up now!", signup_path, class: "btn_large" %>
   		<% elsif not current_user.blank? %>
       <p>Welcome back <%= current_user.name %>!</p>
@@ -44,7 +45,7 @@
             tweets:{
                 background:'rgb(248, 248, 248)',
                 color:'rgb(119, 119, 119)',
-                links:'rgb(119, 119, 119)'
+                links:'rgb(72,141,226)'
             }
         },
         features:{
@@ -64,13 +65,13 @@
         height:'auto',
         theme:{
             shell:{
-                background:'#333333',
-                color:'#ffffff'
+                background:'rgb(248, 248, 248)',
+                color:'rgb(119, 119, 119)'
             },
             tweets:{
-                background:'#000000',
-                color:'#ffffff',
-                links:'#4aed05'
+                background:'rgb(248, 248, 248)',
+                color:'rgb(119, 119, 119)',
+                links:'rgb(72,141,226)'
             }
         },
         features:{

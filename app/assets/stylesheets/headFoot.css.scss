@@ -1,6 +1,6 @@
 // -- SHADOWS -- 
-$head-shadow: 0 1px 1px rgba(0, 0, 0, .5), inset 0 -1px 0 rgba(255, 255, 255, .25), inset 0 3px 13px rgba(0, 0, 0, .15);
-$foot-shadow: 0 -1px 1px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .25), inset 0 -3px 13px rgba(0, 0, 0, .15);
+$head-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.25), inset 0 3px 13px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, .15);
+$foot-shadow: 0 -1px 1px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .25);
 
 header {
 	width: 100%;
@@ -70,8 +70,9 @@ header {
 footer {
 	clear:both;
 	background: $main-grey;
-	min-height: 15em;
 	box-shadow: $foot-shadow;
+	position:relative;
+	z-index:9999;
 		nav {
 			font-size: $font-size;
 			color: $wht;
@@ -126,5 +127,8 @@ footer {
 			a {
 				color: $wht;
 			}
+		}
+		.wrapper {
+		padding-bottom: 2.4em;
 		}
 }

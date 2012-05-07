@@ -7,15 +7,44 @@
 		</div>
 		<nav>
 			<ul>
-		  	<li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>
-		  	<% if signed_in? %>
-		      	<% if current_user.admin? %>
-		          <li class="<%= 'active' if current_page?(users_path) %>"><%= link_to "Users", users_path %></li>
-		      	<% end %>
-		  		<% else %>
-		      <li class="<%= 'active' if current_page?(signin_path) %>"><%= link_to "Sign in", signin_path %></li>
-		  		<% end %>
-		  	<li><%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %></li>
+			  <li class="<%= 'active' if current_page?(root_path) %>">
+			    <%= link_to "Home", root_path %>
+			  </li>
+			  <% if signed_in? %>
+			      <% if current_user.admin? %>
+			          <li class="<%= 'active' if current_page?(users_path) %>">
+			            <%= link_to "Users", users_path %>
+			          </li>
+			      <% end %>
+			      <li id="accountDropDown" class="dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
+			        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			          Account <b class="caret"></b>
+			        </a>
+			        <ul class="dropdown-menu">
+			          <li class="<%= 'active' if current_page?(current_user) %>">
+			            <%= link_to "Posts", current_user %>
+			          </li>
+			          <li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
+			            <%= link_to "Profile", edit_user_path(current_user) %>
+			          </li>
+			          <li class="<%= 'active' if current_page?(networks_path) %>">
+			            <%= link_to "Twitter Accounts", networks_path %>
+			          </li>
+			          <li class="<%= 'active' if current_page?(sessions_path) %>">
+			            <%= link_to "Mobile Sessions", sessions_path %>
+			          </li>
+			          <li class="divider"></li>
+			          <li>
+			            <%= link_to "Sign out", signout_path, method: "delete" %>
+			          </li>
+			        </ul>
+			      </li>
+			  <% else %>
+			      <li class="<%= 'active' if current_page?(signin_path) %>">
+			        <%= link_to "Sign in", signin_path %>
+			      </li>
+			  <% end %>
+			  <li><%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %></li>
 			</ul>
 		</nav>
 	</section>
@@ -32,4 +61,72 @@
         });
     });
 
+
+		<script>
+		//setup an anon function
+		// level one
+		(function(){
+			// level two
+			var DropDown = (function(){
+				// level three
+				var initialize = function(){
+					_hideObjects();
+					_setListeners();
+				}
+				//hide the drop down list
+				var _hideObjects = function(){
+					// level four
+					$('#dropdown-menu').hide();
+				}
+				//set listeners to show drop down
+				var _setListeners = function(){
+					// level four
+					$('.dropdown-toggle').click(function(){
+						$('#dropdown-menu').slideDown();
+					});
+					$('.dropDownList').click(function(){
+						//level five
+						_connectService();
+					});
+					//listen for click on .connectWith
+					//if #dropDown is open (.connectWith has fired)
+					//close #dropDown
+					/*if($('#dropDown').slideDown() === true){
+						$('.connectWith').click(function(){
+							$('#dropDown').slideUp();
+						});
+					}else{
+						return false
+					};*/
+				}
+				var _connectService = function(){
+					// level six
+					//this is where connect code goes
+						alert('hello');
+						$('#dropDown').slideUp();
+				}
+				return {init: initialize}
+			}());
+
+			this.ConnectIt = ConnectIt}).call(this);
+
+		$(document).ready(function(){
+				ConnectIt.init()
+		});
+		</script>
+
+
 </script>
+
+
+<!-- <ul>
+	<li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>
+	<% if signed_in? %>
+    	<% if current_user.admin? %>
+        <li class="<%= 'active' if current_page?(users_path) %>"><%= link_to "Users", users_path %></li>
+    	<% end %>
+		<% else %>
+    <li class="<%= 'active' if current_page?(signin_path) %>"><%= link_to "Sign in", signin_path %></li>
+		<% end %>
+	<li><%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %></li>
+</ul> -->
