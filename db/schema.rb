@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508024233) do
+ActiveRecord::Schema.define(:version => 20120508022747) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -71,34 +71,18 @@ ActiveRecord::Schema.define(:version => 20120508024233) do
     t.integer  "user_id"
   end
 
-  create_table "post_history", :force => true do |t|
-    t.string   "content"
-    t.datetime "created_at"
-    t.string   "hashtag_prefix"
-    t.string   "location"
-    t.boolean  "open"
-    t.string   "photo_content_type"
-    t.string   "photo_file_name"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.decimal  "price"
-    t.string   "recipient_api_account_ids"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
   create_table "posts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "hashtag_prefix"
-    t.integer  "price",                     :limit => 8
-    t.boolean  "open",                                   :default => true
+    t.decimal  "price",                     :precision => 8, :scale => 2
+    t.boolean  "open",                                                    :default => true
     t.string   "location"
     t.string   "recipient_api_account_ids"
   end
@@ -110,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20120508024233) do
   create_table "redirects", :force => true do |t|
     t.string   "key_code"
     t.string   "target_uri"
-    t.integer  "clicks",     :default => 0
+    t.integer  "clicks"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -126,6 +110,17 @@ ActiveRecord::Schema.define(:version => 20120508024233) do
     t.string   "last_result",     :default => "no attempt"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+  end
+
+  create_table "user_limitations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "limitation_type"
+    t.integer  "limit"
+    t.integer  "frequency"
+    t.string   "frequency_type"
+    t.boolean  "active",          :default => true
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "user_logins", :force => true do |t|
