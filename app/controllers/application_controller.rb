@@ -25,22 +25,29 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def passes_limitations?(limitation_type)
-    if signed_in?
-      case limitation_type
-        when :posts
-          user_limitations = UserLimitation.first(:conditions => ['limitation_type = "posts" AND user_id = ?', current_user.id])
-          if user_limitations
-            past_time_contraint = Time.now.advance(user_limitations.frequency_type.to_sym => user_limitations.frequency * -1)
-            number_of_posts = Post.count(:conditions => ['created_at >= ?', past_time_contraint])
-            if number_of_posts >= user_limitations.user_limit
-              return false
+  def passes_limitations?(limitation_type, user_id = nil)
+    if not limitation_type.blank?
+      if not current_user.blank?
+        user_id = current_user.id
+      end
+      if not user_id.blank?
+        case limitation_type.to_sym
+          when :posts
+            user_limitations = UserLimitation.first(:conditions => ['limitation_type = "posts" AND user_id = ?', user_id])
+            if user_limitations
+              past_time_contraint = Time.now.advance(user_limitations.frequency_type.to_sym => user_limitations.frequency * -1)
+              number_of_posts = Post.count(:conditions => ['created_at >= ?', past_time_contraint])
+              if number_of_posts >= user_limitations.user_limit
+                return false
+              else
+                return true
+              end
             else
               return true
             end
-          else
-            return true
-          end
+        end
+      else
+        return true
       end
     else
       return true

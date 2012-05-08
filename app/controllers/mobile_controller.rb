@@ -363,6 +363,47 @@ class MobileController < ApplicationController
 
   end
 
+  def check_limitations
+    if not params[:mobile_auth_token].blank?
+      if not params[:limitation_type].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, params[:mobile_auth_token]])
+          user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id')
+          success = passes_limitations?(params[:limitation_type], user.id)
+          if success
+            render_success_response(
+                :limitation_type => params[:limitation_type],
+                :pass => true
+            )
+          else
+            render_success_response(
+                :limitation_type => params[:limitation_type],
+                :pass => false,
+                :friendly_error => 'You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.'
+            )
+          end
+        else
+          render_success_response(
+              :logged_in => false
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'user_login_status',
+            :error_reason => 'missing required_paramater - limitation_type',
+            :error_code => '403',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'user_login_status',
+          :error_reason => 'missing required_paramater - mobile_auth_token',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
   private
 
   def create_or_update_mobile_auth_token(user_id)
