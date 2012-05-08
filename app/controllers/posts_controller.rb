@@ -26,8 +26,11 @@ class PostsController < ApplicationController
   end
 
   def new
-    if signed_in?
-      @post = Post.new
+    @post = Post.new
+    success = passes_limitations?(:posts)
+    if not success
+      @cant_post = true
+      flash[:notice] = 'In order to keep postings on Slinggit relevant, we currently only allow 10 posts every 24 hours.  Please wait a while and post again.'
     end
   end
 

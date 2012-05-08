@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508024233) do
+ActiveRecord::Schema.define(:version => 20120508090332) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(:version => 20120508024233) do
   create_table "user_limitations", :force => true do |t|
     t.integer  "user_id"
     t.string   "limitation_type"
-    t.integer  "limit"
+    t.integer  "user_limit"
     t.integer  "frequency"
     t.string   "frequency_type"
     t.boolean  "active",          :default => true
