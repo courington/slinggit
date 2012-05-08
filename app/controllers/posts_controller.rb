@@ -26,8 +26,11 @@ class PostsController < ApplicationController
   end
 
   def new
-    if signed_in?
-      @post = Post.new
+    @post = Post.new
+    success = passes_limitations?(:posts)
+    if not success
+      @cant_post = true
+      flash[:notice] = 'In order to keep postings on Slinggit relevant, we currently only allow 10 posts every 24 hours.  Please wait a while and post again.'
     end
   end
 
@@ -85,7 +88,8 @@ class PostsController < ApplicationController
 
   def results
     if not params[:id].blank?
-      @posts = Post.all(:conditions => ["content like ? OR hashtag_prefix like ? OR location like ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%"], :order => 'created_at desc')
+      #I am currently researching how to make this function more like google search.  Faster and more relevent.
+      @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true], :order => 'created_at desc')
     end
   end
 
