@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507050116) do
+ActiveRecord::Schema.define(:version => 20120508022747) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -110,6 +110,17 @@ ActiveRecord::Schema.define(:version => 20120507050116) do
     t.string   "last_result",     :default => "no attempt"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+  end
+
+  create_table "user_limitations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "limitation_type"
+    t.integer  "limit"
+    t.integer  "frequency"
+    t.string   "frequency_type"
+    t.boolean  "active",          :default => true
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "user_logins", :force => true do |t|
