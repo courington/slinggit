@@ -128,6 +128,17 @@ ActiveRecord::Schema.define(:version => 20120508024233) do
     t.datetime "updated_at",                                :null => false
   end
 
+  create_table "user_limitations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "limitation_type"
+    t.integer  "limit"
+    t.integer  "frequency"
+    t.string   "frequency_type"
+    t.boolean  "active",          :default => true
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
   create_table "user_logins", :force => true do |t|
     t.integer  "user_id"
     t.string   "user_agent"
