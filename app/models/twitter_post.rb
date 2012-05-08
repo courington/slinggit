@@ -66,14 +66,14 @@ class TwitterPost < ActiveRecord::Base
 
 # Logic for constructing twitter message.
   def tweet_constructor(client)
-    #TODO need to add the url to the post to the tweet
+    content = self.post.content.truncate(60, :omission => "...")
     redirect = Redirect.get_or_create(
         :target_uri => "#{BASEURL}/posts/#{self.post.id}"
     )
     if self.post.photo_file_name.blank?
-      return client.update("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{self.post.content} - $#{"%.0f" % self.post.price} - #{redirect.get_short_url} | slinggit")
+      return client.update("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.target_uri}")
     else
-      return client.update_with_media("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{self.post.content} - $#{"%.0f" % self.post.price} - #{redirect.get_short_url} | slinggit", File.new(self.post.photo.path(:medium)))
+      return client.update_with_media("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.target_uri}", File.new(self.post.photo.path(:medium)))
     end
   end
 

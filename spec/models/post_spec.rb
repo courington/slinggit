@@ -12,7 +12,7 @@
 #  photo_file_size           :integer
 #  photo_updated_at          :datetime
 #  hashtag_prefix            :string(255)
-#  price                     :decimal(8, 2)
+#  price                     :integer(8)
 #  open                      :boolean         default(TRUE)
 #  location                  :string(255)
 #  recipient_api_account_ids :string(255)

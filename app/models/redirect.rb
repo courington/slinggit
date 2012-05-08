@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: redirects
+#
+#  id         :integer         not null, primary key
+#  key_code   :string(255)
+#  target_uri :string(255)
+#  clicks     :integer         default(0)
+#  active     :boolean         default(TRUE)
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
+#
+
 class Redirect < ActiveRecord::Base
   attr_accessible :target_uri
 
