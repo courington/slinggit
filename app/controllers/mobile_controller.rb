@@ -1,4 +1,5 @@
 class MobileController < ApplicationController
+  before_filter :validate_request_authenticity
   before_filter :require_post
   before_filter :set_state
   before_filter :set_device_name
@@ -401,6 +402,17 @@ class MobileController < ApplicationController
   end
 
 #----BEFORE FILTERS----#
+  def validate_request_authenticity
+    if not request.user_agent.downcase.include?("slinggit") or not params[:slinggit_access_token] == Digest::SHA1.hexdigest("chris,dan,phil,chase")
+      render_error_response(
+          :error_location => 'global',
+          :error_reason => 'authentication failed',
+          :error_code => '401',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+      return
+    end
+  end
 
   def set_mobile_auth_token
     if params[:mobile_auth_token].blank?
