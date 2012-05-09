@@ -10,17 +10,18 @@ class EmailValidation extends Backbone.View
   		@$userEmail = $("user_email")
   		@url = @options.url
   		@resetUrl = @options.resetUrl
+  		@noThxUrl = @options.noThxUrl
   		@permissionGranted = @options.granted
-  		console.log _.isEmpty @permissionGranted
+  		console.log !_.isEmpty @permissionGranted
   		@noThanks = @options.noThanks
-  		console.log _.isEmpty @noThanks
+  		console.log !_.isEmpty @noThanks
   		@hideFields()
   		if !_.isEmpty @permissionGranted or !_.isEmpty @noThanks then @showHiddenFields()
 
 
   	hideFields: ->
   		$(".form_hiddenFields").hide()
-  		$("#form_signUpActions").hide()
+  		$("#form_signUpActions").show()
   		$("#emailAvailabilityNotification").hide()
 
 
@@ -91,7 +92,7 @@ class EmailValidation extends Backbone.View
 		$("#form_signUpActions").hide()
 		$(".form_hiddenFields").show()
 		hideErrorsAndNotifications()
-		$.ajax url: "<%= url_for :controller => :users, :action => :set_no_thanks %>"
+		$.ajax url: @noThxUrl
 
 
 	twitterAuthorize: (e)->
@@ -109,12 +110,12 @@ class EmailValidation extends Backbone.View
 		$("legend").html "Create your profile"
 		$("#emailSuggestion").remove()
 		hideErrorsAndNotifications()
-		$.ajax url: "<%= url_for :controller => :users, :action => :reset_page_session %>"
+		$.ajax url: @resetUrl
 
 
 ## Exports
-@emailValidationView = (url, resetUrl, sessionGranted, noThanks)->
-	return new EmailValidation({ url: url, resetUrl: resetUrl, granted: sessionGranted, noThanks: noThanks })
+@emailValidationView = (url, resetUrl, noThxUrl, sessionGranted, noThanks)->
+	return new EmailValidation({ url: url, resetUrl: resetUrl, noThxUrl: noThxUrl, granted: sessionGranted, noThanks: noThanks })
 
 
 
