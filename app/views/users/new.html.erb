@@ -49,6 +49,10 @@
 
 <script>
     $(document).ready(function () {
+       // window.emailValidationView(<%= url_for :controller => :users, :action => :verify_email_availability %>)
+    });
+        
+    $(document).ready(function () {
         //Check email address after page comes back from twitter and also on blur
         checkEmailAddress($('#user_email'));
         $('#user_email').on('blur', function () {
