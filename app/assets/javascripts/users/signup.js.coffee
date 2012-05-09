@@ -1,6 +1,7 @@
 
 ## Module
 class EmailValidation extends Backbone.View
+	el: "#new_user"
 
 	initialize: (options)->
 		# This keeps @ as @ in all of our methods.  Very
@@ -10,11 +11,11 @@ class EmailValidation extends Backbone.View
   		@url = @options.url
   		@resetUrl = @options.resetUrl
   		@permissionGranted = @options.granted
-  		console.log @permissionGranted
+  		console.log _.isEmpty @permissionGranted
   		@noThanks = @options.noThanks
-  		console.log @noThanks
+  		console.log _.isEmpty @noThanks
   		@hideFields()
-  		if @permissionGranted or @noThanks then @showHiddenFields()
+  		if !_.isEmpty @permissionGranted or !_.isEmpty @noThanks then @showHiddenFields()
 
 
   	hideFields: ->
@@ -26,7 +27,7 @@ class EmailValidation extends Backbone.View
   	showHiddenFields: ->
   		$(".form_hiddenFields").show()
   		$("#form_signUpActions").hide()
-  		if @permissionGranted then $("legend").html "You are authenticated with Twitter"
+  		if !_.isEmpty @permissionGranted then $("legend").html "You are authenticated with Twitter"
 
 	
 	events:
@@ -43,7 +44,7 @@ class EmailValidation extends Backbone.View
 		domains = [ "hotmail.com", "gmail.com", "aol.com", "msn.com", "yahoo.com", "pixorial.com", "slinggit.com" ]
 		$(e.target).mailcheck
 		  domains: domains
-		  suggested: (element, suggestion) ->
+		  suggested: (element, suggestion) =>
 		    $("#emailSuggestion").remove()
 		    @$userEmail.parent().append "<span id='emailSuggestion'>Did you mean <a href='#' id='emailSuggestionReplaceLink'>" + suggestion.full + "</a></span>"
 
@@ -52,7 +53,8 @@ class EmailValidation extends Backbone.View
 
 
 	validateEmail: (e)->
-		email_address = @$userEmail.val()
+		email_address = $(e.target).val()
+		console.log "email #{email_address}"
 		emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 		if emailRegex.test(email_address)
 		  $.ajax(
