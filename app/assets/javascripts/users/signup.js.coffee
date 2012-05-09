@@ -8,12 +8,35 @@ class EmailValidation extends Backbone.View
   		_.bindAll @
   		@$userEmail = $("user_email")
   		@url = @options.url
+  		@resetUrl = @options.resetUrl
+  		@permissionGranted = @options.granted
+  		console.log @permissionGranted
+  		@noThanks = @options.noThanks
+  		console.log @noThanks
+  		@hideFields()
+  		if @permissionGranted or @noThanks then @showHiddenFields()
+
+
+  	hideFields: ->
+  		$(".form_hiddenFields").hide()
+  		$("#form_signUpActions").hide()
+  		$("#emailAvailabilityNotification").hide()
+
+
+  	showHiddenFields: ->
+  		$(".form_hiddenFields").show()
+  		$("#form_signUpActions").hide()
+  		if @permissionGranted then $("legend").html "You are authenticated with Twitter"
 
 	
 	events:
-		"blur #user_email":   "checkEmailAddress"
-		"keyup input":        "hideErrorsAndNotifications"
-		"keyup #user_email":  "validateEmail"
+		"blur #user_email":                   "checkEmailAddress"
+		"keyup input":                        "hideErrorsAndNotifications"
+		"keyup #user_email":                  "validateEmail"
+		"click #noThanksBTN":                 "callNoThanks"
+		"click #twitterBTN":                  "twitterAuthorize"
+		"click #signUpStartOverLink":         "startOver"
+		"click #emailSuggestionReplaceLink":  "swapEmailWithSuggested"
 
 	
 	checkEmailAddress: (e)->
@@ -22,7 +45,7 @@ class EmailValidation extends Backbone.View
 		  domains: domains
 		  suggested: (element, suggestion) ->
 		    $("#emailSuggestion").remove()
-		    @$userEmail.parent().append "<span id='emailSuggestion'>Did you mean <a href='#' onclick='swapEmailWithSuggested()' id='emailSuggestionReplaceLink'>" + suggestion.full + "</a></span>"
+		    @$userEmail.parent().append "<span id='emailSuggestion'>Did you mean <a href='#' id='emailSuggestionReplaceLink'>" + suggestion.full + "</a></span>"
 
 		  empty: (element) ->
 		    $("#emailSuggestion").remove()
@@ -56,6 +79,47 @@ class EmailValidation extends Backbone.View
 		, "fast"
 
 
+	swapEmailWithSuggested: ->
+		@$userEmail.val($('#emailSuggestionReplaceLink').text())
+		$("#emailSuggestion").remove()
+
+
+	callNoThanks: (e)->
+		e.preventDefault()
+		$("#form_signUpActions").hide()
+		$(".form_hiddenFields").show()
+		hideErrorsAndNotifications()
+		$.ajax url: "<%= url_for :controller => :users, :action => :set_no_thanks %>"
+
+
+	twitterAuthorize: (e)->
+		e.preventDefault()
+		$("#twitter_authenticate").val(true)
+		$("form").submit()
+
+
+	startOver: (e)->
+		e.preventDefault()
+		$(".form_hiddenFields").hide()
+		$("#form_signUpActions").show()
+		$("#user_name").val ""
+		$("#user_email").val ""
+		$("legend").html "Create your profile"
+		$("#emailSuggestion").remove()
+		hideErrorsAndNotifications()
+		$.ajax url: "<%= url_for :controller => :users, :action => :reset_page_session %>"
+
+
 ## Exports
-@emailValidationView = (url)->
-	return new EmailValidation({ url: url })
+@emailValidationView = (url, resetUrl, sessionGranted, noThanks)->
+	return new EmailValidation({ url: url, resetUrl: resetUrl, granted: sessionGranted, noThanks: noThanks })
+
+
+
+
+
+
+
+
+
+
