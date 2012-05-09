@@ -1,64 +1,44 @@
 <%= provide(:title, 'Sign up') %>
-<h1>Sign up</h1>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@user) do |f| %>
-        <span id="emailAvailabilityNotification"></span>
-        <%= render 'shared/error_messages', object: f.object %>
+<section class="wrapper">
+	<header>
+		<h1>Sign up</h1>
+	</header>
+  
+	<%= form_for(@user) do |f| %>
+  	<span id="emailAvailabilityNotification"></span>
+    <%= render 'shared/error_messages', object: f.object %>
+    
+		<fieldset id="signUpIntialFields">
+    	<legend>Create your profile</legend>
+      <%= f.label :name, "User Name", class: "control-label", for: "user_name" %>
+      <%= f.text_field :name, placeholder: "User Name", class: "form_singleLine" %>
+        
+			<%= f.label :email, class: "control-label", for: "user_email" %>
+			<%= f.email_field :email, placeholder: "Email", class: "form_singleLine" %>
+		</fieldset>
+      
+  	<fieldset class="form-actions" id="form_signUpActions">
+    	<%= f.button "Authenticate with Twitter", class: "btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
+      <%= f.button "no twitter account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+      <%= hidden_field_tag :twitter_authenticate, nil %>
+		</fieldset>
 
-        <fieldset>
-          <legend id='profileCreateHeader'>
-            Create your profile
-          </legend>
-          <div class="clearfix-placeholder"></div>
-          <div id="signUpInitialFields">
-            <div class="control-group">
-              <%= f.label :name, "User Name", class: "control-label", for: "user_name" %>
-              <div class="controls">
-                <%= f.text_field :name, class: "input-xlarge" %>
-              </div>
-            </div>
+		<fieldset class="form_hiddenFields">
+			<%= f.label :password, "Slinggit Password", class: "control-label", for: "user_password" %>
+			<%= f.password_field :password, placeholder: "Password", class: "form_singleLine" %>
+        
+			<%= f.label :password_confirmation, "Confirmation", class: "control-label", for: "user_password_confirmation" %>
+			<%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "form_singleLine" %>
+		</fieldset>
 
-            <div class="control-group">
-              <%= f.label :email, class: "control-label", for: "user_email" %>
-              <div class="controls">
-                <%= f.text_field :email, class: "input-xlarge" %>
-              </div>
-            </div>
-
-            <div class="form-actions" id="form_signUpActions">
-              <%= f.submit "Authenticate with Twitter", class: "btn btn-medium btn-info", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-              <%= f.submit "no twitter account", class: "btn", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
-              <%= hidden_field_tag :twitter_authenticate, nil %>
-            </div>
-          </div>
-
-          <div id=signUpPasswordFields>
-            <div class="control-group">
-              <%= f.label :password, "Slinggit Password", class: "control-label", for: "user_password" %>
-              <div class="controls">
-                <%= f.password_field :password, class: "input-xlarge" %>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <%= f.label :password_confirmation, "Confirmation", class: "control-label", for: "user_password_confirmation" %>
-              <div class="controls">
-                <%= f.password_field :password_confirmation, class: "input-xlarge" %>
-              </div>
-            </div>
-
-            <%= f.submit "Create my account", class: "btn btn-medium btn-info" %>
-            <%= link_to 'start over', nil, :onclick => "javascript:void(0)", :id => 'signUpStartOverLink' %>
-
-          </div>
-
-        </fieldset>
-
-    <% end %>
-  </div>
-</div>
+		<fieldset>
+			<%= f.button "Create my account", class: "btn_large" %>
+			<%= link_to 'start over', nil, :onclick => "javascript:void(0)", :id => 'signUpStartOverLink' %>
+		</fieldset>
+		
+	<% end %>
+</section>
 
 <style type="text/css">
     #emailSuggestion {
@@ -102,24 +82,24 @@
         });
 
 
-        $('#signUpPasswordFields').hide();
+        $('.form_hiddenFields').hide();
         $('#form_signUpActions').show();
         $('#emailAvailabilityNotification').hide();
 
 
         <% if session[:twitter_permission_granted] %>
-        $('#signUpPasswordFields').show();
+        $('.form_hiddenFields').show();
         $('#form_signUpActions').hide();
-        $('#profileCreateHeader').html('You are authenticated with Twitter');
+        $('legend').html('You are authenticated with Twitter');
         <% elsif session[:no_thanks]%>
-        $('#signUpPasswordFields').show();
+        $('.form_hiddenFields').show();
         $('#form_signUpActions').hide();
         <% end %>
 
         $('#noThanksBTN').click(function (e) {
             e.preventDefault();
             $('#form_signUpActions').hide();
-            $('#signUpPasswordFields').show();
+            $('.form_hiddenFields').show();
             hideErrorsAndNotifications();
             $.ajax({
                 url:"<%= url_for :controller => :users, :action => :set_no_thanks %>"
@@ -134,11 +114,11 @@
 
         $('#signUpStartOverLink').click(function (e) {
             e.preventDefault();
-            $('#signUpPasswordFields').hide();
+            $('.form_hiddenFields').hide();
             $('#form_signUpActions').show();
             $('#user_name').val('');
             $('#user_email').val('');
-            $('#profileCreateHeader').html('Create your profile');
+            $('legend').html('Create your profile');
             $('#emailSuggestion').remove();
             hideErrorsAndNotifications();
             $.ajax({

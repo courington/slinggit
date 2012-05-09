@@ -61,7 +61,9 @@ input[type="button"] {
 	}
 }
 input.submitBTN,
-.btn_large {
+.btn_large,
+.btn_medium,
+.btn_small {
 	background: $main-green;
 	padding: .4em;
 	font-size: $font-size;
