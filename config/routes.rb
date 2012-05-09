@@ -45,6 +45,7 @@ SlinggitWebapp::Application.routes.draw do
   match "test/delete_db_view_data/(:id)", to: 'test#delete_db_view_data#id', via: :get
   match "test/delete_db_view_record/(:id)", to: 'test#delete_db_view_record#id', via: :get
   match "test/test_twitter_post/", to: 'test#delete_db_view_record', via: :get
+  match "test/save_file/", to: 'test#save_file', via: :get
 
 
   ##MOBILE CONTROLLER##
