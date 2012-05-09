@@ -28,7 +28,6 @@ class ApplicationController < ActionController::Base
 
   def passes_limitations?(limitation_type, user_id = nil)
     limitation_type = limitation_type.to_sym
-
     user_id = current_user.id || user_id
 
     return true if limitation_type.blank?
@@ -63,37 +62,37 @@ class ApplicationController < ActionController::Base
   end
 
   def create_api_account(options = {})
-    if not options.blank?
-      case options[:source]
-        when :twitter
-          if not ApiAccount.first(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s], :select => 'id')
-            status = 'primary'
-            if ApiAccount.first(:conditions => ['user_id = ? AND status = "primary"', options[:user_object].id], :select => 'id')
-              status = 'active'
-            end
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options.blank?
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options[:source].blank?
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter].include? limitation_type
 
-            api_account = ApiAccount.create(
-                :user_id => options[:user_object].id,
-                :api_id => options[:api_object].user['id'],
-                :api_source => 'twitter',
-                :oauth_token => options[:api_object].oauth_token,
-                :oauth_secret => options[:api_object].oauth_token_secret,
-                :real_name => options[:api_object].user['name'],
-                :user_name => options[:api_object].user['screen_name'],
-                :image_url => options[:api_object].user['profile_image_url'],
-                :description => options[:api_object].user['description'],
-                :language => options[:api_object].user['lang'],
-                :location => options[:api_object].user['location'],
-                :reauth_required => 'no',
-                :status => status
-            )
-            return [true, api_account]
-          else
-            return [false, "You have alraedy connected that Twitter account."]
+    case options[:source].to_sym
+      when :twitter
+        if not ApiAccount.exists?(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
+          status = 'primary'
+          if ApiAccount.exists?(:conditions => ['user_id = ? AND status = "primary" AND api_source = ?', options[:user_object].id, options[:source]])
+            status = 'active'
           end
+
+          api_account = ApiAccount.create(
+              :user_id => options[:user_object].id,
+              :api_id => options[:api_object].user['id'],
+              :api_source => 'twitter',
+              :oauth_token => options[:api_object].oauth_token,
+              :oauth_secret => options[:api_object].oauth_token_secret,
+              :real_name => options[:api_object].user['name'],
+              :user_name => options[:api_object].user['screen_name'],
+              :image_url => options[:api_object].user['profile_image_url'],
+              :description => options[:api_object].user['description'],
+              :language => options[:api_object].user['lang'],
+              :location => options[:api_object].user['location'],
+              :reauth_required => 'no',
+              :status => status
+          )
+          return [true, api_account]
         else
-          #do nothing
-      end
+          return [false, "You have alraedy connected that Twitter account."]
+        end
     end
   end
 
