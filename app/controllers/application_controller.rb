@@ -7,15 +7,16 @@ class ApplicationController < ActionController::Base
     redirect_info = params[:path]
     if not redirect_info.blank?
       if redirect_info.include? '/'
+        #if a route does not exist, redirect to 404
         redirect_to '/404.html'
       else
-        if user = User.first(:conditions => ['name = ?', redirect_info])
+        if user = User.first(:conditions => ['name = ?', redirect_info], :select => 'id')
           redirect_to :controller => :posts, :action => :show, :id => user.id
-        elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info])
+        elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,ckicks')
           redirect.update_attribute(:clicks, redirect.clicks += 1)
           redirect_to redirect.target_uri
         else
-          flash[:error] = "Darn, we couldn't find what you were looking for.  Try using the quick search feature to find items for sale.'"
+          flash[:error] = "We couldn't find what you were looking for.  Try using the quick search feature to find items for sale.'"
         end
       end
     else
@@ -26,31 +27,23 @@ class ApplicationController < ActionController::Base
   private
 
   def passes_limitations?(limitation_type, user_id = nil)
-    if not limitation_type.blank?
-      if not current_user.blank?
-        user_id = current_user.id
-      end
-      if not user_id.blank?
-        case limitation_type.to_sym
-          when :posts
-            user_limitations = UserLimitation.first(:conditions => ['limitation_type = "posts" AND user_id = ?', user_id])
-            if user_limitations
-              past_time_contraint = Time.now.advance(user_limitations.frequency_type.to_sym => user_limitations.frequency * -1)
-              number_of_posts = Post.count(:conditions => ['created_at >= ?', past_time_contraint])
-              if number_of_posts >= user_limitations.user_limit
-                return false
-              else
-                return true
-              end
-            else
-              return true
-            end
+    limitation_type = limitation_type.to_sym
+
+    user_id = current_user.id || user_id
+
+    return true if limitation_type.blank?
+    return true if user_id.blank?
+    return true unless [:posts].include? limitation_type
+
+    case limitation_type
+      when :posts
+        if  user_limitation = UserLimitation.first(:conditions => ['limitation_type = "posts" AND user_id = ?', user_id], :select => 'frequency_type,frequency,user_limit')
+          time_frame = Time.now.advance(user_limitation.frequency_type.to_sym => user_limitation.frequency * -1)
+          if Post.count(:conditions => ['created_at >= ?', time_frame]) >= user_limitation.user_limit
+            return false
+          end
         end
-      else
         return true
-      end
-    else
-      return true
     end
   end
 
