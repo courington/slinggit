@@ -1,15 +1,16 @@
 <%= provide(:title, 'Sign up') %>
 
-<section class="wrapper">
+<section class="wrapper page_col singleWide">
 	<header>
 		<h1>Sign up</h1>
+		<p>Sign Up</p>
 	</header>
   
 	<%= form_for(@user) do |f| %>
   	<span id="emailAvailabilityNotification"></span>
     <%= render 'shared/error_messages', object: f.object %>
     
-		<fieldset id="signUpIntialFields">
+		<fieldset class="page_col twoCol" id="signUpIntialFields">
     	<legend>Create your profile</legend>
       <%= f.label :name, "User Name", class: "control-label", for: "user_name" %>
       <%= f.text_field :name, placeholder: "User Name", class: "form_singleLine" %>
@@ -20,11 +21,11 @@
       
   	<fieldset class="form-actions" id="form_signUpActions">
     	<%= f.button "Authenticate with Twitter", class: "btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-      <%= f.button "no twitter account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+      <%= f.button "No Twitter Account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
       <%= hidden_field_tag :twitter_authenticate, nil %>
 		</fieldset>
 
-		<fieldset class="form_hiddenFields">
+		<fieldset class="form_hiddenFields page_col twoCol">
 			<%= f.label :password, "Slinggit Password", class: "control-label", for: "user_password" %>
 			<%= f.password_field :password, placeholder: "Password", class: "form_singleLine" %>
         

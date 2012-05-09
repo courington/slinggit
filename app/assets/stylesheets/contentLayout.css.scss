@@ -8,6 +8,7 @@ $main-yellow: rgb(255, 183, 40);
 $main-blue: rgb(72, 141, 226);
 $main-green: rgb(75, 192, 75);
 $lt-grey: rgb(219, 219, 219);
+$dk-grey: rgb(62, 62, 62);
 $wht: rgb(248, 248, 248);
 
 // BORDER RADIUS
@@ -56,14 +57,21 @@ body {
 	overflow: hidden;
 	box-shadow: inset 0 0 72px rgba(0, 0, 0, .25);
 	background: $main-grey;
+	color: $dk-grey;
 }
 h1 {
-	font-size: $font-size * 1.4;
+	font-size: $font-size * 1.6;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 h2, h3 {
+	font-size: $font-size * 1.4;
+}
+h4, h5 {
 	font-size: $font-size * 1.2;
 }
-h4, h5, h6, p {
+
+h6, p {
 	font-size: $font-size;
 }
 .wrapper {
@@ -74,7 +82,6 @@ h4, h5, h6, p {
 	overflow: hidden;
 }
 .page_contentContainer {
-	font-size: 62.5%;
 	min-height: 40em;
 	position: relative;
 	z-index: 1;
@@ -82,7 +89,6 @@ h4, h5, h6, p {
 	background: $wht url("/assets/images/textures/texture_tile_97x157.png") repeat top left;
 	padding: 2.6em 0;
 	.page_col {
-		font-size: $font-size;
 		&.twoCol {
 			width: 45%;
 			float: left;
@@ -93,6 +99,16 @@ h4, h5, h6, p {
 			width: 90%;
 			display:block;
 			margin:0 auto;
+		}
+		header {
+			margin:0 0 0 2.5%;
+			p {
+				font-size: $font-size * 1.6;
+				text-transform: uppercase;
+				font-weight: bold;
+				color: rgba(255, 255, 255, .25);
+				margin: -1.075em 0 1.4em .045em;
+			}
 		}
 	}
 	p {
@@ -117,6 +133,66 @@ h4, h5, h6, p {
 			margin-left: -1%;
 		}
 	}
+	
+	//styles for sign up page
+	fieldset > legend {
+	font-size: 1.6em;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+	border-bottom: 1px solid white;
+	width: 80%;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, .38);
+	line-height: 1.8em;
+	}
+	.control-label {
+	float: left;
+	clear: left;
+	margin: 1.4em 0 -1em 0;
+	}
+	input.form_singleLine {
+	float: left;
+	clear: left;
+	margin: 1.4em auto;
+	border-radius: .5em;
+	width: 75%;
+	}
+	#form_signUpActions {
+	clear: left;
+	width: 45%;
+	margin: 1.4em 2.5%;
+	}
+	#noThanksBTN {
+	margin-left: 4%;
+	}
+	.new_user fieldset:last-child {
+	float: right;
+	}
+	.form_hiddenFields.page_col.twoCol {
+	margin-top: 3em;
+	}
+	#error_explanation {
+	font-size: 1.2em;
+	line-height: 1.6em;
+	background: #FD4128;
+	color: #F8F8F8;
+	font-weight: bold;
+	letter-spacing: .1em;
+	border-radius: .5em;
+	padding: .4em 1.4em;
+	width: 45%;
+	margin: 0 auto;
+	border: 1px solid black;
+	box-shadow: 0 0 20px rgba(0, 0, 0, .38);
+	}
+	//end
+	//styles for sign in page
+	#session_email, #session_password {
+	float: left;
+	clear: left;
+	margin: 1.4em 0;
+	border-radius: .5em;
+	width: 75%;
+	}
+	//end
 }
 
 
