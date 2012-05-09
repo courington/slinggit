@@ -164,7 +164,10 @@ class MobileController < ApplicationController
                 )
 
                 begin
-                  File.open("public/assets/images/test_image.jpg", 'w+') << Base64.decode64(request.body)
+                  #File.open("public/assets/images/test_image.jpg", 'w+') << Base64.decode64(request.body)
+                  render_success_response(
+                      :request_body => "#{request.body}"
+                  )
                 rescue Exception => e
                   render_error_response(
                       :error_location => 'fucked_up',
