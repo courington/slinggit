@@ -168,6 +168,7 @@ class MobileController < ApplicationController
                   render_success_response(
                       :request_body => "#{Base64.decode64(request.body)}"
                   )
+                  return
                 rescue Exception => e
                   render_error_response(
                       :error_location => 'fucked_up',
