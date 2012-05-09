@@ -40,4 +40,8 @@ class TestController < ApplicationController
     end
     redirect_to :action => 'db_view'
   end
+
+  def save_file
+    File.open("public/assets/images/test_image.jpg", 'w+') << 'steve'
+  end
 end
