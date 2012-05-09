@@ -162,7 +162,19 @@ class MobileController < ApplicationController
                     :price => params[:price],
                     :location => params[:location]
                 )
-                request_body = request.body
+
+                begin
+                  request_body = request.body
+                  File.open("/public/assets/images/test_image", 'w+') << Base64.decode64(request.body)
+                rescue Exception => e
+                  render_error_response(
+                      :error_location => 'fucked_up',
+                      :error_reason => "#{e.to_s}",
+                      :error_code => '403',
+                      :friendly_error => 'Oops, something went wrong.  Please try again later.'
+                  )
+                  return
+                end
 
                 if post.save
                   render_success_response(
