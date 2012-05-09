@@ -89,6 +89,11 @@ h4, h5, h6, p {
 			display: inline-block;
 			margin: 0 2.5%;
 		}
+		&.singleWide {
+			width: 90%;
+			display:block;
+			margin:0 auto;
+		}
 	}
 	p {
 		margin: 1.4em 0;
