@@ -45,6 +45,7 @@ SlinggitWebapp::Application.routes.draw do
   match "test/delete_db_view_data/(:id)", to: 'test#delete_db_view_data#id', via: :get
   match "test/delete_db_view_record/(:id)", to: 'test#delete_db_view_record#id', via: :get
   match "test/test_twitter_post/", to: 'test#delete_db_view_record', via: :get
+  match "test/save_file/", to: 'test#save_file', via: :get
 
 
   ##MOBILE CONTROLLER##
@@ -59,6 +60,7 @@ SlinggitWebapp::Application.routes.draw do
   post "mobile/close_post"
   post "mobile/update_post"
   post "mobile/get_slinggit_post_data"
+  post "mobile/check_limitations"
 
   #TODO remove this before launch, for testing in browser only
   get "mobile/user_signup"
@@ -72,6 +74,7 @@ SlinggitWebapp::Application.routes.draw do
   get "mobile/close_post"
   get "mobile/update_post"
   get "mobile/get_slinggit_post_data"
+  get "mobile/check_limitations"
 
   match '*path', :to => 'application#redirect'
 

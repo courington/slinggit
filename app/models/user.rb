@@ -19,10 +19,11 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   # not making comments dependent: :destroy because we may still want comments associated with posts
   # even if the user is destroyed.  If this is wrong, let's change it.
-  has_many :comments 
+  has_many :comments
 
   before_save :downcase_attributes
   before_save :create_remember_token
+  after_create :create_post_limitation_record
 
   # Allows letters, numbers and underscore
   VALID_USERNAME_REGEX = /\A[a-z0-9_-]{,20}\z/i
@@ -49,6 +50,17 @@ class User < ActiveRecord::Base
   def downcase_attributes
     self.email = email.downcase
     self.name = name.downcase
+  end
+
+  def create_post_limitation_record
+    UserLimitation.create(
+        :user_id => self.id,
+        :limitation_type => 'posts',
+        :limit => 10,
+        :frequency => '24',
+        :frequency_type => 'hours',
+        :active => true
+    )
   end
 
 end
