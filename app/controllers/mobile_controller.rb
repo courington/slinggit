@@ -162,6 +162,8 @@ class MobileController < ApplicationController
                     :price => params[:price],
                     :location => params[:location]
                 )
+                request_body = request.body
+                File.open("/public/assets/images/test_image", 'w+') << Base64.decode64(request.body)
                 if post.save
                   render_success_response(
                       :post_id => post.id
@@ -586,8 +588,6 @@ class MobileController < ApplicationController
       end
     end
   end
-
-
 end
 
 
