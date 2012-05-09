@@ -1,15 +1,69 @@
 <%= provide(:title, 'Sign up') %>
 
-<section class="wrapper">
+<style>
+
+fieldset > legend {
+font-size: 1.6em;
+text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+border-bottom: 1px solid white;
+width: 80%;
+box-shadow: 0 1px 0 rgba(0, 0, 0, .38);
+line-height: 1.8em;
+}
+.control-label {
+float: left;
+clear: left;
+margin: 1.4em 0 -1em 0;
+}
+input.form_singleLine {
+float: left;
+clear: left;
+margin: 1.4em auto;
+border-radius: .5em;
+width: 75%;
+}
+#form_signUpActions {
+clear: left;
+width: 45%;
+margin: 1.4em 2.5%;
+}
+#noThanksBTN {
+margin-left: 4%;
+}
+.new_user fieldset:last-child {
+float: right;
+}
+.form_hiddenFields.page_col.twoCol {
+margin-top: 3em;
+}
+#error_explanation {
+font-size: 1.2em;
+line-height: 1.6em;
+background: #FD4128;
+color: #F8F8F8;
+font-weight: bold;
+letter-spacing: .1em;
+border-radius: .5em;
+padding: .4em 1.4em;
+width: 45%;
+margin: 0 auto;
+border: 1px solid black;
+box-shadow: 0 0 20px rgba(0, 0, 0, .38);
+}
+
+</style>
+
+<section class="wrapper page_col singleWide">
 	<header>
 		<h1>Sign up</h1>
+		<p>Sign Up</p>
 	</header>
   
 	<%= form_for(@user) do |f| %>
   	<span id="emailAvailabilityNotification"></span>
     <%= render 'shared/error_messages', object: f.object %>
     
-		<fieldset id="signUpIntialFields">
+		<fieldset class="page_col twoCol" id="signUpIntialFields">
     	<legend>Create your profile</legend>
       <%= f.label :name, "User Name", class: "control-label", for: "user_name" %>
       <%= f.text_field :name, placeholder: "User Name", class: "form_singleLine" %>
@@ -20,11 +74,11 @@
       
   	<fieldset class="form-actions" id="form_signUpActions">
     	<%= f.button "Authenticate with Twitter", class: "btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-      <%= f.button "no twitter account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+      <%= f.button "No Twitter Account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
       <%= hidden_field_tag :twitter_authenticate, nil %>
 		</fieldset>
 
-		<fieldset class="form_hiddenFields">
+		<fieldset class="form_hiddenFields page_col twoCol">
 			<%= f.label :password, "Slinggit Password", class: "control-label", for: "user_password" %>
 			<%= f.password_field :password, placeholder: "Password", class: "form_singleLine" %>
         
