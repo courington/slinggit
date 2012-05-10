@@ -40,17 +40,7 @@ $main-font: 'helvetica neue', helvetica, arial, sans-serif;
 $font-size: 1.6em;
 $txt-shdw: 0 1px 0 rgba(0, 0, 0, .2);
 
-// INPUT FIELDS
 $padding: .4em .6em;
-$input-txt-shading: 0 -1px 0 rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .8);
-$input-focus-shdw: 0 0 8px rgba(72, 141, 226, .5);
-$btn-shading: 0 1px 1px rgba(0, 0, 0, .25), inset 0 1px 1px rgba(255, 255, 255, .25);
-$btn-txt-shading: 0 -1px 0 rgba(0, 0, 0, .25), 0 0 8px rgba(255, 255, 255, .25);
-$btn-focus: inset 0 0 1px rgba(0, 0, 0, .25), 0 0 2px rgba(255, 255, 255, .75);
-$btn-focus-txt: 0 1px 0 rgba(0, 0, 0, .25), 0 0 8px rgba(0, 0, 0, .25);
-$btn-active: inset 0 0 1px rgba(0, 0, 0, .5), 0 0 2px rgba(255, 255, 255, .75);
-$btn-active-txt: 0 0 8px rgba(0, 0, 0, .75);
-
 
 body {
 	font-family: $main-font;
@@ -75,30 +65,24 @@ h6, p {
 	font-size: $font-size;
 }
 .wrapper {
-	font-size: 62.5%;
 	width: 90%;
 	max-width: 1024px;
 	margin: 0 auto;
 	overflow: hidden;
 }
 .page_contentContainer {
-	min-height: 40em;
+	min-height: 32em;
+	font-size: 62.5%;
 	position: relative;
 	z-index: 1;
 	width: 100%;
-	background: $wht url("/assets/images/textures/texture_tile_97x157.png") repeat top left;
-	padding: 2.6em 0;
+	background: $wht /*url("/assets/images/textures/texture_tile_97x157.png") repeat top left*/;
 	.page_col {
 		&.twoCol {
 			width: 45%;
 			float: left;
 			display: inline-block;
 			margin: 0 2.5%;
-		}
-		&.singleWide {
-			width: 90%;
-			display:block;
-			margin:0 auto;
 		}
 		header {
 			margin:0 0 0 2.5%;
