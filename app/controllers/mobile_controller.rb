@@ -250,7 +250,7 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO document
+  #TODO DOCUMENT
   def resubmit_to_post_recipients
     if not params[:post_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
@@ -380,7 +380,7 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO Document
+  #TODO DOCUMENT
   def get_user_api_accounts
     if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
@@ -460,6 +460,21 @@ class MobileController < ApplicationController
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
     end
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
+  def forgot_password
+
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
+  def reset_password
+
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
+  def active_session_list
+
   end
 
   private
