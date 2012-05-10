@@ -34,7 +34,7 @@ class MobileController < ApplicationController
               else
                 render_error_response(
                     :error_location => 'user_signup',
-                    :error_reason => 'invalide - email',
+                    :error_reason => 'invalid - email',
                     :error_code => '409',
                     :friendly_error => 'The email address entered is invalid.'
                 )
@@ -564,7 +564,7 @@ class MobileController < ApplicationController
             :error_location => 'global',
             :error_reason => 'invalid - mobile_auth_token',
             :error_code => '401',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            :friendly_error => 'Your session has expired. Please sign in again.'
         )
         return
       end

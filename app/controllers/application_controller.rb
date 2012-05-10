@@ -28,7 +28,9 @@ class ApplicationController < ActionController::Base
 
   def passes_limitations?(limitation_type, user_id = nil)
     limitation_type = limitation_type.to_sym
-    user_id = current_user.id || user_id
+    if current_user
+      user_id = current_user.id
+    end
 
     return true if limitation_type.blank?
     return true if user_id.blank?
