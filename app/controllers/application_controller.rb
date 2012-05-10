@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
   def create_api_account(options = {})
     return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options.blank?
     return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options[:source].blank?
-    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter].include? limitation_type
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter].include? options[:source].to_sym
 
     case options[:source].to_sym
       when :twitter
