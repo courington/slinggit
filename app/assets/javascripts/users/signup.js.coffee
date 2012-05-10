@@ -97,7 +97,8 @@ class EmailValidation extends Backbone.View
 
 	twitterAuthorize: (e)->
 		$("#twitter_authenticate").val(true)
-		$("form").submit()
+		console.log $("form")
+		$("form#new_user").submit()
 
 
 	startOver: (e)->

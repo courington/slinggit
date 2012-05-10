@@ -20,8 +20,8 @@
 		</fieldset>
       
   	<fieldset class="form-actions" id="form_signUpActions">
-    	<%= f.button "Authenticate with Twitter", class: "btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-        <%= f.button "No Twitter Account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+    	<%= f.button "Authenticate with Twitter", type: "button", class: "btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
+        <%= f.button "No Twitter Account", type: "button", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
         <%= hidden_field_tag :twitter_authenticate, nil %>
 		</fieldset>
 
@@ -58,5 +58,5 @@
           , "<%= session[:no_thanks]%>"
         )
     });
-        
+
 </script>
