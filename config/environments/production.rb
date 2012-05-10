@@ -69,7 +69,7 @@ SlinggitWebapp::Application.configure do
   PROD_ENV = true
   HOSTURL = "integ.slinggit.com" # I'll be switching this shortly
   BASEURL = "https://#{HOSTURL}"
-  POST_PHOTO_DIR = "/home/slinggit/webapps/slinggit_test/uploads" # I'll be switching this shortly
+  POST_PHOTO_DIR = "/home/slinggit/webapps/slinggit_test" # I'll be switching this shortly
 
   #  Our consumer key and secret for our twitter app (PROD)
   config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
