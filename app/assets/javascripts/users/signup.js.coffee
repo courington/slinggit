@@ -96,7 +96,6 @@ class EmailValidation extends Backbone.View
 
 
 	twitterAuthorize: (e)->
-		e.preventDefault()
 		$("#twitter_authenticate").val(true)
 		$("form").submit()
 
