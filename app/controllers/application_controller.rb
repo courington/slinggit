@@ -68,9 +68,9 @@ class ApplicationController < ActionController::Base
 
     case options[:source].to_sym
       when :twitter
-        if not ApiAccount.exists?(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
+        if not ApiAccount.exists?(['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
           status = 'primary'
-          if ApiAccount.exists?(:conditions => ['user_id = ? AND status = "primary" AND api_source = ?', options[:user_object].id, options[:source]])
+          if ApiAccount.exists?(['user_id = ? AND status = "primary" AND api_source = ?', options[:user_object].id, options[:source]])
             status = 'active'
           end
 
