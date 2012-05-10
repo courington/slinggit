@@ -323,7 +323,7 @@ class MobileController < ApplicationController
     else
       render_error_response(
           :error_location => 'get_slinggit_post_data',
-          :error_reason => 'missing required_paramater - offset',
+          :error_reason => 'missing required_paramater - starting_post_id',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
