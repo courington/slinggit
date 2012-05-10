@@ -10,6 +10,7 @@
 
 # Ignore sample photos
 public/assets/posts/
+public/uploads/posts/
 sampleimages/
 
 # Ignore other unneeded files.

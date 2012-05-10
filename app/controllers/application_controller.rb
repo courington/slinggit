@@ -28,7 +28,9 @@ class ApplicationController < ActionController::Base
 
   def passes_limitations?(limitation_type, user_id = nil)
     limitation_type = limitation_type.to_sym
-    user_id = current_user.id || user_id
+    if current_user
+      user_id = current_user.id
+    end
 
     return true if limitation_type.blank?
     return true if user_id.blank?
@@ -64,13 +66,13 @@ class ApplicationController < ActionController::Base
   def create_api_account(options = {})
     return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options.blank?
     return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options[:source].blank?
-    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter].include? limitation_type
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter].include? options[:source].to_sym
 
     case options[:source].to_sym
       when :twitter
-        if not ApiAccount.exists?(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
+        if not ApiAccount.exists?(['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
           status = 'primary'
-          if ApiAccount.exists?(:conditions => ['user_id = ? AND status = "primary" AND api_source = ?', options[:user_object].id, options[:source]])
+          if ApiAccount.exists?(['user_id = ? AND status = "primary" AND api_source = ?', options[:user_object].id, options[:source]])
             status = 'active'
           end
 

@@ -34,7 +34,7 @@ class MobileController < ApplicationController
               else
                 render_error_response(
                     :error_location => 'user_signup',
-                    :error_reason => 'invalide - email',
+                    :error_reason => 'invalid - email',
                     :error_code => '409',
                     :friendly_error => 'The email address entered is invalid.'
                 )
@@ -166,7 +166,7 @@ class MobileController < ApplicationController
                 begin
                   file_name = "#{params[:hashtag_prefix]}_#{post.id}.jpg"
                   image_data = Base64.decode64(request.body.to_s)
-                  File.open("public/assets/images/#{file_name}", 'wb') {|file| (file << image_data) }
+                  File.open("public/assets/images/#{file_name}", 'wb') { |file| (file << image_data) }
                 rescue Exception => e
                   render_error_response(
                       :error_location => 'fucked_up',
@@ -244,57 +244,6 @@ class MobileController < ApplicationController
       render_error_response(
           :error_location => 'create_post',
           :error_reason => 'missing required_paramater - hashtag_prefix',
-          :error_code => '403',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
-    end
-  end
-
-  #TODO document
-  def resubmit_to_post_recipients
-    if not params[:post_id].blank?
-      if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
-        if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-          if post = Post.first(:conditions => ['id = ? AND user_id = ? AND recipient_api_account_ids IS NOT NULL', params[:post_id], user.id], :select => 'recipient_api_account_ids,id')
-            recipient_api_account_ids = post.recipient_api_account_ids.split(',')
-            recipient_api_account_ids.each do |api_account_id|
-              TwitterPost.create(
-                  :user_id => user.id,
-                  :api_account_id => api_account_id,
-                  :post_id => post.id
-              ).do_post
-            end
-            render_success_response(
-                :resubmit_count => recipient_api_account_ids.length
-            )
-          else
-            render_error_response(
-                :error_location => 'resubmit_to_post_recipients',
-                :error_reason => 'post not found',
-                :error_code => '404',
-                :friendly_error => 'Oops, something went wrong.  Please try again later.'
-            )
-          end
-        else
-          render_error_response(
-              :error_location => 'resubmit_to_post_recipients',
-              :error_reason => 'user not found',
-              :error_code => '404',
-              :friendly_error => 'Oops, something went wrong.  Please try again later.'
-          )
-        end
-      else
-        render_error_response(
-            :error_location => 'resubmit_to_post_recipients',
-            :error_reason => 'mobile session not found',
-            :error_code => '404',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
-      end
-    else
-      render_error_response(
-          :error_location => 'resubmit_to_post_recipients',
-          :error_reason => 'missing required_paramater - post_id',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
@@ -380,7 +329,93 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO Document
+  def check_limitations
+    if not params[:limitation_type].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
+        user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id')
+        success = passes_limitations?(params[:limitation_type], user.id)
+        if success
+          render_success_response(
+              :limitation_type => params[:limitation_type],
+              :pass => true
+          )
+        else
+          render_success_response(
+              :limitation_type => params[:limitation_type],
+              :pass => false,
+              :friendly_error => 'You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'check_limitations',
+            :error_reason => 'mobile session not found',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'user_login_status',
+          :error_reason => 'missing required_paramater - limitation_type',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  #TODO DOCUMENT
+  def resubmit_to_post_recipients
+    if not params[:post_id].blank?
+      if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
+        if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+          if post = Post.first(:conditions => ['id = ? AND user_id = ? AND recipient_api_account_ids IS NOT NULL', params[:post_id], user.id], :select => 'recipient_api_account_ids,id')
+            recipient_api_account_ids = post.recipient_api_account_ids.split(',')
+            recipient_api_account_ids.each do |api_account_id|
+              TwitterPost.create(
+                  :user_id => user.id,
+                  :api_account_id => api_account_id,
+                  :post_id => post.id
+              ).do_post
+            end
+            render_success_response(
+                :resubmit_count => recipient_api_account_ids.length
+            )
+          else
+            render_error_response(
+                :error_location => 'resubmit_to_post_recipients',
+                :error_reason => 'post not found',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'resubmit_to_post_recipients',
+              :error_reason => 'user not found',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'resubmit_to_post_recipients',
+            :error_reason => 'mobile session not found',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'resubmit_to_post_recipients',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  #TODO DOCUMENT
   def get_user_api_accounts
     if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
@@ -430,36 +465,29 @@ class MobileController < ApplicationController
     end
   end
 
-  def check_limitations
-    if not params[:limitation_type].blank?
-      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
-        user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id')
-        success = passes_limitations?(params[:limitation_type], user.id)
-        if success
-          render_success_response(
-              :limitation_type => params[:limitation_type],
-              :pass => true
-          )
-        else
-          render_success_response(
-              :limitation_type => params[:limitation_type],
-              :pass => false,
-              :friendly_error => 'You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.'
-          )
-        end
-      else
-        render_success_response(
-            :logged_in => false
-        )
-      end
-    else
-      render_error_response(
-          :error_location => 'user_login_status',
-          :error_reason => 'missing required_paramater - limitation_type',
-          :error_code => '403',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
-    end
+  #TODO IMPLEMENT AND DOCUMENT
+  def forgot_password
+
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
+  def reset_password
+
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
+  def active_session_list
+
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
+  def get_active_session_list
+
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
+  def logout_of_active_session
+
   end
 
   private
@@ -536,7 +564,7 @@ class MobileController < ApplicationController
             :error_location => 'global',
             :error_reason => 'invalid - mobile_auth_token',
             :error_code => '401',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            :friendly_error => 'Your session has expired. Please sign in again.'
         )
         return
       end
