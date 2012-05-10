@@ -89,6 +89,11 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  #TODO FINISH
+  def password_reset
+
+  end
+
   def twitter_signup_callback
     rtoken = session['rtoken']
     rsecret = session['rsecret']
