@@ -27,40 +27,67 @@ class TwitterPost < ActiveRecord::Base
   belongs_to :api_account
   belongs_to :post
 
-  def do_post
-    self.update_attribute(:status, 'processing')
+  PROCESSING_STATUS = 'processing'
+  FAILED_STATUS = 'failed'
+  SUCCEEDED_STATUS = 'done'
+  SUCCEEDED_LAST_RESULT = 'successful post'
+  SUCCEEDED_REPOST_LAST_RESULT = 'successful - duplicate post not submitted again'
 
-    if self.twitter_post_id.blank?
+  def do_post
+    @post_start_time = Time.now
+    self.update_attribute(:status, PROCESSING_STATUS)
+    if not has_been_post?
       twitter_client = nil
       if api_account_id == 0
         twitter_client = Twitter::Client.new(oauth_token: Rails.configuration.slinggit_client_atoken, oauth_token_secret: Rails.configuration.slinggit_client_asecret)
       else
         if self.api_account
           twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
-        else
-          #handle this error... we were given an id that doesnt exist
         end
       end
 
       if not twitter_client.blank?
         begin
-          #result = twitter_client.update("##{self.post.hashtag_prefix}forsale #{self.post.content} - $#{"%.0f" % self.post.price} | Slinggit" )
+          0/0
           result = tweet_constructor(twitter_client)
-          self.twitter_post_id = result.attrs['id_str']
-          self.last_result = 'successful post'
-          self.status = 'done'
-          self.save
+          finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
         rescue Exception => e
-          if e.is_a? Twitter::Error::Unauthorized
+          if e.is_a? Twitter::Error::Unauthorized or true
             if self.api_account
-              self.api_account.reauth_required = 'yes'
+              finalize(FAILED_STATUS, {:api_account_reauth_required => 'yes', :last_result => "api_account-yes // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+            else
+              finalize(FAILED_STATUS, {:last_result => "api_account-no // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
             end
+          else
+            finalize(FAILED_STATUS, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
           end
-          self.last_result = "#{e.class.to_s}-#{e.to_s}"
-          self.status = 'failed'
-          self.save
         end
+      else
+        finalize(FAILED_STATUS, {:last_result => "twitter client could not be established"}) and return
       end
+    else
+      finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_REPOST_LAST_RESULT}) and return
+    end
+  end
+
+  def finalize(status, options = {})
+    self.last_result = options[:last_result] + " // dur=#{Time.now - @post_start_time}-sec"
+    self.status = status
+    self.twitter_post_id = options[:twitter_post_id]
+    if options[:api_account_reauth_required]
+      if self.api_account
+        self.api_account.reauth_required = options[:api_account_reauth_required]
+        UserMailer.api_account_post_failure(self.api_account).deliver
+      end
+    end
+    self.save
+  end
+
+  def has_been_post?
+    if self.twitter_post_id.blank?
+      return false
+    else
+      return true
     end
   end
 
@@ -70,10 +97,12 @@ class TwitterPost < ActiveRecord::Base
     redirect = Redirect.get_or_create(
         :target_uri => "#{BASEURL}/posts/#{self.post.id}"
     )
+    #changed to use our url shortner... if twitter does it for us great... but this will track the number of clicks if we use our own
+    #NOTE... if testing on localhost, the link wont be clickable in twitter... but once a .com is added it will be.
     if self.post.photo_file_name.blank?
-      return client.update("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.target_uri}")
+      return client.update("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}")
     else
-      return client.update_with_media("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.target_uri}", File.new(self.post.photo.path(:medium)))
+      return client.update_with_media("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}", File.new(self.post.photo.path(:medium)))
     end
   end
 

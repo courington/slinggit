@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
       else
         if user = User.first(:conditions => ['name = ?', redirect_info], :select => 'id')
           redirect_to :controller => :posts, :action => :show, :id => user.id
-        elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,ckicks')
+        elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,clicks,id')
           redirect.update_attribute(:clicks, redirect.clicks += 1)
           redirect_to redirect.target_uri
         else

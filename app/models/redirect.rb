@@ -12,7 +12,7 @@
 #
 
 class Redirect < ActiveRecord::Base
-  attr_accessible :target_uri
+  attr_accessible :target_uri, :clicks
 
   before_create :create_hash
 
@@ -20,7 +20,7 @@ class Redirect < ActiveRecord::Base
     if redirect = Redirect.first(:conditions => ['target_uri = ?', options[:target_uri]])
       return redirect
     else
-      redirect = Redirect.create(options)
+      redirect = Redirect.create(options.merge!(:clicks => 0))
       return redirect
     end
   end
