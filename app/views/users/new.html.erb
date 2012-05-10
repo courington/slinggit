@@ -49,15 +49,15 @@
 </style>
 
 <script>
-    $(document).ready(function () {
-        window.emailValidationView(
-            "<%= url_for :controller => :users, :action => :verify_email_availability %>"
-          , "<%= url_for :controller => :users, :action => :reset_page_session %>"
-          , "<%= url_for :controller => :users, :action => :set_no_thanks %>"
-          , "<%= session[:twitter_permission_granted] %>"
-          , "<%= session[:no_thanks]%>"
-        )
-    });
+    // $(document).ready(function () {
+    //     window.emailValidationView(
+    //         "<%= url_for :controller => :users, :action => :verify_email_availability %>"
+    //       , "<%= url_for :controller => :users, :action => :reset_page_session %>"
+    //       , "<%= url_for :controller => :users, :action => :set_no_thanks %>"
+    //       , "<%= session[:twitter_permission_granted] %>"
+    //       , "<%= session[:no_thanks]%>"
+    //     )
+    // });
         
     // $(document).ready(function () {
     //     //Check email address after page comes back from twitter and also on blur

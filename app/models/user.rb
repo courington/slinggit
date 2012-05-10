@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
     UserLimitation.create(
         :user_id => self.id,
         :limitation_type => 'posts',
-        :limit => 10,
+        :user_limit => 10,
         :frequency => '24',
         :frequency_type => 'hours',
         :active => true
