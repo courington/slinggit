@@ -48,11 +48,10 @@ class TwitterPost < ActiveRecord::Base
 
       if not twitter_client.blank?
         begin
-          0/0
           result = tweet_constructor(twitter_client)
           finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
         rescue Exception => e
-          if e.is_a? Twitter::Error::Unauthorized or true
+          if e.is_a? Twitter::Error::Unauthorized
             if self.api_account
               finalize(FAILED_STATUS, {:api_account_reauth_required => 'yes', :last_result => "api_account-yes // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
             else
