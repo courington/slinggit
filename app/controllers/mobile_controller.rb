@@ -255,7 +255,8 @@ class MobileController < ApplicationController
   end
 
   def get_slinggit_post_data
-    if not params[:offset].blank?
+
+    if not params[:starting_post_id].blank?
       if not params[:limit].blank?
         search_term = params[:search_term]
         user_name = params[:user_name]
@@ -263,7 +264,7 @@ class MobileController < ApplicationController
         if not user_name.blank?
           if user = User.first(:conditions => ['name = ? AND status != "deleted"', user_name])
             if not search_term.blank?
-              posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND user_id = ?", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%", user.id], :offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+              posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND user_id = ?", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%", user.id], :offset => params[:starting_post_id].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
             else
               posts = Post.all(:conditions => ["user_id = #{user.id}"], :offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
             end
