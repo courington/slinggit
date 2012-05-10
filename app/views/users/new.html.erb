@@ -21,8 +21,8 @@
       
   	<fieldset class="form-actions" id="form_signUpActions">
     	<%= f.button "Authenticate with Twitter", class: "btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-      <%= f.button "No Twitter Account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
-      <%= hidden_field_tag :twitter_authenticate, nil %>
+        <%= f.button "No Twitter Account", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+        <%= hidden_field_tag :twitter_authenticate, nil %>
 		</fieldset>
 
 		<fieldset class="form_hiddenFields page_col twoCol">
@@ -59,109 +59,4 @@
         )
     });
         
-    // $(document).ready(function () {
-    //     //Check email address after page comes back from twitter and also on blur
-    //     checkEmailAddress($('#user_email'));
-    //     $('#user_email').on('blur', function () {
-    //         checkEmailAddress($(this));
-    //     });
-
-    //     $('#user_name').keyup(hideErrorsAndNotifications);
-    //     $('#user_email').keyup(hideErrorsAndNotifications);
-    //     $('#user_password').keyup(hideErrorsAndNotifications);
-    //     $('#user_password_confirmation').keyup(hideErrorsAndNotifications);
-
-    //     $('#user_email').keyup(function () {
-    //         email_address = $('#user_email').val();
-    //         var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    //         if (emailRegex.test(email_address)) {
-    //             $.ajax({
-    //                 type:"POST",
-    //                 url:"<%= url_for :controller => :users, :action => :verify_email_availability %>",
-    //                 data:{email:email_address}
-    //             }).done(function (response) {
-    //                         if (response == 'unavailable') {
-    //                             $('#user_email')
-    //                             $('#emailAvailabilityNotification').html('<div id="error_explanation"><ul><li>* That email has already been registered.  <a href="#">forgot password?</a></li></ul></div>')
-    //                             $('#emailAvailabilityNotification').show();
-    //                         } else {
-    //                             $('#emailAvailabilityNotification').html('');
-    //                             $('#emailAvailabilityNotification').hide();
-    //                         }
-    //                     });
-    //         }
-    //     });
-
-
-    //     $('.form_hiddenFields').hide();
-    //     $('#form_signUpActions').show();
-    //     $('#emailAvailabilityNotification').hide();
-
-
-    //     <% if session[:twitter_permission_granted] %>
-    //     $('.form_hiddenFields').show();
-    //     $('#form_signUpActions').hide();
-    //     $('legend').html('You are authenticated with Twitter');
-    //     <% elsif session[:no_thanks]%>
-    //     $('.form_hiddenFields').show();
-    //     $('#form_signUpActions').hide();
-    //     <% end %>
-
-    //     $('#noThanksBTN').click(function (e) {
-    //         e.preventDefault();
-    //         $('#form_signUpActions').hide();
-    //         $('.form_hiddenFields').show();
-    //         hideErrorsAndNotifications();
-    //         $.ajax({
-    //             url:"<%= url_for :controller => :users, :action => :set_no_thanks %>"
-    //         })
-    //     })
-
-    //     $('#twitterBTN').click(function (e) {
-    //         e.preventDefault();
-    //         $('#twitter_authenticate').val(true)
-    //         $('form').submit();
-    //     });
-
-    //     $('#signUpStartOverLink').click(function (e) {
-    //         e.preventDefault();
-    //         $('.form_hiddenFields').hide();
-    //         $('#form_signUpActions').show();
-    //         $('#user_name').val('');
-    //         $('#user_email').val('');
-    //         $('legend').html('Create your profile');
-    //         $('#emailSuggestion').remove();
-    //         hideErrorsAndNotifications();
-    //         $.ajax({
-    //             url:"<%= url_for :controller => :users, :action => :reset_page_session %>"
-    //         })
-    //     });
-    // });
-
-    // function hideErrorsAndNotifications() {
-    //     $('#error_explanation').hide();
-    //     $('.field_with_errors').removeClass('field_with_errors')
-    //     $('.alert').hide();
-    //     $("html, body").animate({ scrollTop:0 }, "fast");
-    // }
-
-    // function swapEmailWithSuggested() {
-    //     $('#user_email').val($('#emailSuggestionReplaceLink').text());
-    //     $('#emailSuggestion').remove();
-    // }
-
-    // function checkEmailAddress(domElement) {
-    //     var domains = ['hotmail.com', 'gmail.com', 'aol.com', 'msn.com', 'yahoo.com', 'pixorial.com', 'slinggit.com'];
-    //     $(domElement).mailcheck({
-    //         domains:domains, // optional
-    //         suggested:function (element, suggestion) {
-    //             $('#emailSuggestion').remove();
-    //             $('#user_email').parent().append("<span id='emailSuggestion'>Did you mean <a href='#' onclick='swapEmailWithSuggested()' id='emailSuggestionReplaceLink'>" + suggestion.full + "</a></span>");
-    //         },
-    //         empty:function (element) {
-    //             $('#emailSuggestion').remove();
-    //         }
-    //     });
-    // }
-
 </script>
