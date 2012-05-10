@@ -23,12 +23,10 @@
         </div>
       </div>
 
-      <div class="control-group">
-        <%= f.label :location, "Location", class: "control-label", for: "post_hashtag_prefix" %>
-        <div class="controls">
-          <%= f.text_field :location, class: "input-large", placeholder: "City, State, or Zip" %>
-        </div>
-      </div>
+      <fieldset>
+        <%= f.label :location, "Location", class: "", for: "post_hashtag_prefix" %>
+        <%= f.text_field :location, class: "form_singleLine", placeholder: "City, State, or Zip" %>
+      </fieldset>
 
       <div class="control-group">
         <%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
