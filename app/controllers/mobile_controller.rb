@@ -266,7 +266,7 @@ class MobileController < ApplicationController
             if not search_term.blank?
               posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND user_id = ?", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%", user.id], :offset => params[:starting_post_id].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
             else
-              if params[:starting_post_id] == 0
+              if params[:starting_post_id] == '0'
                 posts = Post.all(:conditions => ["user_id = #{user.id}"], :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
               else
                 posts = Post.all(:conditions => ["user_id = #{user.id}"], :offset => params[:starting_post_id].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
