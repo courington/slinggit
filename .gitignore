@@ -19,5 +19,6 @@ doc/
 .project
 .DS_Store
 Gemfile.lock
+Gemfile
 
 .idea/*
