@@ -15,7 +15,7 @@
       </header>
 
       <fieldset>
-        <%= f.label :hashtag_prefix, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
+        <%= f.label :hashtag_prefix, "Your item", class: "", for: "post_hashtag_prefix" %>
           <div class="input-append">
             <%= f.text_field :hashtag_prefix, class: "form_singleLine hardEdge_right", placeholder: "#" %>
             <span class="add-on">forsale</span>
@@ -23,17 +23,17 @@
       </fieldset>
 
       <fieldset>
-        <%= f.label :location, "Location", class: "control-label", for: "post_hashtag_prefix" %>
+        <%= f.label :location, "Location", class: "", for: "post_hashtag_prefix" %>
         <%= f.text_field :location, class: "form_singleLine", placeholder: "City, State, or Zip" %>
       </fieldset>
 
       <fieldset>
-        <%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
+        <%= f.label :content, "Quick description", class: "", for: "post_content" %>
         <%= f.text_area :content, class: "input-xlarge", rows: "3", placeholder: "Something short and sweet..." %>
       </fieldset>
 
       <fieldset>
-        <%= f.label :price, class: "control-label", for: "post_price" %>
+        <%= f.label :price, class: "", for: "post_price" %>
           <div class="input-append">
             <%= f.text_field :price, class: "form_singleLine hardEdge_right" %>
             <span class="add-on">.00</span>
@@ -41,7 +41,7 @@
       </fieldset>
 
       <fieldset id="photoControlGroup" class="control-group">
-        <%= f.label :photo, "Item Photo (optional)", class: "control-label", for: "post_photo" %>
+        <%= f.label :photo, "Item Photo (optional)", class: "", for: "post_photo" %>
         <div class="controls thumbnail">
           <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
           <a href="#" id="fileSelect">Select a photo</a>

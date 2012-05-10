@@ -29,6 +29,15 @@ $side-br: bottom-right;
 	#{$wk}border-#{$side-bl}-radius: $radius;
 	border-#{$side-bl}-radius: $radius;
 }
+@mixin hardEdge-left {
+	@include rounded-corners(0);
+	#{$ff}border-#{$side-tr}-radius: $radius;
+	#{$wk}border-#{$side-tr}-radius: $radius;
+	border-#{$side-tr}-radius: $radius;
+	#{$ff}border-#{$side-br}-radius: $radius;
+	#{$wk}border-#{$side-br}-radius: $radius;
+	border-#{$side-br}-radius: $radius;
+}
 @mixin textInput {
 	padding: $padding;
 	font-size: $font-size;
@@ -44,15 +53,26 @@ $wk: -webkit-;
 $ms: -ms-;
 $o: -o-;
 
-label {
-	font-size:$font-size;
-}
 input[type="password"],
 input[type="email"],
 input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
+		&.form_singleLine {
+		float: left;
+		clear: left;
+		margin: 1.4em auto;
+		}
+		&#post_hashtag_prefix {
+		width: 57%;
+		}
+		&#post_location {
+		width: 29%;
+		}
+		&#post_price {
+		width: 20%;
+		}
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -67,7 +87,10 @@ textarea {
 	@include rounded-corners($radius);
 	@include transition;
 	resize: none;
-	height:6.3em;
+	height: 6.3em;
+	clear: left;
+	float: left;
+	margin: 1.4em 0;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -122,4 +145,29 @@ input.submitBTN,
 		box-shadow: $btn-active;
 		color: darken($wht, 10%);
 	}
+}
+label {
+	font-size: $font-size - .2em;
+	float: left;
+}
+.add-on {
+	@include hardEdge-left;
+	background: $lt-grey;
+	padding: .45em;
+	font-size: $font-size;
+	font-family: $main-font;
+	color: $main-grey;
+	border: 1px solid darken($lt-grey, 10%);
+	box-shadow: $btn-shading;
+	width: 25%;
+	margin:1.35em 0 0 -.5%;
+	float: left;
+	width: auto;
+}
+.input-append {
+display: block;
+width: 40%;
+}
+fieldset {
+margin: 0 0 1.4em 0;
 }
