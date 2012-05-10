@@ -38,6 +38,7 @@ SlinggitWebapp::Application.configure do
   PROD_ENV = false
   HOSTURL = "localhost:3000"
   BASEURL = "http://#{HOSTURL}"
+  POST_PHOTO_DIR = "/uploads"
 
   #  Our consumer key and secret for our twitter app (DEV)
   #config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
