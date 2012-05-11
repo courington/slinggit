@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511211556) do
+ActiveRecord::Schema.define(:version => 20120511222541) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20120511211556) do
     t.string   "recipient_api_account_ids"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "reply_to"
   end
 
   create_table "post_history", :force => true do |t|
