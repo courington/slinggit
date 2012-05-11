@@ -30,13 +30,18 @@
           <%= f.text_area :content, class: "form-singleLine", rows: "3", placeholder: "Something short and sweet..." %>
       </fieldset>
 
-	<fieldset>
+	    <fieldset>
         <%= f.label :price, class: "control-label", for: "post_price" %>
           <div class="input-append">
             <%= f.text_field :price, class: "hardEdge-right form-singleLine", id: "post_price" %>
             <span class="add-on hardEdge-left">.00</span>
           </div>
-	</fieldset>
+	    </fieldset>
+
+      <fieldset>
+        <%= f.label :reply_to, "Reply To", class: "", for: "post_reply_to" %>
+        <%= f.text_field :reply_to, class: "form-singleLine", placeholder: "email address, phone, etc.." %>
+      </fieldset>
 
       <fieldset id="photoControlGroup" class="control-group">
         <%= f.label :photo, "Item Photo (optional)", class: "control-label", for: "post_photo" %>
