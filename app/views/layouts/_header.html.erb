@@ -76,14 +76,19 @@
 		//hide the drop down list
 		var _hideObjects = function(){
 			// level four
-			$('.nav_dropDown').hide();
+			$('.nav_dropDown').css('display','none');
 		}
 		//set listeners to show drop down
 		var _setListeners = function(){
 			// level four
-			$('.BTN_nav_dropDown').click(function(){
+			$('.BTN_nav_dropDown').click(function(){				
 				$('.nav_dropDown').slideDown();
 			});
+			//$('.BTN_nav_dropDown').click{
+			//	if($('.nav_dropDown').css('display', 'none');){
+			//		$(this).css('display', 'block');
+			//	}
+			//}
 		}
 		return {init: initialize}
 	}());
