@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508090332) do
+ActiveRecord::Schema.define(:version => 20120511211556) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20120508090332) do
     t.boolean  "open",                                   :default => true
     t.string   "location"
     t.string   "recipient_api_account_ids"
+    t.string   "reply_to"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"

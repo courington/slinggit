@@ -16,6 +16,7 @@
 #  open                      :boolean         default(TRUE)
 #  location                  :string(255)
 #  recipient_api_account_ids :string(255)
+#  reply_to                  :string(255)
 #
 
 require 'spec_helper'

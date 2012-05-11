@@ -16,12 +16,13 @@
 #  open                      :boolean         default(TRUE)
 #  location                  :string(255)
 #  recipient_api_account_ids :string(255)
+#  reply_to                  :string(255)
 #
 
 class Post < ActiveRecord::Base
   before_save :create_post_history
 
-  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open
+  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open, :reply_to
 
   belongs_to :user
   has_many :comments, dependent: :destroy
