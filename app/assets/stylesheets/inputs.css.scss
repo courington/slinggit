@@ -59,7 +59,7 @@ input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
-		&.form_singleLine {
+		&.form-singleLine {
 		float: left;
 		clear: left;
 		margin: 1.4em auto;
@@ -79,7 +79,7 @@ input[type="text"] {
 		border: 1px solid $main-blue;
 		}
 }
-input[type="text"].hardEdge_right {
+input[type="text"].hardEdge-right {
 	@include hardEdge-right;
 }
 textarea {
