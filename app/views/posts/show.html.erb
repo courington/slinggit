@@ -1,64 +1,33 @@
 <% provide(:title, @post.content) %>
-<div class="row">
+<section class="wrapper posts">
+	<header>
+		<h1><%= @post.hashtag_prefix %></h1>
+		<p><%= @post.hashtag_prefix %></p>
+		<% if @user == current_user %>
+		<h6 class="pull-right"><%= link_to "edit", edit_post_path(@post), class: "btn" %></h6>
+		<% end %>
+	</header>
 
-  <div class="span8 offset2 well-white">
+	<article>
+		<div class="col_oneThird">
+		<% if @post.photo_file_name.blank? %>
+			<%= image_tag "300x300_placeholder.png" %>
+		<% else %>
+			<%= image_tag @post.photo.url(:medium) %>
+		<% end %>
+		</div>
+		<div class="col_twoThird">
+			<%= render 'posts/post_sidebar' %>
+		</div>
+	</article>
 
-    <div class="row">
-      <div class="span8">
-
-        <div class="row">
-
-          <h2><%= @post.hashtag_prefix %></h2> 
-
-          <% if @user == current_user %>
-            <%= link_to "edit", edit_post_path(@post), class: "btn" %>
-            <span class="pull-right"></span>
-          <% end %>  
-          <hr>
-
-        </div> <!-- row 1 end --> 
-
-        <div class="row">
-
-          <div class="span4"> 
-            <div class="thumbnail">
-              <% if @post.photo_file_name.blank? %>
-                <%= image_tag "http://placehold.it/300x300" %>
-              <% else %>
-                <%= image_tag @post.photo.url(:medium) %>
-              <% end %>
-            </div>
-          </div>
-
-          <div class="span4"> 
-
-            <%= render 'posts/post_sidebar' %>
-
-          </div>
-
-        </div> <!-- row 2 end --> 
-
-        <br>
-
-        <div class="row">
-        
-          <%= render 'posts/post_comment_form' %>
-
-        </div> <!-- row 3 end --> 
-
-        <div class="row">
-          <% if @comments.any? %>
-            <ol class="comments">
-              <%= render @comments %>
-            </ol>
-            <%= will_paginate @comments %>
-          <% end %>  
-        </div> <!-- row 4 end --> 
-
-      </div><!-- span end --> 
-    </div><!-- row end --> 
- 
-
-  </div><!-- span8 offset2 end -->
-
-</div><!-- row end --> 
+	<article role="complementary">
+		<%= render 'posts/post_comment_form' %>
+			<% if @comments.any? %>
+				<ul class="comments">
+					<%= render @comments %>
+				</ul>
+				<%= will_paginate @comments %>
+				<% end %>  
+			</article>
+</section>

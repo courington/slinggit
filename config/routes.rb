@@ -78,7 +78,7 @@ SlinggitWebapp::Application.routes.draw do
   get "mobile/get_slinggit_post_data"
   get "mobile/check_limitations"
 
-  match '*path', :to => 'application#redirect'
+  #match '*path', :to => 'application#redirect'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

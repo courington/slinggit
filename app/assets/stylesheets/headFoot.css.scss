@@ -1,6 +1,6 @@
 // -- SHADOWS -- 
 $head-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.25), inset 0 3px 13px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, .15);
-$foot-shadow: 0 -1px 1px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .25);
+$foot-shadow: 0 -1px 1px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .5);
 
 body > header:first-child {
 	width: 100%;
@@ -49,13 +49,13 @@ body > header:first-child {
 					float: right;	
 				}
 				&:hover {
-					color: $main-yellow;
+					color: $lt-grey;
 				}
 				a {
 					color: $wht;
 					@include transition;
 					&:hover {
-						color: $main-yellow;
+						color: $lt-grey;
 					}
 				}
 			}
@@ -67,7 +67,7 @@ body > header:first-child {
 					color: $wht;
 					@include transition;
 					&:hover {
-						color: $main-yellow;
+						color: $lt-grey;
 					}
 				}
 				.nav_dropDown {
@@ -105,13 +105,12 @@ body > header:first-child {
 footer {
 	clear:both;
 	font-size: 62.5%;
-	background: $main-grey;
 	box-shadow: $foot-shadow;
 	position:relative;
 	z-index:9999;
 		nav {
 			font-size: $font-size;
-			color: $wht;
+			color: $main-grey;
 			text-shadow: $txt-shdw;
 			margin-top: 1.4em;
 			//border-left: 1px solid #F8F8F8;
@@ -122,10 +121,10 @@ footer {
 				li {
 					margin: .5em 1em;
 					a {
-						color: $wht;
+						color: $main-grey;
 						@include transition;
 						&:hover {
-							color: $main-yellow;
+						color: $dk-grey;
 						}
 					}	
 				}
@@ -159,12 +158,12 @@ footer {
 			display: block;
 			margin: 1.4em;
 			font-size: 1.1em;
-			color: $wht;
+			color: $main-grey;
 			a {
-				color: $wht;
+				color: $main-grey;
 			}
 		}
 		.wrapper {
-		padding-bottom: 2.4em;
+		padding-bottom: $font-size * .5;
 		}
 }

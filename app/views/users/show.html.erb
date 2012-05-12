@@ -1,43 +1,32 @@
 <% provide(:title, @user.name) %>
-<div class="row">
+<section class="wrapper posts">	
 
-  <aside class="span4">
-    <section>
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-  </aside>
-
-  <div class="span8">
-
-    <% if current_user?(@user) %>
-    <div class="row">
-      <div class="span8">
-        <div class="form-actions">
-        <section id="post-button-bar">
-          <%= link_to "Create Post", new_post_path, class: "btn btn-medium" %>
-        </section>  
-      </div>
-      </div>  
-    </div>
+	<article>
+		<header>
+    <% if @user.posts.any? %>
+      <h1>Posts (<%= @posts.count %>)</h1>
+			<p>Posts (<%= @posts.count %>)</p>
+		</header>
+		
+    <ul class="posts">
+    	<%= render @posts %>
+    </ul>
+    <%= will_paginate @posts %>
     <% end %>
 
-    <div class="row">
-      <div class="span8">
-        <section id="user-posts">
-          <% if @user.posts.any? %>
-            <h3>Posts (<%= @posts.count %>)</h3>
-            <ol class="posts">
-              <%= render @posts %>
-            </ol>
-            <%= will_paginate @posts %>
-          <% end %>
-        </section>
-      </div>  
+    <% if current_user?(@user) %>
+    <div class="form-actions">
+    	<%= link_to "Create New Post", new_post_path, class: "btn_medium" %>
     </div>
+    <% end %>
+  </article>
 
-  </div>
+	<article>
+  	<header>
+    	<h1><%= @user.name %></h1>
+		</header>
+      <%= gravatar_for @user %>
+	</article>
 
-</div>
+</section>
+

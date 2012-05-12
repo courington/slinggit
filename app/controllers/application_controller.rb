@@ -128,7 +128,7 @@ class ApplicationController < ActionController::Base
   end
 
   def oauth_consumer
-    @oauth_consumer ||= OAuth::Consumer.new(Twitter.consumer_key, Twitter.consumer_secret, site: 'http://api.twitter.com', request_endpoint: 'http://api.twitter.com', sign_in: true)
+    @oauth_consumer ||= OAuth::Consumer.new(Twitter.consumer_key, Twitter.consumer_secret, site: 'https://api.twitter.com', request_endpoint: 'https://api.twitter.com', sign_in: true)
   end
 
   def ask_to_reauthenticate
