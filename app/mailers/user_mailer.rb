@@ -19,8 +19,9 @@ class UserMailer < ActionMailer::Base
   end
 
   def deliver_problem_report(exception)
+    @from = 'problem_report@slinggit.com'
     @exception = exception
-    mail(:to => 'dlogan21@gmail.com,klein.174@gmail.com,wolfspy@gmail.com,chase.courington@gmail.com', :subject => "Problem Report - #{exception.message}")
+    mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :subject => "Problem Report - #{exception.message}")
   end
 
 end
