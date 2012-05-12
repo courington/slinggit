@@ -249,10 +249,19 @@ class MobileController < ApplicationController
   def get_slinggit_post_data
     if not params[:offset].blank?
       if not params[:limit].blank?
+
+        #offset can be 0
         offset = params[:offset].to_i
         offset = 0 if offset < 0
+
+        #limit cannot be 0
         limit = params[:limit].to_i
         limit = 1 if limit <= 0
+
+        #starting_post_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
+        starting_post_id = params[:starting_post_id]
+        starting_post_id = Post.count(id) + 1 if starting_post_id.blank? or starting_post_id <= 0
+
         posts = []
         success = false
         result = {}
@@ -260,6 +269,7 @@ class MobileController < ApplicationController
         filter_data = {
             :offset => offset,
             :limit => limit,
+            :starting_post_id => starting_post_id,
             :search_term => params[:search_term],
             :user_name => params[:user_name]
         }
@@ -481,9 +491,9 @@ class MobileController < ApplicationController
   def get_all_slinggit_post_data(filter_data)
     matches = []
     if not filter_data[:search_term].blank?
-      matches = Post.all(:conditions => ["open = ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", true, "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+      matches = Post.all(:conditions => ["open = ? AND id < ? AND(content like ? OR hashtag_prefix like ? OR location like ?)", true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
     else
-      matches = Post.all(:conditions => ["open = ?", true], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+      matches = Post.all(:conditions => ["open = ? AND id < ?", true, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
     end
     return [true, matches]
   end
@@ -492,9 +502,9 @@ class MobileController < ApplicationController
     matches = []
     if user = User.first(:conditions => ['name = ? AND status != "deleted"', filter_data[:user_name]], :select => 'id')
       if not filter_data[:search_term].blank?
-        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", user.id, true, "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND id < ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", user.id, true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
       else
-        matches = Post.all(:conditions => ["user_id = ? AND open = ?", user.id, true], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND id < ?", user.id, true, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
       end
       return [true, matches]
     else
