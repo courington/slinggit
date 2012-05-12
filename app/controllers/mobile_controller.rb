@@ -1,6 +1,7 @@
 class MobileController < ApplicationController
   before_filter :set_source
   before_filter :require_post
+  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
@@ -599,10 +600,23 @@ class MobileController < ApplicationController
 
 #----BEFORE FILTERS----#
   def validate_request_authenticity
-    if not request.user_agent.downcase.include?("slinggit") or not params[:slinggit_access_token] == Digest::SHA1.hexdigest("chris,dan,phil,chase,duck")
+    if not params[:slinggit_access_token] == Digest::SHA1.hexdigest("chris,dan,phil,chase,duck")
       render_error_response(
           :error_location => 'global',
           :error_reason => 'authentication failed',
+          :error_code => '401',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.',
+          :user_agent => request.user_agent
+      )
+      return
+    end
+  end
+
+  def validate_user_agent
+    if not request.user_agent.downcase.include?("slinggit")
+      render_error_response(
+          :error_location => 'global',
+          :error_reason => 'authentication failed - invalid user_agent',
           :error_code => '401',
           :friendly_error => 'Oops, something went wrong.  Please try again later.',
           :user_agent => request.user_agent
