@@ -1,10 +1,10 @@
 class MobileController < ApplicationController
-  before_filter :require_post
-  before_filter :validate_request_authenticity
-  before_filter :set_state
-  before_filter :set_device_name
-  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login]
-  before_filter :set_options
+  #before_filter :require_post
+  #before_filter :validate_request_authenticity
+  #before_filter :set_state
+  #before_filter :set_device_name
+  #before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login]
+  #before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
   ERROR_STATUS = "error"
@@ -254,82 +254,58 @@ class MobileController < ApplicationController
     @mobile_auth_token
   end
 
-  #TODO REFACTOR
+  #RE DOCUMENT
   def get_slinggit_post_data
-    if not params[:starting_post_id].blank?
+    if not params[:offset].blank?
       if not params[:limit].blank?
-        search_term = params[:search_term]
-        user_name = params[:user_name]
+        offset = params[:offset].to_i
+        offset = 0 if offset < 0
+        limit = params[:limit].to_i
+        limit = 1 if limit <= 0
         posts = []
-        if not user_name.blank?
-          if user = User.first(:conditions => ['name = ? AND status != "deleted"', user_name])
-            if not search_term.blank?
-              posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND user_id = ?", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%", user.id], :offset => params[:starting_post_id].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
-            else
-              if params[:starting_post_id] == '0'
-                posts = Post.all(:conditions => ["user_id = #{user.id}"], :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
-              else
-                starting_post_id = params[:starting_post_id].to_i
-                limit = params[:limit].to_i
-                starting_post_id -= limit
-                starting_post_id = 1 if starting_post_id <= 0
+        success = false
+        result = {}
 
-                posts = Post.all(:conditions => ["user_id = #{user.id}"], :offset => starting_post_id, :limit => limit, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
-              end
-            end
-          else
-            render_error_response(
-                :error_location => 'get_slinggit_post_data',
-                :error_reason => "user not found - #{params[:user_name]}",
-                :error_code => '404',
-                :friendly_error => 'That user no longer has any open items for sale.'
-            )
-            return
-          end
-        elsif not search_term.blank?
-          posts = Post.all(:conditions => ["content like '%#{search_term}%' OR hashtag_prefix like '%#{search_term}%'"], :offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
-        else
-          starting_post_id = params[:starting_post_id].to_i
-          limit = params[:limit].to_i
-          starting_post_id -= limit
-          starting_post_id = 1 if starting_post_id <= 0
-          if params[:starting_post_id] == '0'
-            posts = Post.all(:limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
-          else
-            posts = Post.all(:offset => params[:starting_post_id].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
-          end
-
-        end
-
-        posts_array = []
-        posts.each do |post|
-          posts_array << {
-              :post_id => post.id.to_s,
-              :open => post.open ? 'true' : 'false',
-              :content => post.content,
-              :hashtag_prefix => post.hashtag_prefix,
-              :price => post.price.to_i,
-              :location => post.location,
-              :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
-              :image_uri => 'http://netobjects.com/assets/images/icon-image-bank.png',
-              :created_at_date => post.created_at.strftime("%m-%d-%Y"),
-              :created_at_time => post.created_at.strftime("%H:%M")
-          }
-        end
-
-        return_data = {
-            :rows_found => posts.length.to_s,
-            :params_used => {
-                :offset => params[:offset],
-                :limit => params[:limit],
-                :search_term => search_term.blank? ? '' : search_term,
-                :user_name => user_name.blank? ? '' : user_name
-            },
-            :posts => posts_array
+        filter_data = {
+            :offset => offset,
+            :limit => limit,
+            :search_term => params[:search_term],
+            :user_name => params[:user_name]
         }
 
-        render_success_response(return_data)
+        if not filter_data[:user_name].blank?
+          success, result = get_slinggit_post_data_for_user(filter_data)
+        else
+          success, result = get_all_slinggit_post_data(filter_data)
+        end
 
+        if success
+          posts_array = []
+          result.each do |post|
+            posts_array << {
+                :post_id => post.id.to_s,
+                :open => post.open ? 'true' : 'false',
+                :content => post.content,
+                :hashtag_prefix => post.hashtag_prefix,
+                :price => post.price.to_i,
+                :location => post.location,
+                :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
+                :image_uri => 'http://netobjects.com/assets/images/icon-image-bank.png',
+                :created_at_date => post.created_at.strftime("%m-%d-%Y"),
+                :created_at_time => post.created_at.strftime("%H:%M")
+            }
+          end
+
+          return_data = {
+              :rows_found => posts.length.to_s,
+              :params_used => filter_data,
+              :posts => posts_array
+          }
+
+          render_success_response(return_data)
+        else
+          render_error_response(result)
+        end
       else
         render_error_response(
             :error_location => 'get_slinggit_post_data',
@@ -341,7 +317,7 @@ class MobileController < ApplicationController
     else
       render_error_response(
           :error_location => 'get_slinggit_post_data',
-          :error_reason => 'missing required_paramater - starting_post_id',
+          :error_reason => 'missing required_paramater - offset',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
@@ -510,6 +486,35 @@ class MobileController < ApplicationController
   end
 
   private
+
+  def get_all_slinggit_post_data(filter_data)
+    matches = []
+    if not filter_data[:search_term].blank?
+      matches = Post.all(:conditions => ["open = ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", true, "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+    else
+      matches = Post.all(:conditions => ["open = ?", true], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+    end
+    return [true, matches]
+  end
+
+  def get_slinggit_post_data_for_user(filter_data)
+    matches = []
+    if user = User.first(:conditions => ['name = ? AND status != "deleted"', filter_data[:user_name]], :select => 'id')
+      if not filter_data[:search_term].blank?
+        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", user.id, true, "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+      else
+        matches = Post.all(:conditions => ["user_id = ? AND open = ?", user.id, true], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+      end
+      return [true, matches]
+    else
+      error_hash = {
+          :error_location => 'get_slinggit_post_data',
+          :error_reason => 'user not found',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'}
+      return [false, error_hash]
+    end
+  end
 
   def create_or_update_mobile_auth_token(user_id)
     if not @state.blank?
