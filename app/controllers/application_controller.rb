@@ -9,18 +9,13 @@ class ApplicationController < ActionController::Base
   def redirect
     redirect_info = params[:path]
     if not redirect_info.blank?
-      if redirect_info.include? '/'
-        #if a route does not exist, redirect to 404
-        redirect_to '/404.html'
+      if user = User.first(:conditions => ['name = ?', redirect_info], :select => 'id')
+        redirect_to :controller => :users, :action => :show, :id => user.id
+      elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,clicks,id')
+        redirect.update_attribute(:clicks, redirect.clicks += 1)
+        redirect_to redirect.target_uri
       else
-        if user = User.first(:conditions => ['name = ?', redirect_info], :select => 'id')
-          redirect_to :controller => :posts, :action => :show, :id => user.id
-        elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,clicks,id')
-          redirect.update_attribute(:clicks, redirect.clicks += 1)
-          redirect_to redirect.target_uri
-        else
-          flash[:error] = "We couldn't find what you were looking for.  Try using the quick search feature to find items for sale.'"
-        end
+        redirect_to params[:path]
       end
     else
       redirect_to :controller => :static_pages, :action => :home
