@@ -178,13 +178,12 @@ class MobileController < ApplicationController
           redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
         end
       else
-        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
+        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret, :protocol => 'https://'
       end
     end
   end
 
   def finalize_add_twitter_account
-    render :text => 'steve'
     #This will never get hit becuase the mobile pageview intercepts it and prevents it from redirecting here.
   end
 
