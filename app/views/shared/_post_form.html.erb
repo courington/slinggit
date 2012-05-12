@@ -46,8 +46,7 @@
 
       <fieldset class="form-actions">
         <span>Twitter account(s) to post to:</span>
-        <%= check_box_tag "twitter_accounts[0]", 'post', true %>
-				<%= label :twitter_account[0], "Slinggit", for: "twitter_accounts[0]" %>
+        <%= check_box_tag "twitter_accounts[0]", 'post', true %>Slinggit
         <% @twitter_accounts.each do |twitter_account| %>
             <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %> <%= twitter_account.user_name %>
         <% end %>

@@ -198,14 +198,11 @@ width: 50%;
 clear: left;
 font-size: 1.4em;
 }
-.form-actions label {
-font-size: 1em;
-float: none;
-}
 .form-actions > input[type="checkbox"] {
-clear: left;
 width: auto;
-margin: 1.4em;
+margin: 0;
+display: block;
+clear: left;
 }
 #new_post fieldset:last-child {
 float: right;
