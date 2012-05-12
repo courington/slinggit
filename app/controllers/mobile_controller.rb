@@ -604,7 +604,8 @@ class MobileController < ApplicationController
           :error_location => 'global',
           :error_reason => 'authentication failed',
           :error_code => '401',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          :friendly_error => 'Oops, something went wrong.  Please try again later.',
+          :user_agent => request.user_agent
       )
       return
     end
