@@ -158,7 +158,7 @@ class MobileController < ApplicationController
   end
 
   def add_twitter_account
-    setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name], :protocol => 'https://')
+    setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
   end
 
   def add_twitter_account_callback
@@ -178,7 +178,7 @@ class MobileController < ApplicationController
           redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
         end
       else
-        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret, :protocol => 'https://'
+        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account#, :status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
       end
     end
   end
