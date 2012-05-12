@@ -178,7 +178,7 @@ class MobileController < ApplicationController
           redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
         end
       else
-        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account#, :status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
+        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :access_token => access_token.token, :access_token_secret => access_token.secret
       end
     end
   end
