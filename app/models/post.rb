@@ -27,7 +27,10 @@ class Post < ActiveRecord::Base
   belongs_to :user
   has_many :comments, dependent: :destroy
 
-  has_attached_file :photo, styles: {:medium => "300x300#", :search => '80x80#'},
+  has_attached_file :photo, styles: {:medium => "300x300>", :search => '80x80>'},
+                    :convert_options => {
+                      :medium => "-auto-orient",
+                      :search => "-auto-orient" },
                     url: "/uploads/posts/:id/:style/:basename.:extension",
                     path: "#{POST_PHOTO_DIR}/uploads/posts/:id/:style/:basename.:extension"
   VALID_LOCATION_REGEX = /\A[a-z0-9]{,20}\z/i #We may want to force either numbers or letters at a later date
@@ -56,4 +59,10 @@ class Post < ActiveRecord::Base
     num.gsub!(',','') if num.is_a?(String)
     self[:price] = num.to_i
   end 
+
+  def rotator
+    manipulate! do |image|
+      image.auto_orient
+    end
+  end  
 end
