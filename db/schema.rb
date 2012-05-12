@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512032530) do
+ActiveRecord::Schema.define(:version => 20120512185500) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(:version => 20120512032530) do
     t.string   "recipient_api_account_ids"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.string   "reply_to"
   end
 
   create_table "post_history", :force => true do |t|
@@ -102,7 +101,6 @@ ActiveRecord::Schema.define(:version => 20120512032530) do
     t.boolean  "open",                                   :default => true
     t.string   "location"
     t.string   "recipient_api_account_ids"
-    t.string   "reply_to"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"
