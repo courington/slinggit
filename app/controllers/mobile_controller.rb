@@ -165,7 +165,7 @@ class MobileController < ApplicationController
     rtoken = session['rtoken']
     rsecret = session['rsecret']
     if not params[:denied].blank?
-      redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started.'
+      redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started.'
     else
       request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
       access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
@@ -173,12 +173,12 @@ class MobileController < ApplicationController
         if user = User.first(:conditions => [:name => params[:user_name]])
           client = Twitter::Client.new(oauth_token: access_token.token, oauth_token_secret: access_token.secret)
           create_api_account(:source => :twitter, :user_object => user, :api_object => client)
-          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS
+          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => SUCCESS_STATUS
         else
-          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
         end
       else
-        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :access_token => access_token.token, :access_token_secret => access_token.secret
+        redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
       end
     end
   end
@@ -721,7 +721,7 @@ class MobileController < ApplicationController
   rescue => exception
     UserMailer.deliver_problem_report(exception).deliver
     if session[:source] and session[:source] == NATIVE_APP_WEB_VIEW
-      redirect_to :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      redirect_to :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
     else
       render_error_response(
           :error_location => 'global',
