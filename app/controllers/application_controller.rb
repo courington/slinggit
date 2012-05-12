@@ -154,7 +154,11 @@ class ApplicationController < ActionController::Base
     yield
   rescue => exception
     UserMailer.deliver_problem_report(exception).deliver
-    redirect_to '/500.html'
+    if PROD_ENV
+      redirect_to '/500.html'
+    else
+      raise exception
+    end
   end
 
 end
