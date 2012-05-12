@@ -12,7 +12,6 @@ class MobileController < ApplicationController
   SUCCESS_STATUS = "success"
 
   def user_signup
-    0/0
     if not params[:user_name].blank?
       if not params[:email].blank?
         if not params[:password].blank?
@@ -649,9 +648,10 @@ class MobileController < ApplicationController
   def catch_exceptions
     yield
   rescue => exception
+    puts 'steve'
     render_error_response(
         :error_location => 'global',
-        :error_reason => "exception caught: #{exception.to_s} - #{exception.backtrace}",
+        :error_reason => "exception caught: #{exception.message} - #{exception.backtrace}",
         :error_code => '500',
         :friendly_error => 'Oops, something went wrong.  Please try again later.'
     )
