@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20120512185500) do
   create_table "redirects", :force => true do |t|
     t.string   "key_code"
     t.string   "target_uri"
-    t.integer  "clicks"
+    t.integer  "clicks",     :default => 0
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -146,7 +146,6 @@ ActiveRecord::Schema.define(:version => 20120512185500) do
     t.boolean  "admin",               :default => false
     t.string   "status",              :default => "active"
     t.string   "password_reset_code"
-    t.string   "time_zone"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
