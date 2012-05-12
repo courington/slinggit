@@ -1,6 +1,6 @@
 class MobileController < ApplicationController
   before_filter :set_source
-  before_filter :require_post
+  before_filter :require_post, :except => [:add_twitter_account_callback]
   before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
