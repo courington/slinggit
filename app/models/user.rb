@@ -2,15 +2,16 @@
 #
 # Table name: users
 #
-#  id              :integer         not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  created_at      :datetime        not null
-#  updated_at      :datetime        not null
-#  password_digest :string(255)
-#  remember_token  :string(255)
-#  admin           :boolean         default(FALSE)
-#  status          :string(255)     default("active")
+#  id                  :integer         not null, primary key
+#  name                :string(255)
+#  email               :string(255)
+#  created_at          :datetime        not null
+#  updated_at          :datetime        not null
+#  password_digest     :string(255)
+#  remember_token      :string(255)
+#  admin               :boolean         default(FALSE)
+#  status              :string(255)     default("active")
+#  password_reset_code :string(255)
 #
 
 class User < ActiveRecord::Base
