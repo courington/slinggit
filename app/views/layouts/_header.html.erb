@@ -19,7 +19,7 @@
 				<div id="accountDropDown" class="dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
 			  	<span class="BTN_nav_dropDown" data-toggle="dropdown">Account &raquo;</span>
 			
-			        <ul class="nav_dropDown">
+			        <ul class="nav_dropDown" style="display:none">
 			          <li class="<%= 'active' if current_page?(current_user) %>">
 			            <%= link_to "Posts", current_user %>
 			          </li>
@@ -45,57 +45,18 @@
 			  	<%= link_to "Sign in", signin_path %>
 			  </span>
 			  <% end %>
-			  <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+			  <section id="quickSearchWrapper">
+			  	<%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+			  </section>
+			  
 		</nav>
 	</div>
 </header>
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        $('#quickSearch').keypress(function (e) {
-            if (e.which == 13) {
-                e.preventDefault();
-                document.location.href = "/posts/results/" + $('#quickSearch').val();
-            }
-        });
-    });
-
-</script>
-
-<script type="text/javascript">
-// level one
-(function(){
-	// level two
-	var DropDown = (function(){
-		// level three
-		var initialize = function(){
-			_hideObjects();
-			_setListeners();
-		}
-		//hide the drop down list
-		var _hideObjects = function(){
-			// level four
-			$('.nav_dropDown').css('display','none');
-		}
-		//set listeners to show drop down
-		var _setListeners = function(){
-			// level four
-			$('.BTN_nav_dropDown').click(function(){				
-				$('.nav_dropDown').slideDown();
-			});
-			//$('.BTN_nav_dropDown').click{
-			//	if($('.nav_dropDown').css('display', 'none');){
-			//		$(this).css('display', 'block');
-			//	}
-			//}
-		}
-		return {init: initialize}
-	}());
-
-	this.DropDown = DropDown}).call(this);
-
 $(document).ready(function(){
-		DropDown.init()
+	window.navDropdownView()
+	window.quickSearchView()
 });
 </script>
