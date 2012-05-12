@@ -17,3 +17,11 @@
   <dd><%= @post.content %></dd>
   <dt>
 </dl>
+
+<!-- Reply to container -->
+<div>
+  <% if not @twitter_post.blank? %>
+    <a href="https://twitter.com/#!/<%= @api_account.user_name %>/status/<%= @twitter_post.twitter_post_id %>" target="_blank">@<%= @api_account.user_name %></a>
+  <% end %>  
+
+</div>

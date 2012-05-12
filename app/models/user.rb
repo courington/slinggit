@@ -42,6 +42,10 @@ class User < ActiveRecord::Base
     !twitter_atoken.blank? && !twitter_asecret.blank?
   end
 
+  def primary_twitter_account
+    ApiAccount.first(:conditions => ['user_id = ? AND status = "primary"', self.id])
+  end  
+
   private
 
   def create_remember_token
