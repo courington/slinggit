@@ -84,7 +84,7 @@ SlinggitWebapp::Application.routes.draw do
   get "mobile/check_limitations"
   get "mobile/add_twitter_account"
 
-  #match '*path', :to => 'application#redirect'
+  match '*path', :to => 'application#redirect'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
