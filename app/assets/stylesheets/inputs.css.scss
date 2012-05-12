@@ -64,15 +64,6 @@ input[type="text"] {
 		clear: left;
 		margin: 1.4em auto;
 		}
-		&#post_hashtag_prefix {
-		width: 57%;
-		}
-		&#post_location {
-		width: 29%;
-		}
-		&#post_price {
-		width: 20%;
-		}
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -166,8 +157,11 @@ label {
 }
 .input-append {
 display: block;
-width: 40%;
+width: 100%;
 }
 fieldset {
 margin: 0 0 1.4em 0;
 }
+// create post form
+
+// end

@@ -1,50 +1,43 @@
-<style type="text/css">
-    img.obj {
-        width: 300px;
-    }
-
-</style>
-
-<%= form_for @post do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
-	<header>  	
+<article>
+<header>  	
 	<h1>Create a post:</h1>
 	<p>Create a post:</p>
-	</header>
-
+</header>
+<%= form_for @post do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
       <fieldset>
-        <%= f.label :hashtag_prefix, "Your item", class: "control-label", for: "post_hashtag_prefix" %>
+        <%= f.label :hashtag_prefix, "Your item", class: "", for: "post_hashtag_prefix" %>
           <div class="input-append">
             <%= f.text_field :hashtag_prefix, class: "hardEdge-right form-singleLine", placeholder: "#" %>
             <span class="add-on">forsale</span>
           </div>
       </fieldset>
 
-      <fieldset>
-        <%= f.label :location, "Location", class: "", for: "post_hashtag_prefix" %>
-        <%= f.text_field :location, class: "form-singleLine", placeholder: "City, State, or Zip" %>
-      </fieldset>
-
-      <fieldset class="control-group">
-        <%= f.label :content, "Quick description", class: "control-label", for: "post_content" %>
-          <%= f.text_area :content, class: "form-singleLine", rows: "3", placeholder: "Something short and sweet..." %>
-      </fieldset>
-
-	    <fieldset>
-        <%= f.label :price, class: "control-label", for: "post_price" %>
+	    <fieldset class="col_oneThird">
+        <%= f.label :price, class: "", for: "post_price" %>
           <div class="input-append">
             <%= f.text_field :price, class: "hardEdge-right form-singleLine", id: "post_price" %>
             <span class="add-on hardEdge-left">.00</span>
           </div>
 	    </fieldset>
 
-      <fieldset>
+      <fieldset class="col_twoThird">
+        <%= f.label :location, "Location", class: "", for: "post_hashtag_prefix" %>
+        <%= f.text_field :location, class: "form-singleLine", placeholder: "City, State, or Zip" %>
+      </fieldset>
+	
+	    <fieldset>
         <%= f.label :reply_to, "Reply To", class: "", for: "post_reply_to" %>
         <%= f.text_field :reply_to, class: "form-singleLine", placeholder: "email address, phone, etc.." %>
       </fieldset>
 
+      <fieldset class="control-group">
+        <%= f.label :content, "Quick description", class: "", for: "post_content" %>
+          <%= f.text_area :content, class: "form-singleLine", rows: "3", placeholder: "Something short and sweet..." %>
+      </fieldset>
+
       <fieldset id="photoControlGroup" class="control-group">
-        <%= f.label :photo, "Item Photo (optional)", class: "control-label", for: "post_photo" %>
+        <%= f.label :photo, "Item Photo (optional)", class: "", for: "post_photo" %>
         <div class="controls thumbnail">
           <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
           <a href="#" id="fileSelect">Select a photo</a>
@@ -66,5 +59,5 @@
             <%= f.submit "Post Item", class: "btn-medium", id: "submitNewPost" %>
         <% end %>
       </fieldset>
-
 <% end %>
+</article>

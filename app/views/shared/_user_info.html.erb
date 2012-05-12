@@ -1,11 +1,7 @@
-<aside>
-	<a href="<%= user_path(current_user) %>">
-  	<%= gravatar_for current_user %>
-	</a>
-	<h1>
-  	<%= current_user.name %>
-	</h1>
-	<span>
-  	<%= pluralize(current_user.posts.count, "post") %>
-	</span>
-</aside>
+<article>
+	<header>
+		<h1><%= current_user.name %></h1>
+  	<h6><%= pluralize(current_user.posts.count, "post") %></h6>
+	</header>
+	<a href="<%= user_path(current_user) %>"><%= gravatar_for current_user %></a>
+</article>

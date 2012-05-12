@@ -86,7 +86,9 @@ p {
 		width: 45%;
 		float: left;
 		display: inline-block;
-		margin: 0 2.5%;
+		&:first-child {
+			margin: 0 5% 0 0;
+		}
 		}
 	header {
 		margin:0;
@@ -95,7 +97,7 @@ p {
 			text-transform: uppercase;
 			font-weight: bold;
 			color: rgba(255, 255, 255, .25);
-			margin: -1.075em 0 1.4em .045em;
+			margin: -1.075em 0 0 .045em;
 			}
 		}
 	.twtr-widget {
@@ -157,6 +159,39 @@ p {
 	width: 75%;
 	}
 	//end
+	//Item Photo for posts
+	img.obj {
+        width: 300px;
+    }
+	//end
+	//form: create a post on /posts/new
+	.posts {
+		article{
+			&:first-child {
+			float: left;
+			width: 60%;
+			}
+			&:last-child {
+			float: right;
+			width: 30%;
+				header {
+					float: left;
+					margin: 0 2.5% 0 0;
+					text-align: right;
+					h1 {
+						font-size: $font-size * .75;
+						line-height: ($font-size * .75) * 1.2;
+					}
+					h6 {
+						font-size: $font-size * .65;
+						line-height: ($font-size * .65) * 1.2;
+					}
+				}
+				a:link {
+					float: left;
+				}
+			}
+		}
+	}
+	//end
 }
-
-
