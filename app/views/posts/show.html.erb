@@ -23,7 +23,7 @@
           <div class="span4"> 
             <div class="thumbnail">
               <% if @post.photo_file_name.blank? %>
-                <%= image_tag "http://placehold.it/300x300" %>
+                <%= image_tag "300x300_placeholder.png" %>
               <% else %>
                 <%= image_tag @post.photo.url(:medium) %>
               <% end %>

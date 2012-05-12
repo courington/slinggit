@@ -22,7 +22,7 @@
           <tr class="postResult" id="postResult_<%= post.id %>">
             <td>
               <% if post.photo_file_name.blank? %>
-                <%= image_tag "http://placehold.it/80x80" %>
+                <%= image_tag "80x80_placeholder.png" %>
               <% else %>
                 <%= image_tag post.photo.url(:search) %>
               <% end %>
