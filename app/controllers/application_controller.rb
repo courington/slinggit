@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
+  around_filter :catch_exceptions, :except => [:mobile]
+  before_filter :set_timezone
+
   def redirect
     redirect_info = params[:path]
     if not redirect_info.blank?
@@ -140,6 +143,21 @@ class ApplicationController < ActionController::Base
       return true
     rescue Exception => e
       return false
+    end
+  end
+
+  def set_timezone
+    #Time.zone = current_user.time_zone || 'Central Time (US & Canada)'
+  end
+
+  def catch_exceptions
+    yield
+  rescue => exception
+    UserMailer.deliver_problem_report(exception).deliver
+    if PROD_ENV
+      redirect_to '/500.html'
+    else
+      raise exception
     end
   end
 

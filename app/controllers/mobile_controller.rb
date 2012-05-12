@@ -6,6 +6,7 @@ class MobileController < ApplicationController
   before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login]
   before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
+  around_filter :catch_exceptions
 
   ERROR_STATUS = "error"
   SUCCESS_STATUS = "success"
@@ -643,6 +644,16 @@ class MobileController < ApplicationController
       end
     end
   end
+
+  def catch_exceptions
+    yield
+  rescue => exception
+    puts 'steve'
+    render_error_response(
+        :error_location => 'global',
+        :error_reason => "exception caught: #{exception.message} - #{exception.backtrace}",
+        :error_code => '500',
+        :friendly_error => 'Oops, something went wrong.  Please try again later.'
+    )
+  end
 end
-
-
