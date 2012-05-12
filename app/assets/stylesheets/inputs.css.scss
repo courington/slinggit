@@ -62,7 +62,7 @@ input[type="text"] {
 		&.form-singleLine {
 		float: left;
 		clear: left;
-		margin: 1.4em auto;
+		margin: .7em 0 1.4em 0;
 		}
 		&:focus {
 		outline: none;
@@ -72,6 +72,9 @@ input[type="text"] {
 }
 input[type="text"].hardEdge-right {
 	@include hardEdge-right;
+	width: 65%;
+	clear: left;
+	float: left;
 }
 textarea {
 	@include textInput;
@@ -81,7 +84,8 @@ textarea {
 	height: 6.3em;
 	clear: left;
 	float: left;
-	margin: 1.4em 0;
+	margin: .7em 0 1.4em 0;
+	width: 75%;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -151,17 +155,63 @@ label {
 	border: 1px solid darken($lt-grey, 10%);
 	box-shadow: $btn-shading;
 	width: 25%;
-	margin:1.35em 0 0 -.5%;
+	margin: .675em 0 0 0;
 	float: left;
 	width: auto;
 }
 .input-append {
-display: block;
+overflow:hidden;
 width: 100%;
 }
-fieldset {
-margin: 0 0 1.4em 0;
-}
 // create post form
-
+.col_oneThird,
+.form-actions {
+width: 33%;
+float: left;
+}
+.col_twoThird,
+#photoControlGroup {
+float: left;
+margin: 0 0 0 5%;
+width: 38%;
+}
+#photoControlGroup {
+margin: 0;
+}
+.col_twoThird + fieldset {
+clear: left;
+width: 100%;
+	> input {
+	width: 75%;
+	}
+}
+label[for="post_photo"] {
+float: left;
+display: inline-block;
+}
+.controls.thumbnail {
+font-size: 1.4em;
+margin: 1.4em 0;
+width: 50%;
+}
+.form-actions {
+clear: left;
+font-size: 1.4em;
+}
+.form-actions label {
+font-size: 1em;
+float: none;
+}
+.form-actions > input[type="checkbox"] {
+clear: left;
+width: auto;
+margin: 1.4em;
+}
+#new_post fieldset:last-child {
+float: right;
+width: 50%;
+}
+#submitNewPost {
+width: 50%;
+}
 // end

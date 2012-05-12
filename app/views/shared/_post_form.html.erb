@@ -16,7 +16,7 @@
 	    <fieldset class="col_oneThird">
         <%= f.label :price, class: "", for: "post_price" %>
           <div class="input-append">
-            <%= f.text_field :price, class: "hardEdge-right form-singleLine", id: "post_price" %>
+            <%= f.text_field :price, class: "hardEdge-right form-singleLine", id: "post_price", placeholder: "$" %>
             <span class="add-on hardEdge-left">.00</span>
           </div>
 	    </fieldset>
@@ -31,12 +31,12 @@
         <%= f.text_field :reply_to, class: "form-singleLine", placeholder: "email address, phone, etc.." %>
       </fieldset>
 
-      <fieldset class="control-group">
+      <fieldset>
         <%= f.label :content, "Quick description", class: "", for: "post_content" %>
-          <%= f.text_area :content, class: "form-singleLine", rows: "3", placeholder: "Something short and sweet..." %>
+        <%= f.text_area :content, class: "form-singleLine", rows: "3", placeholder: "Something short and sweet..." %>
       </fieldset>
 
-      <fieldset id="photoControlGroup" class="control-group">
+      <fieldset id="photoControlGroup" class="">
         <%= f.label :photo, "Item Photo (optional)", class: "", for: "post_photo" %>
         <div class="controls thumbnail">
           <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
@@ -45,18 +45,20 @@
       </fieldset>
 
       <fieldset class="form-actions">
-        <span>Select Twitter accounts to post on</span><br/>
-        <%= check_box_tag "twitter_accounts[0]", 'post', true %> Slinggit<br/>
+        <span>Twitter account(s) to post to:</span>
+        <%= check_box_tag "twitter_accounts[0]", 'post', true %>
+				<%= label :twitter_account[0], "Slinggit", for: "twitter_accounts[0]" %>
         <% @twitter_accounts.each do |twitter_account| %>
             <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %> <%= twitter_account.user_name %>
-            <br/>
         <% end %>
+				</fieldset>
         
+<fieldset>
         <% if @cant_post %>
             <div>You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.</div>
-            <%= f.submit "Post Item", class: "btn-medium", id: "submitNewPost", disabled: "disabled" %>
+            <%= f.submit "Post Item", class: "btn_medium", id: "submitNewPost", disabled: "disabled" %>
         <% else %>
-            <%= f.submit "Post Item", class: "btn-medium", id: "submitNewPost" %>
+            <%= f.submit "Post Item", class: "btn_medium", id: "submitNewPost" %>
         <% end %>
       </fieldset>
 <% end %>
