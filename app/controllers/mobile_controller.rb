@@ -1,10 +1,10 @@
 class MobileController < ApplicationController
-  #before_filter :require_post
-  #before_filter :validate_request_authenticity
-  #before_filter :set_state
-  #before_filter :set_device_name
-  #before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login]
-  #before_filter :set_options
+  before_filter :require_post
+  before_filter :validate_request_authenticity
+  before_filter :set_state
+  before_filter :set_device_name
+  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login]
+  before_filter :set_options
   before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
 
   ERROR_STATUS = "error"
