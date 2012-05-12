@@ -28,10 +28,8 @@
         <% if signed_in? and not @primary_twitter_account.blank?  %>
         $('#twtr-widget-1').css('float', 'left');
         $('#twtr-widget-2').css('float', 'right');
-        $('.footer').css('padding-top', '355px');
         <% else %>
         $('#twtr-widget-1').css('padding-left', '0');
-        $('.footer').css('padding-left', '0');
         <% end %>
 
     });

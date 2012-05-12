@@ -1,15 +1,19 @@
 class MobileController < ApplicationController
-  before_filter :require_post
-  before_filter :validate_request_authenticity
-  before_filter :set_state
-  before_filter :set_device_name
-  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login]
-  before_filter :set_options
-  before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
+  before_filter :set_source
+  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   around_filter :catch_exceptions
 
   ERROR_STATUS = "error"
   SUCCESS_STATUS = "success"
+  NATIVE_APP = "native_app"
+  NATIVE_APP_WEB_VIEW = "native_app_web_view"
+  MOBILE_VIEW_ACTIONS = [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
 
   def user_signup
     if not params[:user_name].blank?
@@ -29,6 +33,10 @@ class MobileController < ApplicationController
               if user.save
                 log_user_login(user)
                 mobile_auth_token = create_or_update_mobile_auth_token(user.id)
+                if not params[:access_token].blank? and not params[:access_token_secret].blank?
+                  client = Twitter::Client.new(oauth_token: params[:access_token], oauth_token_secret: params[:access_token_secret])
+                  create_api_account(:source => :twitter, :user_object => user, :api_object => client)
+                end
                 render_success_response(
                     :mobile_auth_token => mobile_auth_token
                 )
@@ -147,6 +155,36 @@ class MobileController < ApplicationController
           :logged_in => false
       )
     end
+  end
+
+  def add_twitter_account
+    setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
+  end
+
+  def add_twitter_account_callback
+    rtoken = session['rtoken']
+    rsecret = session['rsecret']
+    if not params[:denied].blank?
+      redirect_to :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started.'
+    else
+      request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
+      access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+      if not params[:user_name].blank?
+        if user = User.first(:conditions => [:name => params[:user_name]])
+          client = Twitter::Client.new(oauth_token: access_token.token, oauth_token_secret: access_token.secret)
+          create_api_account(:source => :twitter, :user_object => user, :api_object => client)
+          redirect_to :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS
+        else
+          redirect_to :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        end
+      else
+        redirect_to :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
+      end
+    end
+  end
+
+  def finalize_add_twitter_account
+    #This will never get hit becuase the mobile pageview intercepts it and prevents it from redirecting here.
   end
 
   def create_post
@@ -562,12 +600,26 @@ class MobileController < ApplicationController
 
 #----BEFORE FILTERS----#
   def validate_request_authenticity
-    if not request.user_agent.downcase.include?("slinggit") or not params[:slinggit_access_token] == Digest::SHA1.hexdigest("chris,dan,phil,chase,duck")
+    if not params[:slinggit_access_token] == Digest::SHA1.hexdigest("chris,dan,phil,chase,duck")
       render_error_response(
           :error_location => 'global',
           :error_reason => 'authentication failed',
           :error_code => '401',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          :friendly_error => 'Oops, something went wrong.  Please try again later.',
+          :user_agent => request.user_agent
+      )
+      return
+    end
+  end
+
+  def validate_user_agent
+    if not request.user_agent.downcase.include?("slinggit")
+      render_error_response(
+          :error_location => 'global',
+          :error_reason => 'authentication failed - invalid user_agent',
+          :error_code => '401',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.',
+          :user_agent => request.user_agent
       )
       return
     end
@@ -643,6 +695,14 @@ class MobileController < ApplicationController
     end
   end
 
+  def set_source
+    if MOBILE_VIEW_ACTIONS.include? params[:action].to_sym
+      session[:source] = NATIVE_APP_WEB_VIEW
+    else
+      session[:source] = NATIVE_APP
+    end
+  end
+
   def validate_request_data_is_valid_json
     if not params[:post_data].blank?
       if not params[:post_data].valid_json?
@@ -659,12 +719,16 @@ class MobileController < ApplicationController
   def catch_exceptions
     yield
   rescue => exception
-    puts 'steve'
-    render_error_response(
-        :error_location => 'global',
-        :error_reason => "exception caught: #{exception.message} - #{exception.backtrace}",
-        :error_code => '500',
-        :friendly_error => 'Oops, something went wrong.  Please try again later.'
-    )
+    UserMailer.deliver_problem_report(exception).deliver
+    if session[:source] and session[:source] == NATIVE_APP_WEB_VIEW
+      redirect_to :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+    else
+      render_error_response(
+          :error_location => 'global',
+          :error_reason => "exception caught: #{exception.message} - #{exception.backtrace}",
+          :error_code => '500',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 end
