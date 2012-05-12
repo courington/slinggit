@@ -1,7 +1,7 @@
 class PostHistoryTable < ActiveRecord::Migration
   def up
     if not ActiveRecord::Base.connection.table_exists? 'post_histories'
-      create_table :post_histories do |t|
+      create_table :post_histories, :id => false do |t|
         t.integer :id
         t.string :content
         t.datetime :created_at

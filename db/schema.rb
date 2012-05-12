@@ -55,23 +55,8 @@ ActiveRecord::Schema.define(:version => 20120512185500) do
     t.string   "options",           :limit => 1000
   end
 
-  create_table "post_histories", :force => true do |t|
-    t.string   "content"
-    t.datetime "created_at"
-    t.string   "hashtag_prefix"
-    t.string   "location"
-    t.boolean  "open"
-    t.string   "photo_content_type"
-    t.string   "photo_file_name"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.decimal  "price"
-    t.string   "recipient_api_account_ids"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-  end
-
-  create_table "post_history", :force => true do |t|
+  create_table "post_histories", :id => false, :force => true do |t|
+    t.integer  "id"
     t.string   "content"
     t.datetime "created_at"
     t.string   "hashtag_prefix"
@@ -110,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20120512185500) do
   create_table "redirects", :force => true do |t|
     t.string   "key_code"
     t.string   "target_uri"
-    t.integer  "clicks",     :default => 0
+    t.integer  "clicks"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -161,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20120512185500) do
     t.boolean  "admin",               :default => false
     t.string   "status",              :default => "active"
     t.string   "password_reset_code"
+    t.string   "time_zone"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
