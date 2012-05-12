@@ -163,19 +163,9 @@ class MobileController < ApplicationController
                     :location => params[:location]
                 )
 
-                begin
-                  file_name = "#{params[:hashtag_prefix]}_#{post.id}.jpg"
-                  image_data = Base64.decode64(request.body.to_s)
-                  File.open("public/assets/images/#{file_name}", 'wb') { |file| (file << image_data) }
-                rescue Exception => e
-                  render_error_response(
-                      :error_location => 'fucked_up',
-                      :error_reason => "#{e.to_s}",
-                      :error_code => "#{request.body.to_s}",
-                      :friendly_error => 'Oops, something went wrong.  Please try again later.'
-                  )
-                  return
-                end
+                file_name = "#{params[:hashtag_prefix]}_#{post.id}.jpg"
+                image_data = Base64.decode64(request.body.to_s)
+                File.open("public/assets/images/#{file_name}", 'wb') { |file| (file << image_data) }
 
                 if post.save
                   render_success_response(
@@ -254,7 +244,7 @@ class MobileController < ApplicationController
     @mobile_auth_token
   end
 
-  #RE DOCUMENT
+  #TODO RE DOCUMENT
   def get_slinggit_post_data
     if not params[:offset].blank?
       if not params[:limit].blank?
@@ -297,8 +287,8 @@ class MobileController < ApplicationController
           end
 
           return_data = {
-              :rows_found => posts.length.to_s,
-              :params_used => filter_data,
+              :rows_found => result.length.to_s,
+              :filters_used => filter_data,
               :posts => posts_array
           }
 
