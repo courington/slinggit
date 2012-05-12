@@ -260,7 +260,7 @@ class MobileController < ApplicationController
 
         #starting_post_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
         starting_post_id = params[:starting_post_id]
-        starting_post_id = Post.count(id) + 1 if starting_post_id.blank? or starting_post_id <= 0
+        starting_post_id = Post.count() + 1 if starting_post_id.blank? or starting_post_id <= 0
 
         posts = []
         success = false
