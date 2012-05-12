@@ -13,6 +13,11 @@ class UserMailer < ActionMailer::Base
     mail(:to => @user.email, :subject => "Trouble posting to your #{api_account.api_source.titleize} account")
   end
 
+  def password_reset(user)
+    @user = user
+    mail(:to => @user.email, :subject => "Password reset for Slinggit.com")
+  end
+
   def deliver_problem_report(exception)
     #TODO IMPLEMENT
   end

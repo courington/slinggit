@@ -3,8 +3,9 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/set_no_thanks', :to => 'users#set_no_thanks', via: :get
   match 'users/reset_page_session', :to => 'users#reset_page_session', via: :get
   match 'users/verify_email_availability', :to => 'users#verify_email_availability', via: :post
-  match 'users/password_reset', :to => 'users#password_reset'
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
+
+  match 'users/password_reset/(:id)', :to => 'users#password_reset#id'
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
   match 'networks/add_api_account', :to => 'networks#add_api_account', via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get

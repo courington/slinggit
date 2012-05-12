@@ -91,7 +91,22 @@ class UsersController < ApplicationController
 
   #TODO FINISH
   def password_reset
-
+    @email = params[:email]
+    if request.post?
+      if not @email.blank?
+        if user = User.first(:conditions => ['email = ?', params[:email]], :select => 'id,email,password_reset_code,name')
+          if user.password_reset_code.blank?
+            user.update_attribute(:password_reset_code, Digest::SHA1.hexdigest("#{rand(999999)}-#{Time.now}-#{@email}"))
+          end
+          UserMailer.password_reset(user).deliver
+          flash.now[:success] = "An email has been sent to '#{@email}' with instructions to reset your password."
+        else
+          flash.now[:error] = "We could not locate an account with the email address '#{@email}'."
+        end
+      else
+        flash.now[:error] = "Oops, it would appear that you forgot to enter your email address."
+      end
+    end
   end
 
   def twitter_signup_callback
