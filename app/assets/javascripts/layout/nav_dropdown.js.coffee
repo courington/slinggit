@@ -3,7 +3,6 @@ class DropdownView extends Backbone.View
 	el: "#accountDropDown"
 	
 	initialize: ()->
-		console.log "init"
 		@dropdown = $(".nav_dropDown")
 
 	events: 

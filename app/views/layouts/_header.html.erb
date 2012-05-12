@@ -45,7 +45,10 @@
 			  	<%= link_to "Sign in", signin_path %>
 			  </span>
 			  <% end %>
-			  <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+			  <section id="quickSearchWrapper">
+			  	<%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+			  </section>
+			  
 		</nav>
 	</div>
 </header>
@@ -53,14 +56,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-
-		window.navDropdownView()
-
-		$('#quickSearch').keypress(function (e) {
-            if (e.which == 13) {
-                e.preventDefault();
-                document.location.href = "/posts/results/" + $('#quickSearch').val();
-            }
-        });
+	window.navDropdownView()
+	window.quickSearchView()
 });
 </script>
