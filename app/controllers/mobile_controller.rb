@@ -255,7 +255,6 @@ class MobileController < ApplicationController
   end
 
   def get_slinggit_post_data
-
     if not params[:starting_post_id].blank?
       if not params[:limit].blank?
         search_term = params[:search_term]
@@ -269,7 +268,12 @@ class MobileController < ApplicationController
               if params[:starting_post_id] == '0'
                 posts = Post.all(:conditions => ["user_id = #{user.id}"], :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
               else
-                posts = Post.all(:conditions => ["user_id = #{user.id}"], :offset => params[:starting_post_id].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
+                starting_post_id = params[:starting_post_id].to_i
+                limit = params[:limit]
+                starting_post_id -= limit
+                starting_post_id = 1 if starting_post_id <= 0
+
+                posts = Post.all(:conditions => ["user_id = #{user.id}"], :offset => starting_post_id, :limit => limit, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
               end
             end
           else
@@ -284,6 +288,10 @@ class MobileController < ApplicationController
         elsif not search_term.blank?
           posts = Post.all(:conditions => ["content like '%#{search_term}%' OR hashtag_prefix like '%#{search_term}%'"], :offset => params[:offset].to_i, :limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
         else
+          starting_post_id = params[:starting_post_id].to_i
+          limit = params[:limit]
+          starting_post_id -= limit
+          starting_post_id = 1 if starting_post_id <= 0
           if params[:starting_post_id] == '0'
             posts = Post.all(:limit => params[:limit].to_i, :order => 'open desc, id desc', :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at')
           else
