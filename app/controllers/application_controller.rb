@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
+  around_filter :catch_exceptions, :except => [:mobile]
   before_filter :set_timezone
 
   def redirect
@@ -147,6 +148,13 @@ class ApplicationController < ActionController::Base
 
   def set_timezone
     #Time.zone = current_user.time_zone || 'Central Time (US & Canada)'
+  end
+
+  def catch_exceptions
+    yield
+  rescue => exception
+    UserMailer.deliver_problem_report(exception).deliver
+    redirect_to '/500.html'
   end
 
 end
