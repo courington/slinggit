@@ -65,7 +65,7 @@ SlinggitWebapp::Application.routes.draw do
   post "mobile/check_limitations"
   post "mobile/add_twitter_account"
   get "mobile/add_twitter_account_callback"
-  post "mobile/finalize_add_twitter_account"
+  get "mobile/finalize_add_twitter_account"
 
 
 
@@ -83,7 +83,6 @@ SlinggitWebapp::Application.routes.draw do
   get "mobile/get_slinggit_post_data"
   get "mobile/check_limitations"
   get "mobile/add_twitter_account"
-  get "mobile/finalize_add_twitter_account"
 
   #match '*path', :to => 'application#redirect'
 
