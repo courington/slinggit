@@ -1,79 +1,66 @@
-<!-- I know this is bad but I always put my css in the file until Im finished then I move it for quick editing -->
-<style type="text/css">
-    .apiInformationColumn {
-        float: left;
-        font-size: 14px;
-        padding-bottom: 20px;
-        padding-left: 90px;
-    }
-
-    .apiInformationActions {
-        float: left;
-        font-size: 14px;
-        padding-bottom: 20px;
-        padding-left: 90px;
-    }
-
-    .apiHeaderColumn {
-        padding-left: 5%;
-        width: 14%;
-        float: left;
-        text-emphasis: #40e0d0;
-        border-style: none;
-    }
-
-    .footer {
-        padding-top: 120px;
-    }
-
-    table thead th, #account-actions {
-        white-space: nowrap;
-    }
-
-        /*
-        #addTwitterbutton {
-            margin-top: 80px;
-            position: relative;
-        }
-        */
-
-</style>
 <% provide(:title, 'Twitter Accounts') %>
-<section class="wrapper">
+<section class="wrapper accounts">
 	<header>
 		<h1>Manage Your Twitter Accounts</h1>
 		<p>Manage Your Twitter Accounts</p>
 	</header>
 	
 	<article>
-<table class="table table-striped">
-  <thead>
-  <th>Source</th>
-  <th>Account Name</th>
-  <th>Description</th>
-  <th>Status</th>
-  <th>Authorized</th>
-  <th>Actions</th>
-  </thead>
-  <tbody>
-  <% if not @api_accounts.blank? %>
-      <% @api_accounts.each do |api_account| %>
-          <tr>
-            <td id="twitterAccountSource_<%= api_account.id.to_s %>"><%= api_account.api_source %></td>
-            <td id="twitterAccountUserName_<%= api_account.id.to_s %>"><%= api_account.user_name %></td>
-            <td id="twitterAccountDescription_<%= api_account.id.to_s %>"><%= api_account.description || "no description" %></td>
-            <td id="twitterAccountStatus_<%= api_account.id.to_s %>"><%= api_account.status %></td>
-            <td id="twitterAccountReauth_<%= api_account.id.to_s %>"><%= api_account.reauth_required == 'yes' ? "No" : "Yes" %></td>
-            <td id="account-actions">
-              <%= link_to "set primary", nil, :id => "apiAccountPrimary_#{api_account.id}" %>
+		<ul>
+			<li>Source</li>
+			<% if not @api_accounts.blank? %>
+		      <% @api_accounts.each do |api_account| %>
+				<li id="twitterAccountSource_<%= api_account.id.to_s %>"><%= api_account.api_source %></li>
+			  <% end %>
+			<% end %>
+		</ul>
+		
+		<ul>
+			<li>Account Name</li>
+			<% if not @api_accounts.blank? %>
+		    	<% @api_accounts.each do |api_account| %>
+			<li id="twitterAccountUserName_<%= api_account.id.to_s %>"><%= api_account.user_name %></li>
+				<% end %>
+			<% end %>
+		</ul>
+		
+		<ul>
+			<li>Description</li>
+			<% if not @api_accounts.blank? %>
+		      <% @api_accounts.each do |api_account| %>
+			<li id="twitterAccountUserName_<%= api_account.id.to_s %>"><%= api_account.user_name %></li>
+			<% end %>
+			<% end %>
+		</ul>
+		
+		<ul>
+			<li>Status</li>
+			<% if not @api_accounts.blank? %>
+		      <% @api_accounts.each do |api_account| %>
+			<li id="twitterAccountStatus_<%= api_account.id.to_s %>"><%= api_account.status %></li>
+			<% end %>
+			<% end %>
+		</ul>
+		
+		<ul>
+			<li>Authorized</li>
+			<% if not @api_accounts.blank? %>
+		      <% @api_accounts.each do |api_account| %>
+			<li id="twitterAccountReauth_<%= api_account.id.to_s %>"><%= api_account.reauth_required == 'yes' ? "No" : "Yes" %></li>
+			<% end %>
+			<% end %>
+		</ul>
+		<ul>
+			<li>Actions</li>
+			<% if not @api_accounts.blank? %>
+		      <% @api_accounts.each do |api_account| %>
+			<li id="account-actions"><%= link_to "set primary", nil, :id => "apiAccountPrimary_#{api_account.id}" %>
               <span id="spanSeperator_<%= api_account.id.to_s %>"> <%= api_account.status == 'active' ? '|' : '' %>  </span>
-              <%= link_to "delete", nil, :id => "apiAccountDelete_#{api_account.id}" %>
-            </td>
-          </tr>
-      <% end %>
-  <% end %>
-  </tbody>
-</table>
+              <%= link_to "delete", nil, :id => "apiAccountDelete_#{api_account.id}" %></li>
+			<% end %>
+			<% end %>
+		</ul>
+
 </article>
 
 <div class="form-actions">

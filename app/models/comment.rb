@@ -15,5 +15,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   attr_accessible :body, :user_id
 
+  validates :body, presence: true
+
   default_scope order: 'comments.created_at DESC'
 end

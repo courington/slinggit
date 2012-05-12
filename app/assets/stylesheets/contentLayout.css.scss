@@ -75,7 +75,7 @@ p {
 	overflow: hidden;
 	}
 .page_contentContainer {
-	min-height: 32em;
+	min-height: 46em;
 	font-size: 62.5%;
 	position: relative;
 	z-index: 1;
@@ -245,6 +245,23 @@ p {
 	article > ul + .form-actions {
 	width: 100%;
 	margin: 1.4em 0 0 0;
+	}
+	// end
+	// networks page styles
+	.accounts {
+		article {
+			ul {
+				float: left;
+				margin: 0 2.5% 0 0;
+				font-size: $font-size;
+				li {
+					margin: ($font-size * .5) auto;
+					&:first-child {
+						font-weight: bold;
+					}
+				}
+			}
+		}
 	}
 	// end
 }

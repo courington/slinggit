@@ -1,4 +1,4 @@
-<% provide(:title, @post.content) %>
+<% provide(:title, @post.hashtag_prefix) %>
 <section class="wrapper posts">
 	<header>
 		<h1><%= @post.hashtag_prefix %></h1>
@@ -23,11 +23,11 @@
 
 	<article role="complementary">
 		<%= render 'posts/post_comment_form' %>
-			<% if @comments.any? %>
-				<ul class="comments">
-					<%= render @comments %>
-				</ul>
-				<%= will_paginate @comments %>
-				<% end %>  
-			</article>
+		<% if @comments.any? %>
+			<ul class="comments">
+				<%= render @comments %>
+			</ul>
+			<%= will_paginate @comments %>
+		<% end %>  
+	</article>
 </section>
