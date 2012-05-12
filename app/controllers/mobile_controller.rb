@@ -1,15 +1,18 @@
 class MobileController < ApplicationController
+  before_filter :set_source
   before_filter :require_post
-  before_filter :validate_request_authenticity
-  before_filter :set_state
-  before_filter :set_device_name
-  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login]
-  before_filter :set_options
-  before_filter :validate_post_data_is_valid_json, :only => [:create_twitter_post, :resubmit_twitter_post, :delete_twitter_post, :update_twitter_post]
+  before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   around_filter :catch_exceptions
 
   ERROR_STATUS = "error"
   SUCCESS_STATUS = "success"
+  NATIVE_APP = "native_app"
+  NATIVE_APP_WEB_VIEW = "native_app_web_view"
+  MOBILE_VIEW_ACTIONS = [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
 
   def user_signup
     if not params[:user_name].blank?
@@ -677,6 +680,14 @@ class MobileController < ApplicationController
     end
   end
 
+  def set_source
+    if MOBILE_VIEW_ACTIONS.include? params[:action].to_sym
+      session[:source] = NATIVE_APP_WEB_VIEW
+    else
+      session[:source] = NATIVE_APP
+    end
+  end
+
   def validate_request_data_is_valid_json
     if not params[:post_data].blank?
       if not params[:post_data].valid_json?
@@ -693,12 +704,15 @@ class MobileController < ApplicationController
   def catch_exceptions
     yield
   rescue => exception
-    puts 'steve'
-    render_error_response(
-        :error_location => 'global',
-        :error_reason => "exception caught: #{exception.message} - #{exception.backtrace}",
-        :error_code => '500',
-        :friendly_error => 'Oops, something went wrong.  Please try again later.'
-    )
+    if session[:source] and session[:source] == NATIVE_APP_WEB_VIEW
+      redirect_to :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+    else
+      render_error_response(
+          :error_location => 'global',
+          :error_reason => "exception caught: #{exception.message} - #{exception.backtrace}",
+          :error_code => '500',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 end
