@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
+  before_filter :set_timezone
+
   def redirect
     redirect_info = params[:path]
     if not redirect_info.blank?
@@ -141,6 +143,10 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       return false
     end
+  end
+
+  def set_timezone
+    #Time.zone = current_user.time_zone || 'Central Time (US & Canada)'
   end
 
 end
