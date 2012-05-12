@@ -192,6 +192,11 @@ p {
 					float: left;
 				}
 			}
+			&[role="complementary"] {
+				float: none;
+				clear: both;
+				width: 50%;
+			}
 		}
 	}
 	//end
