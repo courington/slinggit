@@ -14,6 +14,8 @@ class PostsController < ApplicationController
       # in order to display edit option.  Dan, if there's a
       # better way, fell free to change this.
       @user = User.find(@post.user_id)
+      @twitter_post = TwitterPost.find_by_post_id(@post.id)
+      @api_account = @user.primary_twitter_account
       # Since we give an non-singed in user the option to sign in, we
       # want to return them to the post after signin.
       unless signed_in?
