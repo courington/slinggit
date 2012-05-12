@@ -158,7 +158,7 @@ class MobileController < ApplicationController
   end
 
   def add_twitter_account
-    setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
+    setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name], :protocol => 'https://')
   end
 
   def add_twitter_account_callback
