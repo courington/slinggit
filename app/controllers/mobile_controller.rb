@@ -29,6 +29,10 @@ class MobileController < ApplicationController
               if user.save
                 log_user_login(user)
                 mobile_auth_token = create_or_update_mobile_auth_token(user.id)
+                if not params[:access_token].blank? and not params[:access_token_secret].blank?
+                  client = Twitter::Client.new(oauth_token: params[:access_token], oauth_token_secret: params[:access_token_secret])
+                  create_api_account(:source => :twitter, :user_object => user, :api_object => client)
+                end
                 render_success_response(
                     :mobile_auth_token => mobile_auth_token
                 )
@@ -147,6 +151,36 @@ class MobileController < ApplicationController
           :logged_in => false
       )
     end
+  end
+
+  def add_twitter_account
+    setup_twitter_call(url_for :controller => :mobile, :action => :authenticate_with_twitter_callback, :user_name => params[:user_name])
+  end
+
+  def add_twitter_account_callback
+    rtoken = session['rtoken']
+    rsecret = session['rsecret']
+    if not params[:denied].blank?
+      redirect_to :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started.'
+    else
+      request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
+      access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+      if not params[:user_name].blank?
+        if user = User.first(:conditions => [:name => params[:user_name]])
+          client = Twitter::Client.new(oauth_token: access_token.token, oauth_token_secret: access_token.secret)
+          create_api_account(:source => :twitter, :user_object => user, :api_object => client)
+          redirect_to :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS
+        else
+          redirect_to :action => :finalize_add_twitter_account, :status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        end
+      else
+        redirect_to :action => :finalize_add_twitter_account, :status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
+      end
+    end
+  end
+
+  def finalize_add_twitter_account
+    #This will never get hit becuase the mobile pageview intercepts it and prevents it from redirecting here.
   end
 
   def create_post
