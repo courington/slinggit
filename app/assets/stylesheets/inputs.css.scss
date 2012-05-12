@@ -10,7 +10,7 @@ $btn-active: inset 0 0 1px rgba(0, 0, 0, .5), 0 0 2px rgba(255, 255, 255, .75);
 $btn-active-txt: 0 0 8px rgba(0, 0, 0, .75);
 
 // BORDER RADIUS
-$radius: .5em;
+$radius: .15em;
 $side-tl: top-left;
 $side-bl: bottom-left;
 $side-tr: top-right;
@@ -124,7 +124,7 @@ input.submitBTN,
 	font-size: $font-size;
 	font-family: $main-font;
 	color: $wht;
-	@include rounded-corners(.5em);
+	@include rounded-corners($radius);
 	border: 1px solid $main-grey;
 	cursor: pointer;
 	box-shadow: $btn-shading;
