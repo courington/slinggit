@@ -238,7 +238,10 @@ class MobileController < ApplicationController
   end
 
   def finalize_add_twitter_account
-    #This will never get hit becuase the mobile pageview intercepts it and prevents it from redirecting here.
+    #This will never get hit because the mobile page view intercepts it and prevents it from redirecting here.
+    #It is not necessary for this to contain an attached view or render any thing what so ever
+    #It is however, necessary for this definition to be present for rails url_for routing purposes and so that we have a distinct url that
+    #indicates to the mobile device that the call is over.
   end
 
   def create_post
@@ -776,7 +779,7 @@ class MobileController < ApplicationController
   rescue => exception
     UserMailer.deliver_problem_report(exception).deliver
     if session[:source] and session[:source] == NATIVE_APP_WEB_VIEW
-      redirect_to :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      redirect_to :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => exception.to_s
     else
       render_error_response(
           :error_location => 'global',
