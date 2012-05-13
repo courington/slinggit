@@ -1,7 +1,7 @@
 class MobileController < ApplicationController
   before_filter :set_source
-  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
@@ -511,6 +511,7 @@ class MobileController < ApplicationController
         api_accounts_array = []
         api_accounts.each do |api_account|
           api_accounts_array << {
+              :id => api_account.id.to_s,
               :api_id => api_account.api_id.to_s,
               :api_id_hash => api_account.api_id_hash,
               :api_source => api_account.api_source,
