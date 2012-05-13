@@ -1,7 +1,7 @@
 class MobileController < ApplicationController
   before_filter :set_source
-  #before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
@@ -244,6 +244,7 @@ class MobileController < ApplicationController
     #indicates to the mobile device that the call is over.
   end
 
+#TODO STORE IMAGE IN CORRECT LOCATION
   def create_post
     if not params[:hashtag_prefix].blank?
       if not params[:content].blank?
@@ -336,11 +337,6 @@ class MobileController < ApplicationController
     end
   end
 
-  def update_post
-    @mobile_auth_token
-  end
-
-#TODO RE DOCUMENT
   def get_slinggit_post_data
     if not params[:offset].blank?
       if not params[:limit].blank?
@@ -456,7 +452,6 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO DOCUMENT
   def resubmit_to_post_recipients
     if not params[:post_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
@@ -507,7 +502,6 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO DOCUMENT
   def get_user_api_accounts
     if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
@@ -558,18 +552,27 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT AND DOCUMENT
-  def forgot_password
-
+  def password_reset
+    @email_or_username = params[:email_or_username]
+    if request.post?
+      if not @email_or_username.blank?
+        if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name')
+          if user.password_reset_code.blank?
+            user.update_attribute(:password_reset_code, Digest::SHA1.hexdigest("#{rand(999999)}-#{Time.now}-#{@email}"))
+          end
+          UserMailer.password_reset(user).deliver
+          flash.now[:success] = "Password reset instructions have been sent to '#{user.email}'."
+        else
+          flash.now[:error] = "We could not locate an account with that email or username."
+        end
+      else
+        flash.now[:error] = "We need either an email address or a username so we know who to send instructions to."
+      end
+    end
   end
 
 #TODO IMPLEMENT AND DOCUMENT
-  def reset_password
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def active_session_list
+  def change_password
 
   end
 
@@ -580,6 +583,31 @@ class MobileController < ApplicationController
 
 #TODO IMPLEMENT AND DOCUMENT
   def logout_of_active_session
+
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def update_post
+    @mobile_auth_token
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def create_post_comment
+
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def delete_post_comment
+
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def get_post_comments
+
+  end
+
+#TODO rIMPLEMENT AND DOCUMENT
+  def report_abuse
 
   end
 

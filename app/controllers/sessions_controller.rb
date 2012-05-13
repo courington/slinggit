@@ -9,12 +9,19 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_email(params[:session][:email])
-    if user && user.authenticate(params[:session][:password])
-      sign_in user
-      redirect_back_or user
+    #error messages copied from google
+    if not params[:session][:email].blank?
+      @email = params[:session][:email]
+      user = User.first(:conditions => ['email = ?', @email])
+      if not user.blank? and user.authenticate(params[:session][:password])
+        sign_in user
+        redirect_back_or user
+      else
+        flash.now[:error] = 'The username or password you entered is incorrect.'
+        render 'new'
+      end
     else
-      flash.now[:error] = 'Invalid email/password combination' # Not quite right!
+      flash.now[:error] = 'Enter your email address.'
       render 'new'
     end
   end

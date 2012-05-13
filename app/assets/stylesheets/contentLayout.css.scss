@@ -106,7 +106,7 @@ p {
 			display: none;
 			}
 		}
-	
+
 	//styles for sign up page
 	fieldset > legend {
 	font-size: 1.6em;
@@ -158,6 +158,14 @@ p {
 	border-radius: .5em;
 	width: 75%;
 	}
+
+  #forgot_password{
+    float: left;
+    clear: left;
+    margin: 0 0;
+    border-radius: .5em;
+    width: 75%;
+  }
 	//end
 	//Item Photo for posts
 	img.obj {
@@ -239,7 +247,7 @@ p {
 				padding-right: $font-size * .75;
 				margin-right: $font-size * .75;
 				}
-			} 
+			}
 		}
 	}
 	article > ul + .form-actions {

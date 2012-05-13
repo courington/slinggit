@@ -90,6 +90,7 @@ class UsersController < ApplicationController
   end
 
   def password_reset
+    #using password_reset instead of forgot_password becuase I feel like the url forgot_password frustrates people or makes them feel dumb.
     @email_or_username = params[:email_or_username]
     if request.post?
       if not @email_or_username.blank?
@@ -100,20 +101,22 @@ class UsersController < ApplicationController
           UserMailer.password_reset(user).deliver
           flash.now[:success] = "Password reset instructions have been sent to '#{user.email}'."
         else
-          flash.now[:error] = "We could not locate an account with that email or username."
+          flash.now[:error] = "That email address or username doesn't have a registered user account. Are you sure you've signed up?"
         end
       else
-        flash.now[:error] = "We need either an email address or a username so we know who to send instructions to."
+        flash.now[:error] = "We need either an email address, or a username, so we know who to send instructions to."
       end
     end
   end
 
   def enter_new_password
     #linked to from the forgot password email... id in this case is the password_reset_code in the users table
-    if not params[:id].blank?
-      @user = User.first(:conditions => ['password_reset_code = ?', params[:id]])
-      if not @user
-        flash[:error] = 'That password resset code is invalid.'
+    @password_reset_code = params[:id] if not params[:id].blank?
+
+    if not @password_reset_code.blank?
+      @user = User.first(:conditions => ['password_reset_code = ?', @password_reset_code])
+      if @user.blank?
+        flash[:error] = 'That password reset code is invalid.'
         redirect_to :controller => :sessions, :action => :new
       else
         if request.post?
@@ -129,7 +132,7 @@ class UsersController < ApplicationController
       end
     else
       flash[:error] = "Oops, that link didn't contain all the information we needed to reset your password."
-      redirect_to root_path
+      redirect_to :controller => :sessions, :action => :new
     end
   end
 
