@@ -13,7 +13,7 @@
         <%= f.text_field :email, class: "input-xlarge", :value => @email %>
         <%= f.label :password, class: "control-label", for: "session_password" %>
         <%= f.password_field :password, class: "input-xlarge" %>
-        <p><%= link_to "forgot password?", {:controller => :users, :action => :password_reset}, :id => 'forgot_password' %></p>
+        <p><%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, :id => 'forgot_password' %></p>
       </fieldset>
       <%= f.button "Sign in", class: "btn_large" %>
   <% end %>

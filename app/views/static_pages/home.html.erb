@@ -1,93 +1,69 @@
 <% provide(:title, 'Home') %>
 <section class="wrapper">
-	
-	<div class="page_col twoCol">
-<header>  	
-<h1>slinggit</h1>
-		<p>slinggit</p>
-		</header>
-			
-		<!-- <form class="page_search">
-		<input type="text" size="100" placeholder="search" name="search" />
-		<input type="button" for="search" value="Submit">
-		</form> -->
-  		<% if current_user.blank? %>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum consequat sapien vel molestie. Aliquam at massa arcu. Mauris volutpat.</p>
-      	<%= link_to "Sign up now!", signup_path, class: "btn_large" %>
-  		<% elsif not current_user.blank? %>
-      <p>Welcome back <%= current_user.name %>!</p>
-      <p>Got some old junk laying
-        around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
-  			<% end %>
-	</div>
 
-<div class="page_col twoCol">
-<script charset="utf-8" src="https://widgets.twimg.com/j/2/widget.js"></script>
-<script>
-    $(document).ready(function () {
-        <% if signed_in? and not @primary_twitter_account.blank?  %>
-        $('#twtr-widget-1').css('float', 'left');
-        $('#twtr-widget-2').css('float', 'right');
-        <% else %>
-        $('#twtr-widget-1').css('padding-left', '0');
-        <% end %>
+  <div class="page_col twoCol">
+    <header>
+      <h1>slinggit</h1>
 
-    });
+      <p>slinggit</p>
+    </header>
 
-    new TWTR.Widget({
-        version:2,
-        type:'profile',
-        rpp:20,
-        interval:300,
-        width:'auto',
-        height:'550',
-        theme:{
-            shell:{
-//cc: BG is set to $wht
-                background:'rgb(248, 248, 248)',
-//cc: text-color is set to $main-grey
-                color:'rgb(119, 119, 119)'
-            },
-            tweets:{
-                background:'rgb(248, 248, 248)',
-                color:'rgb(119, 119, 119)',
-                links:'rgb(72,141,226)'
-            }
-        },
-        features:{
-            scrollbar:true,
-            loop:true,
-            live:true,
-            behavior:'all'
-        }
-    }).render().setUser('gitnsling_test').start();
-    <% if signed_in? and not @primary_twitter_account.blank? %>
-    new TWTR.Widget({
-        version:2,
-        type:'profile',
-        rpp:20,
-        interval:300,
-        width:'auto',
-        height:'auto',
-        theme:{
-            shell:{
-                background:'rgb(248, 248, 248)',
-                color:'rgb(119, 119, 119)'
-            },
-            tweets:{
-                background:'rgb(248, 248, 248)',
-                color:'rgb(119, 119, 119)',
-                links:'rgb(72,141,226)'
-            }
-        },
-        features:{
-            scrollbar:true,
-            loop:true,
-            live:true,
-            behavior:'all'
-        }
-    }).render().setUser('<%= @primary_twitter_account.user_name%>').start();
+    <!-- <form class="page_search">
+         <input type="text" size="100" placeholder="search" name="search" />
+         <input type="button" for="search" value="Submit">
+         </form> -->
+    <% if current_user.blank? %>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum consequat sapien vel molestie. Aliquam
+          at massa arcu. Mauris volutpat.</p>
+        <%= link_to "Sign up now!", signup_path, class: "btn_large" %>
+    <% elsif not current_user.blank? %>
+        <p>Welcome back <%= current_user.name %>!</p>
+
+        <p>Got some old junk laying
+          around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
     <% end %>
-</script>
-</div>
+  </div>
+
+  <div class="page_col twoCol">
+    <script charset="utf-8" src="https://widgets.twimg.com/j/2/widget.js"></script>
+    <script>
+        $(document).ready(function () {
+            <% if signed_in? and not @primary_twitter_account.blank?  %>
+            $('#twtr-widget-1').css('float', 'left');
+            $('#twtr-widget-2').css('float', 'right');
+            <% else %>
+            $('#twtr-widget-1').css('padding-left', '0');
+            <% end %>
+
+        });
+
+        new TWTR.Widget({
+            version:2,
+            type:'profile',
+            rpp:20,
+            interval:300,
+            width:'auto',
+            height:'550',
+            theme:{
+                shell:{
+//cc: BG is set to $wht
+                    background:'rgb(248, 248, 248)',
+//cc: text-color is set to $main-grey
+                    color:'rgb(119, 119, 119)'
+                },
+                tweets:{
+                    background:'rgb(248, 248, 248)',
+                    color:'rgb(119, 119, 119)',
+                    links:'rgb(72,141,226)'
+                }
+            },
+            features:{
+                scrollbar:true,
+                loop:true,
+                live:true,
+                behavior:'all'
+            }
+        }).render().setUser('gitnsling_test').start();
+    </script>
+  </div>
 </section>
