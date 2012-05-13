@@ -50,41 +50,8 @@ SlinggitWebapp::Application.routes.draw do
   match "test/test_twitter_post/", to: 'test#delete_db_view_record', via: :get
   match "test/save_file/", to: 'test#save_file', via: :get
 
-
   ##MOBILE CONTROLLER##
   match 'mobile(/:action)(/:id)', :to => 'mobile#action#id'
-  #post "mobile/user_signup"
-  #post "mobile/user_login"
-  #post "mobile/user_logout"
-  #post "mobile/user_login_status"
-  #post "mobile/get_user_post_data"
-  #post "mobile/get_slinggit_post_data"
-  #post "mobile/get_user_api_accounts"
-  #post "mobile/create_post"
-  #post "mobile/close_post"
-  #post "mobile/update_post"
-  #post "mobile/get_slinggit_post_data"
-  #post "mobile/check_limitations"
-  #post "mobile/add_twitter_account"
-  #post "mobile/delete_twitter_account"
-  #get "mobile/add_twitter_account_callback"
-  #get "mobile/finalize_add_twitter_account"
-  #
-  ##TODO remove this before launch, for testing in browser only
-  #get "mobile/user_signup"
-  #get "mobile/user_login"
-  #get "mobile/user_logout"
-  #get "mobile/user_login_status"
-  #get "mobile/get_user_post_data"
-  #get "mobile/get_slinggit_post_data"
-  #get "mobile/get_user_api_accounts"
-  #get "mobile/create_post"
-  #get "mobile/close_post"
-  #get "mobile/update_post"
-  #get "mobile/get_slinggit_post_data"
-  #get "mobile/check_limitations"
-  #get "mobile/add_twitter_account"
-  #get "mobile/delete_twitter_account"
 
   match '*path', :to => 'application#redirect'
 
