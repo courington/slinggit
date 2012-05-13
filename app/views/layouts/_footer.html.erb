@@ -2,6 +2,10 @@
 	<section class="wrapper">
 		<nav>
 			<ul>
+				<li class="<%= 'active' if current_page?(sessions_path) %>">
+	            	<%= link_to "Mobile Sessions", sessions_path %>
+	          	</li>
+	          	
 				<li><%= link_to "About", about_path %></li>
 				<li><%= link_to "Help", help_path %></li>
 				<li><%= link_to "Contact", contact_path %></li>

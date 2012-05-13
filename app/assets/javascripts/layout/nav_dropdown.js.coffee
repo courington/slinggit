@@ -14,10 +14,10 @@ class DropdownView extends Backbone.View
 		if @dropdown.is(":hidden") then @down() else @up()
 
 	down: ->
-		@dropdown.slideDown(100)
+		@dropdown.fadeIn(100)
 
 	up: ->
-		@dropdown.slideUp(100)
+		@dropdown.fadeOut(100)
 
 
 
