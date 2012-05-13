@@ -53,7 +53,7 @@ class MobileController < ApplicationController
                   :error_location => 'user_signup',
                   :error_reason => 'unavailable - user_name',
                   :error_code => '409',
-                  :friendly_error => 'That user name has already been registered.'
+                  :friendly_error => 'That Username has already been registered.'
               )
             end
           else
@@ -454,7 +454,7 @@ class MobileController < ApplicationController
   def get_user_api_accounts
     if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != "deleted"'])
+        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != "deleted"', user.id])
 
         api_accounts_array = []
         api_accounts.each do |api_account|
