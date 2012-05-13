@@ -224,12 +224,12 @@ class MobileController < ApplicationController
       request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
       access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
       if not params[:user_name].blank?
-        if user = User.first(:conditions => [:name => params[:user_name]])
+        if user = User.first(:conditions => ['name = ?', params[:user_name]])
           client = Twitter::Client.new(oauth_token: access_token.token, oauth_token_secret: access_token.secret)
           create_api_account(:source => :twitter, :user_object => user, :api_object => client)
           redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => SUCCESS_STATUS
         else
-          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :user_name_as_symbol => params[:user_name], :user_name_as_string => params['user_name'], :error_reason => 'user not found'
+          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :user_name => params[:user_name], :error_reason => 'user not found'
         end
       else
         redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
