@@ -9,16 +9,20 @@ class ApplicationController < ActionController::Base
   def redirect
     redirect_info = params[:path]
     if not redirect_info.blank?
-      if user = User.first(:conditions => ['name = ?', redirect_info], :select => 'id')
-        redirect_to :controller => :users, :action => :show, :id => user.id
-      elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,clicks,id')
-        redirect.update_attribute(:clicks, redirect.clicks += 1)
-        redirect_to redirect.target_uri
-      else
+      begin
+        ActionController::Routing::Routes.recognize_path(params[:path], :method => :get)
         redirect_to params[:path]
+      rescue
+        if user = User.first(:conditions => ['name = ?', redirect_info], :select => 'id')
+          redirect_to :controller => :users, :action => :show, :id => user.id
+        elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,clicks,id')
+          redirect.update_attribute(:clicks, redirect.clicks += 1)
+        else
+          redirect_to '/404.html'
+        end
       end
     else
-      redirect_to :controller => :static_pages, :action => :home
+      redirect_to :root
     end
   end
 

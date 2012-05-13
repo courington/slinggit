@@ -6,6 +6,6 @@
    activerecord:
      attributes:
        user:
-         name: "User Name"
+         name: "Username"
        post:
          recipient_api_account_ids: "Twitter accounts"

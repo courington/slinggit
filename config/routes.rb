@@ -5,7 +5,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/verify_email_availability', :to => 'users#verify_email_availability', via: :post
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
 
-  match 'users/password_reset/(:id)', :to => 'users#password_reset#id'
+  match 'users/enter_new_password/(:id)', :to => 'users#enter_new_password#id'
+  match 'users/password_reset', :to => 'users#password_reset'
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
   match 'networks/add_api_account', :to => 'networks#add_api_account', via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
@@ -51,6 +52,7 @@ SlinggitWebapp::Application.routes.draw do
 
 
   ##MOBILE CONTROLLER##
+  #TODO refactor down into match 'mobile/(:controller)(:id)' to: 'mobile/controller/id'
   post "mobile/user_signup"
   post "mobile/user_login"
   post "mobile/user_logout"
@@ -66,8 +68,6 @@ SlinggitWebapp::Application.routes.draw do
   post "mobile/add_twitter_account"
   get "mobile/add_twitter_account_callback"
   get "mobile/finalize_add_twitter_account"
-
-
 
   #TODO remove this before launch, for testing in browser only
   get "mobile/user_signup"

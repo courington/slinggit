@@ -89,23 +89,47 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  #TODO FINISH
   def password_reset
-    @email = params[:email]
+    @email_or_username = params[:email_or_username]
     if request.post?
-      if not @email.blank?
-        if user = User.first(:conditions => ['email = ?', params[:email]], :select => 'id,email,password_reset_code,name')
+      if not @email_or_username.blank?
+        if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name')
           if user.password_reset_code.blank?
             user.update_attribute(:password_reset_code, Digest::SHA1.hexdigest("#{rand(999999)}-#{Time.now}-#{@email}"))
           end
           UserMailer.password_reset(user).deliver
-          flash.now[:success] = "An email has been sent to '#{@email}' with instructions to reset your password."
+          flash.now[:success] = "Password reset instructions have been sent to '#{user.email}'."
         else
-          flash.now[:error] = "We could not locate an account with the email address '#{@email}'."
+          flash.now[:error] = "We could not locate an account with that email or username."
         end
       else
-        flash.now[:error] = "Oops, it would appear that you forgot to enter your email address."
+        flash.now[:error] = "We need either an email address or a username so we know who to send instructions to."
       end
+    end
+  end
+
+  def enter_new_password
+    #linked to from the forgot password email... id in this case is the password_reset_code in the users table
+    if not params[:id].blank?
+      @user = User.first(:conditions => ['password_reset_code = ?', params[:id]])
+      if not @user
+        flash[:error] = 'That password resset code is invalid.'
+        redirect_to :controller => :sessions, :action => :new
+      else
+        if request.post?
+          @user.password = params[:password]
+          @user.password_confirmation = params[:password_confirmation]
+          @user.password_reset_code = nil
+          if @user.save
+            sign_in @user
+            flash[:success] = "Your password has been reset."
+            redirect_to @user
+          end
+        end
+      end
+    else
+      flash[:error] = "Oops, that link didn't contain all the information we needed to reset your password."
+      redirect_to root_path
     end
   end
 
@@ -173,7 +197,7 @@ class UsersController < ApplicationController
   end
 
   def validate_pre_twitter_data
-    #This validates all possible errors for user name and email after the user clicks authenticate with twitter
+    #This validates all possible errors for username and email after the user clicks authenticate with twitter
     #on the sign up page
 
     if params[:user][:name].blank?
