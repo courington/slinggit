@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
       else
         if mobile_session = MobileSession.first(:conditions => ['user_id = ? AND id = ?', current_user.id, mobile_session_id])
           mobile_session.update_attribute(:mobile_auth_token, nil)
-          render :text => "#{mobile_session.device_name} is not longer signed in.", :status => 200
+          render :text => "#{mobile_session.device_name} is no longer signed in.", :status => 200
         else
           render :text => 'not found', :status => 500
         end
