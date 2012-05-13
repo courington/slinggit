@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512220700) do
+ActiveRecord::Schema.define(:version => 20120512234533) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20120512220700) do
     t.datetime "updated_at",                                :null => false
   end
 
+  add_index "twitter_posts", ["api_account_id"], :name => "index_twitter_posts_on_api_account_id"
   add_index "twitter_posts", ["post_id"], :name => "index_twitter_posts_on_post_id"
 
   create_table "user_limitations", :force => true do |t|
