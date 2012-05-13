@@ -13,10 +13,10 @@ $wht: rgb(248, 248, 248);
 
 // BORDER RADIUS
 $radius: .3em;
-@mixin rounded-corners($radius) {
-	-moz-border-radius: $radius;
-	-webkit-border-radius: $radius;
-	border-radius: $radius;
+@mixin rounded-corners($radius){
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
 }
 
 // VENDOR PREFIXES
@@ -27,12 +27,12 @@ $o: -o-;
 
 // TRANSITIONS
 $tranny: all .3s ease;
-@mixin transition($tranny) {
-	-moz-transition: $tranny;
-	-webkit-transition: $tranny;
-	-o-transition: $tranny;
-	-ms-transition: $tranny;
-	transition: $tranny;
+@mixin transition($tranny){
+  -moz-transition: $tranny;
+  -webkit-transition: $tranny;
+  -o-transition: $tranny;
+  -ms-transition: $tranny;
+  transition: $tranny;
 }
 
 // FONTS
@@ -43,233 +43,244 @@ $txt-shdw: 0 1px 0 rgba(0, 0, 0, .2);
 $padding: .4em .6em;
 
 body {
-	font-family: $main-font;
-	overflow: hidden;
-	box-shadow: inset 0 0 72px rgba(0, 0, 0, .25);
-	background: $lt-grey;
-	color: $dk-grey;
-	}
+  font-family: $main-font;
+  overflow: hidden;
+  box-shadow: inset 0 0 72px rgba(0, 0, 0, .25);
+  background: $lt-grey;
+  color: $dk-grey;
+}
+
 h1 {
-	font-size: $font-size * 1.6;
-	text-transform: uppercase;
-	font-weight: bold;
-	}
+  font-size: $font-size * 1.6;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 h2, h3 {
-	font-size: $font-size * 1.4;
-	}
+  font-size: $font-size * 1.4;
+}
+
 h4, h5 {
-	font-size: $font-size * 1.2;
-	}
+  font-size: $font-size * 1.2;
+}
 
 h6, p {
-	font-size: $font-size;
-	}
+  font-size: $font-size;
+}
+
 p {
-	margin: 1.4em 0;
-	line-height: 1.2em;
-	}
+  margin: 1.4em 0;
+  line-height: 1.2em;
+}
+
 .wrapper {
-	width: 90%;
-	max-width: 1024px;
-	margin: 0 auto;
-	overflow: hidden;
-	}
+  width: 90%;
+  max-width: 1024px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
 .page_contentContainer {
-	min-height: 46em;
-	font-size: 62.5%;
-	position: relative;
-	z-index: 1;
-	width: 100%;
-	padding: 1.4em 0;
-	background: $wht;
-	.twoCol {
-		width: 45%;
-		float: left;
-		display: inline-block;
-		&:first-child {
-			margin: 0 5% 0 0;
-		}
-		}
-	header {
-		margin:0 0 1.4em 0;
-		p {
-			font-size: $font-size * 1.6;
-			text-transform: uppercase;
-			font-weight: bold;
-			color: rgba(255, 255, 255, .25);
-			margin: -1.075em 0 0 .045em;
-			}
-		}
-	.twtr-widget {
-		border: 1px solid $lt-grey;
-		.twtr-ft {
-			display: none;
-			}
-		}
+  min-height: 46em;
+  font-size: 62.5%;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 1.4em 0;
+  background: $wht;
+  .twoCol {
+    width: 45%;
+    float: left;
+    display: inline-block;
+    &:first-child {
+      margin: 0 5% 0 0;
+    }
+  }
+  header {
+    margin: 0 0 1.4em 0;
+    p {
+      font-size: $font-size * 1.6;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: rgba(255, 255, 255, .25);
+      margin: -1.075em 0 0 .045em;
+    }
+  }
+  .twtr-widget {
+    border: 1px solid $lt-grey;
+    .twtr-ft {
+      display: none;
+    }
+  }
 
-	//styles for sign up page
-	fieldset > legend {
-	font-size: 1.6em;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
-	border-bottom: 1px solid white;
-	width: 80%;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, .38);
-	line-height: 1.8em;
-	}
-	.control-label {
-	float: left;
-	clear: left;
-	margin: 1.4em 0 -1em 0;
-	}
-	#form_signUpActions {
-	clear: left;
-	width: 45%;
-	margin: 1.4em 2.5%;
-	}
-	#noThanksBTN {
-	margin-left: 4%;
-	}
-	.new_user fieldset:last-child {
-	float: right;
-	}
-	.form_hiddenFields.page_col.twoCol {
-	margin-top: 3em;
-	}
-	#error_explanation {
-	font-size: 1.2em;
-	line-height: 1.6em;
-	background: #FD4128;
-	color: #F8F8F8;
-	font-weight: bold;
-	letter-spacing: .1em;
-	border-radius: .5em;
-	padding: .4em 1.4em;
-	width: 45%;
-	margin: 0 auto;
-	border: 1px solid black;
-	box-shadow: 0 0 20px rgba(0, 0, 0, .38);
-	}
-	//end
-	//styles for sign in page
-	#session_email, #session_password {
-	float: left;
-	clear: left;
-	margin: 1.4em 0;
-	border-radius: .5em;
-	width: 75%;
-	}
+  //styles for sign up page
+  fieldset > legend {
+    font-size: 1.6em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+    border-bottom: 1px solid white;
+    width: 80%;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .38);
+    line-height: 1.8em;
+  }
+  .control-label {
+    float: left;
+    clear: left;
+    margin: 1.4em 0 -1em 0;
+  }
+  #form_signUpActions {
+    clear: left;
+    width: 45%;
+    margin: 1.4em 2.5%;
+  }
+  #noThanksBTN {
+    margin-left: 4%;
+  }
+  .new_user fieldset:last-child {
+    float: right;
+  }
+  .form_hiddenFields.page_col.twoCol {
+    margin-top: 3em;
+  }
+  //end
 
-  #forgot_password{
+  //styles for notices
+  #error_explanation, #notice_explanation, #success_explanation {
+    font-size: 1.2em;
+    line-height: 1.6em;
+    color: #F8F8F8;
+    font-weight: bold;
+    letter-spacing: .1em;
+    border-radius: .5em;
+    padding: .6em 1.4em;
+    width: 45%;
+    margin: 0 auto;
+    border: 1px solid black;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .38);
+  }
+  #notice_explanation{
+    background: $main-blue;
+  }
+  #error_explanation{
+    background: $main-red;
+  }
+  #success_explanation{
+    background: $main-green;
+  }
+  //end
+
+  //styles for sign in page
+  #session_email, #session_password {
+    float: left;
+    clear: left;
+    margin: 1.4em 0;
+    border-radius: .5em;
+    width: 75%;
+  }
+
+  #forgot_password {
     float: left;
     clear: left;
     margin: 0 0;
     border-radius: .5em;
     width: 75%;
   }
-	//end
-	//Item Photo for posts
-	img.obj {
-        width: 300px;
+  //end
+  //Item Photo for posts
+  img.obj {
+    width: 300px;
+  }
+  //end
+  //form: create a post on /posts/new
+  .posts {
+    article {
+      padding-bottom: 1.4em;
+      &:first-child {
+        float: left;
+        width: 60%;
+      }
+      &:last-child {
+        float: right;
+        width: 30%;
+        header {
+          float: left;
+          margin: 0 2.5% 0 0;
+          text-align: right;
+          h1 {
+            font-size: $font-size * .75;
+            line-height: ($font-size * .75) * 1.2;
+          }
+          h6 {
+            font-size: $font-size * .65;
+            line-height: ($font-size * .65) * 1.2;
+          }
+        }
+        a:link {
+          float: left;
+        }
+      }
+      &[role="complementary"] {
+        float: none;
+        clear: both;
+        width: 50%;
+      }
     }
-	//end
-	//form: create a post on /posts/new
-	.posts {
-		article{
-			padding-bottom: 1.4em;
-			&:first-child {
-			float: left;
-			width: 60%;
-			}
-			&:last-child {
-			float: right;
-			width: 30%;
-				header {
-					float: left;
-					margin: 0 2.5% 0 0;
-					text-align: right;
-					h1 {
-						font-size: $font-size * .75;
-						line-height: ($font-size * .75) * 1.2;
-					}
-					h6 {
-						font-size: $font-size * .65;
-						line-height: ($font-size * .65) * 1.2;
-					}
-				}
-				a:link {
-					float: left;
-				}
-			}
-			&[role="complementary"] {
-				float: none;
-				clear: both;
-				width: 50%;
-			}
-		}
-	}
-	.alert.alert-success {
-	font-size: $font-size * 1.2;
-	color: $main-green;
-	width: 50%;
-	margin: 0 auto;
-	text-align: center;
-	}
-	//end
-	// posts page
-	.posts article ul {
-		list-style: disc outside;
-		margin: 0 0 0 $font-size;
-		li {
-			margin: 0 0 $font-size 0;
-			border-bottom: 1px solid $lt-grey;
-		 	a {
-				color: rgb(62, 62, 62);
-				.content {
-					font-size: $font-size;
-					line-height: $font-size;
-					margin: 0 0 ($font-size * .5) 0;
-				}
-				.timestamp {
-					display: block;
-					font-size: $font-size * .65;
-					line-height: ($font-size * .65) * 1.2;
-				}
-			}
-			.pull-right {
-				margin: .7em 0;
-				a {
-				color: $main-blue;
-				font-size: $font-size * .75;
-				font-weight: bold;
-				}
-				.label {
-				border-right: 1px solid $lt-grey;
-				padding-right: $font-size * .75;
-				margin-right: $font-size * .75;
-				}
-			}
-		}
-	}
-	article > ul + .form-actions {
-	width: 100%;
-	margin: 1.4em 0 0 0;
-	}
-	// end
-	// networks page styles
-	.accounts {
-		article {
-			ul {
-				float: left;
-				margin: 0 2.5% 0 0;
-				font-size: $font-size;
-				li {
-					margin: ($font-size * .5) auto;
-					&:first-child {
-						font-weight: bold;
-					}
-				}
-			}
-		}
-	}
-	// end
+  }
+  //end
+  // posts page
+  .posts article ul {
+    list-style: disc outside;
+    margin: 0 0 0 $font-size;
+    li {
+      margin: 0 0 $font-size 0;
+      border-bottom: 1px solid $lt-grey;
+      a {
+        color: rgb(62, 62, 62);
+        .content {
+          font-size: $font-size;
+          line-height: $font-size;
+          margin: 0 0 ($font-size * .5) 0;
+        }
+        .timestamp {
+          display: block;
+          font-size: $font-size * .65;
+          line-height: ($font-size * .65) * 1.2;
+        }
+      }
+      .pull-right {
+        margin: .7em 0;
+        a {
+          color: $main-blue;
+          font-size: $font-size * .75;
+          font-weight: bold;
+        }
+        .label {
+          border-right: 1px solid $lt-grey;
+          padding-right: $font-size * .75;
+          margin-right: $font-size * .75;
+        }
+      }
+    }
+  }
+  article > ul + .form-actions {
+    width: 100%;
+    margin: 1.4em 0 0 0;
+  }
+  // end
+  // networks page styles
+  .accounts {
+    article {
+      ul {
+        float: left;
+        margin: 0 2.5% 0 0;
+        font-size: $font-size;
+        li {
+          margin: ($font-size * .5) auto;
+          &:first-child {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+  // end
 }
