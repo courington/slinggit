@@ -133,9 +133,9 @@ class ApplicationController < ActionController::Base
         end
       end
       api_to_delete.update_attribute(:status, 'deleted')
-      return [true, api_to_delete]
+      return [true, next_primary_api_account]
     else
-      return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."]
+      return [false, "Oops, something went wrong.  Please try again later."]
     end
   end
 

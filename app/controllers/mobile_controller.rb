@@ -1,7 +1,7 @@
 class MobileController < ApplicationController
   before_filter :set_source
-  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
@@ -157,10 +157,6 @@ class MobileController < ApplicationController
     end
   end
 
-  def add_twitter_account
-    setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
-  end
-
   def delete_twitter_account
     if not params[:api_account_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
@@ -170,7 +166,9 @@ class MobileController < ApplicationController
             if success
               render_success_response(
                   :api_account_id => api_account.id,
-                  :api_account_status => api_account.status
+                  :api_account_status => api_account.status,
+                  :new_primary_api_account_id => result.blank? ? '' : result.id,
+                  :new_primary_api_account_status => result.blank? ? '' : result.status
               )
             else
               render_error_response(
@@ -213,11 +211,15 @@ class MobileController < ApplicationController
     end
   end
 
+  def add_twitter_account
+    setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
+  end
+
   def add_twitter_account_callback
     rtoken = session['rtoken']
     rsecret = session['rsecret']
     if not params[:denied].blank?
-      redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started.'
+      redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started.', :error_reason => 'user denied permission'
     else
       request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
       access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
@@ -227,7 +229,7 @@ class MobileController < ApplicationController
           create_api_account(:source => :twitter, :user_object => user, :api_object => client)
           redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => SUCCESS_STATUS
         else
-          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :user_name_as_symbol => params[:user_name], :user_name_as_string => params['user_name'], :error_reason => 'user not found'
         end
       else
         redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => SUCCESS_STATUS, :access_token => access_token.token, :access_token_secret => access_token.secret
