@@ -477,7 +477,7 @@ class MobileController < ApplicationController
 
         return_data = {
             :rows_found => api_accounts.length.to_s,
-            :posts => api_accounts_array
+            :api_accounts => api_accounts_array
         }
 
         render_success_response(return_data)
