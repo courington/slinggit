@@ -17,9 +17,9 @@
 			      <% end %>
 				<!-- DROP DOWN -->
 				<div id="accountDropDown" class="dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
-			  	<span class="BTN_nav_dropDown" data-toggle="dropdown">Settings &raquo;</span>
+			  	<span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings &raquo;</span>
 			
-			        <ul class="nav_dropDown" style="display:none">
+			        <ul class="nav_dropDown dropdown-menu">
 			          <li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
 			            <%= link_to "Profile", edit_user_path(current_user) %>
 			          </li>
@@ -50,7 +50,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	window.navDropdownView()
+	$('#BTN_nav_dropDown').dropdown()
 	window.quickSearchView()
 });
 </script>
