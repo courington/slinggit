@@ -68,7 +68,25 @@ class NetworksController < ApplicationController
   end
 
   def delete_account
-
+    if request.post?
+      if not params[:api_account_id].blank?
+        api_account_id = params[:api_account_id].split('_').last
+        if api_account = ApiAccount.first(:conditions => ['id = ? AND user_id = ?', api_account_id, current_user.id])
+          success, result = delete_api_account(api_account)
+          if success
+            render :text => "#{api_account_id}", :status => 200
+          else
+            render :text => 'error', :status => 500
+          end
+        else
+          render :text => 'error', :status => 500
+        end
+      else
+        render :text => 'error', :status => 500
+      end
+    else
+      render :text => 'error', :status => 500
+    end
   end
 
   def add_api_account

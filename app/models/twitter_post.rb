@@ -37,32 +37,38 @@ class TwitterPost < ActiveRecord::Base
     @post_start_time = Time.now
     self.update_attribute(:status, PROCESSING_STATUS)
     if not has_been_post?
-      twitter_client = nil
-      if api_account_id == 0
-        twitter_client = Twitter::Client.new(oauth_token: Rails.configuration.slinggit_client_atoken, oauth_token_secret: Rails.configuration.slinggit_client_asecret)
-      else
-        if self.api_account
-          twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
-        end
-      end
+      if not self.api_account.status == 'deleted'
 
-      if not twitter_client.blank?
-        begin
-          result = tweet_constructor(twitter_client)
-          finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
-        rescue Exception => e
-          if e.is_a? Twitter::Error::Unauthorized
-            if self.api_account
-              finalize(FAILED_STATUS, {:api_account_reauth_required => 'yes', :last_result => "api_account-yes // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
-            else
-              finalize(FAILED_STATUS, {:last_result => "api_account-no // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
-            end
-          else
-            finalize(FAILED_STATUS, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+
+        twitter_client = nil
+        if api_account_id == 0
+          twitter_client = Twitter::Client.new(oauth_token: Rails.configuration.slinggit_client_atoken, oauth_token_secret: Rails.configuration.slinggit_client_asecret)
+        else
+          if self.api_account
+            twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
           end
         end
+
+        if not twitter_client.blank?
+          begin
+            result = tweet_constructor(twitter_client)
+            finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
+          rescue Exception => e
+            if e.is_a? Twitter::Error::Unauthorized
+              if self.api_account
+                finalize(FAILED_STATUS, {:api_account_reauth_required => 'yes', :last_result => "api_account-yes // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+              else
+                finalize(FAILED_STATUS, {:last_result => "api_account-no // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+              end
+            else
+              finalize(FAILED_STATUS, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+            end
+          end
+        else
+          finalize(FAILED_STATUS, {:last_result => "twitter client could not be established"}) and return
+        end
       else
-        finalize(FAILED_STATUS, {:last_result => "twitter client could not be established"}) and return
+        finalize(FAILED_STATUS, {:last_result => "api account has been deleted"}) and return
       end
     else
       finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_REPOST_LAST_RESULT}) and return

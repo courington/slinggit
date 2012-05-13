@@ -161,6 +161,58 @@ class MobileController < ApplicationController
     setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
   end
 
+  def delete_twitter_account
+    if not params[:api_account_id].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
+        if api_account = ApiAccount.first(:conditions => ['id = ? AND user_id = ?', params[:api_account_id], mobile_session.user_id])
+          if not api_account.status == 'deleted'
+            success, result = delete_api_account(api_account)
+            if success
+              render_success_response(
+                  :api_account_id => api_account.id,
+                  :api_account_status => api_account.status
+              )
+            else
+              render_error_response(
+                  :error_location => 'delete_twitter_account',
+                  :error_reason => result,
+                  :error_code => '404',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+          else
+            render_success_response(
+                :api_account_id => api_account.id,
+                :api_account_status => api_account.status,
+                :note => 'this api account had already been deleted.  There may be a problem with your code.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'delete_twitter_account',
+              :error_reason => 'api account not found',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'delete_twitter_account',
+            :error_reason => 'mobile session not found',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'delete_twitter_account',
+          :error_reason => 'missing required_paramater - api_account_id',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
   def add_twitter_account_callback
     rtoken = session['rtoken']
     rsecret = session['rsecret']
@@ -283,7 +335,7 @@ class MobileController < ApplicationController
     @mobile_auth_token
   end
 
-  #TODO RE DOCUMENT
+#TODO RE DOCUMENT
   def get_slinggit_post_data
     if not params[:offset].blank?
       if not params[:limit].blank?
@@ -399,7 +451,7 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO DOCUMENT
+#TODO DOCUMENT
   def resubmit_to_post_recipients
     if not params[:post_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
@@ -450,7 +502,7 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO DOCUMENT
+#TODO DOCUMENT
   def get_user_api_accounts
     if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
@@ -500,27 +552,27 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO IMPLEMENT AND DOCUMENT
+#TODO IMPLEMENT AND DOCUMENT
   def forgot_password
 
   end
 
-  #TODO IMPLEMENT AND DOCUMENT
+#TODO IMPLEMENT AND DOCUMENT
   def reset_password
 
   end
 
-  #TODO IMPLEMENT AND DOCUMENT
+#TODO IMPLEMENT AND DOCUMENT
   def active_session_list
 
   end
 
-  #TODO IMPLEMENT AND DOCUMENT
+#TODO IMPLEMENT AND DOCUMENT
   def get_active_session_list
 
   end
 
-  #TODO IMPLEMENT AND DOCUMENT
+#TODO IMPLEMENT AND DOCUMENT
   def logout_of_active_session
 
   end
@@ -731,4 +783,5 @@ class MobileController < ApplicationController
       )
     end
   end
+
 end

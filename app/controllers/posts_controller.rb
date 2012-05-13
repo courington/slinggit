@@ -109,7 +109,7 @@ class PostsController < ApplicationController
   end
 
   def load_api_accounts
-    @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ?', current_user.id, 'twitter'])
+    @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ? AND status != "deleted"', current_user.id, 'twitter'])
   end
 
 end

@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
 
     case options[:source].to_sym
       when :twitter
-        if not ApiAccount.exists?(['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s])
+        if not ApiAccount.exists?(['user_id = ? AND api_id = ? AND status != "deleted"', options[:user_object].id, options[:api_object].user['id'].to_s])
           status = 'primary'
           if ApiAccount.exists?(['user_id = ? AND status = "primary" AND api_source = ?', options[:user_object].id, options[:source]])
             status = 'active'
@@ -101,6 +101,10 @@ class ApplicationController < ActionController::Base
   end
 
   def update_api_account(options = {})
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options.blank?
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options[:source].blank?
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter].include? options[:source].to_sym
+
     if not options.blank?
       case options[:source]
         when :twitter
@@ -116,6 +120,22 @@ class ApplicationController < ActionController::Base
         else
           #do nothing
       end
+    end
+  end
+
+  def delete_api_account(api_to_delete)
+    if not api_to_delete.blank?
+      was_primary = api_to_delete.status == 'primary'
+      if was_primary
+        #we need at least one primary if there are api_accounts of this type remaining
+        if next_primary_api_account = ApiAccount.first(:conditions => ['user_id = ? AND api_source = ? AND status != "deleted"', api_to_delete.user_id, api_to_delete.api_source])
+          next_primary_api_account.update_attribute(:status, 'primary')
+        end
+      end
+      api_to_delete.update_attribute(:status, 'deleted')
+      return [true, api_to_delete]
+    else
+      return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."]
     end
   end
 
