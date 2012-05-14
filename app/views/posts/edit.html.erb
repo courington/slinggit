@@ -1,32 +1,15 @@
 <% provide(:title, "Edit post") %> 
-
-<h1>Update your post</h1>
-<div class="row">
-  <div class="span8 offset2 well-white">
-
-    <div class="row">
-      <div class="span8">
-
-          <div class="row">
-
-            <h2><%= @post.hashtag_prefix %></h2> 
-            <hr>
-
-          </div> <!-- row 1 end --> 
-
-          <div class="row">
-
-            <% if @post.open? %>
-              <%= render 'posts/edit_open' %>
-            <% else %>
-              <%= render 'posts/edit_closed' %>
-            <% end %>
-
-          </div> <!-- row 2 end -->
-        		
-
-      </div><!-- span end --> 
-    </div><!-- row end --> 
-
-  </div><!-- span8 offset2 end -->
-</div> <!-- row end --> 
+<section class="wrapper">
+	<header>
+		<h1>Update your post</h1>
+		<p>Update your post</p>
+	</header>
+	<article>
+    	<h2><%= @post.hashtag_prefix %></h2> 
+        <% if @post.open? %>
+        	<%= render 'posts/edit_open' %>
+        <% else %>
+        	<%= render 'posts/edit_closed' %>
+        <% end %>
+	</article>
+</section>
