@@ -41,10 +41,6 @@ SlinggitWebapp::Application.configure do
   POST_PHOTO_DIR = ":rails_root/public"
 
   #  Our consumer key and secret for our twitter app (DEV)
-  #config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
-  #config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
-
-  # Prod credentials.  Only here right now for error testing.
    config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
    config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
 
