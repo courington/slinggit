@@ -19,4 +19,5 @@
 //= require jquery.tablesorter.min
 //= require modernizr.custom.49663
 //= require bootstrap
+//= require happy
 //= require_tree .

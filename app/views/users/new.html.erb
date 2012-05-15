@@ -8,6 +8,7 @@
   
 	<%= form_for(@user) do |f| %>
   	<span id="emailAvailabilityNotification"></span>
+  	<span id="usernameAvailabilityNotification"></span>
     <%= render 'shared/error_messages', object: f.object %>
     
 		<fieldset class="page_col twoCol" id="signUpIntialFields">
@@ -52,6 +53,7 @@
     $(document).ready(function () {
         window.emailValidationView(
             "<%= url_for :controller => :users, :action => :verify_email_availability %>"
+          , "<%= url_for :controller => :users, :action => :verify_username_availability %>"
           , "<%= url_for :controller => :users, :action => :reset_page_session %>"
           , "<%= url_for :controller => :users, :action => :set_no_thanks %>"
           , "<%= session[:twitter_permission_granted] %>"

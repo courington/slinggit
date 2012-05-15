@@ -188,6 +188,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def verify_username_availability
+    if request.post?
+      if User.exists?(:name => params[:name])
+        render :text => 'unavailable', :status => 200
+      else
+        render :text => 'available', :status => 200
+      end  
+    end  
+  end
+
   private
 
   def correct_user

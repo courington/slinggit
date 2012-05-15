@@ -7,14 +7,15 @@ class EmailValidation extends Backbone.View
 		# This keeps @ as @ in all of our methods.  Very
   		# handy with jquery event handeling
   		_.bindAll @
-  		@$userEmail = $("user_email")
-  		@url = @options.url
+  		# localize a some of the input fields into variables to
+  		# to keep from searching the dom over and over
+  		@$userEmail = $("#user_email")
+  		@emailUrl = @options.emailUrl
+  		@userUrl = @options.userUrl
   		@resetUrl = @options.resetUrl
   		@noThxUrl = @options.noThxUrl
   		@permissionGranted = @options.granted
-  		console.log !_.isEmpty @permissionGranted
   		@noThanks = @options.noThanks
-  		console.log !_.isEmpty @noThanks
   		@hideFields()
   		if !_.isEmpty @permissionGranted or !_.isEmpty @noThanks then @showHiddenFields()
 
@@ -23,6 +24,7 @@ class EmailValidation extends Backbone.View
   		$(".form_hiddenFields").hide()
   		$("#form_signUpActions").show()
   		$("#emailAvailabilityNotification").hide()
+  		$("#usernameAvailabilityNotification").hide()
 
 
   	showHiddenFields: ->
@@ -32,22 +34,42 @@ class EmailValidation extends Backbone.View
 
 	
 	events:
-		"blur #user_email":                   "checkEmailAddress"
-		"keyup input":                        "hideErrorsAndNotifications"
-		"keyup #user_email":                  "validateEmail"
+		"blur #user_name":                    "checkUsernameAvailability"
+		"blur #user_email":                   "suggestAndValidate"
+		#"keyup input":                        "hideErrorsAndNotifications"
 		"click #noThanksBTN":                 "callNoThanks"
 		"click #twitterBTN":                  "twitterAuthorize"
 		"click #signUpStartOverLink":         "startOver"
 		"click #emailSuggestionReplaceLink":  "swapEmailWithSuggested"
 
-	
+	checkUsernameAvailability: (e)->
+		username = $(e.target).val()
+		$.ajax(
+			type: "POST"
+			url: @userUrl
+			data:
+				name: username
+		).done (response)->
+			if response is "unavailable"
+				$ "user_name"
+				$("#usernameAvailabilityNotification").html "<div id=\"error_explanation\"><ul><li>* That username has already been registered.  <a href=\"#\">forgot password?</a></li></ul></div>"
+				$("#usernameAvailabilityNotification").show()
+			else
+				$("#usernameAvailabilityNotification").html ""
+				$("#usernameAvailabilityNotification").hide()
+
+
+	suggestAndValidate: (e)->
+		@checkEmailAddress(e)
+		@validateEmail(e)
+
 	checkEmailAddress: (e)->
 		domains = [ "hotmail.com", "gmail.com", "aol.com", "msn.com", "yahoo.com", "pixorial.com", "slinggit.com" ]
 		$(e.target).mailcheck
 		  domains: domains
 		  suggested: (element, suggestion) =>
 		    $("#emailSuggestion").remove()
-		    @$userEmail.parent().append "<span id='emailSuggestion'>Did you mean <a href='#' id='emailSuggestionReplaceLink'>" + suggestion.full + "</a></span>"
+		    $(e.target).after "<span id='emailSuggestion'>Did you mean <a href='#' id='emailSuggestionReplaceLink'>" + suggestion.full + "</a></span>"
 
 		  empty: (element) ->
 		    $("#emailSuggestion").remove()
@@ -55,12 +77,12 @@ class EmailValidation extends Backbone.View
 
 	validateEmail: (e)->
 		email_address = $(e.target).val()
-		console.log "email #{email_address}"
+		#console.log "email #{email_address}"
 		emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 		if emailRegex.test(email_address)
 		  $.ajax(
 		    type: "POST"
-		    url: @url
+		    url: @emailUrl
 		    data:
 		      email: email_address
 		  ).done (response) ->
@@ -91,13 +113,12 @@ class EmailValidation extends Backbone.View
 		e.preventDefault()
 		$("#form_signUpActions").hide()
 		$(".form_hiddenFields").show()
-		hideErrorsAndNotifications()
+		@hideErrorsAndNotifications()
 		$.ajax url: @noThxUrl
 
 
 	twitterAuthorize: (e)->
 		$("#twitter_authenticate").val(true)
-		console.log $("form")
 		$("form#new_user").submit()
 
 
@@ -109,13 +130,13 @@ class EmailValidation extends Backbone.View
 		$("#user_email").val ""
 		$("legend").html "Create your profile"
 		$("#emailSuggestion").remove()
-		hideErrorsAndNotifications()
+		@hideErrorsAndNotifications()
 		$.ajax url: @resetUrl
 
 
 ## Exports
-@emailValidationView = (url, resetUrl, noThxUrl, sessionGranted, noThanks)->
-	return new EmailValidation({ url: url, resetUrl: resetUrl, noThxUrl: noThxUrl, granted: sessionGranted, noThanks: noThanks })
+@emailValidationView = (emailUrl, userUrl, resetUrl, noThxUrl, sessionGranted, noThanks)->
+	return new EmailValidation({ emailUrl: emailUrl, userUrl: userUrl, resetUrl: resetUrl, noThxUrl: noThxUrl, granted: sessionGranted, noThanks: noThanks })
 
 
 
