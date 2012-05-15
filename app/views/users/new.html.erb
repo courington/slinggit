@@ -32,9 +32,7 @@
         
 			<%= f.label :password_confirmation, "Confirmation", class: "control-label", for: "user_password_confirmation" %>
 			<%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "form_singleLine" %>
-		</fieldset>
 
-		<fieldset>
 			<%= f.button "Create my account", class: "btn_large" %>
 			<%= link_to 'start over', nil, :onclick => "javascript:void(0)", :id => 'signUpStartOverLink' %>
 		</fieldset>
