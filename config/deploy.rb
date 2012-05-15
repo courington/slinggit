@@ -28,8 +28,8 @@ before "deploy:assets:precompile", "gems:install"
 namespace :gems do
   desc "Install gems"
   task :install, :roles => :app do
-    #run "cd #{current_release} && bundle install --without development test"
-    run "cd #{current_release} && bundle install --without development production"
+    run "cd #{current_release} && bundle install --without development test"
+    #run "cd #{current_release} && bundle install --without development production"
     # run "cd #{current_release} && bundle install --without test production"
   end
 end
