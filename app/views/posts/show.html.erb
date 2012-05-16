@@ -4,8 +4,14 @@
 		<h1><%= @post.hashtag_prefix %></h1>
 		<p><%= @post.hashtag_prefix %></p>
 		<% if @user == current_user %>
-		<h6 class="pull-right"><%= link_to "edit", edit_post_path(@post), class: "btn" %></h6>
+			<h6 class="pull-right"><%= link_to "edit", edit_post_path(@post), class: "btn" %></h6>
 		<% end %>
+
+		<!-- ADMIN ONLY FUNCTIONALITY -->
+		<% if current_user.admin? %>
+    		<%= link_to "DELETE", @post, method: :delete, confirm: "You sure?" %>
+  		<% end %>
+  		
 	</header>
 
 	<article>

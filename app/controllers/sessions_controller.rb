@@ -13,9 +13,12 @@ class SessionsController < ApplicationController
     if not params[:session][:email].blank?
       @email = params[:session][:email]
       user = User.first(:conditions => ['email = ?', @email])
-      if not user.blank? and user.authenticate(params[:session][:password])
+      if not user.blank? and user.authenticate(params[:session][:password]) and user.status != "deleted"
         sign_in user
         redirect_back_or user
+      elsif not user.blank? and user.authenticate(params[:session][:password]) and user.status == "deleted"
+        flash.now[:error] = 'The user you are trying to login as has been disabled.  For questions regarding this account, please contact slinggit support.'
+        render 'new'
       else
         flash.now[:error] = 'The username or password you entered is incorrect.'
         render 'new'

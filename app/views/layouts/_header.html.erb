@@ -6,10 +6,10 @@
 			<h6>beta</h6>
 		</hgroup>
 		<nav>
-			  <span class="<%= 'active' if current_page?(current_user) %>">
-			    <%= link_to "Posts", current_user %>
-			  </span>
 			  <% if signed_in? %>
+			  	  <span class="<%= 'active' if current_page?(current_user) %>">
+			          <%= link_to "Posts", current_user %>
+			  	  </span>
 			      <% if current_user.admin? %>
 			          <span class="<%= 'active' if current_page?(users_path) %>">
 			            <%= link_to "Users", users_path %>

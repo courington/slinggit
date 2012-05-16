@@ -2,8 +2,8 @@
 <section class="wrapper posts">	
 
 	<article>
-		<header>
     <% if @user.posts.any? %>
+    <header>
       <h1>Posts (<%= @posts.count %>)</h1>
 			<p>Posts (<%= @posts.count %>)</p>
 		</header>
@@ -11,7 +11,6 @@
     <ul class="posts">
     	<%= render @posts %>
     </ul>
-    <%= will_paginate @posts %>
     <% end %>
 
     <% if current_user?(@user) %>
@@ -27,6 +26,10 @@
 		</header>
       <%= gravatar_for @user %>
 	</article>
+  <!-- ADMIN ONLY FUNCTIONALITY -->
+  <% if current_user.admin? && !current_user?(@user) && @user.status != "deleted" %>
+      <%= link_to "Delete This User", @user, method: :delete, confirm: "You sure?" %>
+  <% end %>    
 
 </section>
 

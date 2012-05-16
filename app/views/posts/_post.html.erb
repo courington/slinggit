@@ -1,6 +1,7 @@
 <%= link_to(post_path(post)) do %>
 <li>
-  <span class="content"><%= post.content %></span>
+  <span class="content"><%= post.hashtag_prefix %></span>
+  <span><%= post.content %></span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(post.created_at) %> ago.
   </span>
@@ -16,6 +17,12 @@
   <% if current_user?(post.user) %>
     <%= link_to "edit", edit_post_path(post) %>
   <% end %>
+
+  <!-- ADMIN ONLY FUNCTIONALITY -->
+  <% if current_user.admin? %>
+    <%= link_to "DELETE", post, method: :delete, confirm: "You sure?" %>
+  <% end %>
+  
   </div>  
 </li>
 <% end %>
