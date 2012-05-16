@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     # CMK: added condition to check for status = active
     @user = User.first(:conditions => ['id = ? AND status = "active"', params[:id]])
     if not @user.blank?
-      @posts = @user.posts.where("status = 'active'")
+      @posts = @user.posts.all(:conditions => ['status = "active"'])
 
       # CMK: need to rework pagination
       #@posts.paginate(page: params[:page])
@@ -99,7 +99,7 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  def renable
+  def reenable
     debugger
     user = User.first(:conditions => ['id = ?', params[:id]])
     debugger

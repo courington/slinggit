@@ -8,7 +8,7 @@ SlinggitWebapp::Application.routes.draw do
 
   match 'users/enter_new_password/(:id)', :to => 'users#enter_new_password#id'
   match 'users/password_reset', :to => 'users#password_reset'
-  match 'users/renable', :to => 'users#renable'
+  match 'users/reenable', :to => 'users#reenable'
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
   match 'networks/add_api_account', :to => 'networks#add_api_account', via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get

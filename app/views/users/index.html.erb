@@ -12,7 +12,7 @@
       |  <%= link_to "delete", user, method: :delete, confirm: "You sure?" %>
       <% elsif current_user.admin? && !current_user?(user) && user.status == "deleted" %>
       	<strong>It looks like we have deleted this user.</strong>
-      	<%= link_to "renable", {:controller => :users, :action => :renable, :id => user.id}, confirm: "You sure?" %>
+      	<%= link_to "renable", {:controller => :users, :action => :reenable, :id => user.id}, confirm: "You sure?" %>
   	  <% end %>
     </li>
   <% end %>
