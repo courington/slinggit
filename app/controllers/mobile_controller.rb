@@ -1,12 +1,12 @@
 class MobileController < ApplicationController
-  before_filter :set_source
-  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :set_source
+  #before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  #before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   around_filter :catch_exceptions
 
   ERROR_STATUS = "error"
@@ -571,7 +571,45 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT AND DOCUMENT
+  def get_single_slinggit_post_data
+    if not params[:post_id].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+        if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
+          comments_array = []
+          post.comments.each do |comment|
+            comments_array << comment.attributes.merge!(:user_name => comment.user.name)
+          end
+
+          render_success_response(
+              post.attributes.merge!(:comments => comments_array)
+          )
+        else
+          render_error_response(
+              :error_location => 'get_individual_slinggit_post_data',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'get_individual_slinggit_post_data',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_individual_slinggit_post_data',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  #TODO IMPLEMENT AND DOCUMENT
   def change_password
 
   end
