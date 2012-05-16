@@ -17,9 +17,12 @@
   <% if current_user?(post.user) %>
     <%= link_to "edit", edit_post_path(post) %>
   <% end %>
+
+  <!-- ADMIN ONLY FUNCTIONALITY -->
   <% if current_user.admin? %>
     <%= link_to "DELETE", post, method: :delete, confirm: "You sure?" %>
   <% end %>
+  
   </div>  
 </li>
 <% end %>

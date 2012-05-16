@@ -8,7 +8,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.first(:conditions => ['id = ?', params[:id]])
+    # CMK: added condition to check for status = active
+    @user = User.first(:conditions => ['id = ? AND status = "active"', params[:id]])
     if not @user.blank?
       @posts = @user.posts.where("status == 'active'")
 
@@ -86,8 +87,12 @@ class UsersController < ApplicationController
   def destroy
     user = User.first(:conditions => ['id = ?', params[:id]])
     if user
-      user.status = 'deleted'
-      flash[:success] = "User destroyed."
+      #user.status = 'deleted'
+      if user.update_attribute(:status, "deleted")
+        flash[:success] = "User destroyed."
+      else 
+        flash[:error] = "User deletion unsuccessful"  
+      end
     end
     redirect_to users_path
   end

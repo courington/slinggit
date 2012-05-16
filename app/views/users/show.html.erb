@@ -26,6 +26,10 @@
 		</header>
       <%= gravatar_for @user %>
 	</article>
+  <!-- ADMIN ONLY FUNCTIONALITY -->
+  <% if current_user.admin? && !current_user?(@user) && @user.status != "deleted" %>
+      <%= link_to "Delete This User", @user, method: :delete, confirm: "You sure?" %>
+  <% end %>    
 
 </section>
 

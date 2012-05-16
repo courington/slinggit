@@ -8,8 +8,10 @@
     <li>
       <%= gravatar_for user %>
       <%= link_to user.name, user %>
-      <% if current_user.admin? && !current_user?(user) %>
+      <% if current_user.admin? && !current_user?(user) && user.status != "deleted" %>
       |  <%= link_to "delete", user, method: :delete, confirm: "You sure?" %>
+      <% elsif current_user.admin? && !current_user?(user) && user.status == "deleted" %>
+      	<strong>It looks like we have deleted this user.</strong>
   	  <% end %>
     </li>
   <% end %>
