@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512234533) do
+ActiveRecord::Schema.define(:version => 20120516041155) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(:version => 20120512234533) do
   create_table "posts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20120512234533) do
     t.boolean  "open",                                   :default => true
     t.string   "location"
     t.string   "recipient_api_account_ids"
+    t.string   "status",                                 :default => "active"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"
