@@ -642,7 +642,50 @@ class MobileController < ApplicationController
 
 #TODO IMPLEMENT AND DOCUMENT
   def create_post_comment
-
+    if not params[:post_id].blank?
+      if not params[:comment_body].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
+            comment = Comment.create(
+                :post_id => params[:post_id],
+                :user_id => mobile_session.user_id,
+                :body => params[:comment_body]
+            )
+            render_success_response(
+                :comment_id => comment.id
+            )
+          else
+            render_error_response(
+                :error_location => 'create_post_comment',
+                :error_reason => 'not found - post',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'create_post_comment',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'create_post_comment',
+            :error_reason => 'missing required_paramater - comment_body',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'create_post_comment',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
 #TODO IMPLEMENT AND DOCUMENT
