@@ -16,12 +16,13 @@
 #  open                      :boolean         default(TRUE)
 #  location                  :string(255)
 #  recipient_api_account_ids :string(255)
+#  status                    :string(255)     default("active")
 #
 
 class Post < ActiveRecord::Base
   before_save :create_post_history
 
-  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open
+  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open, :status
 
   belongs_to :user
   has_many :comments, dependent: :destroy
@@ -59,9 +60,4 @@ class Post < ActiveRecord::Base
     self[:price] = num.to_i
   end 
 
-  def rotator
-    manipulate! do |image|
-      image.auto_orient
-    end
-  end  
 end

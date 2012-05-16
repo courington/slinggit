@@ -43,8 +43,9 @@ $txt-shdw: 0 1px 0 rgba(0, 0, 0, .2);
 $padding: .4em .6em;
 
 body {
+	height: 100%;
   font-family: $main-font;
-  overflow: hidden;
+  overflow-x: hidden;
   box-shadow: inset 0 0 72px rgba(0, 0, 0, .25);
   background: $lt-grey;
   color: $dk-grey;
@@ -114,58 +115,81 @@ p {
   }
 
   //styles for sign up page
-  fieldset > legend {
-    font-size: 1.6em;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
-    border-bottom: 1px solid white;
-    width: 80%;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, .38);
-    line-height: 1.8em;
-  }
-  .control-label {
-    float: left;
-    clear: left;
-    margin: 1.4em 0 -1em 0;
-  }
-  #form_signUpActions {
-    clear: left;
-    width: 45%;
-    margin: 1.4em 2.5%;
-  }
-  #noThanksBTN {
-    margin-left: 4%;
-  }
-  .new_user fieldset:last-child {
-    float: right;
-  }
+	.wrapper.page_col.singleWide {
+	}
+	fieldset {
+	margin: 1.4em auto;
+	}
+	.form_initialFields,
+	.form_hiddenFields {
+		label {
+			text-align: left;
+		}
+		input {
+			&[type="text"],
+			&[type="email"],
+			&[type="password"] {
+				width: 35%;
+				float: left;
+			}
+		}
+	}
+	#form_signUpActions {
+	margin: 1.4em 0;
+		#noThanksBTN {
+		background: $lt-grey;
+		color: $main-grey;
+		border: 1px solid darken($lt-grey, 20%);
+	  }
+	}
   .form_hiddenFields.page_col.twoCol {
     margin-top: 3em;
   }
   //end
 
   //styles for notices
-  #error_explanation, #notice_explanation, #success_explanation {
+  #error_explanation, #notice_explanation {
     font-size: 1.2em;
     line-height: 1.6em;
-    color: #F8F8F8;
+    color: $wht;
+text-shadow: 0 1px 0 $main-red;
     font-weight: bold;
     letter-spacing: .1em;
     border-radius: .5em;
     padding: .6em 1.4em;
     width: 45%;
     margin: 0 auto;
-    border: 1px solid black;
+    border: 1px solid $main-red;
     box-shadow: 0 0 20px rgba(0, 0, 0, .38);
   }
-  #notice_explanation{
-    background: $main-blue;
-  }
-  #error_explanation{
-    background: $main-red;
-  }
-  #success_explanation{
-    background: $main-green;
-  }
+#success_explanation {
+background: lighten($main-green, 15%);
+color: $wht;
+text-shadow: 1px solid $main-green;
+box-shadow: 0 1px 0 $dk-grey;
+border: none;
+width: 50%;
+margin: 0 auto;
+text-align: center;
+font-size: 1.6em;
+padding: 1.4em .8em;
+margin-top: -1.4em;
+border-radius: .5em;
+}
+
+ #error_explanation,
+#notice_explanation {
+background: lighten($main-red, 18%);
+float: left;
+box-shadow: none;
+width: auto;
+text-align: left;
+font-weight: normal;
+background: none;
+border: none;
+color: rgb(253, 65, 40);
+text-shadow: none;
+}
   //end
 
   //styles for sign in page
@@ -173,7 +197,7 @@ p {
     float: left;
     clear: left;
     margin: 1.4em 0;
-    border-radius: .5em;
+    border-radius: $radius;
     width: 75%;
   }
 

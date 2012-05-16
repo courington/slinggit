@@ -8,7 +8,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.first(:conditions => ['id = ?', params[:id]])
-    if not @post.blank?
+    if not @post.blank? and @post.status != 'deleted'
       @comments = @post.comments.paginate(page: params[:page])
       # creating user object to compare against current_user
       # in order to display edit option.  Dan, if there's a
@@ -75,7 +75,7 @@ class PostsController < ApplicationController
   def update
     # Don't need to find Post here because of correct_user filter
     if @post.update_attributes(params[:post])
-      flash[:success] = "Prost updated"
+      flash[:success] = "Post updated"
       redirect_back_or current_user
     else
       render 'edit'

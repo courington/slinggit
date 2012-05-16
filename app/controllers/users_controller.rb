@@ -1,16 +1,20 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update]
   before_filter :correct_user, only: [:edit, :update]
-  before_filter :admin_user, only: [:index, :destroy]
+  before_filter :admin_user, only: [:index, :destroy, :renable]
 
   def index
     @users = User.paginate(page: params[:page])
   end
 
   def show
-    @user = User.first(:conditions => ['id = ?', params[:id]])
+    # CMK: added condition to check for status = active
+    @user = User.first(:conditions => ['id = ? AND status = "active"', params[:id]])
     if not @user.blank?
-      @posts = @user.posts.paginate(page: params[:page])
+      @posts = Post.all(:conditions => ['user_id = ? AND status = "active"', @user.id])
+
+      # CMK: need to rework pagination
+      #@posts.paginate(page: params[:page])
     else
       if signed_in?
         redirect_to current_user
@@ -83,8 +87,31 @@ class UsersController < ApplicationController
   def destroy
     user = User.first(:conditions => ['id = ?', params[:id]])
     if user
-      user.status = 'deleted'
-      flash[:success] = "User destroyed."
+      if user.update_attribute(:status, "deleted")
+        user.posts.each do |post|
+          post.update_attribute(:status, "deleted")  
+        end  
+        flash[:success] = "User destroyed."
+      else 
+        flash[:error] = "User deletion unsuccessful"  
+      end
+    end
+    redirect_to users_path
+  end
+
+  def reenable
+    debugger
+    user = User.first(:conditions => ['id = ?', params[:id]])
+    debugger
+    if user
+      if user.update_attribute(:status, "active")
+        user.posts.each do |post|
+          post.update_attribute(:status, "active")  
+        end  
+        flash[:success] = "User reactivated."
+      else 
+        flash[:error] = "User reactivation unsuccessful"  
+      end
     end
     redirect_to users_path
   end
