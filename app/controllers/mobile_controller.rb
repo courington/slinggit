@@ -1,12 +1,12 @@
 class MobileController < ApplicationController
-  #before_filter :set_source
-  #before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_source
+  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   around_filter :catch_exceptions
 
   ERROR_STATUS = "error"
@@ -554,20 +554,31 @@ class MobileController < ApplicationController
 
   def password_reset
     @email_or_username = params[:email_or_username]
-    if request.post?
-      if not @email_or_username.blank?
-        if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name')
-          if user.password_reset_code.blank?
-            user.update_attribute(:password_reset_code, Digest::SHA1.hexdigest("#{rand(999999)}-#{Time.now}-#{@email}"))
-          end
-          UserMailer.password_reset(user).deliver
-          flash.now[:success] = "Password reset instructions have been sent to '#{user.email}'."
-        else
-          flash.now[:error] = "We could not locate an account with that email or username."
+    if not @email_or_username.blank?
+      if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name')
+        if user.password_reset_code.blank?
+          user.update_attribute(:password_reset_code, Digest::SHA1.hexdigest("#{rand(999999)}-#{Time.now}-#{@email}"))
         end
+        UserMailer.password_reset(user).deliver
+        render_success_response(
+            :email_sent_to => user.email,
+            :password_reset_code => user.password_reset_code
+        )
       else
-        flash.now[:error] = "We need either an email address or a username so we know who to send instructions to."
+        render_error_response(
+            :error_location => 'password_reset',
+            :error_reason => 'not found - user',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
       end
+    else
+      render_error_response(
+          :error_location => 'password_reset',
+          :error_reason => 'missing required_paramater - email_or_username',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
     end
   end
 
@@ -609,7 +620,108 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO IMPLEMENT AND DOCUMENT
+  def create_post_comment
+    if not params[:post_id].blank?
+      if not params[:comment_body].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
+            comment = Comment.create(
+                :post_id => params[:post_id],
+                :user_id => mobile_session.user_id,
+                :body => params[:comment_body]
+            )
+            render_success_response(
+                :comment_id => comment.id
+            )
+          else
+            render_error_response(
+                :error_location => 'create_post_comment',
+                :error_reason => 'not found - post',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'create_post_comment',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'create_post_comment',
+            :error_reason => 'missing required_paramater - comment_body',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'create_post_comment',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def delete_post_comment
+    if not params[:post_id].blank?
+      if not params[:comment_id].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
+            if comment = Comment.first(:conditions => ['post_id = ? and id = ?', mobile_session.user_id, params[:comment_id]])
+              comment_id = comment.id
+              comment.destroy
+              render_success_response(
+                  :comment_id => comment_id,
+                  :status => 'destroyed'
+              )
+            else
+              render_error_response(
+                  :error_location => 'delete_post_comment',
+                  :error_reason => 'not found - comment for owner',
+                  :error_code => '404',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+          else
+            render_error_response(
+                :error_location => 'delete_post_comment',
+                :error_reason => 'not found - post',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'delete_post_comment',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'delete_post_comment',
+            :error_reason => 'missing required_paramater - comment_id',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'delete_post_comment',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
   def change_password
 
   end
@@ -627,21 +739,6 @@ class MobileController < ApplicationController
 #TODO IMPLEMENT AND DOCUMENT
   def update_post
     @mobile_auth_token
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def create_post_comment
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def delete_post_comment
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def get_post_comments
-
   end
 
 #TODO rIMPLEMENT AND DOCUMENT
