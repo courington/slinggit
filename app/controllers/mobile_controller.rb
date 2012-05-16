@@ -667,27 +667,6 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT AND DOCUMENT
-  def change_password
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def get_active_session_list
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def logout_of_active_session
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def update_post
-    @mobile_auth_token
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
   def delete_post_comment
     if not params[:post_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
@@ -731,6 +710,26 @@ class MobileController < ApplicationController
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
     end
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def change_password
+
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def get_active_session_list
+
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def logout_of_active_session
+
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def update_post
+    @mobile_auth_token
   end
 
 #TODO rIMPLEMENT AND DOCUMENT
