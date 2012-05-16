@@ -75,7 +75,7 @@ class PostsController < ApplicationController
   def update
     # Don't need to find Post here because of correct_user filter
     if @post.update_attributes(params[:post])
-      flash[:success] = "Prost updated"
+      flash[:success] = "Post updated"
       redirect_back_or current_user
     else
       render 'edit'
