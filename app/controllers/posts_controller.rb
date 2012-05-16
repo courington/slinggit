@@ -8,7 +8,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.first(:conditions => ['id = ?', params[:id]])
-    if not @post.blank?
+    if not @post.blank? and @post.status != 'deleted'
       @comments = @post.comments.paginate(page: params[:page])
       # creating user object to compare against current_user
       # in order to display edit option.  Dan, if there's a

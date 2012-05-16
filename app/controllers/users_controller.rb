@@ -10,7 +10,10 @@ class UsersController < ApplicationController
   def show
     @user = User.first(:conditions => ['id = ?', params[:id]])
     if not @user.blank?
-      @posts = @user.posts.paginate(page: params[:page])
+      @posts = @user.posts.where("status == 'active'")
+
+      # CMK: need to rework pagination
+      #@posts.paginate(page: params[:page])
     else
       if signed_in?
         redirect_to current_user

@@ -60,9 +60,4 @@ class Post < ActiveRecord::Base
     self[:price] = num.to_i
   end 
 
-  def rotator
-    manipulate! do |image|
-      image.auto_orient
-    end
-  end  
 end
