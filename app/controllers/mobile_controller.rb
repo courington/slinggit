@@ -620,27 +620,6 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO IMPLEMENT AND DOCUMENT
-  def change_password
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def get_active_session_list
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def logout_of_active_session
-
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
-  def update_post
-    @mobile_auth_token
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
   def create_post_comment
     if not params[:post_id].blank?
       if not params[:comment_body].blank?
@@ -689,13 +668,69 @@ class MobileController < ApplicationController
   end
 
 #TODO IMPLEMENT AND DOCUMENT
-  def delete_post_comment
+  def change_password
 
   end
 
 #TODO IMPLEMENT AND DOCUMENT
-  def get_post_comments
+  def get_active_session_list
 
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def logout_of_active_session
+
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def update_post
+    @mobile_auth_token
+  end
+
+#TODO IMPLEMENT AND DOCUMENT
+  def delete_post_comment
+    if not params[:post_id].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+        if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
+          if comment = Comment.first(:conditions => ['user_id = ? AND post_id = ?', mobile_session.user_id, params[:post_id]])
+            comment_id = comment.id
+            comment.destroy
+            render_success_response(
+                :comment_id => comment_id,
+                :status => 'destroyed'
+            )
+          else
+            render_error_response(
+                :error_location => 'delete_post_comment',
+                :error_reason => 'not found - comment for owner',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'delete_post_comment',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'delete_post_comment',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'delete_post_comment',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
 #TODO rIMPLEMENT AND DOCUMENT
