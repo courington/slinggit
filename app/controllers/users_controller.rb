@@ -59,9 +59,10 @@ class UsersController < ApplicationController
           session.delete('access_token')
           session.delete('access_secret')
         end
+        @user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(@user.email + "slinggit"))
         UserMailer.welcome_email(@user).deliver
         sign_in @user
-        flash[:success] = "Welcome SlingGit.  Time to start slingin!"
+        flash[:success] = "Welcome SlingGit.  Please be sure to verify your email address."
         redirect_back_or @user
       else
         render 'new'
@@ -84,16 +85,37 @@ class UsersController < ApplicationController
     end
   end
 
+  def verify_email
+    if not params[:id].blank?
+      if user = User.first(:conditions => ['email_activation_code = ?', params[:id]])
+        if user.email_activation_code == Digest::SHA1.hexdigest(user.email + "slinggit")
+          user.update_attribute(:email_activation_code, nil)
+          flash[:success] = "Your email has been verified."
+          sign_in user
+          redirect_to user
+        else
+          flash[:error] = "Invalid email activation code."
+          redirect_to :controller => :static_pages, :action => :home
+        end
+      else
+        flash[:error] = "Invalid email activation code."
+        redirect_to :controller => :static_pages, :action => :home
+      end
+    else
+      redirect_to :controller => :static_pages, :action => :home
+    end
+  end
+
   def destroy
     user = User.first(:conditions => ['id = ?', params[:id]])
     if user
       if user.update_attribute(:status, "deleted")
         user.posts.each do |post|
-          post.update_attribute(:status, "deleted")  
-        end  
+          post.update_attribute(:status, "deleted")
+        end
         flash[:success] = "User destroyed."
-      else 
-        flash[:error] = "User deletion unsuccessful"  
+      else
+        flash[:error] = "User deletion unsuccessful"
       end
     end
     redirect_to users_path
@@ -106,11 +128,11 @@ class UsersController < ApplicationController
     if user
       if user.update_attribute(:status, "active")
         user.posts.each do |post|
-          post.update_attribute(:status, "active")  
-        end  
+          post.update_attribute(:status, "active")
+        end
         flash[:success] = "User reactivated."
-      else 
-        flash[:error] = "User reactivation unsuccessful"  
+      else
+        flash[:error] = "User reactivation unsuccessful"
       end
     end
     redirect_to users_path
@@ -221,8 +243,8 @@ class UsersController < ApplicationController
         render :text => 'unavailable', :status => 200
       else
         render :text => 'available', :status => 200
-      end  
-    end  
+      end
+    end
   end
 
   private

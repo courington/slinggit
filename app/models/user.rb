@@ -44,7 +44,11 @@ class User < ActiveRecord::Base
 
   def primary_twitter_account
     ApiAccount.first(:conditions => ['user_id = ? AND status = "primary"', self.id])
-  end  
+  end
+
+  def email_is_verified?
+    self.email_activation_code.blank?
+  end
 
   private
 
