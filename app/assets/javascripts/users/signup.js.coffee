@@ -52,7 +52,7 @@ class EmailValidation extends Backbone.View
 		).done (response)->
 			if response is "unavailable"
 				$ "user_name"
-				$("#usernameAvailabilityNotification").html "<div id=\"error_explanation\"><ul><li>* That username has already been registered.  <a href=\"#\">forgot password?</a></li></ul></div>"
+				$("#usernameAvailabilityNotification").html "<div id=\"error_explanation\"><ul><li>* That username has already been registered.  <a href=\"/users/password_reset\">forgot password?</a></li></ul></div>"
 				$("#usernameAvailabilityNotification").show()
 			else
 				$("#usernameAvailabilityNotification").html ""
@@ -88,7 +88,7 @@ class EmailValidation extends Backbone.View
 		  ).done (response) ->
 		    if response is "unavailable"
 		      $ "#user_email"
-		      $("#emailAvailabilityNotification").html "<div id=\"error_explanation\"><ul><li>* That email has already been registered.  <a href=\"#\">forgot password?</a></li></ul></div>"
+		      $("#emailAvailabilityNotification").html "<div id=\"error_explanation\"><ul><li>* That email has already been registered.  <a href=\"/users/password_reset\">forgot password?</a></li></ul></div>"
 		      $("#emailAvailabilityNotification").show()
 		    else
 		      $("#emailAvailabilityNotification").html ""
