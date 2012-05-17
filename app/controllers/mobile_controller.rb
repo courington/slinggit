@@ -588,7 +588,9 @@ class MobileController < ApplicationController
         if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
           comments_array = []
           post.comments.each do |comment|
-            comments_array << comment.attributes.merge!(:user_name => comment.user.name)
+            if comment.status == 'active'
+              comments_array << comment.attributes.merge!(:user_name => comment.user.name)
+            end
           end
 
           render_success_response(
@@ -673,11 +675,10 @@ class MobileController < ApplicationController
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
           if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
             if comment = Comment.first(:conditions => ['post_id = ? and id = ?', mobile_session.user_id, params[:comment_id]])
-              comment_id = comment.id
-              comment.destroy
+              comment.udpate_attribute(:status, 'deleted')
               render_success_response(
-                  :comment_id => comment_id,
-                  :status => 'destroyed'
+                  :comment_id => comment.id,
+                  :status => comment.status
               )
             else
               render_error_response(
