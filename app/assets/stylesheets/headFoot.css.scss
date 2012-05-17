@@ -9,7 +9,7 @@ body > header:first-child {
 	background: $main-blue;
 	box-shadow: $head-shadow;
 	position:relative;
-	z-index:9999;
+	z-index:9000;
 	h1 {
 		text-indent: -99999px;
 	}
@@ -24,7 +24,7 @@ body > header:first-child {
 			margin: .2em 0;
 		}
 		h6 {
-			font-size: 1.2em;
+			font-size: 1em;
 			color: #F0F0F0;
 			position: relative;
 			top: -1.6em;

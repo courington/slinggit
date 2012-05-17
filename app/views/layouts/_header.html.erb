@@ -7,13 +7,13 @@
 		</hgroup>
 		<nav>
 			  <% if signed_in? %>
-			  	  <span class="<%= 'active' if current_page?(current_user) %>">
+			  	  <div class="<%= 'active' if current_page?(current_user) %>">
 			          <%= link_to "Posts", current_user %>
-			  	  </span>
+			  	  </div>
 			      <% if current_user.admin? %>
-			          <span class="<%= 'active' if current_page?(users_path) %>">
+			          <div class="<%= 'active' if current_page?(users_path) %>">
 			            <%= link_to "Users", users_path %>
-			          </span>
+			          </div>
 			      <% end %>
 				<!-- DROP DOWN -->
 				<div id="accountDropDown" class="dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
@@ -26,7 +26,6 @@
 			          <li class="<%= 'active' if current_page?(networks_path) %>">
 			            <%= link_to "Twitter Accounts", networks_path %>
 			          </li>
-			          <li class="divider"></li>
 			          <li>
 			            <%= link_to "Sign out", signout_path, method: "delete" %>
 			          </li>

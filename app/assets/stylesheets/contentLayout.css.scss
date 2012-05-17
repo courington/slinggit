@@ -197,7 +197,7 @@ text-shadow: none;
     float: left;
     clear: left;
     margin: 1.4em 0;
-    border-radius: $radius;
+    @include rounded-corners;
     width: 75%;
   }
 
@@ -205,7 +205,7 @@ text-shadow: none;
     float: left;
     clear: left;
     margin: 0 0;
-    border-radius: .5em;
+    @include rounded-corners;
     width: 75%;
   }
   //end

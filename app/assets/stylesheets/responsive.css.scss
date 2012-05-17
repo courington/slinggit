@@ -1,38 +1,76 @@
 // small handheld device
 @media all and (min-width: 320px) and (max-width: 640px) {
-	body > header:first-child .logo {
-	width: 136px;
+	body > header:first-child .logo a:link {
+	width: 85px;
+	display: block;
+	overflow: hidden;
 	}
 	body > header:first-child {
 		position: fixed;
-		height:auto;
+		height:5.5em;
+		.logo {
+		width: 30%;
+		}
 		.logo h6 {
-		top: -10px;
-		left: 107px;
+			top: -7px;
+			left: 8px;
 		}
 		nav {
-			margin: .7em 0 0 0;
+			margin: 0;
+			padding: 1.4em 0;
+			width: 70%;
+		 	div {
+				float: left;
+				width: 50%;
+				text-align: center;
+			}
+			#accountDropDown {
+				float: right;
+				width: 50%;
+				text-align: center;
+				.nav_dropDown {
+					left: 0;
+					top: .65em;
+					@include rounded-corners;
+					width: 95%;
+					text-align: right;
+					box-shadow: none;
+					border-top: none;
+					padding: 0;
+					li {
+						font-size: $font-size * .5;
+						line-height: $font-size *.5;
+						padding: .7em 7.5% .7em 0;
+						&:last-child {
+							border-top: solid 1px lighten($main-grey, 25%);
+							box-shadow: inset 0 1px 0 $wht;
+						}
+					}
+				}
+			}
 		 span {
 			float: none;
 			}
-			#accountDropDown {
-			float: none;
-			width: 100%;
-			}
+		}
+		div a:link,
+		div a:visited {
+			color: $wht;
 		}
 		#quickSearchWrapper {
 			display: none;
 		}
 	}
 	.page_contentContainer {
-		padding-top: 9em;
+		padding-top: 7.5em;
 	}
 	.page_contentContainer header {
-	margin: 0 0 3.4em 0;
+	margin: 0 0 $font-size 0;
+	font-size: $font-size * .5;
+	text-align: center;
 	}
 	.page_contentContainer header p {
 	line-height: 1em;
-	margin: -1.975em 0 0 0.045em;
+	margin: -.975em 0 0 .045em;
 	}
 	.page_contentContainer .posts article:last-child {
 	display: none;
@@ -42,7 +80,7 @@
 	width: 100%;
 	}
 	input[type="text"].hardEdge-right {
-	width: 48%;	
+	width: 75%;	
 	}
 	.wrapper {
 	width: 95%;
@@ -62,6 +100,39 @@
 	.page_contentContainer .form_initialFields input[type="text"], .page_contentContainer .form_initialFields input[type="email"], .page_contentContainer .form_initialFields input[type="password"], .page_contentContainer .form_hiddenFields input[type="text"], .page_contentContainer .form_hiddenFields input[type="email"], .page_contentContainer .form_hiddenFields input[type="password"] {
 	width: 94%;
 	float: left;
+	}
+	.posts article:first-child fieldset.col_oneThird,
+	.posts article:first-child fieldset.col_twoThird {
+	width: 45%;
+	margin: 0;
+	float: left;
+	}
+	#post_price {
+	width: 50%;
+	}
+	#post_location {
+	width: 100%;
+	}
+	#post_content {
+	width: 90%;
+	}
+	.page_contentContainer fieldset {
+	margin: 0 0 $font-size 0;
+	}
+	#new_post fieldset:last-child {
+	float: none;
+	width: 90%;
+	margin: 0 auto;
+		#submitNewPost {
+		width: 100%;
+		}
+	}
+	.form-actions {
+		font-size: 1.4em;
+		float: right;
+		span {
+			display: block;
+		}
 	}
 }
 //end

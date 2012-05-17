@@ -72,12 +72,20 @@ input[type="text"] {
 }
 input[type="text"].hardEdge-right {
 	@include hardEdge-right;
-	width: 30%;
+	width: 75%;
 	clear: left;
 	float: left;
 }
+.col_oneThird {
+width: 50%;
+margin: 0;
+float: left;
+}
 #post_price {
-width: 10%;
+width: 45%;
+}
+#post_location {
+width: 100%;
 }
 textarea {
 	@include textInput;
@@ -88,7 +96,7 @@ textarea {
 	clear: left;
 	float: left;
 	margin: .7em 0 1.4em 0;
-	width: 75%;
+	width: 95%;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -180,6 +188,7 @@ width: 38%;
 }
 #photoControlGroup {
 margin: 0;
+width: 50%;
 }
 .col_twoThird + fieldset {
 clear: left;
@@ -193,9 +202,10 @@ float: left;
 display: inline-block;
 }
 .controls.thumbnail {
-font-size: 1.4em;
-margin: 1.4em 0;
-width: 50%;
+font-size: $font-size;
+margin: ($font-size * .5) auto;
+float: left;
+font-weight: 600;
 }
 /*.form-actions {
 clear: left;
