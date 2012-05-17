@@ -261,6 +261,10 @@ text-shadow: none;
       a {
         color: rgb(62, 62, 62);
         .photo{
+          border: 1px solid $lt-grey;
+          padding: 1px;
+          width: 60px;
+          background-color: $wht;
           // CMK: Chase - not sure if you want these images to be a set size or not
           img{
             width: 60px;

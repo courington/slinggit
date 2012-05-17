@@ -1,12 +1,12 @@
 <li>
   <%= link_to(post_path(post)) do %>
-    <span class="photo">
+    <div class="photo">
       <% if post.photo_file_name.blank? %>
         <%= image_tag "80x80_placeholder.png" %>
       <% else %>
         <%= image_tag post.photo.url(:search) %>
       <% end %>
-    </span>
+    </div>
     <span class="item"><%= post.hashtag_prefix %></span>
     <span><%= post.content %></span>
   <% end %>
