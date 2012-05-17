@@ -928,7 +928,7 @@ class MobileController < ApplicationController
   end
 
   def get_file_path(post)
-    return "public/system/posts/photos/000/000/ #{post.id}/original/#{post.hashtag_prefix}.jpg"
+    return "public/system/posts/photos/000/000/#{post.id}/original/#{post.hashtag_prefix}.jpg"
   end
 
   def validate_request_data_is_valid_json
