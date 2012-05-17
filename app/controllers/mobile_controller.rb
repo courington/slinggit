@@ -260,11 +260,13 @@ class MobileController < ApplicationController
                     :location => params[:location]
                 )
 
-                file_name = "#{params[:hashtag_prefix]}_#{post.id}.jpg"
-                image_data = Base64.decode64(request.body.to_s)
-                File.open("public/assets/images/#{file_name}", 'wb') { |file| (file << image_data) }
-
                 if post.save
+
+                  if not request.body.blank?
+                    image_data = Base64.decode64(request.body.to_s)
+                    File.open(get_file_path(post), 'wb') { |file| (file << image_data) }
+                  end
+
                   render_success_response(
                       :post_id => post.id
                   )
@@ -383,7 +385,7 @@ class MobileController < ApplicationController
                 :price => post.price.to_i,
                 :location => post.location,
                 :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
-                :image_uri => 'https://netobjects.com/assets/images/icon-image-bank.png',
+                :image_uri => get_file_path(post),
                 :created_at_date => post.created_at.strftime("%m-%d-%Y"),
                 :created_at_time => post.created_at.strftime("%H:%M")
             }
@@ -923,6 +925,10 @@ class MobileController < ApplicationController
     else
       session[:source] = NATIVE_APP
     end
+  end
+
+  def get_file_path(post)
+    return "public/system/posts/photos/000/000/ #{post.id}/original/#{post.hashtag_prefix}.jpg"
   end
 
   def validate_request_data_is_valid_json
