@@ -1,6 +1,13 @@
 <%= link_to(post_path(post)) do %>
 <li>
-  <span class="content"><%= post.hashtag_prefix %></span>
+  <span class="photo">
+    <% if post.photo_file_name.blank? %>
+      <%= image_tag "80x80_placeholder.png" %>
+    <% else %>
+      <%= image_tag post.photo.url(:search) %>
+    <% end %>
+  </span>
+  <span class="item"><%= post.hashtag_prefix %></span>
   <span><%= post.content %></span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(post.created_at) %> ago.

@@ -259,6 +259,15 @@ text-shadow: none;
       border-bottom: 1px solid $lt-grey;
       a {
         color: rgb(62, 62, 62);
+        .photo{
+          // CMK: Chase - not sure if you want these images to be a set size or not
+          img{
+            width: 50px;
+          }
+        }
+        .item {
+          font-size: $font-size * 1;
+        }
         .content {
           font-size: $font-size;
           line-height: $font-size;
