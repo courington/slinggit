@@ -77,6 +77,6 @@ SlinggitWebapp::Application.configure do
 
   # @slinggit's authentication token and password, generated from the above consumer
   # key and secret.
-  config.slinggit_client_atoken = '561831843-vpq6NXNaQ8FGXR07D8GETEO6WxxkMKGbHMZ7qefk'
-  config.slinggit_client_asecret = 'fEvbYhkf8PKHs8CeXGE7JhB2lf39NSKKDDTA4y0U0s'
+  config.slinggit_client_atoken = '561831843-GXxjNVqaA1mTId1g61VXEyywDNBIUnsZ6mbUsvUa'
+  config.slinggit_client_asecret = 'yOe5hXiG5vNLGWkJc11UFTiQyFC7ciH5OsFLMFSJfI'
 end
