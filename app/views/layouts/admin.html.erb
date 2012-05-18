@@ -2,9 +2,6 @@
 <html>
 <head>
   <%= favicon_link_tag "favicon.ico" %>
-  <!--[if lt IE 9]>
-  <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
   <title><%= full_title(yield(:title)) %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <%= javascript_include_tag "application" %>
@@ -12,7 +9,7 @@
 </head>
 <body>
 <% if not action_name == 'index' %>
-    <%= render 'shared/admin_header' %>
+    <%= render 'layouts/admin_header' %>
 <% end %>
 <div class="page_contentContainer">
   <% flash.each do |key, value| %>
@@ -22,5 +19,6 @@
   <% end %>
   <%= yield %>
 </div>
+<%= render 'layouts/admin_footer' %>
 </body>
 </html>
