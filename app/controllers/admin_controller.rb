@@ -73,7 +73,7 @@ class AdminController < ApplicationController
           if post = Post.first(:conditions => ['id = ? AND status != "deleted"', post_id])
             user = User.first(:conditions => ['id = ?', post.user_id])
             if not user.id == current_user.id
-              if not current_user.is_admin?
+              if not user.is_admin?
 
                 #"delete" the post
                 post.update_attribute(:status, 'deleted') #remove the post
