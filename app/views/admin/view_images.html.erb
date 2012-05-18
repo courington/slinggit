@@ -1,0 +1,41 @@
+<% @image_datas.each do |image_data| %>
+    <div id="notificationDiv"></div>
+    <a href="" id="imagePostId_<%= image_data[:post_id] %>"><img src='<%= "/#{@relative_path}/#{image_data[:image_path]}" %>'/></a>
+<% end %>
+
+<style type="text/css">
+    a {
+        float: left;
+        padding: 1px;;
+    }
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#notificationDiv').hide()
+        $("[id^=imagePostId_]").each(function (key) {
+            $('#' + this.id).click(function (e) {
+                $('#notificationDiv').val('Working... Please Wait');
+                $('#notificationDiv').show();
+                e.preventDefault();
+                if (confirm("By clicking OK, you will be removing any twitter posts that are associated to this image, setting the associated post record to deleted, disabling the posters account and sending a terms violation email to the poster...")) {
+                    $.ajax({
+                        type:"POST",
+                        url:"<%= url_for :controller => :admin, :action => :eradicate_all_from_image %>",
+                        data:{image_post_id:this.id}
+                    }).done(function (response) {
+                                if (response != "error") {
+                                    $('#' + response).hide()
+                                    $('#notificationDiv').val('Done... Post and associated user eradicated.  Email sent.');
+                                }
+                            });
+                } else {
+                    return false;
+                }
+            });
+        });
+    })
+
+
+</script>
