@@ -1,8 +1,12 @@
-<% @image_datas.each do |image_data| %>
-    <div id="workingDiv">Working... Please Wait (the blinking is just a joke)</div>
-    <div id="doneDiv">Done... post and associated user eradicated. Email sent.</div>
-    <div id="errorDiv">Done... post and associated user eradicated. Email sent.</div>
-    <a href="" id="imagePostId_<%= image_data[:post_id] %>"><img src='<%= "/#{@relative_path}/#{image_data[:image_path]}" %>'/></a>
+<% if not @image_datas.blank? %>
+    <% @image_datas.each do |image_data| %>
+        <div id="workingDiv">Working... Please Wait (the blinking is just a joke)</div>
+        <div id="doneDiv">Done... post and associated user eradicated. Email sent.</div>
+        <div id="errorDiv">Done... post and associated user eradicated. Email sent.</div>
+        <a href="" id="imagePostId_<%= image_data[:post_id] %>"><img src='<%= "/#{@relative_path}/#{image_data[:image_path]}" %>'/></a>
+    <% end %>
+<% else %>
+    <div>No Images Available</div>
 <% end %>
 
 <script type="text/javascript">
