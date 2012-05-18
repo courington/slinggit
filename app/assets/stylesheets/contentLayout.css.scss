@@ -197,7 +197,7 @@ text-shadow: none;
     float: left;
     clear: left;
     margin: 1.4em 0;
-    border-radius: $radius;
+    @include rounded-corners;
     width: 75%;
   }
 
@@ -205,7 +205,7 @@ text-shadow: none;
     float: left;
     clear: left;
     margin: 0 0;
-    border-radius: .5em;
+    @include rounded-corners;
     width: 75%;
   }
   //end
@@ -257,8 +257,23 @@ text-shadow: none;
     li {
       margin: 0 0 $font-size 0;
       border-bottom: 1px solid $lt-grey;
+      list-style: none;
       a {
         color: rgb(62, 62, 62);
+        .photo{
+          border: 1px solid $lt-grey;
+          padding: 1px;
+          width: 60px;
+          background-color: $wht;
+          // CMK: Chase - not sure if you want these images to be a set size or not
+          img{
+            width: 60px;
+          }
+        }
+        .item {
+          font-size: $font-size * 1;
+          line-height: $font-size;
+        }
         .content {
           font-size: $font-size;
           line-height: $font-size;

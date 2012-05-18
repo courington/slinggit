@@ -4,6 +4,7 @@
 	<p>Create a post:</p>
 </header>
 <%= form_for @post do |f| %>
+
       <fieldset>
         <%= f.label :hashtag_prefix, "Your item", class: "", for: "post_hashtag_prefix" %>
           <div class="input-append">
@@ -44,17 +45,17 @@
         <% @twitter_accounts.each do |twitter_account| %>
             <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %> <%= twitter_account.user_name %>
         <% end %>
-				</fieldset>
+	  </fieldset>
         
 <%= render 'shared/error_messages', object: f.object %>
 
-				<fieldset>
+		<fieldset>
         	<% if @cant_post %>
           	<div>You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.</div>
             <%= f.submit "Post Item", class: "btn_medium", id: "submitNewPost", disabled: "disabled" %>
         	<% else %>
             <%= f.submit "Post Item", class: "btn_medium", id: "submitNewPost" %>
         	<% end %>
-				</fieldset>
+		</fieldset>
 <% end %>
 </article>
