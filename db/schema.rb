@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517011811) do
+ActiveRecord::Schema.define(:version => 20120518100431) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(:version => 20120517011811) do
   create_table "redirects", :force => true do |t|
     t.string   "key_code"
     t.string   "target_uri"
-    t.integer  "clicks",     :default => 0
+    t.integer  "clicks"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -151,10 +151,21 @@ ActiveRecord::Schema.define(:version => 20120517011811) do
     t.boolean  "admin",                 :default => false
     t.string   "status",                :default => "active"
     t.string   "password_reset_code"
+    t.string   "time_zone"
     t.string   "email_activation_code"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+
+  create_table "violation_records", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "violation"
+    t.string   "violation_source"
+    t.integer  "violation_source_id"
+    t.string   "action_taken"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
 end

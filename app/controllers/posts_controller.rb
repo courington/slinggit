@@ -91,7 +91,7 @@ class PostsController < ApplicationController
   def results
     if not params[:id].blank?
       #I am currently researching how to make this function more like google search.  Faster and more relevent.
-      @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true], :order => 'created_at desc')
+      @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = 'active'", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true], :order => 'created_at desc')
     end
   end
 
@@ -99,7 +99,7 @@ class PostsController < ApplicationController
 
   def correct_user
     if signed_in?
-      @post = Post.first(:conditions => ['user_id = ? AND id = ?', current_user.id, params[:id]])
+      @post = Post.first(:conditions => ['user_id = ? AND id = ? AND status = "active"', current_user.id, params[:id]])
       if @post.blank?
         redirect_to current_user
       end

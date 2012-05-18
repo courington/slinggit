@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
 
   around_filter :catch_exceptions, :except => [:mobile]
   before_filter :set_timezone
+  before_filter :verify_good_standing, :except => [:mobile, :admin, :verify_good_standing, :suspended_account]
+
+  #######CONSTANTS#####
+  #terms violation constants
+  ILLICIT_PHOTO = "An illicit photo was uploaded."
+  POST_VIOLATION_SOURCE = 'post'
+  ####END CONSTANTS#####
 
   def redirect
     redirect_info = params[:path]
@@ -27,6 +34,19 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def verify_good_standing
+    if signed_in?
+      if current_user.status == 'suspended'
+        if signed_in?
+          sign_out
+          reset_session
+        end
+        redirect_to '/suspended_account' and return
+      end
+    end
+    return true
+  end
 
   def passes_limitations?(limitation_type, user_id = nil)
     limitation_type = limitation_type.to_sym

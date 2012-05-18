@@ -15,12 +15,18 @@ class UserMailer < ActionMailer::Base
 
   def password_reset(user)
     @user = user
-    mail(:to => @user.email, :subject => "Password reset for Slinggit.com")
+    mail(:to => user.email, :subject => "Password reset for Slinggit.com")
   end
 
   def deliver_problem_report(exception)
     @exception = exception
     mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :from => 'problem_report@slinggit.com', :subject => "Problem Report - #{exception.message}")
+  end
+
+  def terms_violation_notification(user, violation_reason)
+    @violation_reason = violation_reason
+    @user = user
+    mail(:to => user.email, :subject => "Your account has been suspended")
   end
 
 end

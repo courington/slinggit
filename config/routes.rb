@@ -38,6 +38,7 @@ SlinggitWebapp::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   match '/help', to: 'static_pages#help'
+  match '/suspended_account', to: 'static_pages#suspended_account'
 
   # Nested route for comments.  I'm a bit worried that I'm defining resource :posts twice,
   # the other above, but couldn't find documentation on how to combine the two so that posts
@@ -46,15 +47,17 @@ SlinggitWebapp::Application.routes.draw do
     resources :comments
   end
 
-  ##TEST CONTROLLER##
-  get "test/db_view"
-  match "test/delete_db_view_data/(:id)", to: 'test#delete_db_view_data#id', via: :get
-  match "test/delete_db_view_record/(:id)", to: 'test#delete_db_view_record#id', via: :get
-  match "test/test_twitter_post/", to: 'test#delete_db_view_record', via: :get
-  match "test/save_file/", to: 'test#save_file', via: :get
-
   ##MOBILE CONTROLLER##
+  match 'mobile' => 'mobile#index'
   match 'mobile(/:action)(/:id)', :to => 'mobile#action#id'
+
+  ##ADMIN CONTROLLER##
+  match 'admin' => 'admin#index'
+  match 'admin(/:action(/:id))' => 'admin#action#id'
+
+  ##TEST CONTROLLER##
+  match 'test' => 'test#index'
+  match 'test(/:action)(/:id)', :to => 'test#action#id'
 
   match '*path', :to => 'application#redirect'
 

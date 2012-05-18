@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     self.email_activation_code.blank?
   end
 
+  def is_admin?
+    self.admin
+  end
+
   private
 
   def create_remember_token
