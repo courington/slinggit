@@ -42,7 +42,7 @@ end
 
 group :production do
   gem 'mysql2'
-  #gem "therubyracer"
+  gem "therubyracer"
 end
 
 
