@@ -244,7 +244,6 @@ class MobileController < ApplicationController
     #indicates to the mobile device that the call is over.
   end
 
-#TODO STORE IMAGE IN CORRECT LOCATION
   def create_post
     if not params[:hashtag_prefix].blank?
       if not params[:content].blank?
@@ -264,7 +263,7 @@ class MobileController < ApplicationController
 
                   if not request.body.blank?
                     image_data = Base64.decode64(request.body.to_s)
-                    File.open(get_file_path(post), 'wb') { |file| (file << image_data) }
+                    File.open(get_relative_image_path(post), 'wb') { |file| (file << image_data) }
                   end
 
                   render_success_response(
@@ -385,7 +384,7 @@ class MobileController < ApplicationController
                 :price => post.price.to_i,
                 :location => post.location,
                 :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
-                :image_uri => get_file_path(post),
+                :image_uri => get_full_image_path(post),
                 :created_at_date => post.created_at.strftime("%m-%d-%Y"),
                 :created_at_time => post.created_at.strftime("%H:%M")
             }
@@ -927,8 +926,12 @@ class MobileController < ApplicationController
     end
   end
 
-  def get_file_path(post)
-    return "public/system/posts/photos/000/000/#{post.id}/original/#{post.hashtag_prefix}.jpg"
+  def get_relative_image_path(post)
+    return "public/system/posts/photos/000/000//original/.jpg"
+  end
+
+  def get_full_image_path(post)
+    return "#{BASEURL}/system/posts/photos/000/000/#{post.id}/original/#{post.hashtag_prefix}.jpg"
   end
 
   def validate_request_data_is_valid_json
