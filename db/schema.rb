@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518100431) do
+ActiveRecord::Schema.define(:version => 20120518131149) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(:version => 20120518100431) do
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "invitations", :force => true do |t|
+    t.string   "email_address"
+    t.string   "location"
+    t.text     "comment"
+    t.string   "status",        :default => "pending"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
 
   create_table "mobile_sessions", :force => true do |t|
     t.integer  "user_id"
@@ -101,6 +110,16 @@ ActiveRecord::Schema.define(:version => 20120518100431) do
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "system_preferences", :force => true do |t|
+    t.string   "preference_key"
+    t.string   "preference_value"
+    t.string   "constraints"
+    t.string   "description"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "active",           :default => false
   end
 
   create_table "twitter_posts", :force => true do |t|
