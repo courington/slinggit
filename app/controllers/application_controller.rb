@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   around_filter :catch_exceptions, :except => [:mobile]
   before_filter :set_timezone
   before_filter :verify_good_standing, :except => [:mobile, :admin, :verify_good_standing, :suspended_account]
+  before_filter :invitation_only, :except => [:mobile]
 
   #######CONSTANTS#####
   #terms violation constants
@@ -35,17 +36,23 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def verify_good_standing
-    if signed_in?
-      if current_user.status == 'suspended'
-        if signed_in?
-          sign_out
-          reset_session
+  #returns a key value pair of system preferences
+  def system_preferences
+    if session[:system_preferences].blank?
+      active_preferences = HashWithIndifferentAccess.new()
+      system_preferences = SystemPreference.all(:conditions => ['active = ?', true])
+      system_preferences.each do |preference|
+        if (preference.start_date.blank? or preference.start_date <= Date.now) and (preference.end_date.blank? or preference.end_date >= Date.now)
+          if preference.constraints.blank? or eval(preference.constraints)
+            active_preferences[preference.preference_key] = preference.preference_value
+          end
         end
-        redirect_to '/suspended_account' and return
       end
+      session[:system_preferences] = active_preferences
+      return active_preferences
+    else
+      return session[:system_preferences]
     end
-    return true
   end
 
   def passes_limitations?(limitation_type, user_id = nil)
@@ -183,6 +190,27 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       return false
     end
+  end
+
+  #BEFORE FILTERS#
+
+  def invitation_only
+    if system_preferences[:invitation_only] == 'on'
+      flash[:success] = "if you can see this, the SystemPreference table invitation_only record is active.  This is session based."
+    end
+  end
+
+  def verify_good_standing
+    if signed_in?
+      if current_user.status == 'suspended'
+        if signed_in?
+          sign_out
+          reset_session
+        end
+        redirect_to '/suspended_account' and return
+      end
+    end
+    return true
   end
 
   def set_timezone
