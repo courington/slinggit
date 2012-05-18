@@ -927,7 +927,7 @@ class MobileController < ApplicationController
   end
 
   def get_relative_image_path(post)
-    return "public/system/posts/photos/000/000//original/.jpg"
+    return "public/system/posts/photos/000/000/#{post.id}/original/.jpg"
   end
 
   def get_full_image_path(post)
