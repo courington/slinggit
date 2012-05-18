@@ -66,51 +66,66 @@ class AdminController < ApplicationController
 
   def eradicate_all_from_image
     if request.post?
-      if not params[:image_post_id].blank?
-        post_id = params[:image_post_id].split('_').last
-        if post = Post.first(:conditions => ['id = ? AND status != "deleted"', post_id])
+      #Post.transaction do
+      begin
+        if not params[:image_post_id].blank?
+          post_id = params[:image_post_id].split('_').last
+          if post = Post.first(:conditions => ['id = ? AND status != "deleted"', post_id])
+            user = User.first(:conditions => ['id = ?', post.user_id])
+            if not user.id == current_user.id
+              if not current_user.is_admin?
 
-          #"delete" the post
-          post.update_attribute(:status, 'deleted') #remove the post
+                #"delete" the post
+                post.update_attribute(:status, 'deleted') #remove the post
 
-          #suspend the user
-          user = User.first(:conditions => ['id = ?', post.user_id])
-          #user.update_attribute(:status, 'suspended')
+                #suspend the user
+                user.update_attribute(:status, 'suspended')
 
-          #undo (delete) all posts made to any api_account
-          tweets_undon = 0
-          if not post.recipient_api_account_ids.blank? #remove the tweet
-            twitter_posts = TwitterPost.all(:conditions => ['id in (?)', post.recipient_api_account_ids.split(',')])
-            if not twitter_posts.blank?
-              twitter_posts.each do |twitter_post|
-                twitter_post.undo_post
-                tweets_undon += 1
+                #undo (delete) all posts made to any api_account
+                tweets_undon = 0
+                if not post.recipient_api_account_ids.blank? #remove the tweet
+                  twitter_posts = TwitterPost.all(:conditions => ['id in (?)', post.recipient_api_account_ids.split(',')])
+                  if not twitter_posts.blank?
+                    twitter_posts.each do |twitter_post|
+                      twitter_post.undo_post
+                      tweets_undon += 1
+                    end
+                  end
+                end
+
+                #create the violation record
+                ViolationRecord.create(
+                    :user_id => user.id,
+                    :violation => ILLICIT_PHOTO,
+                    :violation_source => POST_VIOLATION_SOURCE,
+                    :violation_source_id => post.id,
+                    :action_taken => "post set to deleted // user.status set to suspended // tweets_undon - #{tweets_undon} // email delivered"
+                )
+
+                #inform the user that their account has been suspended
+                UserMailer.terms_violation_notification(user, ILLICIT_PHOTO).deliver
+
+                #return success and remove the photo
+                render :text => "#{params[:image_post_id]}", :status => 200
+              else
+                render :text => "Error - That image belongs to an admin account... #{user.name}", :status => 200
               end
+            else
+              render :text => 'Error - That action would suspend your self.', :status => 200
             end
+          else
+            render :text => 'Error - Post not found or already deleted', :status => 200
           end
-
-          #create the violation record
-          ViolationRecord.create(
-              :user_id => user.id,
-              :violation => ILLICIT_PHOTO,
-              :violation_source => POST_VIOLATION_SOURCE,
-              :violation_source_id => post.id,
-              :action_taken => "post set to deleted // user.status set to suspended // tweets_undon - #{tweets_undon} // email delivered"
-          )
-
-          #inform the user that their account has been suspended
-          UserMailer.terms_violation_notification(user, ILLICIT_PHOTO).deliver
-
-          #return success and remove the photo
-          render :text => "#{params[:image_post_id]}", :status => 200
         else
-          render :text => 'error', :status => 500
+          render :text => 'Error - No image post id', :status => 200
         end
-      else
-        render :text => 'error', :status => 500
+      rescue Exception => e
+        #raise ActiveRecord::Rollback
+        render :text => e.to_s, :status => 200
       end
+      #end
     else
-      render :text => 'error', :status => 500
+      render :text => 'Error - Invalid request', :status => 200
     end
   end
 
@@ -124,4 +139,5 @@ class AdminController < ApplicationController
       redirect_to "/404.html"
     end
   end
+
 end
