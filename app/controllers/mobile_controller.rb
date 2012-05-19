@@ -263,6 +263,7 @@ class MobileController < ApplicationController
 
                   if not request.body.blank?
                     image_data = Base64.decode64(request.body.to_s)
+                    # cmk: Need a method to save the image
                     File.open(get_relative_image_path(post), 'wb') { |file| (file << image_data) }
                   end
 

@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: system_preferences
+#
+#  id               :integer         not null, primary key
+#  preference_key   :string(255)
+#  preference_value :string(255)
+#  constraints      :string(255)
+#  description      :string(255)
+#  start_date       :datetime
+#  end_date         :datetime
+#  active           :boolean         default(FALSE)
+#
+
 #create_table :system_preferences do |t|
 #  t.string :preference_key
 #  t.string :preference_value

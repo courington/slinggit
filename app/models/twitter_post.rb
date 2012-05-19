@@ -40,11 +40,10 @@ class TwitterPost < ActiveRecord::Base
     @start_time = Time.now
     self.update_attribute(:status, PROCESSING_STATUS)
     if not has_been_posted?
-      #debugger - This still screws me up, throws an error, sorry if I forgot to uncomment
       if not self.api_account.blank?
         if not self.api_account.status == 'deleted'
           twitter_client = nil
-          if api_account_id == 0
+          if self.api_account_id == 0
             twitter_client = Twitter::Client.new(oauth_token: Rails.configuration.slinggit_client_atoken, oauth_token_secret: Rails.configuration.slinggit_client_asecret)
           else
             if self.api_account
@@ -85,7 +84,6 @@ class TwitterPost < ActiveRecord::Base
     @start_time = Time.now
     self.update_attribute(:status, PROCESSING_STATUS)
     if has_been_posted?
-      #debugger - This still screws me up, throws an error, sorry if I forgot to uncomment
       if not self.api_account.blank?
         if not self.api_account.status == 'deleted'
           twitter_client = nil

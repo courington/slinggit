@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: violation_records
+#
+#  id                  :integer         not null, primary key
+#  user_id             :integer
+#  violation           :string(255)
+#  violation_source    :string(255)
+#  violation_source_id :integer
+#  action_taken        :string(255)
+#  created_at          :datetime        not null
+#  updated_at          :datetime        not null
+#
+
 #create_table :violation_records do |t|
 #  t.integer :user_id
 #  t.string :violation

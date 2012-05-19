@@ -49,6 +49,7 @@ class PostsController < ApplicationController
       if not twitter_accounts.blank?
         twitter_accounts.each do |id, value|
           recipient_api_account_ids << id
+          debugger
           TwitterPost.create(
               :user_id => @post.user_id,
               :api_account_id => id.to_i,
