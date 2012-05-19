@@ -7,12 +7,12 @@
   </header>
 
   <%= form_for(:session, url: sessions_path) do |f| %>
-		<fieldset>
+		<fieldset class="form_fieldHalf">
     	<%= f.label :email, for: "session_email" %>
       <%= f.email_field :email, class: "form-singleLine", :value => @email %>
 		</fieldset>
 			
-		<fieldset>
+		<fieldset class="form_fieldHalf">
     	<%= f.label :password, for: "session_password" %>
       <%= f.password_field :password, class: "form-singleLine" %>
 		</fieldset>

@@ -1,3 +1,26 @@
 <% provide(:title, 'Contact') %>
-<h1>Contact</h1>
-<p>Find me in app/views/static_pages/contact.html.erb</p>
+<section class="wrapper">
+	<header>
+		<h1>Contact</h1>
+		<p>Contact</p>
+	</header>
+	
+	<article>
+		<p>Find me in app/views/static_pages/contact.html.erb</p>
+	</article>
+	
+	<article>
+		<p>need to build a contact form: name, email, message</p>
+		<form>
+	         <fieldset>
+	             <input type="email" size="100" placeholder="Email Address" name="emailAddress" />
+	         </fieldset>
+	         <fieldset>
+	             <textarea type="text" size="100" placeholder="Message" name="description" /></textarea>
+	         </fieldset>
+	         <fieldset>
+	             <input type="button" for="inputSmall" value="Send" class="submitBTN">
+	         </fieldset>
+	     </form>
+	</article>
+</section>
