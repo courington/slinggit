@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "noreply@slinggit.com"
+  default from: "Slinggit <noreply@slinggit.com>"
 
   def welcome_email(user)
     @user = user
@@ -18,9 +18,9 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "Password reset for Slinggit.com")
   end
 
-  def deliver_problem_report(exception)
+  def problem_report(exception)
     @exception = exception
-    mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :from => 'problem_report@slinggit.com', :subject => "Problem Report - #{exception.message}")
+    mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :from => 'Problem Report <problem_report@slinggit.com>', :subject => "Problem Report - #{exception.message}")
   end
 
   def terms_violation_notification(user, violation_reason)
