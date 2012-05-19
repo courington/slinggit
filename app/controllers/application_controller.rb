@@ -197,7 +197,7 @@ class ApplicationController < ActionController::Base
 
   def invitation_only
     if system_preferences[:invitation_only] == 'on'
-      flash[:success] = "if you can see this, the SystemPreference table invitation_only record is active.  This is session based."
+
     end
   end
 
