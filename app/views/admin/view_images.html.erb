@@ -1,59 +1,16 @@
 <% if not @image_datas.blank? %>
-    <% @image_datas.each do |image_data| %>
-        <div class="workingDiv">Working... Please Wait (the blinking is just a joke)</div>
-        <div class="doneDiv">Done... post and associated user eradicated. Email sent.</div>
-        <div class="errorDiv">Done... post and associated user eradicated. Email sent.</div>
-        <a href="" id="imagePostId_<%= image_data[:post_id] %>"><img src="<%= image_data[:image_path] %>"/></a>
-    <% end %>
+    <div id=imageContent>
+      <% @image_datas.each do |image_data| %>
+          <script type="text/javascript">
+              window.createPhotoArticle($('#imageContent'))
+          </script>
+      <% end %>
+    </div>
 <% else %>
     <div>No Images Available</div>
 <% end %>
 
-<script type="text/javascript">
 
-    //here I am coding this shit right in the view again... sorry, still havent taken the time to learn coffee script yet...
-    //but you should leave this here so I can see about learning it and moving this over as a good learning experience.
-    $(document).ready(function () {
-        showHideNotifications();
-        $("[id^=imagePostId_]").each(function (key) {
-            $('#' + this.id).click(function (e) {
-                e.preventDefault();
-                if (confirm("By clicking OK, you will be removing any twitter posts that are associated to this image, setting the associated post record to deleted, disabling the posters account and sending a terms violation email to the poster...")) {
-                    showHideNotifications('workingDiv')
-                    $.ajax({
-                        type:"POST",
-                        url:"<%= url_for :controller => :admin, :action => :eradicate_all_from_image %>",
-                        data:{image_post_id:this.id}
-                    }).done(function (response) {
-                                if (response.toLowerCase().indexOf("error") != -1) {
-                                    $('#errorDiv').html(response)
-                                    showHideNotifications('errorDiv')
-                                } else {
-                                    showHideNotifications('doneDiv')
-                                    $('#' + response).hide()
-                                }
-                            });
-                } else {
-                    showHideNotifications();
-                    return false;
-                }
-            });
-        });
-    })
-
-    function showHideNotifications(id) {
-        console.log ("here")
-        console.log ($('#workingDiv'))
-        $('.workingDiv').hide();
-        $('.doneDiv').hide();
-        $('.errorDiv').hide();
-        if (id) {
-            $('.' + id).show();
-        }
-    }
-
-
-</script>
 
 <!-- Chase feel free to delete these when you style this to work on mobile as well. -->
 

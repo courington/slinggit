@@ -933,7 +933,7 @@ class MobileController < ApplicationController
   end
 
   def get_temp_photo_path(name)
-    "#{Rails.root}/public/tmp/#{name}.jpg"
+    "#{Rails.root}/public/tmp_images/#{name}.jpg"
   end
 
   def validate_request_data_is_valid_json
