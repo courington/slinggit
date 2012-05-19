@@ -18,8 +18,9 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "Password reset for Slinggit.com")
   end
 
-  def problem_report(exception)
+  def problem_report(exception, user)
     @exception = exception
+    @current_user = user
     mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :from => 'Problem Report <problem_report@slinggit.com>', :subject => "Problem Report - #{exception.message}")
   end
 

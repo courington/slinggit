@@ -220,7 +220,7 @@ class ApplicationController < ActionController::Base
   def catch_exceptions
     yield
   rescue => exception
-    UserMailer.problem_report(exception).deliver
+    UserMailer.problem_report(exception, current_user).deliver
     if PROD_ENV
       redirect_to '/500.html'
     else

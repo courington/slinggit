@@ -1,3 +1,11 @@
 Caught exception! <%= @exception.message %>
 
+<% if not @current_user.blank? %>
+    Signed in user id: <%= @current_user.id %>
+    Signed in user email: <%= @current_user.email %>
+    Signed in user name: <%= @current_user.name %>
+<% else %>
+    No signed in user
+<% end %>
+
 <%= @exception.backtrace.join("\n") %>

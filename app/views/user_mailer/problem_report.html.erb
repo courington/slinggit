@@ -7,7 +7,17 @@
 <p>
   Caught exception! <%= @exception.message %>
 </p>
-<br/>
+
+<p>
+  <% if not @current_user.blank? %>
+      Signed in user id: <%= @current_user.id %><br/>
+      Signed in user email: <%= @current_user.email %><br/>
+      Signed in user name: <%= @current_user.name %>
+  <% else %>
+      No signed in user
+  <% end %>
+</p>
+
 <p>
   <%= @exception.backtrace.join("\n") %>
 </p>
