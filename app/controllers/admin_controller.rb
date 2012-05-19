@@ -93,7 +93,7 @@ class AdminController < ApplicationController
                   end
                 end
 
-                #create the violation record
+                #create the violation record which automatically sends an email to the user
                 ViolationRecord.create(
                     :user_id => user.id,
                     :violation => ILLICIT_PHOTO,
@@ -101,9 +101,6 @@ class AdminController < ApplicationController
                     :violation_source_id => post.id,
                     :action_taken => "post set to deleted // user.status set to suspended // tweets_undon - #{tweets_undon} // email delivered"
                 )
-
-                #inform the user that their account has been suspended
-                UserMailer.terms_violation_notification(user, ILLICIT_PHOTO).deliver
 
                 #return success and remove the photo
                 render :text => "#{params[:image_post_id]}", :status => 200
