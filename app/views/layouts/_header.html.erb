@@ -34,9 +34,15 @@
           </div>
           <!-- END -->
       <% else %>
-			  <span class="<%= 'active' if current_page?(signin_path) %>">
-			  	<%= link_to "Sign in", signin_path %>
-			  </span>
+        <% if current_page?(signin_path) %>
+  			  <span>
+  			  	<%= link_to "Sign up", signup_path %>
+  			  </span>
+        <% else %>       
+          <span>
+            <%= link_to "Sign in", signin_path %>
+          </span>
+        <% end %>  
       <% end %>
       <section id="quickSearchWrapper">
         <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>

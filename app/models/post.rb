@@ -68,4 +68,8 @@ class Post < ActiveRecord::Base
     "#{POST_PHOTO_URL}/posts/#{self.id}"
   end  
 
+  def save_photo_from_image_data(image_data)
+    #file = File.open(image_data)
+  end  
+
 end
