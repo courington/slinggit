@@ -1,37 +1,42 @@
 <footer class="footer">
-	<section class="wrapper">
-		<nav>
-			<ul>
-				<li class="<%= 'active' if current_page?(sessions_path) %>">
-	            	<%= link_to "Mobile Sessions", sessions_path %>
-	          	</li>
-	          	
-				<li><%= link_to "About", about_path %></li>
-				<li><%= link_to "Help", help_path %></li>
-				<li><%= link_to "Contact", contact_path %></li>
-			</ul>
-			<% if signed_in? %>
+  <section class="wrapper">
+    <nav>
+      <ul>
+        <li class="<%= 'active' if current_page?(sessions_path) %>">
+          <%= link_to "Mobile Sessions", sessions_path %>
+        </li>
+
+        <li><%= link_to "About", about_path %></li>
+        <li><%= link_to "Help", help_path %></li>
+        <li><%= link_to "Contact", contact_path %></li>
+      </ul>
+      <% if signed_in? %>
 			<span id="footerLoggedInUser"><%= "#{current_user.email}
-		" %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
-		<% else %>
-		<% end %>
-	</nav>
-	
-	<!-- ><form>
-		<fieldset>
-			<input type="email" size="100" placeholder="Email Address" name="emailAddress" />
-		</fieldset>
-		<fieldset>
-			<textarea type="text" size="100" placeholder="Message" name="description" /></textarea>
-		</fieldset>
-		<fieldset>
-			<input type="button" for="inputSmall" value="Send" class="submitBTN">
-		</fieldset>
-	</form> -->
-	
-	<small>
-		Copywrite &copy; 2012 <a href="https://slinggit.com/">slinggit</a>
-	</small>
-</section>
-<%= debug(params) if Rails.env.development? %>
+                                              " %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
+      <% else %>
+      <% end %>
+    </nav>
+
+    <!-- ><form>
+         <fieldset>
+             <input type="email" size="100" placeholder="Email Address" name="emailAddress" />
+         </fieldset>
+         <fieldset>
+             <textarea type="text" size="100" placeholder="Message" name="description" /></textarea>
+         </fieldset>
+         <fieldset>
+             <input type="button" for="inputSmall" value="Send" class="submitBTN">
+         </fieldset>
+     </form> -->
+
+    <small>
+      Copywrite &copy; 2012 <a href="https://slinggit.com/">slinggit</a>
+    </small>
+  </section>
+  <%= debug(params) if Rails.env.development? %>
+
+  <!-- TODO ASK CHRIS WHERE TO PUT THESE -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+  <%= stylesheet_link_tag "easyConfirm" %>
+  <%= javascript_include_tag "jquery.easy-confirm-dialog" %>
 </footer>

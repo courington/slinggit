@@ -823,7 +823,7 @@ class MobileController < ApplicationController
 
 #----BEFORE FILTERS----#
   def validate_request_authenticity
-    if not params[:slinggit_access_token] == Digest::SHA1.hexdigest("chris,dan,phil,chase,duck")
+    if not params[:slinggit_access_token] == SLINGGIT_SECRET_HASH
       render_error_response(
           :error_location => 'global',
           :error_reason => 'authentication failed',

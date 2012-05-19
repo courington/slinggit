@@ -9,9 +9,9 @@ class ApplicationController < ActionController::Base
   before_filter :invitation_only, :except => [:mobile]
 
   #######CONSTANTS#####
-  #terms violation constants
   ILLICIT_PHOTO = "An illicit photo was uploaded."
   POST_VIOLATION_SOURCE = 'post'
+  SLINGGIT_SECRET_HASH = Digest::SHA1.hexdigest("chris,dan,phil,chase,duck")
   ####END CONSTANTS#####
 
   def redirect

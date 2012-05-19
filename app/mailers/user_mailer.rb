@@ -30,4 +30,10 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "Your account has been suspended")
   end
 
+  def account_deleted(user)
+    @user = user
+    @reactive_url = "#{BASEURL}/users/reactivate/#{user.account_reactivation_code}"
+    mail(:to => user.email, :subject => "Your account has been deleted")
+  end
+
 end
