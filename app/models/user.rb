@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def is_admin?
-    self.admin or self.email.include? '@slinggit.com'
+    self.admin or (self.email.include? '@slinggit.com' and self.email_is_verified?)
   end
 
   private
