@@ -390,7 +390,7 @@ class MobileController < ApplicationController
                 :price => post.price.to_i,
                 :location => post.location,
                 :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
-                :image_uri => post.photo.url(:search),
+                :image_uri => post.photo_file_name.blank? ? "#{BASEURL}/assets/80x80_placeholder.png" : "#{BASEURL}/#{post.photo.url(:search)}",
                 :created_at_date => post.created_at.strftime("%m-%d-%Y"),
                 :created_at_time => post.created_at.strftime("%H:%M")
             }
