@@ -31,8 +31,8 @@ class Post < ActiveRecord::Base
                     :convert_options => {
                       :medium => "-auto-orient",
                       :search => "-auto-orient" },
-                    url: "/uploads/posts/:id/:style/:basename.:extension",
-                    path: "#{POST_PHOTO_DIR}/uploads/posts/:id/:style/:basename.:extension"
+                    url: "#{POST_PHOTO_URL}/posts/:id/:style/:basename.:extension",
+                    path: "#{POST_PHOTO_DIR}/posts/:id/:style/:basename.:extension"
   VALID_LOCATION_REGEX = /\A[a-z0-9]{,20}\z/i #We may want to force either numbers or letters at a later date
   validates :location, length: {maximum: 16}, format: {with: VALID_LOCATION_REGEX, :message => "cannot contain spaces"}
   validates :content, presence: true, length: {maximum: 300}
@@ -59,5 +59,13 @@ class Post < ActiveRecord::Base
     num.gsub!(',','') if num.is_a?(String)
     self[:price] = num.to_i
   end 
+
+  def root_photo_path
+    "#{POST_PHOTO_DIR}/posts/#{self.id}"
+  end
+
+  def root_url_path
+    "#{POST_PHOTO_URL}/posts/#{self.id}"
+  end  
 
 end
