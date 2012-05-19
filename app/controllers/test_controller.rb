@@ -7,7 +7,7 @@ class TestController < ApplicationController
 
   def save_file
     tmp_dir = "#{Rails.root}/public/tmp/steve.jpg"
-    @file = File.open(tmp_dir, 'w+') { |file| (file << "") }
+    @file = nil
 
     post = Post.new(
         :user_id => current_user.id,
