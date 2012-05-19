@@ -102,7 +102,7 @@ class AdminController < ApplicationController
                   )
 
                   #return success and remove the photo
-                  render :text => "#{params[:image_post_id]}", :status => 200
+                  render :text => "success", :status => 200
                 else
                   render :text => "Error - That image belongs to an admin account... #{user.name}", :status => 200
                 end
