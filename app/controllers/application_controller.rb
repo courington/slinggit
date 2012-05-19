@@ -179,7 +179,7 @@ class ApplicationController < ActionController::Base
 
   def ask_to_reauthenticate
     reset_session
-    flash[:warning] = "Whoops! Looks like we need you to reauthorize your Twitter account."
+    flash[:warning] = "Oops! Looks like we need you to reauthorize your Twitter account."
     redirect_to reauthorize_twitter_path
   end
 
@@ -192,7 +192,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  #BEFORE FILTERS#
+
+  ###BEFORE FILTERS####
 
   def invitation_only
     if system_preferences[:invitation_only] == 'on'
