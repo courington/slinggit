@@ -251,22 +251,27 @@ class MobileController < ApplicationController
           if not params[:location].blank?
             if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
               if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+
+                tmp_file_path = get_temp_photo_path(params[:hashtag_prefix] + Time.now.to_s)
+                if not request.body.blank?
+                  image_data = Base64.decode64(request.body.to_s)
+                  @file = File.open(tmp_file_path, 'wb') { |file| (file << image_data) }
+                end
+
                 post = Post.new(
                     :user_id => user.id,
                     :hashtag_prefix => params[:hashtag_prefix],
                     :content => params[:content],
                     :price => params[:price],
-                    :location => params[:location]
+                    :location => params[:location],
+                    :photo => @file
                 )
 
+                if not post.photo_file_name.blank?
+                  File.delete(tmp_file_path)
+                end
+
                 if post.save
-
-                  if not request.body.blank?
-                    image_data = Base64.decode64(request.body.to_s)
-                    # cmk: Need a method to save the image
-                    File.open(get_relative_image_path(post), 'wb') { |file| (file << image_data) }
-                  end
-
                   render_success_response(
                       :post_id => post.id
                   )
@@ -385,7 +390,7 @@ class MobileController < ApplicationController
                 :price => post.price.to_i,
                 :location => post.location,
                 :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
-                :image_uri => get_full_image_path(post),
+                :image_uri => post.photo.url(:search),
                 :created_at_date => post.created_at.strftime("%m-%d-%Y"),
                 :created_at_time => post.created_at.strftime("%H:%M")
             }
@@ -927,12 +932,8 @@ class MobileController < ApplicationController
     end
   end
 
-  def get_relative_image_path(post)
-    return "public/system/posts/photos/000/000/#{post.id}/original/.jpg"
-  end
-
-  def get_full_image_path(post)
-    return "#{BASEURL}/system/posts/photos/000/000/#{post.id}/original/#{post.hashtag_prefix}.jpg"
+  def get_temp_photo_path(name)
+    "#{Rails.root}/public/tmp/#{name}.jpg"
   end
 
   def validate_request_data_is_valid_json
