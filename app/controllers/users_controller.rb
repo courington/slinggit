@@ -279,7 +279,7 @@ class UsersController < ApplicationController
   end
 
   def admin_user
-    redirect_to(root_path) unless not current_user.blank? and current_user.admin?
+    redirect_to(root_path) unless not current_user.blank? and current_user.is_admin?
   end
 
   def validate_pre_twitter_data
