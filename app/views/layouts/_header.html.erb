@@ -1,54 +1,54 @@
 <header>
-	<div class="wrapper">
-		<hgroup class="logo">
-			<h1>Slinggit</h1>
-			<%= link_to image_tag("images/logos/logo_grey_hinted_320x120.png", :width=>"100%", :height=>"auto", :title=>"Slinggit Logo Grey", :alt=>"Slinggit Logo" ), :action => 'home', :controller => 'static_pages' %>
-			<h6>beta</h6>
-		</hgroup>
-		<nav>
-			  <% if signed_in? %>
-			  	  <div class="<%= 'active' if current_page?(current_user) %>">
-			          <%= link_to "Posts", current_user %>
-			  	  </div>
-			      <% if current_user.admin? %>
-			          <div class="<%= 'active' if current_page?(users_path) %>">
-			            <%= link_to "Users", users_path %>
-			          </div>
-			      <% end %>
-				<!-- DROP DOWN -->
-				<div id="accountDropDown" class="dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
-			  	<span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings &raquo;</span>
-			
-			        <ul class="nav_dropDown dropdown-menu">
-			          <li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
-			            <%= link_to "Profile", edit_user_path(current_user) %>
-			          </li>
-			          <li class="<%= 'active' if current_page?(networks_path) %>">
-			            <%= link_to "Twitter Accounts", networks_path %>
-			          </li>
-			          <li>
-			            <%= link_to "Sign out", signout_path, method: "delete" %>
-			          </li>
-			        </ul>
-			
-				</div>
-				<!-- END -->
-			  <% else %>
+  <div class="wrapper">
+    <hgroup class="logo">
+      <h1>Slinggit</h1>
+      <%= link_to image_tag("images/logos/logo_grey_hinted_320x120.png", :width => "100%", :height => "auto", :title => "Slinggit Logo Grey", :alt => "Slinggit Logo"), :action => 'home', :controller => 'static_pages' %>
+      <h6>beta</h6>
+    </hgroup>
+    <nav>
+      <% if signed_in? %>
+          <div class="<%= 'active' if current_page?(current_user) %>">
+            <%= link_to "Posts", current_user %>
+          </div>
+          <% if current_user.admin? %>
+              <div class="<%= 'active' if current_page?(users_path) %>">
+                <%= link_to "Users", users_path %>
+              </div>
+          <% end %>
+          <!-- DROP DOWN -->
+          <div id="accountDropDown" class="dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
+            <span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings &raquo;</span>
+
+            <ul class="nav_dropDown dropdown-menu">
+              <li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
+                <%= link_to "Profile", edit_user_path(current_user) %>
+              </li>
+              <li class="<%= 'active' if current_page?(networks_path) %>">
+                <%= link_to "Twitter Accounts", networks_path %>
+              </li>
+              <li>
+                <%= link_to "Sign out", signout_path, method: "delete" %>
+              </li>
+            </ul>
+
+          </div>
+          <!-- END -->
+      <% else %>
 			  <span class="<%= 'active' if current_page?(signin_path) %>">
 			  	<%= link_to "Sign in", signin_path %>
 			  </span>
-			  <% end %>
-			  <section id="quickSearchWrapper">
-			  	<%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
-			  </section>
-			  
-		</nav>
-	</div>
+      <% end %>
+      <section id="quickSearchWrapper">
+        <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+      </section>
+
+    </nav>
+  </div>
 </header>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('#BTN_nav_dropDown').dropdown()
-		window.quickSearchView()
-	});	
+    $(document).ready(function () {
+        $('#BTN_nav_dropDown').dropdown()
+        window.quickSearchView()
+    });
 </script>

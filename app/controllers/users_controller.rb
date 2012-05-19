@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:edit, :update]
+  before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account]
   before_filter :correct_user, only: [:edit, :update]
-  before_filter :admin_user, only: [:index, :destroy, :renable]
+  before_filter :admin_user, only: [:index]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
           session.delete('access_token')
           session.delete('access_secret')
         end
-        @user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(@user.email + "slinggit"))
+        @user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(@user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH))
         UserMailer.welcome_email(@user).deliver
         sign_in @user
         flash[:success] = "Welcome SlingGit.  Please be sure to verify your email address."
@@ -88,7 +88,7 @@ class UsersController < ApplicationController
   def verify_email
     if not params[:id].blank?
       if user = User.first(:conditions => ['email_activation_code = ?', params[:id]])
-        if user.email_activation_code == Digest::SHA1.hexdigest(user.email + "slinggit")
+        if user.email_activation_code == Digest::SHA1.hexdigest(@user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH)
           user.update_attribute(:email_activation_code, nil)
           flash[:success] = "Your email has been verified."
           sign_in user
@@ -106,36 +106,60 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    user = User.first(:conditions => ['id = ?', params[:id]])
-    if user
-      if user.update_attribute(:status, "deleted")
-        user.posts.each do |post|
-          post.update_attribute(:status, "deleted")
-        end
-        flash[:success] = "User destroyed."
-      else
-        flash[:error] = "User deletion unsuccessful"
-      end
-    end
-    redirect_to users_path
+  def delete_account
+
   end
 
-  def reenable
-    debugger
-    user = User.first(:conditions => ['id = ?', params[:id]])
-    debugger
-    if user
-      if user.update_attribute(:status, "active")
+  def destroy
+    #even if there are errors and they must resubmit, we want to grab the information they enter immidiately and store it...
+    #because people tend to be rushed to do things and the second time around they may not enter anything.
+    #Or they may enter something entirely different and we should grab both so we have more information as to what our customers want.
+
+    if not params[:reason].blank?
+      UserFeedback.create(
+          :user_id => current_user.id,
+          :source => 'delete_account',
+          :information => params[:reason]
+      )
+    end
+
+    if not params[:password].blank?
+      if current_user.authenticate(params[:password])
+        current_user.update_attribute(:status, "deleted")
+        current_user.posts.each do |post|
+          post.update_attribute(:status, "deleted")
+        end
+        current_user.update_attribute(:account_reactivation_code, Digest::SHA1.hexdigest(current_user.email + "slinggit_account_reactivation_code" + SLINGGIT_SECRET_HASH))
+        UserMailer.account_deleted(current_user).deliver
+        sign_out
+        reset_session
+        flash[:success] = "Your account has been deleted."
+        redirect_to :controller => :static_pages, :action => :home
+      else
+        flash[:error] = "The password you entered is incorrect."
+        redirect_to :controller => :users, :action => :delete_accountSS
+      end
+    else
+      flash[:error] = "You must first enter your password."
+      redirect_to :controller => :users, :action => :delete_account
+    end
+  end
+
+  def reactivate
+    if not params[:id].blank?
+      if user = User.first(:conditions => ['account_reactivation_code = ?', params[:id]])
+        user.update_attribute(:status, "active")
         user.posts.each do |post|
           post.update_attribute(:status, "active")
         end
-        flash[:success] = "User reactivated."
-      else
-        flash[:error] = "User reactivation unsuccessful"
+        user.update_attribute(:account_reactivation_code, nil)
+        flash[:success] = "Your account has been reactivated.  You may now sign in."
+        redirect_to :controller => :sessions, :action => :new
       end
+    else
+      flash[:error] = "Oops, that link didn't contain all the information we needed to reactivate your account."
+      redirect_to :controller => :static_pages, :action => :home
     end
-    redirect_to users_path
   end
 
   def password_reset

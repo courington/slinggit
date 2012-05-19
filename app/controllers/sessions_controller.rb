@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
         sign_in user
         redirect_back_or user
       elsif not user.blank? and user.authenticate(params[:session][:password]) and user.status == "deleted"
-        flash.now[:error] = 'The user you are trying to login as has been disabled.  For questions regarding this account, please contact slinggit support.'
+        flash.now[:error] = 'The user you are trying to login as has been deleted.  For questions regarding this account, please contact Slinggit support.'
         render 'new'
       else
         flash.now[:error] = 'The username or password you entered is incorrect.'

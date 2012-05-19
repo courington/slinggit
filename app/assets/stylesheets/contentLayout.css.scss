@@ -113,12 +113,17 @@ p {
       display: none;
     }
   }
-
+//styles for sign in page
+.form_fieldHalf {
+	width: 50%;
+	margin:$font-size 0;
+}
+//end
   //styles for sign up page
 	.wrapper.page_col.singleWide {
 	}
 	fieldset {
-	margin: 1.4em auto;
+	margin: $font-size auto;
 	}
 	.form_initialFields,
 	.form_hiddenFields {

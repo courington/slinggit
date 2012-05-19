@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "noreply@slinggit.com"
+  default from: "Slinggit <noreply@slinggit.com>"
 
   def welcome_email(user)
     @user = user
@@ -18,15 +18,22 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "Password reset for Slinggit.com")
   end
 
-  def deliver_problem_report(exception)
+  def problem_report(exception, user)
     @exception = exception
-    mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :from => 'problem_report@slinggit.com', :subject => "Problem Report - #{exception.message}")
+    @current_user = user
+    mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :from => 'Problem Report <problem_report@slinggit.com>', :subject => "Problem Report - #{exception.message}")
   end
 
   def terms_violation_notification(user, violation_reason)
     @violation_reason = violation_reason
     @user = user
     mail(:to => user.email, :subject => "Your account has been suspended")
+  end
+
+  def account_deleted(user)
+    @user = user
+    @reactive_url = "#{BASEURL}/users/reactivate/#{user.account_reactivation_code}"
+    mail(:to => user.email, :subject => "Your account has been deleted")
   end
 
 end

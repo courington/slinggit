@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518131149) do
+ActiveRecord::Schema.define(:version => 20120519092955) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(:version => 20120518131149) do
   create_table "redirects", :force => true do |t|
     t.string   "key_code"
     t.string   "target_uri"
-    t.integer  "clicks",     :default => 0
+    t.integer  "clicks"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -137,6 +137,14 @@ ActiveRecord::Schema.define(:version => 20120518131149) do
   add_index "twitter_posts", ["api_account_id"], :name => "index_twitter_posts_on_api_account_id"
   add_index "twitter_posts", ["post_id"], :name => "index_twitter_posts_on_post_id"
 
+  create_table "user_feedbacks", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "source"
+    t.text     "information"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "user_limitations", :force => true do |t|
     t.integer  "user_id"
     t.string   "limitation_type"
@@ -163,15 +171,16 @@ ActiveRecord::Schema.define(:version => 20120518131149) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.string   "password_digest"
     t.string   "remember_token"
-    t.boolean  "admin",                 :default => false
-    t.string   "status",                :default => "active"
+    t.boolean  "admin",                     :default => false
+    t.string   "status",                    :default => "active"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
+    t.string   "account_reactivation_code"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

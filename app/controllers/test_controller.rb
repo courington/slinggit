@@ -10,8 +10,20 @@ class TestController < ApplicationController
     File.open("public/assets/images/steve.jpg", 'wb') { |file| (file << data) }
   end
 
+  def test_violation_creation
+    ViolationRecord.create(
+        :user_id => current_user.id,
+        :violation => ILLICIT_PHOTO,
+        :violation_source => POST_VIOLATION_SOURCE,
+        :violation_source_id => 2,
+        :action_taken => "post set to deleted // user.status set to suspended // tweets_undon - test // email delivered"
+    )
+
+  end
+
   private
 
+  #DO NOT DELETE
   def verify_authorization
     if signed_in? and current_user.is_admin?
       return true
