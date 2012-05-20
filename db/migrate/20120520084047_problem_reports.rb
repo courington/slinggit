@@ -4,6 +4,9 @@ class ProblemReports < ActiveRecord::Migration
       t.string :exception_message
       t.string :exception_class
       t.text :exception_backtrace
+      t.string :user_agent
+      t.string :ip_address
+      t.string :url_referrer
       t.integer :signed_in_user_id
       t.string :status, :default => 'new'
       t.timestamps

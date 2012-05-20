@@ -230,14 +230,27 @@ class ApplicationController < ActionController::Base
   end
 
   def create_problem_report(exception, send_email = true)
-    #after_create delivers an email to executives -- ask chris was the alias is for everyone
+    user_agent = nil
+    ip_address = nil
+    url_referrer = nil
+
+    if not request.blank?
+      user_agent = request.user_agent if request.user_agent
+      ip_address = request.remote_ip if request.remote_ip
+      url_referrer = request.referrer if request.referrer
+    end
+
     ProblemReport.create(
         :exception_message => exception.message,
         :exception_class => exception.class.to_s,
         :exception_backtrace => exception.backtrace,
+        :user_agent => user_agent,
+        :ip_address => ip_address,
+        :url_referrer => url_referrer,
         :signed_in_user_id => signed_in? ? current_user.id : nil,
         :send_email => send_email
     )
   end
 
 end
+
