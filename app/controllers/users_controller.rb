@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     # CMK: added condition to check for status = active
     @user = User.first(:conditions => ['id = ? AND status = "active"', params[:id]])
     if not @user.blank?
-      @posts = Post.all(:conditions => ['user_id = ? AND status = ?', @user.id, 'active'])
+      @posts = Post.paginate(page: params[:page], :per_page=>2, :conditions => ['user_id = ? AND status = ?', @user.id, 'active'])
 
       # CMK: need to rework pagination
       #@posts.paginate(page: params[:page])

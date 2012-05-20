@@ -3,14 +3,16 @@
 
 	<article>
     <% if @user.posts.any? %>
-    <header>
-      <h1>Posts (<%= @posts.count %>)</h1>
-			<p>Posts (<%= @posts.count %>)</p>
-		</header>
-		
-    <ul class="posts">
-    	<%= render @posts %>
-    </ul>
+      <%= will_paginate @posts%>
+      <header>
+        <h1>Posts (<%= @posts.count %>)</h1>
+  			<p>Posts (<%= @posts.count %>)</p>
+  		</header>
+  		
+      <ul class="posts">
+      	<%= render @posts %>
+      </ul>
+      <%= will_paginate @posts%>
     <% end %>
 
     <% if current_user?(@user) %>
