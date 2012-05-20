@@ -41,6 +41,15 @@ class ProblemReport < ActiveRecord::Base
       return 'system'
     end
   end
+
+  def signed_in_user_name
+    if not self.signed_in_user_id.blank?
+      return User.first(:conditions => ['id = ?', self.signed_in_user_id], :select => 'name').name
+    else
+      return 'No one was logged in'
+    end
+  end
+
 end
 
 
