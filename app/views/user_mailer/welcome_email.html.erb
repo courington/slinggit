@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
 <h1>Welcome to slinggit.com, <%= @user.name %></h1>
+
 <p>
   Clean up that clutter in your home or appartment and Slinggit quickly and easily with our iPhone App.
 </p>
+
 <p>
-  Before you get started, please verify your email address by following this link: <%= @url %>
+  Before you can get started posting, please verify your email address by clicking the link below:
 </p>
+
+<p>
+  <a href="<%= @url %>"><%= @url %></a>
+</p>
+
 <p>Thanks for joining and have a great day!</p>
 </body>
 </html>
