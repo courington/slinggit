@@ -124,9 +124,29 @@ class AdminController < ApplicationController
   end
 
   def problem_reports
-    @problem_reports = ProblemReport.all(:conditions => ['status in (?)', ['open', 'in_progress', 'closed']], :order => 'status desc, created_at desc')
+    if not params[:id].blank?
+      if problem_report = ProblemReport.first(:conditions => ['id = ?', params[:id]])
+        problem_report.status = 'resolved'
+        problem_report.last_updated_by_user_id = current_user.id
+        problem_report.save
+        flash[:success] = 'Problem marked as resolved'
+        redirect_to :controller => :admin, :action => :problem_reports, :id => nil #removes id from url
+      end
+    end
+    @problem_reports = ProblemReport.all(:conditions => ['status = ?', 'open'], :order => 'status desc, created_at desc')
     if @problem_reports.length <= 0
-      redirect_to :action => :index
+      flash[:error] = 'No problem reports found'
+      redirect_to :controller => :admin, :action => :index if not performed?
+    end
+  end
+
+  def view_problem_report
+    if not params[:id].blank?
+      @problem_report = ProblemReport.first(:conditions => ['id = ?', params[:id]])
+      if @problem_report.blank?
+        alert[:error] = 'No problem report was found with that id'
+        redirect_to :action => :problem_reports
+      end
     end
   end
 
