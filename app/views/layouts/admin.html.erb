@@ -4,7 +4,7 @@
   <%= favicon_link_tag "favicon.ico" %>
   <title><%= full_title(yield(:title)) %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "admin" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -22,9 +22,3 @@
 <%= render 'layouts/admin_footer' %>
 </body>
 </html>
-
-<style type="text/css">
-    .adminHeader {
-        padding-bottom: 30px;
-    }
-</style>

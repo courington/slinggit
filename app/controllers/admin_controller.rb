@@ -1,8 +1,6 @@
 class AdminController < ApplicationController
   before_filter :verify_authorization
 
-  layout 'admin'
-
   def index
     @user = current_user
   end
@@ -122,6 +120,14 @@ class AdminController < ApplicationController
       end
     else
       render :text => 'Error - Invalid request', :status => 200
+    end
+  end
+
+  def problem_reports
+    if not params[:id].blank?
+      @problem_reports = ProblemReport.all(:conditions => ['status in (?)', ['open','in_progress']], :order => 'status desc, created_at desc')
+    else
+      redirect_to :action => :index
     end
   end
 

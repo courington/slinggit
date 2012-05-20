@@ -111,9 +111,11 @@ ActiveRecord::Schema.define(:version => 20120520084047) do
     t.string   "ip_address"
     t.string   "url_referrer"
     t.integer  "signed_in_user_id"
-    t.string   "status",              :default => "new"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "status",                  :default => "open"
+    t.integer  "last_updated_by_user_id"
+    t.integer  "owned_by_user_id"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "redirects", :force => true do |t|

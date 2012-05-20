@@ -6,7 +6,9 @@
 #  t.string :ip_address
 #  t.string :url_referrer
 #  t.integer :signed_in_user_id
-#  t.string :status, :default => 'new'
+#  t.string :status, :default => 'open'
+#  t.integer :last_updated_by_user_id
+#  t.integer :owned_by_user_id
 #  t.timestamps
 #end
 
@@ -21,6 +23,22 @@ class ProblemReport < ActiveRecord::Base
   def send_problem_report_email
     if send_email
       UserMailer.problem_report(self).deliver
+    end
+  end
+
+  def owner_name
+    if not self.owned_by_user_id.blank?
+      return User.first(:conditions => ['id = ?', self.owned_by_user_id], :select => 'name').name
+    else
+      return 'system'
+    end
+  end
+
+  def last_updated_by_name
+    if not self.last_updated_by_user_id.blank?
+      return User.first(:conditions => ['id = ?', self.last_updated_by_user_id], :select => 'name').name
+    else
+      return 'system'
     end
   end
 end
