@@ -7,7 +7,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
 
   match 'users/:name', :to => 'users#show', via: :get
-  #match 'users/:name/edit', :to => 'users#edit'
+  match 'users/:name/edit', :to => 'users#edit'
   #match 'users/:name', :to => 'users#update', via: :put
   match 'users/enter_new_password/(:id)', :to => 'users#enter_new_password#id'
   match 'users/password_reset', :to => 'users#password_reset'

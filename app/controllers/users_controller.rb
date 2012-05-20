@@ -74,7 +74,7 @@ class UsersController < ApplicationController
       flash[:success] = "Profile updated"
       sign_in @user
       reset_session
-      redirect_to "#{USERS_PATH}/#{@user.name}"
+      redirect_to @user
     else
       render 'edit'
     end
