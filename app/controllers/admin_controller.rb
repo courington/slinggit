@@ -124,9 +124,8 @@ class AdminController < ApplicationController
   end
 
   def problem_reports
-    if not params[:id].blank?
-      @problem_reports = ProblemReport.all(:conditions => ['status in (?)', ['open','in_progress']], :order => 'status desc, created_at desc')
-    else
+    @problem_reports = ProblemReport.all(:conditions => ['status in (?)', ['open', 'in_progress', 'closed']], :order => 'status desc, created_at desc')
+    if @problem_reports.length <= 0
       redirect_to :action => :index
     end
   end

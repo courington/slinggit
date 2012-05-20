@@ -1,3 +1,4 @@
+<div id="notice"></div>
 <table border="1" cellpadding="5">
   <thead>
   <th>Exception</th>
@@ -14,7 +15,7 @@
       <tr>
         <td><%= problem_report.exception_message %></td>
         <td><%= problem_report.exception_class %></td>
-        <td><a href="#"><%= problem_report.status %></a></td>
+        <td><a href="#" id="problemReport_<%= problem_report.id %>"><%= problem_report.status %></a></td>
         <td><%= problem_report.created_at.strftime("%m/%d/%Y") %></td>
         <td><%= problem_report.last_updated_by_name %></td>
         <td><%= problem_report.updated_at.strftime("%m/%d/%Y") %></td>
@@ -24,3 +25,25 @@
   <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+    $("[id^=problemReport_]").each(function (key) {
+        $('#' + this.id).click(function (e) {
+            e.preventDefault();
+            toggleNextStatus(e.target.id);
+        });
+    });
+
+    function toggleNextStatus(targetId){
+        current_status = $('#' + targetId).html()
+        if(current_status == 'open'){
+            $('#' + targetId).html("in_progress")
+        }
+        else if(current_status == 'in_progress'){
+            $('#' + targetId).html("closed")
+        }
+        else if(current_status == 'closed'){
+            $('#' + targetId).html("open")
+        }
+    }
+</script>
