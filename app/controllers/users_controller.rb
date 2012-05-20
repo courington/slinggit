@@ -1,11 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account]
   before_filter :correct_user, only: [:edit, :update]
-  before_filter :admin_user, only: [:index]
-
-  def index
-    @users = User.paginate(page: params[:page])
-  end
 
   def show
     # CMK: added condition to check for status = active
