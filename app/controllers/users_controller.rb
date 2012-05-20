@@ -131,13 +131,14 @@ class UsersController < ApplicationController
         end
         current_user.update_attribute(:account_reactivation_code, Digest::SHA1.hexdigest(current_user.email + "slinggit_account_reactivation_code" + SLINGGIT_SECRET_HASH))
         UserMailer.account_deleted(current_user).deliver
+        UserMailer.inform_admin_account_deleted(current_user).deliver
         sign_out
         reset_session
         flash[:success] = "Your account has been deleted."
         redirect_to :controller => :static_pages, :action => :home
       else
         flash[:error] = "The password you entered is incorrect."
-        redirect_to :controller => :users, :action => :delete_accountSS
+        redirect_to :controller => :users, :action => :delete_account
       end
     else
       flash[:error] = "You must first enter your password."

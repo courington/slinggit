@@ -129,7 +129,8 @@ input[type="button"] {
 input.submitBTN,
 .btn_large,
 .btn_medium,
-.btn_small {
+.btn_small,
+.btn_cancel{
 	background: $main-green;
 	padding: .4em;
 	font-size: $font-size;
@@ -152,6 +153,11 @@ input.submitBTN,
 		color: darken($wht, 10%);
 	}
 }
+
+.btn_cancel{
+  background: $main-red;
+}
+
 label {
 	font-size: $font-size - .2em;
 	display: block;

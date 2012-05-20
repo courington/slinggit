@@ -1,6 +1,8 @@
 class UserMailer < ActionMailer::Base
   default from: "Slinggit <noreply@slinggit.com>"
 
+  EXECUTIVES = 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com'
+
   def welcome_email(user)
     @user = user
     @url = "#{BASEURL}/users/verify_email/#{user.email_activation_code}"
@@ -21,7 +23,7 @@ class UserMailer < ActionMailer::Base
   def problem_report(exception, user)
     @exception = exception
     @current_user = user
-    mail(:to => 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com', :from => 'Problem Report <problem_report@slinggit.com>', :subject => "Problem Report - #{exception.message}")
+    mail(:to => EXECUTIVES, :from => 'Problem Report <problem_report@slinggit.com>', :subject => "Problem Report - #{exception.message}")
   end
 
   def terms_violation_notification(user, violation_reason)
@@ -34,6 +36,13 @@ class UserMailer < ActionMailer::Base
     @user = user
     @reactive_url = "#{BASEURL}/users/reactivate/#{user.account_reactivation_code}"
     mail(:to => user.email, :subject => "Your account has been deleted")
+  end
+
+  def inform_admin_account_deleted(user)
+    @user = user
+    @user_feedbacks = UserFeedback.all(:conditions => ['user_id = ?', user.id])
+    @reactive_url = "#{BASEURL}/users/reactivate/#{user.account_reactivation_code}"
+    mail(:to => EXECUTIVES, :from =>'From Beyond The Grave <deleted_account@slinggit.com>', :subject => "User deleted account")
   end
 
 end
