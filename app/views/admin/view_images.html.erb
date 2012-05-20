@@ -1,15 +1,23 @@
+<div id="errorDiv"></div>
 <% if not @image_datas.blank? %>
-    <div id=imageContent>
-      <% @image_datas.each do |image_data| %>
-          <script type="text/javascript">
-              window.createPhotoArticle($('#imageContent'))
-          </script>
-      <% end %>
-    </div>
+    <div id="imageContent"></div>
 <% else %>
     <div>No Images Available</div>
 <% end %>
 
+
+<script type="text/javascript">
+
+    <% @image_datas.each do |image_data| %>
+        window.createPhotoArticle(
+            $('#imageContent'), 
+            "<%= image_data[:image_path] %>",
+            "<%= image_data[:post_id] %>",
+            "<%= url_for :controller => :admin, :action => :eradicate_all_from_image %>"
+        ).render()
+    <% end %>
+
+</script>
 
 
 <!-- Chase feel free to delete these when you style this to work on mobile as well. -->
