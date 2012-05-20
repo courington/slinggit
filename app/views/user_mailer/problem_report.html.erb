@@ -19,7 +19,9 @@
 <p>
   <strong>Exception Class:</strong> <%= @problem_report.exception_class %><br/><br/>
   <strong>Exception Backtrace:</strong><br/>
-  <%= @problem_report.exception_backtrace.join("<br />") %>
+  <% @problem_report.exception_backtrace.each do |path| %>
+    <%= path %><br/>
+  <% end %>
 </p>
 </body>
 </html>
