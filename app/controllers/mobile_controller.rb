@@ -952,7 +952,7 @@ class MobileController < ApplicationController
   def catch_exceptions
     yield
   rescue => exception
-    UserMailer.problem_report(exception, current_user).deliver
+    create_problem_report(exception)
     if session[:source] and session[:source] == NATIVE_APP_WEB_VIEW
       redirect_to :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => exception.to_s
     else

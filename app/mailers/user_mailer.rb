@@ -20,10 +20,9 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "Password reset for Slinggit.com")
   end
 
-  def problem_report(exception, user)
-    @exception = exception
-    @current_user = user
-    mail(:to => EXECUTIVES, :from => 'Problem Report <problem_report@slinggit.com>', :subject => "Problem Report - #{exception.message}")
+  def problem_report(problem_report)
+    @problem_report = problem_report
+    mail(:to => EXECUTIVES, :from => 'Problem Report <problem_report@slinggit.com>', :subject => "Problem Report - #{problem_report.exception_message}")
   end
 
   def terms_violation_notification(user, violation_reason)

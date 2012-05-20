@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120519092955) do
+ActiveRecord::Schema.define(:version => 20120520084047) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -103,10 +103,20 @@ ActiveRecord::Schema.define(:version => 20120519092955) do
   add_index "posts", ["updated_at"], :name => "index_posts_on_updated_at"
   add_index "posts", ["user_id", "created_at"], :name => "index_posts_on_user_id_and_created_at"
 
+  create_table "problem_reports", :force => true do |t|
+    t.string   "exception_message"
+    t.string   "exception_class"
+    t.text     "exception_backtrace"
+    t.integer  "signed_in_user_id"
+    t.string   "status",              :default => "new"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
   create_table "redirects", :force => true do |t|
     t.string   "key_code"
     t.string   "target_uri"
-    t.integer  "clicks",     :default => 0
+    t.integer  "clicks"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
@@ -178,8 +188,8 @@ ActiveRecord::Schema.define(:version => 20120519092955) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "active"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
   end
 

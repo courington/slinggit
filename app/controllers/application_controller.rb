@@ -221,12 +221,23 @@ class ApplicationController < ActionController::Base
   def catch_exceptions
     yield
   rescue => exception
-    UserMailer.problem_report(exception, current_user).deliver
+    create_problem_report(exception)
     if PROD_ENV
       redirect_to '/500.html'
     else
       raise exception
     end
+  end
+
+  def create_problem_report(exception, send_email = true)
+    #after_create delivers an email to executives -- ask chris was the alias is for everyone
+    ProblemReport.create(
+        :exception_message => exception.message,
+        :exception_class => exception.class.to_s,
+        :exception_backtrace => exception.backtrace,
+        :signed_in_user_id => signed_in? ? current_user.id : nil,
+        :send_email => send_email
+    )
   end
 
 end
