@@ -1,17 +1,12 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account]
   before_filter :correct_user, only: [:edit, :update]
-  before_filter :admin_user, only: [:index]
-
-  def index
-    @users = User.paginate(page: params[:page])
-  end
 
   def show
     # CMK: added condition to check for status = active
     @user = User.first(:conditions => ['id = ? AND status = "active"', params[:id]])
     if not @user.blank?
-      @posts = Post.all(:conditions => ['user_id = ? AND status = ?', @user.id, 'active'])
+      @posts = Post.paginate(page: params[:page], :per_page=>2, :conditions => ['user_id = ? AND status = ?', @user.id, 'active'])
 
       # CMK: need to rework pagination
       #@posts.paginate(page: params[:page])
