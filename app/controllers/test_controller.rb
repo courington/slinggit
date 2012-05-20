@@ -1,6 +1,18 @@
 class TestController < ApplicationController
   before_filter :verify_authorization
 
+  def index
+    render :text => 'Your in the test controller'
+  end
+
+  def raise_exception
+    if not params[:exception].blank?
+      raise params[:exception]
+    else
+      0/0
+    end
+  end
+
   def test_file_path
     render :text => "<img src='http://localhost:3000/system/posts/photos/000/000/307/original/me_100.jpg' />"
   end

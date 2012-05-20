@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
-<h1>Dear <%= @user.name %></h1>,
+<p>Dear <%= @user.name %></p>,
 <p>
-  This email is to inform you that your Slinggit account registered with this email account has been successfully deleted.
+  This email is to inform you that your Slinggit account registered to this email address been deleted.
 </p>
+
 <p>
-  The Slinggit team is sad to see you go.  If you change your mind, deleted your account by mistake or did not authorize your account deletion, you can use the link below to reinstate your account.
+  We are sad to see you go.  If you deleted your account because Slinggit lacks a feature that you would find useful, please let us know so we can make the service better.
 </p>
+
+<p>
+  If you change your mind, deleted your account by mistake or did not authorize your account deletion, you can always use the
+  link below to restore your account and pick up right where you left off.
+</p>
+
 <p>
   <a href="<%= @reactive_url %>"><%= @reactive_url %></a>
 </p>
+
 <p>Sincerely,</p>
 
 <p>Your friends at Slinggit</p>

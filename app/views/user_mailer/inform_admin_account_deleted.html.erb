@@ -4,8 +4,7 @@
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
-<h1><%= "#{@user.name}(#{@user.email}) with user_id #{@user.id} has deleted their account.  They have provided the following feedback:" %></h1>
-
+<p><%= "#{@user.name}(#{@user.email}) with user_id #{@user.id} has deleted their account.  They have provided the following feedback:" %></p>
 <p>
   <% if not @user_feedbacks.blank? %>
     <ul>
