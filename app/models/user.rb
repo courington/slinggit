@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}
   validates :password_confirmation, presence: true
 
-
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
   end

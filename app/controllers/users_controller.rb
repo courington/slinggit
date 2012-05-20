@@ -1,18 +1,18 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account]
   before_filter :correct_user, only: [:edit, :update]
+  #before_filter :admin_user, only: [:index]
+
+  USERS_PATH = "/users"
 
   def show
-    # CMK: added condition to check for status = active
-    @user = User.first(:conditions => ['id = ? AND status = "active"', params[:id]])
+    # CMK: added condition to check for status != deleted
+    @user = User.first(:conditions => ['name = ? AND status != "deleted"', params[:name]])
     if not @user.blank?
-      @posts = Post.paginate(page: params[:page], :per_page=>2, :conditions => ['user_id = ? AND status = ?', @user.id, 'active'])
-
-      # CMK: need to rework pagination
-      #@posts.paginate(page: params[:page])
+      @posts = Post.paginate(page: params[:page], :per_page=>2, :conditions => ['user_id = ? AND status != ?', @user.id, 'deleted'])
     else
       if signed_in?
-        redirect_to current_user
+        redirect_to "#{USERS_PATH}/#{current_user.name}"
       else
         redirect_to new_user_path
       end
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
       flash[:success] = "Profile updated"
       sign_in @user
       reset_session
-      redirect_to @user
+      redirect_to "#{USERS_PATH}/#{@user.name}"
     else
       render 'edit'
     end

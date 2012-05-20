@@ -7,8 +7,8 @@
     </hgroup>
     <nav>
       <% if signed_in? %>
-          <div class="<%= 'active' if current_page?(current_user) %>">
-            <%= link_to "Posts", current_user %>
+          <div class="<%= 'active' if current_page?("/users/#{current_user.name}") %>">
+            <%= link_to "Posts", "/users/#{current_user.name}" %>
           </div>
           <% if current_user.is_admin? %>
               <div class="<%= 'active' if current_page?(users_path) %>">
