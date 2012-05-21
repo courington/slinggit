@@ -59,10 +59,11 @@ input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
-		&.form-singleLine {
+		&.form_singleLine {
+		width: 100%;
 		float: left;
 		clear: left;
-		margin: .7em 0 1.4em 0;
+		margin: ($font-size * .5) 0 $font-size 0;
 		}
 		&:focus {
 		outline: none;
@@ -140,7 +141,7 @@ input.submitBTN,
 	border: 1px solid $main-grey;
 	cursor: pointer;
 	box-shadow: $btn-shading;
-	text-shadow: $btn-txt-shading;
+	//text-shadow: $btn-txt-shading;
 	@include transition;
 	&:hover,
 	&:focus {
@@ -208,24 +209,21 @@ float: left;
 display: inline-block;
 }
 .controls.thumbnail {
-font-size: $font-size;
-margin: ($font-size * .5) auto;
-float: left;
-font-weight: 600;
+	font-size: $font-size;
+	margin: ($font-size * .5) auto;
+	float: left;
+	font-weight: 600;
+	text-decoration: underline;
 }
-/*.form-actions {
-clear: left;
-font-size: 1.4em;
-}*/
-.form-actions > input[type="checkbox"] {
+fieldset > input[type="checkbox"] {
 width: auto;
 margin: 0;
 display: block;
 clear: left;
 }
 #new_post fieldset:last-child {
-float: right;
-width: 50%;
+clear: both;
+margin: $font-size 0;
 }
 #submitNewPost {
 width: 50%;
