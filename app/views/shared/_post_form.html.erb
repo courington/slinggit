@@ -8,7 +8,7 @@
       <fieldset>
         <%= f.label :hashtag_prefix, "Your item", class: "", for: "post_hashtag_prefix" %>
           <div class="input-append">
-            <%= f.text_field :hashtag_prefix, class: "hardEdge-right form-singleLine", placeholder: "#", maxLength: "10" %>
+            <%= f.text_field :hashtag_prefix, class: "hardEdge-right form_singleLine", placeholder: "#", maxLength: "10" %>
             <span class="add-on">forsale</span>
           </div>
       </fieldset>
@@ -16,22 +16,22 @@
 	    <fieldset class="col_oneThird">
         <%= f.label :price, class: "", for: "post_price" %>
           <div class="input-append">
-            <%= f.text_field :price, class: "hardEdge-right form-singleLine", id: "post_price", placeholder: "$", maxLength: "5" %>
+            <%= f.text_field :price, class: "hardEdge-right form_singleLine", id: "post_price", placeholder: "$", maxLength: "5" %>
             <span class="add-on hardEdge-left">.00</span>
           </div>
 	    </fieldset>
 
       <fieldset class="col_twoThird">
         <%= f.label :location, "Location", class: "", for: "post_hashtag_prefix" %>
-        <%= f.text_field :location, class: "form-singleLine", placeholder: "City, State, or Zip", maxLength: "16" %>
+        <%= f.text_field :location, class: "form_singleLine", placeholder: "City, State, or Zip", maxLength: "16" %>
       </fieldset>
 
       <fieldset>
         <%= f.label :content, "Quick description", class: "", for: "post_content" %>
-        <%= f.text_area :content, class: "form-singleLine", rows: "3", placeholder: "Something short and sweet..." %>
+        <%= f.text_area :content, class: "form_singleLine", rows: "3", placeholder: "Something short and sweet..." %>
       </fieldset>
 
-      <fieldset id="photoControlGroup" class="">
+      <fieldset id="photoControlGroup" class="col_oneThird">
         <%= f.label :photo, "Item Photo (optional)", class: "", for: "post_photo" %>
         <div class="controls thumbnail">
           <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
@@ -39,7 +39,7 @@
         </div>
       </fieldset>
 
-      <fieldset class="form-actions">
+      <fieldset class="col_twoThird">
         <span>Twitter account(s) to post to:</span>
         <%= check_box_tag "twitter_accounts[0]", 'post', true %>Slinggit
         <% @twitter_accounts.each do |twitter_account| %>

@@ -6,17 +6,20 @@
       <h6>beta</h6>
     </hgroup>
     <nav>
+	    <div id="quickSearchWrapper">
+	      <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+	    </div>
       <% if signed_in? %>
-          <div class="<%= 'active' if current_page?("/users/#{current_user.name}") %>">
-            <%= link_to "Posts", "/users/#{current_user.name}" %>
+          <div class="head_aside <%= 'active' if current_page?(current_user) %>">
+            <%= link_to "Posts", current_user %>
           </div>
           <% if current_user.is_admin? %>
-              <div class="<%= 'active' if current_page?(users_path) %>">
+              <div class="head_aside <%= 'active' if current_page?(users_path) %>">
                 <%= link_to "Admin", admin_path %>
               </div>
           <% end %>
           <!-- DROP DOWN -->
-          <div id="accountDropDown" class="dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
+          <div id="accountDropDown" class="head_aside dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
             <span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings &raquo;</span>
 
             <ul class="nav_dropDown dropdown-menu">
@@ -27,7 +30,7 @@
                 <%= link_to "Twitter Accounts", networks_path %>
               </li>
               <li>
-                <%= link_to "Sign out", signout_path, method: "delete" %>
+                <%= link_to "Sign Out", signout_path, method: "delete" %>
               </li>
             </ul>
 
@@ -35,19 +38,15 @@
           <!-- END -->
       <% else %>
         <% if current_page?(signin_path) %>
-  			  <span>
-  			  	<%= link_to "Sign up", signup_path %>
-  			  </span>
+  			<div class="head_aside">
+				<%= link_to "Sign Up", signup_path %>
+  			</div>
         <% else %>       
-          <span>
-            <%= link_to "Sign in", signin_path %>
-          </span>
+          <div class="head_aside">
+            <%= link_to "Sign In", signin_path %>
+          </div>
         <% end %>  
       <% end %>
-      <section id="quickSearchWrapper">
-        <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
-      </section>
-
     </nav>
   </div>
 </header>

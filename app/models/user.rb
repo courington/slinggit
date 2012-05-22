@@ -17,6 +17,9 @@
 #
 
 class User < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+  
   attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret, :status
   has_secure_password
   has_many :posts, dependent: :destroy
