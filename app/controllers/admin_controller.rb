@@ -62,7 +62,6 @@ class AdminController < ApplicationController
   end
 
   def set_user_status
-    debugger
     user = User.first(:conditions => ['id = ?', params[:id]])
     status = params[:status]
     if not user.blank?

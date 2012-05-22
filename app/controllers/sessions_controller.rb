@@ -16,6 +16,10 @@ class SessionsController < ApplicationController
       if not user.blank? and user.authenticate(params[:session][:password]) and user.status != "deleted"
         sign_in user
         redirect_back_or user
+      elsif not user.blank? and user.authenticate(params[:session][:password]) and user.status == "suspended"
+        flash.now[:error] = 'Your account is currently in time out.  To begin posting again, please contact Slinggit support.'
+        sign_in user
+        redirect_back_or user
       elsif not user.blank? and user.authenticate(params[:session][:password]) and user.status == "deleted"
         flash.now[:error] = 'The user you are trying to login as has been deleted.  For questions regarding this account, please contact Slinggit support.'
         render 'new'
