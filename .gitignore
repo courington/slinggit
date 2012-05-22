@@ -23,3 +23,6 @@ Gemfile.lock
 Gemfile
 
 .idea/*
+app/views/admin/problem_reports.erb
+app/views/admin/view_images.html.erb.orig
+app/views/users/index.html.erb

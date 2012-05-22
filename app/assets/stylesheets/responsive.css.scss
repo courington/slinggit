@@ -24,6 +24,9 @@
 				width: 50%;
 				text-align: center;
 			}
+			.head_aside {
+				margin: 0;
+			}
 			#accountDropDown {
 				float: right;
 				width: 50%;
@@ -88,9 +91,9 @@
 	}
 	.page_contentContainer .twoCol:first-child {
 	margin: 1.4em auto;
-	border-bottom: 1px solid #F8F8F8;
+	//border-bottom: 1px solid #F8F8F8;
 	padding: 0 5%;
-	box-shadow: 0 1px 0 rgba(62, 62, 62, .2);
+	//box-shadow: 0 1px 0 rgba(62, 62, 62, .2);
 	}
 	.page_contentContainer .twoCol {
 	width: 100%;
@@ -106,6 +109,7 @@
 	width: 45%;
 	margin: 0;
 	float: left;
+	clear: none;
 	}
 	#post_price {
 	width: 50%;
@@ -118,6 +122,8 @@
 	}
 	.page_contentContainer fieldset {
 	margin: 0 0 $font-size 0;
+	width: 95%;
+	float: none;
 	}
 	#new_post fieldset:last-child {
 	float: none;
@@ -128,11 +134,22 @@
 		}
 	}
 	.form-actions {
-		font-size: 1.4em;
 		float: right;
 		span {
 			display: block;
 		}
+	}
+	.btn_large,
+	.btn_medium,
+	.btn_small {
+		display: block;
+		width: 95%;
+		margin: $font-size auto;
+		text-align: center;
+	}
+	.page_contentContainer #session_password,
+	.page_contentContainer #session_email {
+	width: 94%;
 	}
 }
 //end

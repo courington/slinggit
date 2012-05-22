@@ -1,72 +1,50 @@
 <% provide(:title, "Edit user") %>
 <section class="wrapper">
-  <h1>Update your profile</h1>
+	<header>
+		<h1>Update your profile</h1>
+		<p>Update your profile</p>
+	</header>
+	
+	<article>
+	<%= form_for @user do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+		<legend>User Info</legend>
 
-  <div class="row">
-    <div class="span6 offset3">
-      <%= form_for @user do |f| %>
-          <%= render 'shared/error_messages', object: f.object %>
+			<fieldset>
+				<%= f.label :name, class: "control-label", for: "user_name" %>
+                <%= f.text_field :name, class: "form_singleLine" %>
+            </fieldset>
 
-          <fieldset>
-            <p>
-              User Info
-            </p>
+            <fieldset>
+				<%= f.label :email, class: "control-label", for: "user_email" %>
+				<%= f.text_field :email, class: "form_singleLine" %>
+			</fieldset>
 
-            <div class="clearfix-placeholder"></div>
-            <div class="control-group">
-              <%= f.label :name, class: "control-label", for: "user_name" %>
-              <div class="controls">
-                <%= f.text_field :name, class: "input-xlarge" %>
-              </div>
-            </div>
+            <fieldset>
+				<%= f.label :password, class: "control-label", for: "user_password" %>
+				<%= f.password_field :password, class: "form_singleLine" %>
+            </fieldset>
 
-            <div class="control-group">
-              <%= f.label :email, class: "control-label", for: "user_email" %>
-              <div class="controls">
-                <%= f.text_field :email, class: "input-xlarge" %>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <%= f.label :password, class: "control-label", for: "user_password" %>
-              <div class="controls">
-                <%= f.password_field :password, class: "input-xlarge" %>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <%= f.label :password_confirmation, "Confirm Password", class: "control-label", for: "user_password_confirmation" %>
-              <div class="controls">
-                <%= f.password_field :password_confirmation, class: "input-xlarge" %>
-              </div>
-            </div>
+            <fieldset>
+				<%= f.label :password_confirmation, "Confirm Password", class: "control-label", for: "user_password_confirmation" %>
+				<%= f.password_field :password_confirmation, class: "form_singleLine" %>
+            </fieldset>
 
             <% if !session['access_secret'].nil? && !session['access_token'].nil? %>
-                <%= f.hidden_field :twitter_atoken, value: session['access_token'] %>
-                <%= f.hidden_field :twitter_asecret, value: session['access_secret'] %>
+				<%= f.hidden_field :twitter_atoken, value: session['access_token'] %>
+				<%= f.hidden_field :twitter_asecret, value: session['access_secret'] %>
             <% end %>
 
-            <div class="form-actions">
-              <%= f.submit "Save changes", class: "btn btn-medium" %>
-            </div>
+              <%= f.submit "Save changes", class: "btn_medium" %>
+	<% end %>
+	</article>
 
-          </fieldset>
-
-      <% end %>
-
-      <fieldset>
-        <p>Gravatar</p>
-
+	<article>
+		<p>Gravatar</p>
         <div class="thumbnail">
           <%= gravatar_for @user %>
-          <p>
-            <a href="https://gravatar.com/emails" target="_blank">change</a>
-          </p>
+          <p><a href="https://gravatar.com/emails" target="_blank">change</a></p>
         </div>
-      </fieldset>
-      <p>
         <a href="<%= url_for :controller => :users, :action => :delete_account %>">Delete Account</a>
-      </p>
-    </div>
-  </div>
+    </article>
 </section>
