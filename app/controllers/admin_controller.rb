@@ -51,7 +51,7 @@ class AdminController < ApplicationController
   #### END QUICK DATABASE VIEW ####
 
   def view_users
-    @users = User.paginate(page: params[:page], :per_page=>100, :conditions => ['status != ?', "deleted"], :select => 'id,email,name,status,created_at')
+    @users = User.paginate(page: params[:page], :per_page=>100, :conditions => ['status != ?', "deleted"], :select => 'id,email,name,slug,status,created_at')
   end
 
   def view_images

@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     # CMK: added condition to check for status != deleted
-    @user = User.first(:conditions => ['id = ? AND status != "deleted"', params[:id]])
+    @user = User.first(:conditions => ['name = ? AND status != "deleted"', params[:id]])
     if not @user.blank?
       @posts = Post.paginate(page: params[:page], :per_page=>2, :conditions => ['user_id = ? AND status != ?', @user.id, 'deleted'])
     else
