@@ -2,16 +2,6 @@
 <section class="wrapper">
 
   <div class="page_col twoCol">
-    <header>
-      <h1>slinggit</h1>
-
-      <p>slinggit</p>
-    </header>
-
-    <!-- <form class="page_search">
-         <input type="text" size="100" placeholder="search" name="search" />
-         <input type="button" for="search" value="Submit">
-         </form> -->
     <% if current_user.blank? %>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum consequat sapien vel molestie. Aliquam
           at massa arcu. Mauris volutpat.</p>
@@ -22,7 +12,45 @@
         <p>Got some old junk laying
           around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
     <% end %>
+
+    <!-- BEGIN IMAGE CYCLE CODE -->
+
+    <script type="text/javascript" src="http://malsup.github.com/jquery.cycle.all.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#iphoneDemo').cycle({
+                fx:'fade'
+            });
+        })
+    </script>
+    <div class="pics" id="iphoneDemo">
+      <img src="assets/images/iphone_demo/main.png"/>
+      <img src="assets/images/iphone_demo/createaccount.png"/>
+      <img src="assets/images/iphone_demo/signin.png"/>
+      <img src="assets/images/iphone_demo/newpost.png"/>
+    </div>
+
+    <!-- END IMAGE CYCLE CODE -->
+
   </div>
+
+  <style type="text/css">
+      .pics {
+          height: 255px;
+          width: 500px;
+          margin-left: 150px;
+          margin-top: -46px;
+      }
+
+      .pics img {
+          border: 1px solid #ccc;
+          background-color: #eee;
+          width: 255px;
+          height: 500px;
+          top: 0;
+          left: 0
+      }
+  </style>
 
   <div class="page_col twoCol">
     <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
