@@ -6,9 +6,6 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/verify_username_availability', :to => 'users#verify_username_availability', via: :post
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
 
-  #match 'users/:name', :to => 'users#show', via: :get
-  #match 'users/:name/edit', :to => 'users#edit'
-  #match 'users/:name', :to => 'users#update', via: :put
   match 'users/enter_new_password/(:id)', :to => 'users#enter_new_password#id'
   match 'users/password_reset', :to => 'users#password_reset'
   match 'users/reactivate(/:id)', :to => 'users#reactivate#id', via: :get
@@ -58,6 +55,8 @@ SlinggitWebapp::Application.routes.draw do
 
   ##ADMIN CONTROLLER##
   match 'admin' => 'admin#index'
+  # CMK: added this for more convenient redirect with user destroy/suspend/reenable actions
+  match 'admin/users' => 'admin#view_users', :as => :admin_users
   match 'admin(/:action(/:id))' => 'admin#action#id'
 
   ##TEST CONTROLLER##

@@ -51,7 +51,7 @@ class AdminController < ApplicationController
   #### END QUICK DATABASE VIEW ####
 
   def view_users
-    @users = User.paginate(page: params[:page], :per_page=>100, :conditions => ['status != ?', "deleted"], :select => 'id,email,name,slug,status,created_at')
+    @users = User.paginate(page: params[:page], :per_page=>100, :select => 'id,email,name,slug,status,created_at')
   end
 
   def view_images
@@ -59,6 +59,25 @@ class AdminController < ApplicationController
     Post.find_each(:conditions => ['status = "active" AND photo_file_name IS NOT NULL'], :select => 'id,user_id,photo_file_name,photo_updated_at') do |post|
       @image_datas << {:image_path => post.photo.url(:medium), :post_id => post.id}
     end
+  end
+
+  def set_user_status
+    debugger
+    user = User.first(:conditions => ['id = ?', params[:id]])
+    status = params[:status]
+    if not user.blank?
+      if user.update_attribute(:status, status)
+        if user.posts.any?
+          user.posts.each do |post|
+            post.update_attribute(:status, status)  
+          end
+        end
+        flash[:success] = "User #{status}."
+      else 
+        flash[:error] = "User #{status} unsuccessfully"  
+      end
+    end
+    redirect_to admin_users_path
   end
 
   def eradicate_all_from_image

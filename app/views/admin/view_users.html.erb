@@ -8,11 +8,16 @@
     <li>
       <%= gravatar_for user %>
       <%= link_to user.name, user %>
-      <% if current_user.is_admin? && !current_user?(user) && user.status != "deleted" %>
-      |  <%= link_to "delete", user, method: :delete, confirm: "You sure?" %>
+      <% if current_user.is_admin? && !current_user?(user) && user.status == "active" %>
+      |  <%= link_to "delete", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "deleted"}, confirm: "Delete: You sure?" %>
+      |  <%= link_to "suspend", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "suspended"}, confirm: "Suspend: You sure?" %>
+      <% elsif current_user.is_admin? && !current_user?(user) && user.status == "suspended" %>
+      	<strong>User is currently suspended.</strong>
+      	<%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "active"}, confirm: "Re-enable: You sure?" %>
+        |  <%= link_to "delete", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "deleted"}, confirm: "Delete: You sure?" %>
       <% elsif current_user.is_admin? && !current_user?(user) && user.status == "deleted" %>
-      	<strong>It looks like we have deleted this user.</strong>
-      	<%= link_to "renable", {:controller => :users, :action => :reenable, :id => user.id}, confirm: "You sure?" %>
+        <strong>It looks like we have deleted this user.</strong>
+        <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "active"}, confirm: "Re-enable: You sure?" %>
   	  <% end %>
     </li>
   <% end %>
