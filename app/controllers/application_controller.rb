@@ -205,11 +205,7 @@ class ApplicationController < ActionController::Base
     if signed_in?
       # suspended users are allowed to login, they're just notified that their accounts are suspeneded.
       if current_user.status == 'suspended'
-        if signed_in?
-          sign_out
-          reset_session
-        end
-        redirect_to '/suspended_account' and return
+        flash.now[:notice] = 'It seems as though you are currently in time out due to a terms of service violation.  If you feel you have reached this message in error, please contact support@slinggit.com' and return
       # if the user is deleted and doesn't have a reactivation_code, they've been banned, banned so hard!
       elsif current_user.status == "deleted" and current_user.account_reactivation_code == nil
         if signed_in?
