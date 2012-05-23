@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
       when :posts
         if  user_limitation = UserLimitation.first(:conditions => ['limitation_type = "posts" AND user_id = ?', user_id], :select => 'frequency_type,frequency,user_limit')
           time_frame = Time.now.advance(user_limitation.frequency_type.to_sym => user_limitation.frequency * -1)
-          if Post.count(:conditions => ['created_at >= ?', time_frame]) >= user_limitation.user_limit
+          if Post.count(:conditions => ['created_at >= ? AND user_id = ?', time_frame, user_id]) >= user_limitation.user_limit
             return false
           end
         end
