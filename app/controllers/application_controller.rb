@@ -203,13 +203,29 @@ class ApplicationController < ActionController::Base
 
   def verify_good_standing
     if signed_in?
+      # suspended users are allowed to login, they're just notified that their accounts are suspeneded.
       if current_user.status == 'suspended'
         if signed_in?
           sign_out
           reset_session
         end
         redirect_to '/suspended_account' and return
-      end
+      # if the user is deleted and doesn't have a reactivation_code, they've been banned, banned so hard!
+      elsif current_user.status == "deleted" and current_user.account_reactivation_code == nil
+        if signed_in?
+          sign_out
+          reset_session
+        end
+        redirect_to '/deleted_account' and return
+      # if the user is deleted and does have a reactivation_cod, they've removed themselves.  We might want 
+      # to be more friendly to them
+      elsif current_user.status == "deleted" and current_user.account_reactivation_code != nil
+        if signed_in?
+          sign_out
+          reset_session
+        end
+        redirect_to '/reactivate_account' and return
+      end  
     end
     return true
   end

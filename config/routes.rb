@@ -41,6 +41,8 @@ SlinggitWebapp::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
   match '/help', to: 'static_pages#help'
   match '/suspended_account', to: 'static_pages#suspended_account'
+  match '/deleted_account', to: 'static_pages#deleted_account'
+  match '/reactivate_account', to: 'static_pages#reactivate_account'
 
   # Nested route for comments.  I'm a bit worried that I'm defining resource :posts twice,
   # the other above, but couldn't find documentation on how to combine the two so that posts
