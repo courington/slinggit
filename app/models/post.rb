@@ -39,8 +39,8 @@ class Post < ActiveRecord::Base
   validates :user_id, presence: true
   VALID_HASHTAG_REGEX = /\A[a-z0-9_]{,20}\z/i
   validates :hashtag_prefix, presence: true, length: {maximum: 10}, format: {with: VALID_HASHTAG_REGEX, :message => "(Item) cannot contain spaces.  Characters must be either a-z, 0-9, or _"}
-  VALID_PRICE_REGEX = /\A[0-9]{,20}\z/i
-  validates :price, presence: true, length: {maximum: 5}, format: {with: VALID_PRICE_REGEX, :message => "cannot be more than $99999 and cannot include commas"}
+  #VALID_PRICE_REGEX = /\A[0-9]{,20}\z/i
+  validates :price, presence: true, :numericality => { :only_integer => true, :message => "must be a number and cannot be longer than 5 characters" }#, length: {maximum: 5}, format: {with: VALID_PRICE_REGEX, :message => "cannot be more than $99999 and cannot include commas"}
   #validates_attachment_presence :photo
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
@@ -56,8 +56,12 @@ class Post < ActiveRecord::Base
   end
 
   def price=(num)
+    # strip commas
     num.gsub!(',','') if num.is_a?(String)
-    self[:price] = num.to_i
+    # then check if the string is an int
+    if !!(num =~ /^[-+]?[0-9]+$/)
+      self[:price] = num.to_i 
+    end  
   end 
 
   def root_photo_path
