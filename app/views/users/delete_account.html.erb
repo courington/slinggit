@@ -29,7 +29,7 @@
         why are you deleting your account?</p>
       <%= text_area_tag :reason, @reason, :placeholder => 'Example: "I hate the color blue and I needed more customer support."', class: "input-xlarge" %>
 
-      <%= submit_tag "Delete My Account", class: "btn_large", :id => 'delete_account', :title => "Do you acknowledge everything on this page and still want to delete your account?" %>
+      <%= button_tag "Delete My Account", :type => "submit", class: "btn_large", :id => 'delete_account', :title => "Do you acknowledge everything on this page and still want to delete your account?" %>
       <%= link_to "Cancel", edit_user_path(current_user), :class => "btn_cancel" %>
   <% end %>
 
