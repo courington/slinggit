@@ -2,23 +2,33 @@
 
   <% if @post.open? %>
 
-    <%= form_for([@post, @post.comments.build]) do |f| %>
-      <%= f.hidden_field :user_id, value: current_user.id %>
+    <% if current_user.status != "suspended" %>
 
-      <fieldset>
-        <div class="control group">
-          <div class="controls">
-            <%= f.text_area :body, class: "input-xlarge", rows: "3", style: "width:100%" %> <!-- inline style! -->
-          </div>  
-        </div>
+      <%= form_for([@post, @post.comments.build]) do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
 
-        <div class="form-actions">
-          <%= f.submit "Reply to Post", class: "btn btn-inverse" %>
-        </div>
+        <fieldset>
+          <div class="control group">
+            <div class="controls">
+              <%= f.text_area :body, class: "input-xlarge", rows: "3", style: "width:100%" %> <!-- inline style! -->
+            </div>  
+          </div>
 
-      </fieldset>
+          <div class="form-actions">
+            <%= f.submit "Reply to Post", class: "btn btn-inverse" %>
+          </div>
 
-      <% end %><!-- form end -->
+        </fieldset>
+
+        <% end %><!-- form end -->
+
+    <% else %>
+
+      <div class="notice">
+        You are currently in time out.  As a result of this, you cannot comment on posts.
+      </div>  
+
+    <% end %>    
 
   <% else %>
 
