@@ -56,4 +56,5 @@ SlinggitWebapp::Application.configure do
   config.slinggit_client_atoken = '571885574-lYr8br0gkmLOaPSB5GRxGssQhpVlxZavksjFFWbQ'
   config.slinggit_client_asecret = 't6dzy6YrrG0I0STKvRRCyAqWrVqZiRNfqfzWNGbdxYI'
   config.slinggit_username = 'gitnsling_test'
+  
 end

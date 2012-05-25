@@ -2,6 +2,9 @@ class PostsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
   before_filter :correct_user, only: [:destroy, :edit, :update]
   before_filter :load_api_accounts, :only => [:new, :create]
+  # CMK: I'm not sure I was asking Dan the right questions tonight about
+  # where to put this, but this seems cleaner than putting it the model.
+  before_filter :get_id_for_slinggit_api_account, :only => [:new, :create]
 
   def index
   end
@@ -48,14 +51,20 @@ class PostsController < ApplicationController
     else
       if not twitter_accounts.blank?
         twitter_accounts.each do |id, value|
-          recipient_api_account_ids << id
-          debugger
-          TwitterPost.create(
-              :user_id => @post.user_id,
-              :api_account_id => id.to_i,
-              :post_id => @post.id,
-              :content => @post.content
-          ).do_post
+          # We need to first make sure the user is the owner of this account, or that
+          # it is the slinggit account. Should we log a volation here?
+          proposed_api_account = ApiAccount.first(:conditions => ['id = ?', id], :select => 'user_id')
+          if not proposed_api_account.blank?
+            if current_user.id == proposed_api_account.user_id || proposed_api_account.user_id == 0
+              recipient_api_account_ids << id
+              TwitterPost.create(
+                  :user_id => @post.user_id,
+                  :api_account_id => id.to_i,
+                  :post_id => @post.id,
+                  :content => @post.content
+              ).do_post
+            end
+          end  
         end
 
         if not recipient_api_account_ids.blank?
@@ -111,6 +120,11 @@ class PostsController < ApplicationController
 
   def load_api_accounts
     @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ? AND status != "deleted"', current_user.id, 'twitter'])
+  end
+
+  def get_id_for_slinggit_api_account
+    slinggit_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id')
+    @slinggit_account_id = slinggit_api_account.id
   end
 
 end

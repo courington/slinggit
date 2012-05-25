@@ -41,7 +41,7 @@
 
       <fieldset class="col_twoThird">
         <span>Twitter account(s) to post to:</span>
-        <%= check_box_tag "twitter_accounts[0]", 'post', true %>Slinggit
+        <%= check_box_tag "twitter_accounts[#{@slinggit_account_id}]", 'post', true %>Slinggit
         <% @twitter_accounts.each do |twitter_account| %>
             <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %> <%= twitter_account.user_name %>
         <% end %>

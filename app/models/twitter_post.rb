@@ -43,14 +43,9 @@ class TwitterPost < ActiveRecord::Base
       if not self.api_account.blank?
         if not self.api_account.status == 'deleted'
           twitter_client = nil
-          if self.api_account_id == 0
-            twitter_client = Twitter::Client.new(oauth_token: Rails.configuration.slinggit_client_atoken, oauth_token_secret: Rails.configuration.slinggit_client_asecret)
-          else
-            if self.api_account
-              twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
-            end
-          end
-
+          if self.api_account
+            twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
+          end       
           if not twitter_client.blank?
             begin
               result = tweet_constructor(twitter_client)
@@ -87,14 +82,9 @@ class TwitterPost < ActiveRecord::Base
       if not self.api_account.blank?
         if not self.api_account.status == 'deleted'
           twitter_client = nil
-          if api_account_id == 0
-            twitter_client = Twitter::Client.new(oauth_token: Rails.configuration.slinggit_client_atoken, oauth_token_secret: Rails.configuration.slinggit_client_asecret)
-          else
-            if self.api_account
-              twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
-            end
-          end
-
+          if self.api_account
+            twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
+          end 
           if not twitter_client.blank?
             begin
               result = twitter_client.status_destroy(self.twitter_post_id)
