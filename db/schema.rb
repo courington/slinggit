@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120522024326) do
+ActiveRecord::Schema.define(:version => 20120520084047) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -196,12 +196,10 @@ ActiveRecord::Schema.define(:version => 20120522024326) do
     t.string   "email_activation_code"
     t.string   "time_zone"
     t.string   "account_reactivation_code"
-    t.string   "slug"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
-  add_index "users", ["slug"], :name => "index_users_on_slug", :unique => true
 
   create_table "violation_records", :force => true do |t|
     t.integer  "user_id"
