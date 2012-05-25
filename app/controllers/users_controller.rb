@@ -5,11 +5,39 @@ class UsersController < ApplicationController
 
   USERS_PATH = "/users"
 
+  def request_invitation
+
+    #check to see if the user already exists in the users table as well
+
+    if request.post?
+      if not params[:email].blank?
+        if invitation = Invitation.first(:conditions => ['email = ?', params[:email]], :select => 'status')
+          if invitation.status == 'approved'
+            flash.now[:success] = "Your invitation has already been approved.  Please follow the link in your approval email."
+          elsif invitation.status == 'active'
+            flash.now[:notice] = "Your invitation has already been activated.  Please log in with your email and password"
+          else
+            flash.now[:notice] = "You have already requested an invitation.  We will let you know when it has been approved."
+          end
+        else
+          #this will automatically generate an email for us and the user.
+          Invitation.create(
+              :email => params[:email],
+              :comment => params[:comment]
+          )
+          flash.now[:succcess] = "Invitation request has been sent.  We will approve it as soon as possible."
+        end
+      else
+        flash.now[:error] = "Please give us your email address so we can contact you when your invitation is approved."
+      end
+    end
+  end
+
   def show
     # CMK: added condition to check for status != deleted
     @user = User.first(:conditions => ['name = ? AND status != "deleted"', params[:id]])
     if not @user.blank?
-      @posts = Post.paginate(page: params[:page], :per_page=>2, :conditions => ['user_id = ? AND status != ?', @user.id, 'deleted'])
+      @posts = Post.paginate(page: params[:page], :per_page => 2, :conditions => ['user_id = ? AND status != ?', @user.id, 'deleted'])
     else
       if signed_in?
         redirect_to current_user
@@ -20,6 +48,11 @@ class UsersController < ApplicationController
   end
 
   def new
+    if system_preferences[:invitation_only] == 'on'
+      flash[:notice] = "We are not currently accepting new users without an invitation."
+      redirect_to :action => :request_invitation and return
+    end
+
     if session[:user].blank?
       @user = User.new
       # CMK: storing return_url here, prior to session reset, so that we can return
