@@ -80,4 +80,5 @@ SlinggitWebapp::Application.configure do
   # key and secret.
   config.slinggit_client_atoken = '561831843-GXxjNVqaA1mTId1g61VXEyywDNBIUnsZ6mbUsvUa'
   config.slinggit_client_asecret = 'yOe5hXiG5vNLGWkJc11UFTiQyFC7ciH5OsFLMFSJfI'
+  config.slinggit_username = 'slinggit'
 end
