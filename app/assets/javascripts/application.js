@@ -12,11 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui-1.7.2.min
 //= require underscore
 //= require backbone
 //= require json2
 //= require jquery.mailcheck.min
 //= require jquery.tablesorter.min
+//= require jquery.easy-confirm-dialog
 //= require modernizr.custom.49663
 //= require bootstrap
 //= require happy

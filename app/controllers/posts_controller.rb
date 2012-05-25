@@ -45,6 +45,7 @@ class PostsController < ApplicationController
     params.delete(:twitter_accounts)
 
     @post = current_user.posts.build(params[:post])
+    debugger
     if not @post.save
       render 'new'
       return
@@ -66,7 +67,7 @@ class PostsController < ApplicationController
             end
           end  
         end
-
+        debugger
         if not recipient_api_account_ids.blank?
           @post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
         end
