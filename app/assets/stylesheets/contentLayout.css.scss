@@ -38,7 +38,7 @@ $sixCols: 16.66666667%;
 
 //ROW HEIGHT -- based on font-size and line-height; this needs some work yet -- cc
 $font-size: 1.6em;
-$leading: 1.6em;
+$leading: ($font-size * .8 );
 .row {
 	width: 100%;
 	overflow: hidden;
@@ -111,7 +111,6 @@ h6, p {
 }
 
 p {
-  margin: $font-size 0;
   line-height: $leading;
 }
 
@@ -150,8 +149,8 @@ p {
       font-size: $font-size * 1.6;
       text-transform: uppercase;
       font-weight: bold;
-      color: rgba(255, 255, 255, .25);
-      margin: -1.225em 0 0 0.075em;
+	  color: rgba(255, 255, 255, .25);
+	  margin: -1.05em 0 0 0.25%;
     }
   }
   .twtr-widget {
@@ -305,6 +304,24 @@ margin: 3em $font-size;
 	float: left;
 	margin-right: ($font-size /2) !important;
 }
+.posts p {
+font-size: 1.2em;
+line-height: 1.46em;
+text-rendering: optimizelegibility;
+letter-spacing: .1em;
+word-spacing: .1em;
+}
+.label.label-success,
+.posts .col4 .pull_right a {
+	font-size: 1.2em;
+	line-height: 1.46em;
+	text-rendering: optimizelegibility;
+	letter-spacing: .1em;
+	word-spacing: .1em;
+width: 20%;
+float: left;
+clear: none;
+}
   // posts page
   .posts article ul {
     list-style: disc outside;
@@ -316,15 +333,16 @@ margin: 3em $font-size;
       list-style: none;
       a {
         color: rgb(62, 62, 62);
+		width: 100%;
         .photo {
           border: 1px solid $lt-grey;
           padding: 1px;
-          width: 60px;
+          width: 90%;
           background-color: $wht;
-		  margin: 0 $font-size 0 0;
+		  margin: 0;
           // CMK: Chase - not sure if you want these images to be a set size or not
           img{
-            width: 60px;
+            width: 100%;
           }
         }
         .item {
