@@ -1,7 +1,7 @@
 <% provide(:title, @user.name) %>
 <section class="wrapper posts">	
 
-	<article>
+	<article class="col4">
     <% if @user.posts.any? %>
       <%= will_paginate @posts%>
       <header>
@@ -24,7 +24,7 @@
     <% end %>
   </article>
 
-	<article>
+	<article class="col2">
   	<header>
     	<h1><%= @user.name %></h1>
 		</header>

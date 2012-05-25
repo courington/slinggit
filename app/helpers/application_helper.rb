@@ -10,5 +10,23 @@ module ApplicationHelper
     end
   end
 
+  def system_preferences
+    if session[:system_preferences].blank?
+      active_preferences = HashWithIndifferentAccess.new()
+      system_preferences = SystemPreference.all(:conditions => ['active = ?', true])
+      system_preferences.each do |preference|
+        if (preference.start_date.blank? or preference.start_date <= Date.now) and (preference.end_date.blank? or preference.end_date >= Date.now)
+          if preference.constraints.blank? or eval(preference.constraints)
+            active_preferences[preference.preference_key] = preference.preference_value
+          end
+        end
+      end
+      session[:system_preferences] = active_preferences
+      return active_preferences
+    else
+      return session[:system_preferences]
+    end
+  end
+
 end
 

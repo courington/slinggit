@@ -21,7 +21,7 @@
 class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
-  
+
   attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret, :status
   has_secure_password
   has_many :posts, dependent: :destroy
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   before_save :downcase_attributes
   before_save :create_remember_token
-  after_create :create_post_limitation_record
+  after_create :create_limitation_records
 
   # Allows letters, numbers and underscore
   VALID_USERNAME_REGEX = /\A[a-z0-9_-]{,20}\z/i
@@ -71,15 +71,51 @@ class User < ActiveRecord::Base
     self.name = name.downcase
   end
 
-  def create_post_limitation_record
+  def create_limitation_records
+    #by doing limitations on a per user basis, we can provide different values for different users
+    #using a system preference for the defaults will allow us to make a single database change for all new users moving forward
+    #if we dont have an active preference for somereason, it will default since we clearly need something here
+
+    default_invites_user_limit = system_preferences[:default_invites_user_limit] || '{"user_limit":"100","frequency":"0","frequency_type":""}'
+    decoded_default_invites_user_limit = ActiveSupport::JSON.decode(default_invites_user_limit)
+    UserLimitation.create(
+        :user_id => self.id,
+        :limitation_type => 'invites',
+        :user_limit => decoded_default_invites_user_limit['user_limit'],
+        :frequency => decoded_default_invites_user_limit['frequency'],
+        :frequency_type => decoded_default_invites_user_limit['frequency_type'],
+        :active => true
+    )
+
+    default_posts_user_limit = system_preferences[:default_posts_user_limit] || '{"user_limit":"10","frequency":"24","frequency_type":"hours"}'
+    decoded_default_posts_user_limit = ActiveSupport::JSON.decode(default_posts_user_limit)
     UserLimitation.create(
         :user_id => self.id,
         :limitation_type => 'posts',
-        :user_limit => 10,
-        :frequency => '24',
-        :frequency_type => 'hours',
+        :user_limit => decoded_default_posts_user_limit['user_limit'],
+        :frequency => decoded_default_posts_user_limit['frequency'],
+        :frequency_type => decoded_default_posts_user_limit['frequency_type'],
         :active => true
     )
+  end
+
+  def system_preferences
+    #we dont have access to session here so a method in this model was added
+    if @system_preferences.blank?
+      active_preferences = HashWithIndifferentAccess.new()
+      system_preferences = SystemPreference.all(:conditions => ['active = ?', true])
+      system_preferences.each do |preference|
+        if (preference.start_date.blank? or preference.start_date <= Date.now) and (preference.end_date.blank? or preference.end_date >= Date.now)
+          if preference.constraints.blank? or eval(preference.constraints)
+            active_preferences[preference.preference_key] = preference.preference_value
+          end
+        end
+      end
+      @system_preferences = active_preferences
+      return @system_preferences
+    else
+      return @system_preferences
+    end
   end
 
 end

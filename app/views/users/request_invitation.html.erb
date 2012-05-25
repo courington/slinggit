@@ -1,0 +1,25 @@
+<%= provide(:title, 'Request Invitation') %>
+
+<section class="wrapper page_col singleWide">
+  <header>
+    <h1>Request Invitation</h1>
+
+    <p>Request Invitation</p>
+  </header>
+
+  <%= form_tag do |f| %>
+      <fieldset>
+        <%= label_tag :email, "Email", for: "invitation_email" %>
+        <%= email_field_tag :email, @email, placeholder: "Email", class: "form_singleLine", size: "30" %>
+      </fieldset>
+
+      <fieldset>
+        <%= label :comment, "Comment", for: "invitation_comment" %>
+        <%= text_area_tag :comment, @comment, placeholder: "Let us know a bit about your self and why you want to try Slinggit. (optional)", class: "input-xlarge" %>
+      </fieldset>
+
+      <fieldset>
+        <%= button_tag "Send Request", class: "btn_large", :type => 'submit' %>
+      </fieldset>
+  <% end %>
+</section>

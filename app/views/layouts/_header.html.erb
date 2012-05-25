@@ -6,9 +6,9 @@
       <h6>beta</h6>
     </hgroup>
     <nav>
-	    <div id="quickSearchWrapper">
-	      <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
-	    </div>
+      <div id="quickSearchWrapper">
+        <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+      </div>
       <% if signed_in? %>
           <div class="head_aside <%= 'active' if current_page?(current_user) %>">
             <%= link_to "Posts", current_user %>
@@ -37,18 +37,26 @@
           </div>
           <!-- END -->
       <% else %>
-        <% if current_page?(signin_path) %>
-  			<div class="head_aside">
-				<%= link_to "Sign Up", signup_path %>
-  			</div>
-        <% else %>       
-          <div class="head_aside">
-            <%= link_to "Sign In", signin_path %>
-          </div>
-	  			<div class="head_aside">
-					<%= link_to "Sign Up", signup_path %>
-	  			</div>
-        <% end %>  
+          <% if current_page?(signin_path) %>
+              <div class="head_aside">
+                <% if system_preferences[:invitation_only] == "on" %>
+                    <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
+                <% else %>
+                    <%= link_to "Sign Up", signup_path %>
+                <% end %>
+              </div>
+          <% else %>
+              <div class="head_aside">
+                <%= link_to "Sign In", signin_path %>
+              </div>
+              <div class="head_aside">
+                <% if system_preferences[:invitation_only] == "on" %>
+                    <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
+                <% else %>
+                    <%= link_to "Sign Up", signup_path %>
+                <% end %>
+              </div>
+          <% end %>
       <% end %>
     </nav>
   </div>
