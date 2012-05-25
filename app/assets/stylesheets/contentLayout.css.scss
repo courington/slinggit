@@ -39,6 +39,10 @@ $sixCols: 16.66666667%;
 //ROW HEIGHT -- based on font-size and line-height; this needs some work yet -- cc
 $font-size: 1.6em;
 $leading: 1.6em;
+.row {
+	width: 100%;
+	overflow: hidden;
+}
 
 // COLOR VARIABLES
 $main-grey: rgb(119, 119, 119);
@@ -112,11 +116,11 @@ p {
 }
 
 .wrapper {
-  width: 90%;
+  width: 100%;
   max-width: 1024px;
   margin: 0 auto;
   overflow: hidden;
-  padding: 0 0 $font-size 0;
+  padding: 0 2.5%;
 }
 
 .subHeader{
@@ -297,21 +301,27 @@ margin: 3em $font-size;
     }
   }
   //end
+.pagination ul li {
+	float: left;
+	margin-right: ($font-size /2) !important;
+}
   // posts page
   .posts article ul {
     list-style: disc outside;
-    margin: 0 0 0 $font-size;
+    margin: $font-size 0;
+	overflow: hidden;
     li {
-      margin: 0 0 $font-size 0;
+      margin: 0 0 0 0;
       //border-bottom: 1px solid $lt-grey;
       list-style: none;
       a {
         color: rgb(62, 62, 62);
-        .photo{
+        .photo {
           border: 1px solid $lt-grey;
           padding: 1px;
           width: 60px;
           background-color: $wht;
+		  margin: 0 $font-size 0 0;
           // CMK: Chase - not sure if you want these images to be a set size or not
           img{
             width: 60px;
@@ -319,7 +329,7 @@ margin: 3em $font-size;
         }
         .item {
           font-size: $font-size * 1;
-          line-height: $font-size;
+          display: block;
         }
         .content {
           font-size: $font-size;

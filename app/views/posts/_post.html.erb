@@ -1,42 +1,27 @@
-<li>
-  <article>
-
+<li class="row">
     <div class="row">
-      <%= link_to(post_path(post)) do %>
-      <div class="col_oneThird">
+	<%= link_to(post_path(post)) do %>
+		<div class="col2">
+        	<div class="photo">
+          	<% if post.photo_file_name.blank? %>
+            	<%= image_tag "80x80_placeholder.png" %>
+          	<% else %>
+            	<%= image_tag post.photo.url(:search) %>
+          	<% end %>
+        	</div>
+		</div>
+    
+		<div class="col4">
+			<span class="item"><%= post.hashtag_prefix %></span>
+			<span><%= post.content %></span>
+			<% end %>
+			<span class="timestamp">Posted <%= time_ago_in_words(post.created_at) %> ago.</span>
+			<span class="timestamp">Updated <%= time_ago_in_words(post.updated_at) %> ago.</span>
+		</div>
+	</div>
 
-        <div class="photo">
-          <% if post.photo_file_name.blank? %>
-            <%= image_tag "80x80_placeholder.png" %>
-          <% else %>
-            <%= image_tag post.photo.url(:search) %>
-          <% end %>
-        </div>
-
-      </div>
-
-      <div class="col_twoThird">
-
-          <span class="item"><%= post.hashtag_prefix %></span>
-          <span><%= post.content %></span>
-
-      </div>
-
-      <% end %>
-    </div>
-
-    <div class="row">
-
-      <div class="col_twoThird">
-        <span class="timestamp">
-          Posted <%= time_ago_in_words(post.created_at) %> ago.
-        </span>
-        <span class="timestamp">
-          Updated <%= time_ago_in_words(post.updated_at) %> ago.
-        </span>
-      </div>
-
-      <div class="col_oneThird">
+	<div class="row">
+      <div class="col5 pull_right">
         <% if post.open? %>
           <span class="label label-success">Open</span>
         <% else %>  
@@ -51,7 +36,5 @@
           <%= link_to "DELETE", post, method: :delete, confirm: "You sure?" %>
         <% end %>
       </div>  
-
     </div>
-  </article>
 </li>
