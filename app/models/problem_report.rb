@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: problem_reports
+#
+#  id                      :integer         not null, primary key
+#  exception_message       :string(255)
+#  exception_class         :string(255)
+#  exception_backtrace     :text
+#  user_agent              :string(255)
+#  ip_address              :string(255)
+#  url_referrer            :string(255)
+#  signed_in_user_id       :integer
+#  status                  :string(255)     default("open")
+#  last_updated_by_user_id :integer
+#  owned_by_user_id        :integer
+#  created_at              :datetime        not null
+#  updated_at              :datetime        not null
+#
+
 #create_table :problem_reports do |t|
 #  t.string :exception_message
 #  t.string :exception_class

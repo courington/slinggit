@@ -5,39 +5,47 @@
 		<p>Update your profile</p>
 	</header>
 	
-	<article>
-	<%= form_for @user do |f| %>
-		<%= render 'shared/error_messages', object: f.object %>
-		<legend>User Info</legend>
+	<% if @user.status != "suspended" %>
+		<article>
+		<%= form_for @user do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<legend>User Info</legend>
 
-			<fieldset>
-				<%= f.label :name, class: "control-label", for: "user_name" %>
-                <%= f.text_field :name, class: "form_singleLine" %>
-            </fieldset>
+				<fieldset>
+					<%= f.label :name, class: "control-label", for: "user_name" %>
+	                <%= f.text_field :name, class: "form_singleLine" %>
+	            </fieldset>
 
-            <fieldset>
-				<%= f.label :email, class: "control-label", for: "user_email" %>
-				<%= f.text_field :email, class: "form_singleLine" %>
-			</fieldset>
+	            <fieldset>
+					<%= f.label :email, class: "control-label", for: "user_email" %>
+					<%= f.text_field :email, class: "form_singleLine" %>
+				</fieldset>
 
-            <fieldset>
-				<%= f.label :password, class: "control-label", for: "user_password" %>
-				<%= f.password_field :password, class: "form_singleLine" %>
-            </fieldset>
+	            <fieldset>
+					<%= f.label :password, class: "control-label", for: "user_password" %>
+					<%= f.password_field :password, class: "form_singleLine" %>
+	            </fieldset>
 
-            <fieldset>
-				<%= f.label :password_confirmation, "Confirm Password", class: "control-label", for: "user_password_confirmation" %>
-				<%= f.password_field :password_confirmation, class: "form_singleLine" %>
-            </fieldset>
+	            <fieldset>
+					<%= f.label :password_confirmation, "Confirm Password", class: "control-label", for: "user_password_confirmation" %>
+					<%= f.password_field :password_confirmation, class: "form_singleLine" %>
+	            </fieldset>
 
-            <% if !session['access_secret'].nil? && !session['access_token'].nil? %>
-				<%= f.hidden_field :twitter_atoken, value: session['access_token'] %>
-				<%= f.hidden_field :twitter_asecret, value: session['access_secret'] %>
-            <% end %>
+	            <% if !session['access_secret'].nil? && !session['access_token'].nil? %>
+					<%= f.hidden_field :twitter_atoken, value: session['access_token'] %>
+					<%= f.hidden_field :twitter_asecret, value: session['access_secret'] %>
+	            <% end %>
 
-              <%= f.submit "Save changes", class: "btn_medium" %>
+	              <%= f.submit "Save changes", class: "btn_medium" %>
+		<% end %>
+		</article>
+	<% else %>
+
+		<div class="notice">
+        	You are currently in time out.  As a result of this, you cannot edit your profile.
+      	</div>  
+
 	<% end %>
-	</article>
 
 	<article>
 		<p>Gravatar</p>

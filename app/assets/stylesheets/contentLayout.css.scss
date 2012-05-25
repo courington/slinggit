@@ -1,6 +1,45 @@
 // Date: May 5, 2012
 // Author: @chasecourington
 
+//WIDTH
+$sixCols: 16.66666667%;
+.col1 {
+	width: $sixCols;
+	display: inline-block;
+}
+.col2 {
+	width: ($sixCols * 2);
+	display: inline-block;
+}
+.col3 {
+	width: ($sixCols * 3);
+	display: inline-block;
+}
+.col4 {
+	width: ($sixCols * 4);
+	display: inline-block;
+}
+.col5 {
+	width: ($sixCols * 5);
+	display: inline-block;
+}
+.col6 {
+	width: 100%;
+	display: block;
+}
+
+//RIGHT or LEFT
+.pull_right {
+	float: right;
+}
+.pull_left {
+	float: left;
+}
+
+//ROW HEIGHT -- based on font-size and line-height; this needs some work yet -- cc
+$font-size: 1.6em;
+$leading: 1.6em;
+
 // COLOR VARIABLES
 $main-grey: rgb(119, 119, 119);
 $main-red: rgb(253, 65, 40);
@@ -35,11 +74,9 @@ $tranny: all .3s ease;
   transition: $tranny;
 }
 
-// FONTS
+// TYPOGRAPHY
 $main-font: 'helvetica neue', helvetica, arial, sans-serif;
-$font-size: 1.6em;
 $txt-shdw: 0 1px 0 rgba(0, 0, 0, .2);
-
 $padding: .4em .6em;
 
 body {
@@ -71,7 +108,7 @@ h6, p {
 
 p {
   margin: $font-size 0;
-  line-height: 1.2em;
+  line-height: $leading;
 }
 
 .wrapper {
