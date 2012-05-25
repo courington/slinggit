@@ -44,4 +44,8 @@ class UserMailer < ActionMailer::Base
     mail(:to => EXECUTIVES, :from =>'From Beyond The Grave <deleted_account@slinggit.com>', :subject => "User deleted account")
   end
 
+  def invitation_request(email)
+    mail(:to => email, :subject => "We have received your invitation request", :bcc => EXECUTIVES)
+  end
+
 end

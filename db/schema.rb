@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520084047) do
+ActiveRecord::Schema.define(:version => 20120523063039) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -45,12 +45,13 @@ ActiveRecord::Schema.define(:version => 20120520084047) do
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "invitations", :force => true do |t|
-    t.string   "email_address"
-    t.string   "location"
+    t.string   "email"
     t.text     "comment"
-    t.string   "status",        :default => "pending"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.string   "status",          :default => "pending"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.integer  "source_user_id"
+    t.string   "activation_code"
   end
 
   create_table "mobile_sessions", :force => true do |t|
@@ -137,6 +138,8 @@ ActiveRecord::Schema.define(:version => 20120520084047) do
     t.boolean  "active",           :default => false
   end
 
+  add_index "system_preferences", ["preference_key"], :name => "index_system_preferences_on_preference_key", :unique => true
+
   create_table "twitter_posts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "api_account_id"
@@ -193,13 +196,15 @@ ActiveRecord::Schema.define(:version => 20120520084047) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "active"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
+    t.string   "slug"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+  add_index "users", ["slug"], :name => "index_users_on_slug", :unique => true
 
   create_table "violation_records", :force => true do |t|
     t.integer  "user_id"

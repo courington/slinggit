@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   around_filter :catch_exceptions, :except => [:mobile]
   before_filter :set_timezone
   before_filter :verify_good_standing, :except => [:mobile, :admin, :verify_good_standing, :suspended_account]
-  before_filter :invitation_only, :except => [:mobile]
 
   #######CONSTANTS#####
   ILLICIT_PHOTO = "An illicit photo was uploaded."
@@ -194,13 +193,6 @@ class ApplicationController < ActionController::Base
 
 
   ###BEFORE FILTERS####
-
-  def invitation_only
-    if system_preferences[:invitation_only] == 'on'
-
-    end
-  end
-
   def verify_good_standing
     if signed_in?
       # suspended users are allowed to login, they're just notified that their accounts are suspeneded.
