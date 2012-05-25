@@ -11,7 +11,7 @@
             <%= link_to "Sign up now!", signup_path, class: "btn_large" %>
         <% end %>
     <% elsif not current_user.blank? %>
-        <p>Welcome back <%= cur5rent_user.name %>!</p>
+        <p>Welcome back <%= current_user.name %>!</p>
 
         <p>Got some old junk laying
           around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
