@@ -48,6 +48,7 @@ class Post < ActiveRecord::Base
 
   STATUS_DELETED = "deleted"
   STATUS_ACTIVE = "active"
+  STATUS_BANNED = "banned"
 
   def create_post_history
     if not self.id.blank?
@@ -80,7 +81,7 @@ class Post < ActiveRecord::Base
   end  
 
   def is_deleted?
-    self.status == STATUS_DELETED
+    self.status == STATUS_DELETED || self.status == STATUS_BANNED
   end  
 
 end
