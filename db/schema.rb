@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120525030856) do
+ActiveRecord::Schema.define(:version => 20120526001305) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -189,12 +189,12 @@ ActiveRecord::Schema.define(:version => 20120525030856) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",                     :default => false
-    t.string   "status",                    :default => "active"
+    t.string   "status",                    :default => "unverified"
     t.string   "password_reset_code"
     t.string   "email_activation_code"
     t.string   "time_zone"
