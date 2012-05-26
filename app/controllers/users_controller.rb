@@ -116,7 +116,7 @@ class UsersController < ApplicationController
   def verify_email
     if not params[:id].blank?
       if user = User.first(:conditions => ['email_activation_code = ?', params[:id]])
-        if user.email_activation_code == Digest::SHA1.hexdigest(@user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH)
+        if user.email_activation_code == Digest::SHA1.hexdigest(user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH)
           user.update_attribute(:email_activation_code, nil)
           flash[:success] = "Your email has been verified."
           sign_in user
