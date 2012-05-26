@@ -1,25 +1,36 @@
 <% provide(:title, "Sign in") %>
 
-<section class="wrapper  page_col singleWide">
-	<header>
+<section class="wrapper">
+	<header class="row">
 		<h1>Sign in</h1>
 		<p>Sign in</p>
 	</header>
 
+<div class="row">
 	<%= form_for(:session, url: sessions_path) do |f| %>
-	<fieldset class="form_initialFields">
+	
+<div class="row">
+	<fieldset class="col2 form_initialFields">
     	<%= f.label :email, for: "session_email" %>
       	<%= f.email_field :email, class: "form_singleLine", :value => @email, placeholder: "Email" %>
 	</fieldset>
-			
-	<fieldset class="form_initialFields">
+</div>
+
+<div class="row">
+	<fieldset class="col2 form_initialFields">
     	<%= f.label :password, for: "session_password" %>
       	<%= f.password_field :password, class: "form_singleLine", placeholder: "Password" %>
 	</fieldset>
-	<fieldset class="form_initialFields">
+</div>
+
+<div class="row">
+	<fieldset class="col2 form_initialFields">
     	<%= f.button "Sign in", class: "btn_large" %>
 	</fieldset>
+</div>
+
 	<% end %>
+</div>
 
 	<%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, :id => 'forgot_password' %>
 	<%= link_to "New User? Sign Up!", signup_path %>
