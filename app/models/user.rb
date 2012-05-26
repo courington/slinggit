@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
   STATUS_DELETED = "deleted"
   STATUS_BANNED = "banned"
   STATUS_ACTIVE = "active"
+  STATUS_SUSPENDED = "suspended"
 
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
@@ -66,7 +67,7 @@ class User < ActiveRecord::Base
   end
 
   def is_considered_deleted?
-    self.status != STATUS_UNVERIFIED and self.status != STATUS_DELETED
+    self.status == STATUS_BANNED or self.status == STATUS_DELETED
   end  
 
   def is_self_destroyed?
@@ -75,6 +76,10 @@ class User < ActiveRecord::Base
 
   def is_banned?
     self.status == STATUS_BANNED
+  end  
+
+  def is_suspended?
+    self.status == STATUS_SUSPENDED
   end  
 
   private
