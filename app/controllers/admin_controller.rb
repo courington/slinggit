@@ -1,6 +1,11 @@
 class AdminController < ApplicationController
   before_filter :verify_authorization
 
+  STATUS_UNVERIFIED = "unverified"
+  STATUS_DELETED = "deleted"
+  STATUS_BANNED = "banned"
+  STATUS_ACTIVE = "active"
+
   def index
     @user = current_user
   end
