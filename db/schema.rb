@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526001305) do
+ActiveRecord::Schema.define(:version => 20120527043815) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -36,8 +36,9 @@ ActiveRecord::Schema.define(:version => 20120526001305) do
     t.text     "body"
     t.integer  "post_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.string   "status",     :default => "active"
   end
 
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
@@ -196,8 +197,8 @@ ActiveRecord::Schema.define(:version => 20120526001305) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "unverified"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "external"
