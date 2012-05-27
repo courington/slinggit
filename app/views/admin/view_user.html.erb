@@ -1,19 +1,25 @@
-    <div>
-      <%= gravatar_for @user %>
-      <%= link_to @user.name, @user %>
+<div>
+  <%= link_to "<- Back to users", admin_users_path %>
+</div>  
+<div>
+  <%= gravatar_for @user %>
+  <%= link_to @user.name, {:controller => :admin, :action => :view_user, :id => @user.id} %>
 
-      <% if current_user.is_admin? && !current_user?(@user) && @user.is_active? %>
-      |  <%= link_to "Ban", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
-      |  <%= link_to "suspend", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
+  <% if current_user.is_admin? && !current_user?(@user) && @user.is_active? %>
+  |  <%= link_to "Ban", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
+  |  <%= link_to "suspend", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
 
-      <% elsif current_user.is_admin? && !current_user?(@user) && @user.is_suspended? %>
-        <strong>User is currently suspended.</strong>
-        <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, confirm: "Re-enable: You sure?" %>
-        |  <%= link_to "delete", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
-      
-      <% elsif current_user.is_admin? && !current_user?(@user) && @user.is_banned? %>
-        <strong>It looks like we have deleted this user.</strong>
-        <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, confirm: "Re-enable: You sure?" %>
-      
-      <% end %>
-    </div>
+  <% elsif current_user.is_admin? && !current_user?(@user) && @user.is_suspended? %>
+    <strong>User is currently suspended.</strong>
+    <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, confirm: "Re-enable: You sure?" %>
+    |  <%= link_to "delete", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
+  
+  <% elsif current_user.is_admin? && !current_user?(@user) && @user.is_banned? %>
+    <strong>It looks like we have deleted this user.</strong>
+    <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, confirm: "Re-enable: You sure?" %>
+  
+  <% end %>
+</div>
+<div>
+  User Profile Page: <%= link_to user_path(@user.name), user_path(@user.name) %>
+</div>
