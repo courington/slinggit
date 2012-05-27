@@ -1,7 +1,7 @@
-<article>
-	<header>
+<article class="col2">
+	<header class="row">
 		<h1><%= current_user.name %></h1>
-  	<h6><%= pluralize(current_user.posts.count, "post") %></h6>
+  		<h6><%= pluralize(current_user.posts.count, "post") %></h6>
 	</header>
 	<a href="<%= user_path(current_user) %>"><%= gravatar_for current_user %></a>
 </article>
