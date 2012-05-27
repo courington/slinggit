@@ -759,9 +759,9 @@ class MobileController < ApplicationController
   def get_all_slinggit_post_data(filter_data)
     matches = []
     if not filter_data[:search_term].blank?
-      matches = Post.all(:conditions => ["open = ? AND id <= ? AND(content like ? OR hashtag_prefix like ? OR location like ?)", true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name')
+      matches = Post.all(:conditions => ["open = ? AND id <= ? AND(content like ? OR hashtag_prefix like ? OR location like ?)", true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at')
     else
-      matches = Post.all(:conditions => ["open = ? AND id <= ?", true, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name')
+      matches = Post.all(:conditions => ["open = ? AND id <= ?", true, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at')
     end
     return [true, matches]
   end
@@ -770,9 +770,9 @@ class MobileController < ApplicationController
     matches = []
     if user = User.first(:conditions => ['name = ? AND status != "deleted"', filter_data[:user_name]], :select => 'id')
       if not filter_data[:search_term].blank?
-        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND id <= ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", user.id, true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name')
+        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND id <= ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", user.id, true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at')
       else
-        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND id <= ?", user.id, true, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name')
+        matches = Post.all(:conditions => ["user_id = ? AND open = ? AND id <= ?", user.id, true, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at')
       end
       return [true, matches]
     else
