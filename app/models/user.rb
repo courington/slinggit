@@ -71,6 +71,10 @@ class User < ActiveRecord::Base
     self.admin or (self.email.include? '@slinggit.com' and self.email_is_verified?)
   end
 
+  def is_active?
+    self.status == STATUS_ACTIVE
+  end  
+
   def is_considered_deleted?
     self.status == STATUS_BANNED or self.status == STATUS_DELETED
   end   
@@ -84,6 +88,7 @@ class User < ActiveRecord::Base
   end  
 
   def is_suspended?
+    debugger
     self.status == STATUS_SUSPENDED
   end  
 
