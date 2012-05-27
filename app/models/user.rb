@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   end  
 
   def is_considered_deleted?
-    self.status == STATUS_BANNED or self.status == STATUS_DELETED
+    self.status == STATUS_BANNED || self.status == STATUS_DELETED
   end   
 
   def is_self_destroyed?
@@ -77,7 +77,6 @@ class User < ActiveRecord::Base
   end  
 
   def is_suspended?
-    debugger
     self.status == STATUS_SUSPENDED
   end  
 

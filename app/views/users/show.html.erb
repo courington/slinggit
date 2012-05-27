@@ -2,12 +2,12 @@
 <section class="wrapper posts">	
 
 	<article class="col4">
-    	<% if @user.posts.any? %>
+    <% if @user.posts.any? %>
     	<header>
         	<h1>Posts (<%= @posts.count %>)</h1>
   			<p>Posts (<%= @posts.count %>)</p>
   		</header>
-		<%= will_paginate @posts%>
+		  <%= will_paginate @posts%>
       <ul class="posts">
       	<%= render @posts %>
       </ul>
