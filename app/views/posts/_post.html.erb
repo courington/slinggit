@@ -34,7 +34,7 @@
 
         <!-- ADMIN ONLY FUNCTIONALITY -->
         <% if is_signed_in_and_admin? %>
-          <%= link_to "DELETE", post, method: :delete, confirm: "You sure?" %>
+          <%= link_to "DELETE POST", {:controller => :admin, :action => :set_post_status, :id => post.id, :status => "DEL"}, confirm: "Delete Post: You sure?" %>
         <% end %>
       </div>
     </div>

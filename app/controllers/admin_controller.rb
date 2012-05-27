@@ -1,11 +1,6 @@
 class AdminController < ApplicationController
   before_filter :verify_authorization
 
-  STATUS_UNVERIFIED = "unverified"
-  STATUS_DELETED = "deleted"
-  STATUS_BANNED = "banned"
-  STATUS_ACTIVE = "active"
-
   def index
     @user = current_user
   end
@@ -77,7 +72,11 @@ class AdminController < ApplicationController
       if user.update_attribute(:status, status)
         if user.posts.any?
           user.posts.each do |post|
-            post.update_attribute(:status, status)  
+            if status == STATUS_BANNED
+              post.update_attribute(:status, STATUS_DELETED)
+            else  
+              post.update_attribute(:status, status)  
+            end  
           end
         end
         flash[:success] = "User status set to: #{status}."
@@ -89,6 +88,19 @@ class AdminController < ApplicationController
       flash[:notice] = "User does not exist"
       redirect_to admin_users_path
     end
+  end
+
+  def set_post_status
+    post = Post.first(:conditions => ['id = ?', params[:id]])
+    status = params[:status]
+    if not post.blank?
+      if post.update_attribute(:status, status)
+        if status == STATUS_DELETED
+          user = User.first(:conditions => ['id = ?', post.user_id], :select => 'status')
+          user.update_attribute(:status, STATUS_SUSPENDED)
+        end  
+      end
+    end  
   end
 
   def eradicate_all_from_image
