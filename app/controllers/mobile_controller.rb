@@ -591,30 +591,21 @@ class MobileController < ApplicationController
 
   def get_single_slinggit_post_data
     if not params[:post_id].blank?
-      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-        if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
-          comments_array = []
-          post.comments.each do |comment|
-            if comment.status == 'active'
-              comments_array << comment.attributes.merge!(:user_name => comment.user.name)
-            end
+      if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], "active"])
+        comments_array = []
+        post.comments.each do |comment|
+          if comment.status == 'active'
+            comments_array << comment.attributes.merge!(:user_name => comment.user.name)
           end
-
-          render_success_response(
-              post.attributes.merge!(:comments => comments_array)
-          )
-        else
-          render_error_response(
-              :error_location => 'get_individual_slinggit_post_data',
-              :error_reason => 'not found - post',
-              :error_code => '404',
-              :friendly_error => 'Oops, something went wrong.  Please try again later.'
-          )
         end
+
+        render_success_response(
+            post.attributes.merge!(:comments => comments_array)
+        )
       else
         render_error_response(
             :error_location => 'get_individual_slinggit_post_data',
-            :error_reason => 'not found - mobile_session',
+            :error_reason => 'not found - post',
             :error_code => '404',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
         )
