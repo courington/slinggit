@@ -93,12 +93,13 @@ class AdminController < ApplicationController
   def set_post_status
     post = Post.first(:conditions => ['id = ?', params[:id]])
     status = params[:status]
+    user_status = params[:user_status]
     if not post.blank?
       if post.update_attribute(:status, status)
-        if status == STATUS_DELETED
-          user = User.first(:conditions => ['id = ?', post.user_id], :select => 'status')
-          user.update_attribute(:status, STATUS_SUSPENDED)
-        end  
+        user = User.first(:conditions => ['id = ?', post.user_id])
+        user.update_attribute(:status, user_status)
+        flash[:success] = "Post status set to: #{status} and user status set to: #{user_status}"
+        redirect_to :action => "view_user", :id => user.id
       end
     end  
   end

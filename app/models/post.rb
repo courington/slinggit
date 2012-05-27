@@ -77,7 +77,7 @@ class Post < ActiveRecord::Base
   end  
 
   def is_deleted?
-    self.status == STATUS_DELETED || self.status == STATUS_BANNED
+    self.status == STATUS_DELETED
   end  
 
 end

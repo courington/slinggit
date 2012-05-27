@@ -2,7 +2,7 @@
 
   <% if @post.open? %>
 
-    <% if current_user.status != "suspended" %>
+    <% if not current_user.is_suspended? %>
 
       <%= form_for([@post, @post.comments.build]) do |f| %>
         <%= f.hidden_field :user_id, value: current_user.id %>
@@ -39,7 +39,7 @@
 
   <% end %>  
 
-<% else %>
+<% else %> <!-- Not signed in -->
   <div class="alert alert-info-black">
     <a class="close" data-dismiss="alert" href="#">×</a>
     <h4 class="alert-heading"><%= link_to "Sign in", signin_path %> to reply to this post</h4>
