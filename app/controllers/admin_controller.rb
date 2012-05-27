@@ -1,11 +1,6 @@
 class AdminController < ApplicationController
   before_filter :verify_authorization
 
-  STATUS_UNVERIFIED = "unverified"
-  STATUS_DELETED = "deleted"
-  STATUS_BANNED = "banned"
-  STATUS_ACTIVE = "active"
-
   def index
     @user = current_user
   end
@@ -59,6 +54,10 @@ class AdminController < ApplicationController
     @users = User.paginate(page: params[:page], :per_page=>100, :select => 'id,email,name,slug,status,created_at')
   end
 
+  def view_user
+    @user = User.first(:conditions => ['id = ?', params[:id]])
+  end  
+
   def view_images
     @image_datas = []
     Post.find_each(:conditions => ['status = "active" AND photo_file_name IS NOT NULL'], :select => 'id,user_id,photo_file_name,photo_updated_at') do |post|
@@ -73,15 +72,35 @@ class AdminController < ApplicationController
       if user.update_attribute(:status, status)
         if user.posts.any?
           user.posts.each do |post|
-            post.update_attribute(:status, status)  
+            if status == STATUS_BANNED
+              post.update_attribute(:status, STATUS_DELETED)
+            else  
+              post.update_attribute(:status, status)  
+            end  
           end
         end
-        flash[:success] = "User #{status}."
+        flash[:success] = "User status set to: #{status}."
       else 
-        flash[:error] = "User #{status} unsuccessfully"  
+        flash[:error] = "User status: #{status}, unsuccessfully set"  
       end
+      redirect_to :action => "view_user", :id => user.id
+    else
+      flash[:notice] = "User does not exist"
+      redirect_to admin_users_path
     end
-    redirect_to admin_users_path
+  end
+
+  def set_post_status
+    post = Post.first(:conditions => ['id = ?', params[:id]])
+    status = params[:status]
+    if not post.blank?
+      if post.update_attribute(:status, status)
+        if status == STATUS_DELETED
+          user = User.first(:conditions => ['id = ?', post.user_id], :select => 'status')
+          user.update_attribute(:status, STATUS_SUSPENDED)
+        end  
+      end
+    end  
   end
 
   def eradicate_all_from_image

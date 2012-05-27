@@ -56,5 +56,16 @@ SlinggitWebapp::Application.configure do
   config.slinggit_client_atoken = '571885574-lYr8br0gkmLOaPSB5GRxGssQhpVlxZavksjFFWbQ'
   config.slinggit_client_asecret = 't6dzy6YrrG0I0STKvRRCyAqWrVqZiRNfqfzWNGbdxYI'
   config.slinggit_username = 'gitnsling_test'
+
+  ## STATUSES ##
+  STATUS_UNVERIFIED = "UVR"
+  STATUS_DELETED = "DEL"
+  STATUS_BANNED = "BAN"
+  STATUS_ACTIVE = "ACT"
+  STATUS_SUSPENDED = "SUS"
+
+  ## ROLES ##
+  ROLE_ADMIN = "ADM"
+  ROLE_EXTERNAL = "EXT"
   
 end
