@@ -59,6 +59,10 @@ class AdminController < ApplicationController
     @users = User.paginate(page: params[:page], :per_page=>100, :select => 'id,email,name,slug,status,created_at')
   end
 
+  def view_user
+    @user = User.first(:conditions => ['id = ?', params[:id]])
+  end  
+
   def view_images
     @image_datas = []
     Post.find_each(:conditions => ['status = "active" AND photo_file_name IS NOT NULL'], :select => 'id,user_id,photo_file_name,photo_updated_at') do |post|
@@ -76,12 +80,15 @@ class AdminController < ApplicationController
             post.update_attribute(:status, status)  
           end
         end
-        flash[:success] = "User #{status}."
+        flash[:success] = "User status set to: #{status}."
       else 
-        flash[:error] = "User #{status} unsuccessfully"  
+        flash[:error] = "User status: #{status}, unsuccessfully set"  
       end
+      redirect_to :action => "view_user", :id => user.id
+    else
+      flash[:notice] = "User does not exist"
+      redirect_to admin_users_path
     end
-    redirect_to admin_users_path
   end
 
   def eradicate_all_from_image
