@@ -46,6 +46,10 @@ class Post < ActiveRecord::Base
 
   default_scope order: 'posts.updated_at DESC'
 
+  STATUS_DELETED = "deleted"
+  STATUS_ACTIVE = "active"
+  STATUS_BANNED = "banned"
+
   def create_post_history
     if not self.id.blank?
       current_post_before_save = Post.first(:conditions => ['id = ?', self.id])
@@ -72,8 +76,12 @@ class Post < ActiveRecord::Base
     "#{POST_PHOTO_URL}/posts/#{self.id}"
   end  
 
-  def save_photo_from_image_data(image_data)
-    #file = File.open(image_data)
+  def is_active?
+    self.status == STATUS_ACTIVE
+  end  
+
+  def is_deleted?
+    self.status == STATUS_DELETED || self.status == STATUS_BANNED
   end  
 
 end

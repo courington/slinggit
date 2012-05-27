@@ -1,47 +1,49 @@
 <%= provide(:title, 'Sign up') %>
-
-<section class="wrapper page_col singleWide">
-	<header>
+<section class="wrapper">
+	<header class="row">
 		<h1>Sign up</h1>
 		<p>Sign Up</p>
 	</header>
   
+
 	<%= form_for(@user) do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
     
-	<fieldset class="form_initialFields">
-		<%= f.label :name, "Username", for: "user_name" %>
-		<%= f.text_field :name, placeholder: "Username", class: "form_singleLine" %>
-    </fieldset>
-	<div id="usernameAvailabilityNotification"></div>
-  	<fieldset class="form_initialFields">
-		<%= f.label :email, for: "user_email" %>
-		<%= f.email_field :email, placeholder: "Email", class: "form_singleLine" %>
+	<fieldset class="row form_initialFields">
+		<%= f.label :name, "Username", for: "user_name", class: "col6" %>
+		<%= f.text_field :name, placeholder: "Username", class: "col2 form_singleLine" %>
 	</fieldset>
-	<div id="emailAvailabilityNotification"></div>
-	
-  	<fieldset class="form-actions" id="form_signUpActions">
-		<%= f.button "Sign Up with Twitter", type: "button", class: "btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-		<%= f.button "Twitter-less Sign Up", type: "button", class: "btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+	<div class="row" id="usernameAvailabilityNotification"></div>
+
+	<fieldset class="row form_initialFields">
+		<%= f.label :email, for: "user_email", class: "col6" %>
+		<%= f.email_field :email, placeholder: "Email", class: "col2 form_singleLine" %>
+	</fieldset>
+	<div class="row" id="emailAvailabilityNotification"></div>
+
+	<fieldset class="row form-actions" id="form_signUpActions">
+		<%= f.button "Sign Up with Twitter", type: "button", class: "col2 btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
+		<%= f.button "Don't Use Twitter", type: "button", class: "col1 btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
 		<%= hidden_field_tag :twitter_authenticate, nil %>
 	</fieldset>
 
-	<fieldset class="form_hiddenFields">
-		<%= f.label :password, "Slinggit Password", class: "control-label", for: "user_password" %>
-		<%= f.password_field :password, placeholder: "Password", class: "form_singleLine" %>
+	<fieldset class="row form_hiddenFields">
+		<%= f.label :password, "Slinggit Password", for: "user_password", class: "col6" %>
+		<%= f.password_field :password, placeholder: "Password", class: "col2 form_singleLine" %>
 	</fieldset>
 
-		<fieldset class="form_hiddenFields">
-			<%= f.label :password_confirmation, "Confirmation", class: "control-label", for: "user_password_confirmation" %>
-			<%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "form_singleLine" %>
-		</fieldset>
-		
-		<fieldset class="form_hiddenFields">
-			<%= f.button "Create my account", class: "btn_large" %>
-			<%= link_to 'start over', nil, :onclick => "javascript:void(0)", :id => 'signUpStartOverLink' %>
-		</fieldset>
+	<fieldset class="row form_hiddenFields">
+		<%= f.label :password_confirmation, "Confirmation", for: "user_password_confirmation", class: "col6" %>
+		<%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "col2 form_singleLine" %>
+	</fieldset>
+
+	<fieldset class="row form_hiddenFields">
+		<%= f.button "Create my account", class: "col2 btn_large" %>
+		<%= link_to 'start over', nil, :onclick => "javascript:void(0)", class: "col6", :id => 'signUpStartOverLink' %>
+	</fieldset>
+
 	<% end %>
-	
+
 </section>
 
 <style type="text/css">

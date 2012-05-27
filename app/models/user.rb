@@ -44,6 +44,12 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}
   validates :password_confirmation, presence: true
 
+  STATUS_UNVERIFIED = "unverified"
+  STATUS_DELETED = "deleted"
+  STATUS_BANNED = "banned"
+  STATUS_ACTIVE = "active"
+  STATUS_SUSPENDED = "suspended"
+
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
   end
@@ -53,12 +59,28 @@ class User < ActiveRecord::Base
   end
 
   def email_is_verified?
-    self.email_activation_code.blank?
+    self.email_activation_code.blank? and self.status != STATUS_UNVERIFIED
   end
 
   def is_admin?
     self.admin or (self.email.include? '@slinggit.com' and self.email_is_verified?)
   end
+
+  def is_considered_deleted?
+    self.status == STATUS_BANNED or self.status == STATUS_DELETED
+  end  
+
+  def is_self_destroyed?
+    self.status == STATUS_DELETED
+  end  
+
+  def is_banned?
+    self.status == STATUS_BANNED
+  end  
+
+  def is_suspended?
+    self.status == STATUS_SUSPENDED
+  end  
 
   private
 

@@ -39,12 +39,13 @@ $side-br: bottom-right;
 	border-#{$side-br}-radius: $radius;
 }
 @mixin textInput {
-	padding: $padding;
+	padding: .4em 0;
 	font-size: $font-size;
 	font-family: $main-font;
 	color: $main-grey;
 	border: 1px solid $lt-grey;
 	box-shadow: $input-txt-shading;
+	text-indent: .6em;
 }
 
 // VENDOR PREFIXES
@@ -60,9 +61,9 @@ input[type="text"] {
 	@include rounded-corners($radius);
 	@include transition;
 		&.form_singleLine {
-		width: 100%;
-		float: left;
-		clear: left;
+		//width: 100%;
+		//float: left;
+		//clear: left;
 		margin: ($font-size * .5) 0 $font-size 0;
 		}
 		&:focus {
@@ -132,15 +133,15 @@ input.submitBTN,
 .btn_medium,
 .btn_small,
 .btn_cancel{
-	background: $main-green;
+	cursor: pointer;
 	padding: .4em;
+	color: $wht;
 	font-size: $font-size;
 	font-family: $main-font;
-	color: $wht;
-	@include rounded-corners($radius);
+	background: $main-green;
 	border: 1px solid $main-grey;
-	cursor: pointer;
 	box-shadow: $btn-shading;
+	@include rounded-corners($radius);
 	//text-shadow: $btn-txt-shading;
 	@include transition;
 	&:hover,

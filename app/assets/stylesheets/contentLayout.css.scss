@@ -42,6 +42,7 @@ $leading: ($font-size * .8 );
 .row {
 	width: 100%;
 	overflow: hidden;
+	display: block;
 }
 
 // COLOR VARIABLES
@@ -168,10 +169,10 @@ p {
 	.form_initialFields,
 	.form_hiddenFields,
 	#form_signUpActions {
-	margin: $font-size 0;
+	//margin: $font-size 0;
 	//width: 35%;
-	float: left;
-	clear: left;
+	//float: left;
+	//clear: left;
 	}
 	.form_initialFields,
 	.form_hiddenFields {
@@ -182,8 +183,8 @@ p {
 			&[type="text"],
 			&[type="email"],
 			&[type="password"] {
-				width: 100%;
-				float: left;
+				//width: 100%;
+				//float: left;
 			}
 		}
 	}
@@ -242,11 +243,6 @@ background: none;
 border: none;
 color: rgb(253, 65, 40);
 text-shadow: none;
-}
-#usernameAvailabilityNotification, #emailAvailabilityNotification {
-float: left;
-width: 35%;
-margin: 3em $font-size;
 }
   //end
 

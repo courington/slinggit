@@ -1,24 +1,20 @@
 <% provide(:title, 'Home') %>
 <section class="wrapper">
-
-  <div class="page_col twoCol">
-    <% if current_user.blank? %>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum consequat sapien vel molestie. Aliquam
-          at massa arcu. Mauris volutpat.</p>
+	<div class="row">
+  	<div class="col4 pull_left">
+    	<% if current_user.blank? %>
+        <p>Looking for something? Want to sell something? Slinggit.</p>
         <% if system_preferences[:invitation_only] == "on" %>
             <%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "btn_large" %>
         <% else %>
             <%= link_to "Sign up now!", signup_path, class: "btn_large" %>
         <% end %>
-    <% elsif not current_user.blank? %>
+    	<% elsif not current_user.blank? %>
         <p>Welcome back <%= current_user.name %>!</p>
-
-        <p>Got some old junk laying
-          around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
-    <% end %>
-
+        <p>Got some old junk laying around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
+    	<% end %>
+		</div>
     <!-- BEGIN IMAGE CYCLE CODE -->
-
     <script type="text/javascript" src="http://malsup.github.com/jquery.cycle.all.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -27,15 +23,13 @@
             });
         })
     </script>
-    <div class="pics" id="iphoneDemo">
+    <div class="pics col2 pull_right" id="iphoneDemo">
       <img src="assets/images/iphone_demo/main.png"/>
       <img src="assets/images/iphone_demo/createaccount.png"/>
       <img src="assets/images/iphone_demo/signin.png"/>
       <img src="assets/images/iphone_demo/newpost.png"/>
     </div>
-
     <!-- END IMAGE CYCLE CODE -->
-
   </div>
 
   <style type="text/css">
@@ -56,7 +50,8 @@
       }
   </style>
 
-  <div class="page_col twoCol">
+<div class="row">
+  <div class="col6">
     <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
     <script type="text/javascript">
         new TWTR.Widget({
@@ -86,4 +81,5 @@
         }).render().setUser('slinggit').start();
     </script>
   </div>
+</div>
 </section>
