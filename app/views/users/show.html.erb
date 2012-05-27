@@ -30,8 +30,8 @@
       <%= gravatar_for @user %>
 	</article>
   <!-- ADMIN ONLY FUNCTIONALITY -->
-  <% if is_signed_in_and_admin? && !current_user?(@user) && @user.status != "deleted" %>
-      <%= link_to "Delete This User", @user, method: :delete, confirm: "You sure?" %>
+  <% if is_signed_in_and_admin? && !current_user?(@user) && @user.is_considered_deleted? %>
+      <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "banned"}, confirm: "Ban: You sure?" %>
   <% end %>    
 
 </section>

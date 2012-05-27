@@ -44,11 +44,16 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}
   validates :password_confirmation, presence: true
 
-  STATUS_UNVERIFIED = "unverified"
-  STATUS_DELETED = "deleted"
-  STATUS_BANNED = "banned"
-  STATUS_ACTIVE = "active"
-  STATUS_SUSPENDED = "suspended"
+  ## STATUSES ##
+  STATUS_UNVERIFIED = "UVR"
+  STATUS_DELETED = "DEL"
+  STATUS_BANNED = "BAN"
+  STATUS_ACTIVE = "ACT"
+  STATUS_SUSPENDED = "SUS"
+
+  ## ROLES ##
+  ROLE_ADMIN = "ADM"
+  ROLE_EXTERNAL = "EXT"
 
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
@@ -68,7 +73,7 @@ class User < ActiveRecord::Base
 
   def is_considered_deleted?
     self.status == STATUS_BANNED or self.status == STATUS_DELETED
-  end  
+  end   
 
   def is_self_destroyed?
     self.status == STATUS_DELETED

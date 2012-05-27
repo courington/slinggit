@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120527043815) do
+ActiveRecord::Schema.define(:version => 20120527163826) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(:version => 20120527043815) do
     t.text     "body"
     t.integer  "post_id"
     t.integer  "user_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.string   "status",     :default => "active"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "status",     :default => "ACT"
   end
 
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(:version => 20120527043815) do
   create_table "posts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20120527043815) do
     t.boolean  "open",                                   :default => true
     t.string   "location"
     t.string   "recipient_api_account_ids"
-    t.string   "status",                                 :default => "active"
+    t.string   "status",                                 :default => "ACT"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"
@@ -190,18 +190,18 @@ ActiveRecord::Schema.define(:version => 20120527043815) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",                     :default => false
-    t.string   "status",                    :default => "unverified"
+    t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "time_zone"
     t.string   "email_activation_code"
+    t.string   "time_zone"
     t.string   "account_reactivation_code"
     t.string   "slug"
-    t.string   "role",                      :default => "external"
+    t.string   "role",                      :default => "EXT"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
