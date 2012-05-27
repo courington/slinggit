@@ -253,8 +253,8 @@ class MobileController < ApplicationController
               if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
 
                 tmp_file_path = get_temp_photo_path(params[:hashtag_prefix] + Time.now.to_s)
-                if not request.body.blank?
-                  image_data = Base64.decode64(request.body.to_s)
+                if not params[:image_data].blank?
+                  image_data = Base64.decode64(params[:image_data])
                   @file = File.open(tmp_file_path, 'wb') { |file| (file << image_data) }
                 end
 
@@ -267,9 +267,9 @@ class MobileController < ApplicationController
                     :photo => @file
                 )
 
-                if not post.photo_file_name.blank?
-                  File.delete(tmp_file_path)
-                end
+                #if not post.photo_file_name.blank?
+                #  File.delete(tmp_file_path)
+                #end
 
                 if post.save
                   render_success_response(
