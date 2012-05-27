@@ -46,10 +46,6 @@ class Post < ActiveRecord::Base
 
   default_scope order: 'posts.updated_at DESC'
 
-  STATUS_DELETED = "deleted"
-  STATUS_ACTIVE = "active"
-  STATUS_BANNED = "banned"
-
   def create_post_history
     if not self.id.blank?
       current_post_before_save = Post.first(:conditions => ['id = ?', self.id])

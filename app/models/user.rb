@@ -44,17 +44,6 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}
   validates :password_confirmation, presence: true
 
-  ## STATUSES ##
-  STATUS_UNVERIFIED = "UVR"
-  STATUS_DELETED = "DEL"
-  STATUS_BANNED = "BAN"
-  STATUS_ACTIVE = "ACT"
-  STATUS_SUSPENDED = "SUS"
-
-  ## ROLES ##
-  ROLE_ADMIN = "ADM"
-  ROLE_EXTERNAL = "EXT"
-
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
   end
