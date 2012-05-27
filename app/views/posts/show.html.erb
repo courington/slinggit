@@ -1,41 +1,44 @@
 <% provide(:title, @post.hashtag_prefix) %>
 <section class="wrapper posts">
-	<header>
-		<h1><%= @post.hashtag_prefix %></h1>
-		<p><%= @post.hashtag_prefix %></p>
-		<% if current_user?(@user) %>
-			<% if current_user.status != "suspended"%>
-				<h6 class="pull-right"><%= link_to "edit", edit_post_path(@post), class: "btn" %></h6>
-			<% end %>	
-		<% end %>
+	<div class="row">
+		<header>
+			<h1><%= @post.hashtag_prefix %></h1>
+			<p><%= @post.hashtag_prefix %></p>	  		
+		</header>
 
-		<!-- ADMIN ONLY FUNCTIONALITY -->
-		<% if is_signed_in_and_admin? %>
-    		<%= link_to "DELETE", @post, method: :delete, confirm: "You sure?" %>
-  		<% end %>
-  		
-	</header>
-
-	<article>
-		<div class="col_oneThird">
+		<div class="col3">
 		<% if @post.photo_file_name.blank? %>
 			<%= image_tag "300x300_placeholder.png" %>
 		<% else %>
 			<%= image_tag @post.photo.url(:medium) %>
 		<% end %>
 		</div>
-		<div class="col_twoThird">
+		<div class="col2">
 			<%= render 'posts/post_sidebar' %>
 		</div>
-	</article>
+	</div>
 
-	<article role="complementary">
-		<%= render 'posts/post_comment_form' %>
-		<% if @comments.any? %>
-			<ul class="comments">
-				<%= render @comments %>
-			</ul>
-			<%= will_paginate @comments %>
-		<% end %>  
-	</article>
+	<div class="row">
+		<div class="col6">
+			<div class="row">
+				<%= render 'posts/post_comment_form' %>
+			</div>
+			<div class="row">
+				<% if @comments.any? %>
+					<ul class="comments">
+						<%= render @comments %>
+					</ul>
+					<%= will_paginate @comments %>
+				<% end %>  
+			</div>
+		</div>
+	</div>
+
+	<div class="row adminActions">
+		<!-- ADMIN ONLY FUNCTIONALITY -->
+		<% if is_signed_in_and_admin? %>
+			<%= link_to "DELETE", @post, method: :delete, confirm: "You sure?" %>
+		<% end %>
+	 </div> 		
+
 </section>

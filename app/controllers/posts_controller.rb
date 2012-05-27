@@ -11,7 +11,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.first(:conditions => ['id = ?', params[:id]])
-    if not @post.blank? and @post.status != 'deleted'
+    if not @post.blank? and not @post.is_deleted?
       @comments = @post.comments.paginate(page: params[:page])
       # creating user object to compare against current_user
       # in order to display edit option.  Dan, if there's a
@@ -93,11 +93,11 @@ class PostsController < ApplicationController
     end
   end
 
-  def destroy
-    @post.status = 'deleted'
-    @post.save
-    redirect_back_or current_user
-  end
+  # def destroy
+  #   @post.status = 'deleted'
+  #   @post.save
+  #   redirect_back_or current_user
+  # end
 
   def results
     if not params[:id].blank?

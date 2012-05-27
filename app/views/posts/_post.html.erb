@@ -1,6 +1,5 @@
 <li class="row">
-    <div class="row">
-
+  <div class="row">
 		<div class="col2">
 		<%= link_to(post_path(post)) do %>
         	<div class="photo">
@@ -23,19 +22,30 @@
 
 	<div class="row">
       <div class="col4 pull_right">
-        <% if post.open? %>
-          <p class="label label-success">Open</p>
-        <% else %>  
-          <p class="label label">Closed</p>
-        <% end %>  
-        <% if current_user?(post.user) %>
-          <%= link_to "edit", edit_post_path(post) %>
-        <% end %>
 
-        <!-- ADMIN ONLY FUNCTIONALITY -->
-        <% if is_signed_in_and_admin? %>
-          <%= link_to "DELETE POST", {:controller => :admin, :action => :set_post_status, :id => post.id, :status => "DEL"}, confirm: "Delete Post: You sure?" %>
-        <% end %>
+        <div class="row">
+          <% if post.open? %>
+            <p class="label label-success">Open</p>
+          <% else %>  
+            <p class="label label">Closed</p>
+          <% end %>  
+          <% if current_user?(post.user) %>
+            <%= link_to "edit", edit_post_path(post) %>
+          <% end %>
+        </div>
+
+        <div class="row adminActions">
+          <% if is_signed_in_and_admin? && !current_user?(@user)%>
+            <!-- ADMIN ONLY FUNCTIONALITY -->
+            <div class="row">
+              <%= link_to "DELETE POST and SUSPEND USER", {:controller => :admin, :action => :set_post_status, :id => post.id, :status => "DEL", :user_status => "SUS"}, confirm: "Delete Post: You sure?" %>
+            </div>
+            <div class="row">
+              <%= link_to "DELETE POST and BAN USER", {:controller => :admin, :action => :set_post_status, :id => post.id, :status => "DEL", :user_status => "BAN"}, confirm: "Delete Post: You sure?" %>
+            </div>  
+          <% end %>
+        </div>  
+
       </div>
     </div>
 </li>
