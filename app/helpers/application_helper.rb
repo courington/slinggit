@@ -28,5 +28,13 @@ module ApplicationHelper
     end
   end
 
+  def invite_only?
+    if system_preferences[:invitation_only] and system_preferences[:invitation_only] == "on"
+      return true
+    else
+      return false
+    end
+  end
+
 end
 

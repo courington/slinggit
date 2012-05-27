@@ -4,7 +4,7 @@
   	<div class="col4 pull_left">
     	<% if current_user.blank? %>
         <p>Looking for something? Want to sell something? Slinggit.</p>
-        <% if system_preferences[:invitation_only] == "on" %>
+        <% if invite_only? %>
             <%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "btn_large" %>
         <% else %>
             <%= link_to "Sign up now!", signup_path, class: "btn_large" %>
