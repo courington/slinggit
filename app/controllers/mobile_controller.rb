@@ -595,7 +595,11 @@ class MobileController < ApplicationController
         comments_array = []
         post.comments.each do |comment|
           if comment.status == 'active'
-            comments_array << comment.attributes.merge!(:user_name => comment.user.name)
+            comments_array << comment.attributes.merge!(
+                :user_name => comment.user.name,
+                :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
+                :created_at_time => comment.created_at.strftime("%H:%M")
+            )
           end
         end
 
