@@ -40,7 +40,7 @@
       <% else %>
           <% if current_page?(signin_path) %>
               <div class="head_aside">
-                <% if system_preferences[:invitation_only] == "on" %>
+                <% if invite_only? %>
                     <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
                 <% else %>
                     <%= link_to "Sign Up", signup_path %>
@@ -51,7 +51,7 @@
                 <%= link_to "Sign In", signin_path %>
               </div>
               <div class="head_aside">
-                <% if system_preferences[:invitation_only] == "on" %>
+                <% if invite_only? %>
                     <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
                 <% else %>
                     <%= link_to "Sign Up", signup_path %>
