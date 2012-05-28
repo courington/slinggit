@@ -2,7 +2,7 @@ class NetworksController < ApplicationController
   before_filter :signed_in_user
 
   def index
-    @api_accounts = ApiAccount.all(:conditions => ['status != "deleted" AND user_id = ?', current_user.id])
+    @api_accounts = ApiAccount.all(:conditions => ['status != ? AND user_id = ?', STATUS_DELETED, current_user.id])
   end
 
   def create
@@ -20,7 +20,7 @@ class NetworksController < ApplicationController
       if not params[:api_account_id].blank?
         api_account_id = params[:api_account_id].split('_').last
         if new_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND id = ?', current_user.id, api_account_id.to_i])
-          if old_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND status = "primary"', current_user.id])
+          if old_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND status = ?', current_user.id, STATUS_PRIMARY])
             success = remove_primary_status_from_account(old_primary_account)
             if success
               success = add_primary_status_to_account(new_primary_account)
@@ -50,7 +50,7 @@ class NetworksController < ApplicationController
   end
 
   def remove_primary_status_from_account(api_account)
-    api_account.status = 'active'
+    api_account.status = STATUS_ACTIVE
     if api_account.save
       return true
     else
@@ -59,7 +59,7 @@ class NetworksController < ApplicationController
   end
 
   def add_primary_status_to_account(api_account)
-    api_account.status = 'primary'
+    api_account.status = STATUS_PRIMARY
     if api_account.save
       return true
     else

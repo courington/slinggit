@@ -60,7 +60,7 @@ class AdminController < ApplicationController
 
   def view_images
     @image_datas = []
-    Post.find_each(:conditions => ['status = "active" AND photo_file_name IS NOT NULL'], :select => 'id,user_id,photo_file_name,photo_updated_at') do |post|
+    Post.find_each(:conditions => ['status = ? AND photo_file_name IS NOT NULL', STATUS_ACTIVE], :select => 'id,user_id,photo_file_name,photo_updated_at') do |post|
       @image_datas << {:image_path => post.photo.url(:medium), :post_id => post.id}
     end
   end

@@ -69,11 +69,11 @@ class User < ActiveRecord::Base
   end   
 
   def is_self_destroyed?
-    self.status == STATUS_DELETED
+    self.status == STATUS_DELETED && self.account_reactivation_code != nil
   end  
 
   def is_banned?
-    self.status == STATUS_BANNED
+    self.status == STATUS_BANNED && self.account_reactivation_code == nil
   end  
 
   def is_suspended?
