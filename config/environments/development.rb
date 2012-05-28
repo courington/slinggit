@@ -63,6 +63,7 @@ SlinggitWebapp::Application.configure do
   STATUS_BANNED = "BAN"
   STATUS_ACTIVE = "ACT"
   STATUS_SUSPENDED = "SUS"
+  STATUS_PRIMARY = "PRM"
 
   ## ROLES ##
   ROLE_ADMIN = "ADM"

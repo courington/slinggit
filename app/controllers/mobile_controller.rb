@@ -161,7 +161,7 @@ class MobileController < ApplicationController
     if not params[:api_account_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
         if api_account = ApiAccount.first(:conditions => ['id = ? AND user_id = ?', params[:api_account_id], mobile_session.user_id])
-          if not api_account.status == 'deleted'
+          if not api_account.status == STATUS_DELETED
             success, result = delete_api_account(api_account)
             if success
               render_success_response(
@@ -512,7 +512,7 @@ class MobileController < ApplicationController
   def get_user_api_accounts
     if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != "deleted"', user.id])
+        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED])
 
         api_accounts_array = []
         api_accounts.each do |api_account|
@@ -591,10 +591,10 @@ class MobileController < ApplicationController
 
   def get_single_slinggit_post_data
     if not params[:post_id].blank?
-      if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], "active"])
+      if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
         comments_array = []
         post.comments.each do |comment|
-          if comment.status == 'active'
+          if comment.status == STATUS_ACTIVE
             comments_array << comment.attributes.merge!(
                 :user_name => comment.user.name,
                 :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
@@ -628,7 +628,7 @@ class MobileController < ApplicationController
     if not params[:post_id].blank?
       if not params[:comment_body].blank?
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], "active"])
+          if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
             comment = Comment.create(
                 :post_id => params[:post_id],
                 :user_id => mobile_session.user_id,
@@ -677,7 +677,7 @@ class MobileController < ApplicationController
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
           if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
             if comment = Comment.first(:conditions => ['post_id = ? and id = ?', mobile_session.user_id, params[:comment_id]])
-              comment.udpate_attribute(:status, 'deleted')
+              comment.udpate_attribute(:status, STATUS_DELETED)
               render_success_response(
                   :comment_id => comment.id,
                   :status => comment.status
@@ -763,7 +763,7 @@ class MobileController < ApplicationController
 
   def get_slinggit_post_data_for_user(filter_data)
     matches = []
-    if user = User.first(:conditions => ['name = ? AND status != "deleted"', filter_data[:user_name]], :select => 'id')
+    if user = User.first(:conditions => ['name = ? AND status != ?', filter_data[:user_name], STATUS_DELETED], :select => 'id')
       if not filter_data[:search_term].blank?
         matches = Post.all(:conditions => ["user_id = ? AND open = ? AND id <= ? AND (content like ? OR hashtag_prefix like ? OR location like ?)", user.id, true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at')
       else
