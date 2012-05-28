@@ -1,7 +1,50 @@
 // Specfic styles for the posts sidebar
+#post{
+	background-color: $white;
+	@include rounded-corners(3px);
+	border: 1px solid $lt-grey;
+	padding: 10px 0px 10px 0px;
+
+	.contentHeader{
+		border-bottom: 1px solid $lt-grey;
+	}
+
+	.innerHeader {
+		padding: 10px 10px 0px 10px;
+	}
+
+	.postDetails{
+		margin-top: 10px;
+
+		.postInfo{
+			vertical-align: top;
+
+			dl{
+				margin-top: 10px;
+				padding: 10px;
+				font-size: $font-size * .9;
+
+				dt{
+					padding: 5px 5px;
+					font-weight: 600;
+				}
+
+				dd{
+					padding: 5px 5px;
+				}
+			}
+
+		}
+
+
+	}
+
+}
+
+
 .postSidebar{
 
-	vertical-align: top;
+	
 
 	#postDetails, #postReply{
 
@@ -9,30 +52,7 @@
 		@include rounded-corners(3px);
 		border: 1px solid $lt-grey;
 
-		.contentHeader{
-			border-bottom: 1px solid $lt-grey;
-		}
-
-		.innerHeader {
-			padding: 10px;
-			h2{
-			}
-		}
-
-		dl{
-			margin-top: 10px;
-			padding: 10px;
-			font-size: $font-size * .9;
-
-			dt{
-				padding: 5px 5px;
-				font-weight: 600;
-			}
-
-			dd{
-				padding: 5px 5px;
-			}
-		}
+		
 
 	}
 
