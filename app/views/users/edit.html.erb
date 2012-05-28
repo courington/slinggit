@@ -6,7 +6,7 @@
 		<p>Update your profile</p>
 	</header>
 	
-	<% if @user.status != "suspended" %>
+	<% if !@user.is_suspended? %>
 	
 		<article class="col4 pull_left">
 			

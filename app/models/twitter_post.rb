@@ -41,7 +41,7 @@ class TwitterPost < ActiveRecord::Base
     self.update_attribute(:status, PROCESSING_STATUS)
     if not has_been_posted?
       if not self.api_account.blank?
-        if not self.api_account.status == 'deleted'
+        if not self.api_account.status == STATUS_DELETED
           twitter_client = nil
           if self.api_account
             twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
@@ -80,7 +80,7 @@ class TwitterPost < ActiveRecord::Base
     self.update_attribute(:status, PROCESSING_STATUS)
     if has_been_posted?
       if not self.api_account.blank?
-        if not self.api_account.status == 'deleted'
+        if not self.api_account.status == STATUS_DELETED
           twitter_client = nil
           if self.api_account
             twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)

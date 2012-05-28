@@ -118,7 +118,7 @@ class UsersController < ApplicationController
       if user = User.first(:conditions => ['email_activation_code = ?', params[:id]])
         if user.email_activation_code == Digest::SHA1.hexdigest(user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH)
           user.update_attribute(:email_activation_code, nil)
-          user.update_attribute(:status, "active")
+          user.update_attribute(:status, STATUS_ACTIVE)
           flash[:success] = "Your email has been verified."
           sign_in user
           redirect_to user
@@ -154,9 +154,9 @@ class UsersController < ApplicationController
 
     if not params[:password].blank?
       if current_user.authenticate(params[:password])
-        current_user.update_attribute(:status, "deleted")
+        current_user.update_attribute(:status, STATUS_DELETED)
         current_user.posts.each do |post|
-          post.update_attribute(:status, "deleted")
+          post.update_attribute(:status, STATUS_DELETED)
         end
         current_user.update_attribute(:account_reactivation_code, Digest::SHA1.hexdigest(current_user.email + "slinggit_account_reactivation_code" + SLINGGIT_SECRET_HASH))
         UserMailer.account_deleted(current_user).deliver
@@ -178,9 +178,9 @@ class UsersController < ApplicationController
   def reactivate
     if not params[:id].blank?
       if user = User.first(:conditions => ['account_reactivation_code = ?', params[:id]])
-        user.update_attribute(:status, "active")
+        user.update_attribute(:status, STATUS_ACTIVE)
         user.posts.each do |post|
-          post.update_attribute(:status, "active")
+          post.update_attribute(:status, STATUS_ACTIVE)
         end
         user.update_attribute(:account_reactivation_code, nil)
         flash[:success] = "Your account has been reactivated.  You may now sign in."

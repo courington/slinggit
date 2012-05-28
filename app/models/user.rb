@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def primary_twitter_account
-    ApiAccount.first(:conditions => ['user_id = ? AND status = "primary"', self.id])
+    ApiAccount.first(:conditions => ['user_id = ? AND status = ?', self.id, STATUS_PRIMARY])
   end
 
   def email_is_verified?
