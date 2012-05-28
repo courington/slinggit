@@ -1,25 +1,26 @@
 <% provide(:title, @post.hashtag_prefix) %>
 <section class="wrapper posts">
-	<div class="row">
-		<header>
-			<h1><%= @post.hashtag_prefix %></h1>
-			<p><%= @post.hashtag_prefix %></p>	  		
-		</header>
 
-		<div class="col3">
+	<header class="row">
+		<h1><%= @post.hashtag_prefix %></h1>
+		<p><%= @post.hashtag_prefix %></p>	  		
+	</header>
+
+	<div class="row">
+		<div class="col2">
 		<% if @post.photo_file_name.blank? %>
 			<%= image_tag "300x300_placeholder.png" %>
 		<% else %>
 			<%= image_tag @post.photo.url(:medium) %>
 		<% end %>
 		</div>
-		<div class="col2">
+		<div class="col3 postSidebar">
 			<%= render 'posts/post_sidebar' %>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col6">
+		<div class="col3">
 			<div class="row">
 				<%= render 'posts/post_comment_form' %>
 			</div>

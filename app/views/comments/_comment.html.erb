@@ -1,13 +1,17 @@
 <li>
-  <%= gravatar_for User.find(comment.user_id) %>
+	<div class="col2">
+  		<%= gravatar_for User.find(comment.user_id) %>
+  	</div>
 
-  <% if User.find(comment.user_id) == @user %> 
-  	<strong>Item Owner</strong>
-  <% end %>
+  	<div class="col3">
+  		<% if User.find(comment.user_id) == @user %> 
+  			<strong>Item Owner</strong>
+  		<% end %>
 
-  <span class="content"><%= comment.body %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(comment.created_at) %> ago.
-  </span>
+  		<span class="content"><%= comment.body %></span>
+  		<span class="timestamp">
+    		Posted <%= time_ago_in_words(comment.created_at) %> ago.
+  		</span>
+  	</div>	
 
 </li>	

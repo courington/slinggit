@@ -1,25 +1,31 @@
-<dl class="dl-horizontal" style="font-size: 16px;"> <!-- inline style! -->
-  <dt>Location:</dt>
-  <dd><%= @post.location %></dd>
-  <dt>Price:</dt>
-  <dd><%= @post.price %></dd>
-  <dt>Interested:</dt>
-  <dd><%= @post.comments.count('user_id', :distinct => true) %></dd>
-  <dt>Status:</dt>
-  <dd>
-    <% if @post.open? %>
-      <span class="label label-success">Open</span>
-    <% else %>  
-      <span class="label label">Closed</span>
-    <% end %>
-  </dd>
-  <dt>Description</dt>
-  <dd><%= @post.content %></dd>
-  <dt>
-</dl>
+<div id="postDetails">
+  <div class="row contentHeader">
+    <div class="innerHeader">
+      <h2>The Details</h2>
+    </div>  
+  </div>  
+  <dl class="row" >
+    <dt class="col2">Location</dt>
+    <dd class="col3"><%= @post.location %></dd>
+    <dt class="col2">Price</dt>
+    <dd class="col3"><%= @post.price %></dd>
+    <dt class="col2">Interested</dt>
+    <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
+    <dt class="col2">Status</dt>
+    <dd class="col3">
+      <% if @post.open? %>
+        Open
+      <% else %>  
+        Closed
+      <% end %>
+    </dd>
+    <dt class="col6">Description</dt>
+    <dd class="col6"><%= @post.content %></dd>
+  </dl>
+</div>
 
 <!-- Reply to container -->
-<div>
+<div id="postReply" class="row">
   <% if not @twitter_post.blank? %>
     <p>Reply directly to
       <a href="https://twitter.com/#!/<%= @api_account.user_name %>/status/<%= @twitter_post.twitter_post_id %>" target="_blank">@<%= @api_account.user_name %></a>
