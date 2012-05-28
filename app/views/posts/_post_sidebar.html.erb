@@ -26,6 +26,11 @@
 
 <!-- Reply to container -->
 <div id="postReply" class="row">
+  <div class="row contentHeader">
+    <div class="innerHeader">
+      <h2>Reply to Seller</h2>
+    </div>  
+  </div> 
   <% if not @twitter_post.blank? %>
     <p>Reply directly to
       <a href="https://twitter.com/#!/<%= @api_account.user_name %>/status/<%= @twitter_post.twitter_post_id %>" target="_blank">@<%= @api_account.user_name %></a>
