@@ -102,7 +102,7 @@ class PostsController < ApplicationController
   def results
     if not params[:id].blank?
       #I am currently researching how to make this function more like google search.  Faster and more relevent.
-      @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = 'active'", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true], :order => 'created_at desc')
+      @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
     end
   end
 
@@ -110,7 +110,7 @@ class PostsController < ApplicationController
 
   def correct_user
     if signed_in?
-      @post = Post.first(:conditions => ['user_id = ? AND id = ? AND status = "active"', current_user.id, params[:id]])
+      @post = Post.first(:conditions => ['user_id = ? AND id = ? AND status = ?', current_user.id, params[:id], STATUS_ACTIVE])
       if @post.blank?
         redirect_to current_user
       end
@@ -120,7 +120,7 @@ class PostsController < ApplicationController
   end
 
   def load_api_accounts
-    @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ? AND status != "deleted"', current_user.id, 'twitter'])
+    @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ? AND status != ?', current_user.id, 'twitter', STATUS_DELETED])
   end
 
   def get_id_for_slinggit_api_account

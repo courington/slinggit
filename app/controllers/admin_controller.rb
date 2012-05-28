@@ -110,16 +110,16 @@ class AdminController < ApplicationController
         begin
           if not params[:post_id].blank?
             post_id = params[:post_id]
-            if post = Post.first(:conditions => ['id = ? AND status != "deleted"', post_id])
+            if post = Post.first(:conditions => ['id = ? AND status != ?', post_id, STATUS_DELETED])
               user = User.first(:conditions => ['id = ?', post.user_id])
               if not user.id == current_user.id
                 if not user.is_admin?
 
                   #"delete" the post
-                  post.update_attribute(:status, 'deleted') #remove the post
+                  post.update_attribute(:status, STATUS_DELETED) #remove the post
 
                   #suspend the user
-                  user.update_attribute(:status, 'suspended')
+                  user.update_attribute(:status, STATUS_SUSPENDED)
 
                   #undo (delete) all posts made to any api_account
                   tweets_undon = 0
