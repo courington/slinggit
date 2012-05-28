@@ -230,6 +230,7 @@ DEPENDENCIES
   guard-rspec (= 0.5.5)
   guard-spork (= 0.3.2)
   jquery-rails (= 2.0.0)
+  mail (= 2.4.4)
   mysql2
   oauth (= 0.4.6)
   paperclip (= 3.0.2)
