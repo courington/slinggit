@@ -24,7 +24,7 @@ class MobileController < ApplicationController
           if not User.exists?(['email = ?', email])
             if not User.exists?(['name = ?', user_name])
               user = User.new(
-                  :name => params[:user_name],
+                  :user_name => params[:user_name],
                   :email => params[:email],
                   :password => params[:password],
                   :password_confirmation => params[:password]
@@ -38,7 +38,8 @@ class MobileController < ApplicationController
                   create_api_account(:source => :twitter, :user_object => user, :api_object => client)
                 end
                 render_success_response(
-                    :mobile_auth_token => mobile_auth_token
+                    :mobile_auth_token => mobile_auth_token,
+                    :user_id => user.id
                 )
               else
                 render_error_response(
@@ -99,7 +100,8 @@ class MobileController < ApplicationController
           mobile_auth_token = create_or_update_mobile_auth_token(user.id)
           render_success_response(
               :mobile_auth_token => mobile_auth_token,
-              :user_name => user.name
+              :user_name => user.name,
+              :user_id => user.id
           )
         else
           render_error_response(
@@ -148,7 +150,8 @@ class MobileController < ApplicationController
       user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'name')
       render_success_response(
           :logged_in => true,
-          :user_name => user.name
+          :user_name => user.name,
+          :user_id => user.id
       )
     else
       render_success_response(
@@ -383,7 +386,8 @@ class MobileController < ApplicationController
           posts_array = []
           result.each do |post|
             posts_array << {
-                :post_id => post.id.to_s,
+                :post_id => post.id,
+                :user_id => post.user_id,
                 :open => post.open ? 'true' : 'false',
                 :content => post.content,
                 :hashtag_prefix => post.hashtag_prefix,
