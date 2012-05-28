@@ -252,7 +252,7 @@ class MobileController < ApplicationController
             if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
               if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
 
-                tmp_file_path = get_temp_photo_path(params[:hashtag_prefix] + Time.now.to_s)
+                tmp_file_path = get_temp_photo_path(params[:hashtag_prefix] + Time.now.to_f.to_s)
                 if not params[:image_data].blank?
                   image_data = Base64.decode64(params[:image_data])
                   @file = File.open(tmp_file_path, 'wb') { |file| (file << image_data) }
