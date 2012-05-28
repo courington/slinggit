@@ -18,7 +18,9 @@ class PostsController < ApplicationController
       # better way, fell free to change this.
       @user = User.find(@post.user_id)
       @api_account = @user.primary_twitter_account
-      @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+      if not @api_account.blank?
+        @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+      end
       # Since we give an non-singed in user the option to sign in, we
       # want to return them to the post after signin.
       unless signed_in?

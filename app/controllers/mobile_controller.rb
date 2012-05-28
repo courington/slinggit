@@ -744,7 +744,7 @@ class MobileController < ApplicationController
     @mobile_auth_token
   end
 
-#TODO rIMPLEMENT AND DOCUMENT
+#TODO IMPLEMENT AND DOCUMENT
   def report_abuse
 
   end
