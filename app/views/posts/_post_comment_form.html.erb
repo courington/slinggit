@@ -39,10 +39,4 @@
 
   <% end %>  
 
-<% else %> <!-- Not signed in -->
-  <div class="alert alert-info-black">
-    <a class="close" data-dismiss="alert" href="#">×</a>
-    <h4 class="alert-heading"><%= link_to "Sign in", signin_path %> to reply to this post</h4>
-    <p>New to slinggit? <%= link_to "Sign up now!", signup_path %>. Or you can always reply to [primary_handle] via Twitter</p>
-  </div>
 <% end %>

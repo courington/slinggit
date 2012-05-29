@@ -13,7 +13,7 @@
 		</div>	
 
 		<div class="row postDetails">
-			<div class="col2 postInfo">
+			<div class="col3 postInfo">
 				 <dl>
 				    <dt class="col2">Location</dt>
 				    <dd class="col3"><%= @post.location %></dd>
@@ -29,6 +29,8 @@
 				        Closed
 				      <% end %>
 				    </dd>
+				    <dt class="col6">Description</dt>
+    				<dd class="col6"><%= @post.content %></dd>
 				</dl>
 			</div>
 			<div class="col3">
@@ -42,7 +44,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col3">
+		<div id="comments" class="col4">
 			<div class="row">
 				<%= render 'posts/post_comment_form' %>
 			</div>
@@ -55,7 +57,7 @@
 				<% end %>  
 			</div>
 		</div>
-		<div class="col2">
+		<div id="postReply" class="col2">
 			<%= render 'posts/post_sidebar' %>
 		</div>	
 	</div>

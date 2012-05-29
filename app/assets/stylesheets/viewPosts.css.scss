@@ -40,24 +40,24 @@
 	}
 
 }
+#comments{
+	margin-top: 20px;
+}
 
+#postReply{
 
-.postSidebar{
+	vertical-align: top;
+	margin-top: 20px;
+	background-color: $white;
+	@include rounded-corners(3px);
+	border: 1px solid $lt-grey;
 
-	
-
-	#postDetails, #postReply{
-
-		background-color: $white;
-		@include rounded-corners(3px);
-		border: 1px solid $lt-grey;
-
-		
-
+	.contentHeader{
+		border-bottom: 1px solid $lt-grey;
 	}
 
-	#postReply{
-		margin-top: 20px;
+	.innerHeader {
+		padding: 20px;
 	}
 
 }
