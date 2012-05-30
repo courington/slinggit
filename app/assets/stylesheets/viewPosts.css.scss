@@ -2,7 +2,7 @@
 #post{
 	background-color: $white;
 	@include rounded-corners(3px);
-	border: 1px solid $lt-grey;
+	//border: 1px solid $lt-grey;
 	padding: 10px 0px 10px 0px;
 
 	.contentHeader{

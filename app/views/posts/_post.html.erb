@@ -9,12 +9,12 @@
             	<%= image_tag post.photo.url(:medium) %>
           	<% end %>
         	</div>
+    <% end %>
 		</div>
     
 		<div class="col4">
 			<h2 class="item"><%= post.hashtag_prefix %></h2>
 			<p><%= post.content %></p>
-			<% end %>
 			<small class="timestamp">Posted <%= time_ago_in_words(post.created_at) %> ago.</small>
 			<small class="timestamp">Updated <%= time_ago_in_words(post.updated_at) %> ago.</small>
 		</div>
