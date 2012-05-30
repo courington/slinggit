@@ -1,0 +1,19 @@
+.twitterPostAccount {
+	font-size: $font-size * .875;
+	span:first-child {
+		float: left;
+		clear: left;
+	}
+	input[type="checkbox"] {
+		float: left;
+		margin: $font-size 0 0 0;
+ 		&+ span {
+			float: left;
+			margin: 1em 0 0 2.5%;
+		}
+	}
+}
+
+form .row:last-child {
+	margin: $font-size 0 0 0;
+}

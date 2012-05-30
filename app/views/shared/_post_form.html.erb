@@ -26,7 +26,7 @@
 
       <fieldset class="row">
         <%= f.label :content, "Quick description", class: "col3", for: "post_content" %>
-        <%= f.text_area :content, class: "col6 form_singleLine", rows: "3", placeholder: "more #hashtags, a succinct description, maybe @someone to sling at" %>
+        <%= f.text_area :content, class: "col5 form_singleLine", rows: "3", placeholder: "a short description maybe @someone to sling at or tag with #hastags" %>
       </fieldset>
 
 <div class="row">
@@ -38,11 +38,11 @@
         </div>
       </fieldset>
 
-      <fieldset class="col3">
+      <fieldset class="col3 twitterPostAccount">
         <span>Twitter account(s) to post to:</span>
-        <%= check_box_tag "twitter_accounts[#{@slinggit_account_id}]", 'post', true %>Slinggit
+        <%= check_box_tag "twitter_accounts[#{@slinggit_account_id}]", 'post', true %><span>Slinggit</span>
         <% @twitter_accounts.each do |twitter_account| %>
-            <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %> <%= twitter_account.user_name %>
+            <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %><span> <%= twitter_account.user_name %></span>
         <% end %>
 	  </fieldset>
 	</div>

@@ -74,7 +74,7 @@ input[type="text"] {
 }
 input[type="text"].hardEdge-right {
 	@include hardEdge-right;
-	width: 75%;
+	//width: 75%;
 	clear: left;
 	float: left;
 }
@@ -86,9 +86,9 @@ float: left;
 #post_price {
 width: 45%;
 }
-#post_location {
-width: 100%;
-}
+//#post_location {
+//width: 100%;
+//}
 textarea {
 	@include textInput;
 	@include rounded-corners($radius);
@@ -174,14 +174,14 @@ label {
 	border: 1px solid darken($lt-grey, 10%);
 	box-shadow: $btn-shading;
 	width: 25%;
-	margin: .675em 0 0 0;
+	margin: .7em 0 0 0;
 	float: left;
 	width: auto;
 }
-.input-append {
-overflow:hidden;
-width: 100%;
-}
+//.input-append {
+//overflow:hidden;
+//width: 100%;
+//}
 // create post form
 /*.col_oneThird,
 .form-actions {
@@ -211,8 +211,7 @@ display: inline-block;
 }
 .controls.thumbnail {
 	font-size: $font-size;
-	margin: ($font-size * .5) auto;
-	float: left;
+	margin: $font-size auto;
 	font-weight: 600;
 	text-decoration: underline;
 }
@@ -222,10 +221,10 @@ margin: 0;
 display: block;
 clear: left;
 }
-#new_post fieldset:last-child {
-clear: both;
-margin: $font-size 0;
-}
+//#new_post fieldset:last-child {
+//clear: both;
+//margin: $font-size 0;
+//}
 #submitNewPost {
 width: 50%;
 }
