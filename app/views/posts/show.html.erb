@@ -1,25 +1,50 @@
 <% provide(:title, @post.hashtag_prefix) %>
 <section class="wrapper posts">
-	<div class="row">
-		<header>
-			<h1><%= @post.hashtag_prefix %></h1>
-			<p><%= @post.hashtag_prefix %></p>	  		
-		</header>
 
-		<div class="col3">
-		<% if @post.photo_file_name.blank? %>
-			<%= image_tag "300x300_placeholder.png" %>
-		<% else %>
-			<%= image_tag @post.photo.url(:medium) %>
-		<% end %>
-		</div>
-		<div class="col2">
-			<%= render 'posts/post_sidebar' %>
+	<div id="post">
+
+		<div class="contentHeader">
+			<div class="innerHeader">
+				<header class="row">
+					<h1><%= @post.hashtag_prefix %></h1>
+					<p><%= @post.hashtag_prefix %></p>	  		
+				</header>
+			</div>	
+		</div>	
+
+		<div class="row postDetails">
+			<div class="col3 postInfo">
+				 <dl>
+				    <dt class="col2">Location</dt>
+				    <dd class="col3"><%= @post.location %></dd>
+				    <dt class="col2">Price</dt>
+				    <dd class="col3"><%= @post.price %></dd>
+				    <dt class="col2">Interested</dt>
+				    <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
+				    <dt class="col2">Status</dt>
+				    <dd class="col3">
+				      <% if @post.open? %>
+				        Open
+				      <% else %>  
+				        Closed
+				      <% end %>
+				    </dd>
+				    <dt class="col6">Description</dt>
+    				<dd class="col6"><%= @post.content %></dd>
+				</dl>
+			</div>
+			<div class="col3">
+				<% if @post.photo_file_name.blank? %>
+					<%= image_tag "300x300_placeholder.png" %>
+				<% else %>
+					<%= image_tag @post.photo.url(:medium) %>
+				<% end %>
+			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col6">
+		<div id="comments" class="col4">
 			<div class="row">
 				<%= render 'posts/post_comment_form' %>
 			</div>
@@ -32,6 +57,9 @@
 				<% end %>  
 			</div>
 		</div>
+		<div id="postReply" class="col2">
+			<%= render 'posts/post_sidebar' %>
+		</div>	
 	</div>
 
 	<div class="row adminActions">
