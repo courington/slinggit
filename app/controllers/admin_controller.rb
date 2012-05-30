@@ -50,13 +50,17 @@ class AdminController < ApplicationController
 
   #### END QUICK DATABASE VIEW ####
 
+  def view_invitations
+    @invitations = Invitation.all(:conditions => ['status = ?', 'pending'])
+  end
+
   def view_users
-    @users = User.paginate(page: params[:page], :per_page=>100, :select => 'id,email,name,slug,status,created_at')
+    @users = User.paginate(page: params[:page], :per_page => 100, :select => 'id,email,name,slug,status,created_at')
   end
 
   def view_user
     @user = User.first(:conditions => ['id = ?', params[:id]])
-  end  
+  end
 
   def view_images
     @image_datas = []
@@ -74,14 +78,14 @@ class AdminController < ApplicationController
           user.posts.each do |post|
             if status == STATUS_BANNED
               post.update_attribute(:status, STATUS_DELETED)
-            else  
-              post.update_attribute(:status, status)  
-            end  
+            else
+              post.update_attribute(:status, status)
+            end
           end
         end
         flash[:success] = "User status set to: #{status}."
-      else 
-        flash[:error] = "User status: #{status}, unsuccessfully set"  
+      else
+        flash[:error] = "User status: #{status}, unsuccessfully set"
       end
       redirect_to :action => "view_user", :id => user.id
     else
@@ -101,7 +105,7 @@ class AdminController < ApplicationController
         flash[:success] = "Post status set to: #{status} and user status set to: #{user_status}"
         redirect_to :action => "view_user", :id => user.id
       end
-    end  
+    end
   end
 
   def eradicate_all_from_image
@@ -187,9 +191,25 @@ class AdminController < ApplicationController
     if not params[:id].blank?
       @problem_report = ProblemReport.first(:conditions => ['id = ?', params[:id]])
       if @problem_report.blank?
-        alert[:error] = 'No problem report was found with that id'
+        flash[:error] = 'No problem report was found with that id'
         redirect_to :action => :problem_reports
       end
+    end
+  end
+
+  def approve_invitation
+    if not params[:id].blank?
+      if invitation = Invitation.first(:conditions => ['id = ?', params[:id]])
+        invitation.status = "approved"
+        invitation.activation_code = Digest::SHA1.hexdigest("#{invitation.email}#{SLINGGIT_SECRET_HASH}")
+        invitation.save
+
+        UserMailer.invitation_approved(invitation).deliver
+        flash[:success] = 'Invitation approved'
+      else
+        flash[:error] = 'No pending invitations'
+      end
+      redirect_to :action => :view_invitations
     end
   end
 

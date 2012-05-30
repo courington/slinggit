@@ -25,7 +25,8 @@ class UsersController < ApplicationController
               :email => params[:email],
               :comment => params[:comment]
           )
-          flash.now[:succcess] = "Invitation request has been sent.  We will approve it as soon as possible."
+          flash[:succcess] = "Invitation request has been sent.  We will approve it as soon as possible."
+          redirect_to :controller => :static_pages, :action => :home
         end
       else
         flash.now[:error] = "Please give us your email address so we can contact you when your invitation is approved."
@@ -48,19 +49,36 @@ class UsersController < ApplicationController
   end
 
   def new
-    if system_preferences[:invitation_only] == 'on'
+    if invite_only? and params[:id].blank? and session[:approved_invitation].blank?
       flash[:notice] = "We are not currently accepting new users without an invitation."
       redirect_to :action => :request_invitation and return
+    elsif invite_only? and not params[:id].blank?
+      if invitation = Invitation.first(:conditions => ['activation_code = ?', params[:id]])
+        session[:approved_invitation] = invitation
+      else
+        flash[:notice] = "We are sorry, but the invitation code provided is invalid."
+        redirect_to :action => :request_invitation and return
+      end
     end
 
     if session[:user].blank?
       @user = User.new
+      if not session[:approved_invitation].blank?
+        @user.email = session[:approved_invitation].email
+      end
       # CMK: storing return_url here, prior to session reset, so that we can return
       # the use back to, say, a post if it's not nil.
       return_url = session[:return_to]
+      approved_invitation = session[:approved_invitation]
+
       reset_session
+
       if return_url
         session[:return_to] = return_url
+      end
+
+      if approved_invitation
+        session[:approved_invitation] = approved_invitation
       end
     else
       @user = session[:user]
@@ -69,32 +87,43 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
-    if not params[:twitter_authenticate].blank?
-      success = validate_pre_twitter_data
-      if success
-        # CMK: so I added :return_url to parameters, so that we can have that after
-        # twitter authentication, in order to redirect the use back to, say, a post.
-        setup_twitter_call(url_for(:controller => :users, :action => :twitter_signup_callback, :name => @user.name, :email => @user.email, :return_url => session[:return_to]))
+    if not invite_only? or (invite_only? and not session[:approved_invitation].blank?)
+      @user = User.new(params[:user])
+      if not invite_only? or (invite_only? and @user.email == session[:approved_invitation].email)
+        if not params[:twitter_authenticate].blank?
+          success = validate_pre_twitter_data
+          if success
+            # CMK: so I added :return_url to parameters, so that we can have that after
+            # twitter authentication, in order to redirect the use back to, say, a post.
+            setup_twitter_call(url_for(:controller => :users, :action => :twitter_signup_callback, :name => @user.name, :email => @user.email, :return_url => session[:return_to]))
+          else
+            render 'new'
+          end
+        else
+          if @user.save
+            if not session['access_token'].blank? and not session['access_secret'].blank?
+              client = Twitter::Client.new(oauth_token: session['access_token'], oauth_token_secret: session['access_secret'])
+              create_api_account(:source => :twitter, :user_object => @user, :api_object => client)
+              session.delete('access_token')
+              session.delete('access_secret')
+            end
+            @user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(@user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH))
+            UserMailer.welcome_email(@user).deliver
+            sign_in @user
+            session.delete(:approved_invitation)
+            flash[:success] = "Welcome SlingGit.  Please be sure to verify your email address."
+            redirect_back_or @user
+          else
+            render 'new'
+          end
+        end
       else
-        render 'new'
+        flash[:error] = "The email address you provided did not match the invitation request.  Please be sure to use the same email address you used when you requested an invite."
+        redirect_to :action => :new
       end
     else
-      if @user.save
-        if not session['access_token'].blank? and not session['access_secret'].blank?
-          client = Twitter::Client.new(oauth_token: session['access_token'], oauth_token_secret: session['access_secret'])
-          create_api_account(:source => :twitter, :user_object => @user, :api_object => client)
-          session.delete('access_token')
-          session.delete('access_secret')
-        end
-        @user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(@user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH))
-        UserMailer.welcome_email(@user).deliver
-        sign_in @user
-        flash[:success] = "Welcome SlingGit.  Please be sure to verify your email address."
-        redirect_back_or @user
-      else
-        render 'new'
-      end
+      flash[:notice] = "We are not currently accepting new users without an invitation."
+      redirect_to :action => :request_invitation and return
     end
   end
 

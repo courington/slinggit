@@ -48,4 +48,9 @@ class UserMailer < ActionMailer::Base
     mail(:to => email, :subject => "We have received your invitation request", :bcc => EXECUTIVES)
   end
 
+  def invitation_approved(invitation)
+    @activation_code = invitation.activation_code
+    mail(:to => invitation.email, :subject => "Slinggit invitation approved", :bcc => EXECUTIVES)
+  end
+
 end

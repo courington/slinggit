@@ -35,6 +35,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def invite_only?
+    if system_preferences[:invitation_only] and system_preferences[:invitation_only] == "on"
+      return true
+    else
+      return false
+    end
+  end
+
   #returns a key value pair of system preferences
   def system_preferences
     if session[:system_preferences].blank?
@@ -198,22 +206,22 @@ class ApplicationController < ActionController::Base
       # suspended users are allowed to login, they're just notified that their accounts are suspeneded.
       if current_user.is_suspended?
         flash.now[:notice] = 'It seems as though you are currently in time out due to a terms of service violation.  If you feel you have reached this message in error, please contact support@slinggit.com' and return
-      # if the user is deleted and doesn't have a reactivation_code, they've been banned, banned so hard!
+        # if the user is deleted and doesn't have a reactivation_code, they've been banned, banned so hard!
       elsif current_user.is_banned?
         if signed_in?
           sign_out
           reset_session
         end
         redirect_to '/deleted_account' and return
-      # if the user is deleted and does have a reactivation_cod, they've removed themselves.  We might want 
-      # to be more friendly to them
+        # if the user is deleted and does have a reactivation_cod, they've removed themselves.  We might want
+        # to be more friendly to them
       elsif current_user.is_self_destroyed?
         if signed_in?
           sign_out
           reset_session
         end
         redirect_to '/reactivate_account' and return
-      end  
+      end
     end
     return true
   end
