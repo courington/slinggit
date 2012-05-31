@@ -5,7 +5,7 @@
       	<%= link_to image_tag("images/logos/logo_grey_hinted_320x120.png", :width => "100%", :height => "auto", :title => "Slinggit Logo Grey", :alt => "Slinggit Logo"), :action => 'home', :controller => 'static_pages' %>
       	<h6>beta</h6>
     	</hgroup>
-			
+
     	<nav>
       	<div id="quickSearchWrapper">
         	<%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
@@ -29,6 +29,9 @@
               </li>
               <li class="<%= 'active' if current_page?(networks_path) %>">
                 <%= link_to "Twitter Accounts", networks_path %>
+              </li>
+              <li>
+                <%= link_to "Messages", messages_path %>
               </li>
               <li>
                 <%= link_to "Sign Out", signout_path, method: "delete" %>

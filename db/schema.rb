@@ -63,11 +63,13 @@ ActiveRecord::Schema.define(:version => 20120531031416) do
     t.string   "contact_info_json"
     t.string   "body",              :limit => 1200
     t.string   "status",                            :default => "UNR"
+    t.string   "id_hash"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
   end
 
   add_index "messages", ["creator_user_id"], :name => "index_messages_on_creator_user_id"
+  add_index "messages", ["id_hash"], :name => "index_messages_on_id_hash"
   add_index "messages", ["source"], :name => "index_messages_on_source"
   add_index "messages", ["status"], :name => "index_messages_on_status"
 
@@ -213,8 +215,8 @@ ActiveRecord::Schema.define(:version => 20120531031416) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "time_zone"
     t.string   "email_activation_code"
+    t.string   "time_zone"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
