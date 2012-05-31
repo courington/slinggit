@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_filter :signed_in_user
 
   def index
-
+    @messages = Message.paginate(page: params[:page], :per_page => 2, :conditions => ['recipient_user_id = ? AND status != ?', current_user.id, STATUS_DELETED], :order => 'status desc')
   end
 
   def show

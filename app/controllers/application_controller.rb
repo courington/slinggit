@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_timezone
   before_filter :verify_good_standing, :except => [:mobile, :admin, :verify_good_standing, :suspended_account]
 
+  require "#{Rails.root}/lib/ext/string"
+
   #######CONSTANTS#####
   ILLICIT_PHOTO = "An illicit photo was uploaded."
   POST_VIOLATION_SOURCE = 'post'
@@ -198,7 +200,6 @@ class ApplicationController < ActionController::Base
       return false
     end
   end
-
 
   ###BEFORE FILTERS####
   def verify_good_standing
