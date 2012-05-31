@@ -4,12 +4,6 @@ input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
-		&.form_singleLine {
-		//width: 100%;
-		//float: left;
-		//clear: left;
-		margin: ($font-size * .5) 0 $font-size 0;
-		}
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -120,10 +114,9 @@ label {
 	color: $main-grey;
 	border: 1px solid darken($lt-grey, 10%);
 	box-shadow: $btn-shading;
-	width: 25%;
-	margin: .7em 0 0 0;
 	float: left;
 	width: auto;
+	margin: .1em 0 0 0;
 }
 .form-actions {
 width: 33%;

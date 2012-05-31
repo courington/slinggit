@@ -118,22 +118,6 @@
 	#post_location {
 	width: 100%;
 	}
-	#post_content {
-	width: 90%;
-	}
-	/*.page_contentContainer fieldset {
-	margin: 0 0 $font-size 0;
-	width: 95%;
-	float: none;
-	}*/
-	#new_post fieldset:last-child {
-	float: none;
-	width: 90%;
-	margin: 0 auto;
-		#submitNewPost {
-		width: 100%;
-		}
-	}
 	.form-actions {
 		float: right;
 		span {
@@ -186,8 +170,39 @@
 	}
 	
 	//responsive styles for posts_create
-	.createPost article:last-child {
-	display: none;
+	.createPost {
+		.row > article.col4 {
+			width: 100%;
+			display: block;
+		}
+		article:last-child {
+			display: none;
+		}
+		#new_post {
+			border: none;
+			padding:0;
+			@include rounded-corners;
+			background: transparent;
+		}
+			.new_post > div.row > fieldset.col2.pull_left {
+				width: 44%;
+			}
+			.new_post > div.row > fieldset.col4.pull_left {
+				float: right;
+				width: 55%;
+				margin: 0 1% 0 0;
+			}
+			#post_hashtag_prefix {
+				width: 79%;
+			}
+			#post_content {
+				width: 100%;
+				height: 4.8em;
+				margin: 0 auto;
+			}
+			#submitNewPost {
+				width: 100%;
+			}
 	}
 }
 //this bracket closes the 320-640 media query	

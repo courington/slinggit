@@ -1,11 +1,11 @@
-<article class="col4">
+<article class="col4 pull_left">
 <%= form_for @post do |f| %>
 
       <fieldset class="row">
         <%= f.label :hashtag_prefix, "Your item", class: "col6", for: "post_hashtag_prefix" %>
           <div class="row">
             <%= f.text_field :hashtag_prefix, class: "hardEdge-right form_singleLine col4", placeholder: "#", maxLength: "10" %>
-            <span class="col2 add_on hardEdge_left">forsale</span>
+            <span class="col2 add_on">forsale</span>
           </div>
       </fieldset>
 
@@ -14,7 +14,7 @@
         <%= f.label :price, class: "col3", for: "post_price" %>
           <div class="input-append">
             <%= f.text_field :price, class: "hardEdge-right form_singleLine", id: "post_price", placeholder: "$", maxLength: "5" %>
-            <span class="col2 add_on hardEdge_left">.00</span>
+            <span class="col2 add_on">.00</span>
           </div>
 	    </fieldset>
 

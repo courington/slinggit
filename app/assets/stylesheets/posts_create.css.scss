@@ -1,5 +1,5 @@
   .createPost {
-        header {
+        article header {
           padding: 0 2.5% 0 0;
           text-align: right;
           h1 {
@@ -38,6 +38,13 @@
 	}
 }
 
-form .row:last-child {
-	margin: $font-size 0 0 0;
+#new_post {
+	border: 1px solid $lt-grey;
+	padding:0 2.5%;
+	@include rounded-corners;
+	background: #fff;
+}
+
+#new_post > .row {
+margin: 1.4em auto;
 }
