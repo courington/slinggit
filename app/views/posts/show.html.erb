@@ -23,7 +23,7 @@
 									<% if @post.photo_file_name.blank? %>
 										<%= image_tag "300x300_placeholder.png" %>
 									<% else %>
-										<%= image_tag @post.photo.url(:medium), :height => "auto", :width => "100%" %>
+										<%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%" %>
 									<% end %>
 								</div>
 							<div class="col3 pull_left postInfo">
@@ -51,11 +51,7 @@
 					</div>	
 				</div>
 				<div class="col2 pull_right">
-					<% if @post.photo_file_name.blank? %>
-						<%= image_tag "300x300_placeholder.png" %>
-					<% else %>
-						<%= image_tag @post.photo.url(:medium), :height => "auto", :width => "100%" %>
-					<% end %>
+					<%= render 'posts/post_sidebar' %>
 				</div>
 			</div>
 
@@ -78,9 +74,6 @@
 				<% end %>  
 			</div>
 		</div>
-		<div id="postReply" class="col2 pull_left">
-			<%= render 'posts/post_sidebar' %>
-		</div>	
 	</div>
 
 	<div class="row adminActions">
