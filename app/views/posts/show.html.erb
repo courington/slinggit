@@ -49,7 +49,7 @@
 						<p><strong>Description</strong></p>
 				    	<p><%= @post.content %></p>
 					</div>	
-					
+
 				</div>
 				<div id="postReplyWrapper" class="col2 pull_right">
 					<%= render 'posts/post_sidebar' %>
@@ -60,19 +60,27 @@
 	</div>
 
 	<div class="row">
-		<div id="comments" class="col4 pull_left">
+		<section id="comments" class="col4 pull_left">
+			<% if signed_in? %>
+				<div class="row">	
+					<%= render 'posts/post_comment_form' %>
+				</div>
+			<% end %>
 			<div class="row">
-				<% if @comments.any? %>
-					<ul class="comments">
+				<div class="col6"> 
+					<% if @comments.any? %>
 						<%= render @comments %>
-					</ul>
-					<%= will_paginate @comments %>
-				<% end %>  
+						<%= will_paginate @comments %>
+					<% end %>  
+				</div>
 			</div>
-			<div class="row">
-				<%= render 'posts/post_comment_form' %>
-			</div>
-		</div>
+			<% if not signed_in? %>
+				<div class="row">	
+					<%= render 'posts/post_comments_signup' %>
+				</div>
+			<% end %>
+			
+		</section>
 	</div>
 
 	<div class="row adminActions">

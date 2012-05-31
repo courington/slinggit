@@ -11,12 +11,12 @@
 
       <% if not @twitter_post.blank? %>
         <div class="row">
-          <%= button_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_medium", method: "get" %>
+          <%= button_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_medium", method: "get", type: "button" %>
         </div> 
       <% end %>  
 
       <div class="row">
-        <%= button_to "slinggit", user_path, class: "col6 btn_medium", method: "get" %>
+        <%= button_to "slinggit", user_path, class: "col6 btn_medium", method: "get", type: "button" %>
       </div> 
 
     </div>

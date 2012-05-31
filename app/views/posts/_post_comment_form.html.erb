@@ -1,64 +1,38 @@
-<% if signed_in? %>
+<% if @post.open? %>
 
-  <% if @post.open? %>
+  <% if not current_user.is_suspended? %>
 
-    <% if not current_user.is_suspended? %>
+    <%= form_for([@post, @post.comments.build]) do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
 
-      <%= form_for([@post, @post.comments.build]) do |f| %>
-        <%= f.hidden_field :user_id, value: current_user.id %>
+      <fieldset>
+        <div class="control group">
+          <div class="controls">
+            <%= f.text_area :body, class: "input-xlarge", rows: "3", style: "width:100%" %> <!-- inline style! -->
+          </div>  
+        </div>
 
-        <fieldset>
-          <div class="control group">
-            <div class="controls">
-              <%= f.text_area :body, class: "input-xlarge", rows: "3", style: "width:100%" %> <!-- inline style! -->
-            </div>  
-          </div>
+        <div class="form-actions">
+          <%= f.submit "Reply to Post", class: "btn btn-inverse" %>
+        </div>
 
-          <div class="form-actions">
-            <%= f.submit "Reply to Post", class: "btn btn-inverse" %>
-          </div>
+      </fieldset>
 
-        </fieldset>
-
-        <% end %><!-- form end -->
-
-    <% else %>
-
-      <div class="notice">
-        You are currently in time out.  As a result of this, you cannot comment on posts.
-      </div>  
-
-    <% end %>    
+      <% end %><!-- form end -->
 
   <% else %>
 
-      <div class="alert alert-error">
-        <h4 class="alert-heading">Post Closed</h4>
-        Oh snap, it appears this item is no longer for sale.
-      </div>
+    <div class="notice">
+      You are currently in time out.  As a result of this, you cannot comment on posts.
+    </div>  
 
-  <% end %>  
+  <% end %>    
 
 <% else %>
-  <div class="col6">
 
-    <div class="row">
-      <h4>Signin or Signup to ask a question</h4>
-      <hr>
+    <div class="alert alert-error">
+      <h4 class="alert-heading">Post Closed</h4>
+      Oh snap, it appears this item is no longer for sale.
     </div>
 
-    <div class="row">
-
-      <div class="col2 pull_left">
-        <%= button_to "Sign in", signin_path, class: "btn_medium" %>
-      </div>  
-
-      <div class="col4 pull_right">
-        <p>New to slinggit?  Signing up is the easiest way to interact with buyers and sellers.</p>
-        <%= button_to "Sign up", signup_path, class: "btn_medium" %>
-      </div>
-
-    </div>
-
-  </div>
-<% end %>
+<% end %>  
