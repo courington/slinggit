@@ -1,7 +1,7 @@
 // Specfic styles for the posts sidebar
 #post{
-	background-color: $white;
-	@include rounded-corners(3px);
+	//background-color: $white;
+	//@include rounded-corners(3px);
 	//border: 1px solid $lt-grey;
 	padding: 10px 10px 10px 0px;
 
@@ -51,21 +51,23 @@
 #postReplyWrapper{
 
 	padding-left: 10px;
+	vertical-align: top;
 	
 	#postReply{
-
-		vertical-align: top;
-		margin-top: 20px;
-		background-color: $white;
-		@include rounded-corners(3px);
-		border: 1px solid $lt-grey;
+		//background-color: $white;
+		//@include rounded-corners(3px);
+		//border: 1px solid $lt-grey;
 
 		.contentHeader{
-			border-bottom: 1px solid $lt-grey;
+			//border-bottom: 1px solid $lt-grey;
 		}
 
 		.innerHeader {
 			padding: 20px;
+		}
+
+		#postReplyActions{
+			padding: 20px 0 20px;
 		}
 
 	}

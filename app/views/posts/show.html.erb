@@ -63,7 +63,9 @@
 		<section id="comments" class="col4 pull_left">
 			<% if signed_in? %>
 				<div class="row">	
+					<div class="col6"> 
 					<%= render 'posts/post_comment_form' %>
+					</div>
 				</div>
 			<% end %>
 			<div class="row">
@@ -76,7 +78,9 @@
 			</div>
 			<% if not signed_in? %>
 				<div class="row">	
-					<%= render 'posts/post_comments_signup' %>
+					<div id="signUpWrapper" class="col6">
+						<%= render 'posts/post_comments_signup' %>
+					</div>
 				</div>
 			<% end %>
 			
