@@ -1,0 +1,57 @@
+// posts page
+.posts article ul {
+    list-style: disc outside;
+    margin: $font-size 0;
+	overflow: hidden;
+    li {
+      margin: 0 0 0 0;
+      list-style: none;
+      a {
+        color: rgb(62, 62, 62);
+		width: 100%;
+        .photo {
+          border: 1px solid $lt-grey;
+          padding: 1px;
+          width: 90%;
+          background-color: $wht;
+		  margin: 0;
+          // CMK: Chase - not sure if you want these images to be a set size or not
+          img{
+            width: 100%;
+          }
+        }
+        .item {
+          font-size: $font-size * 1;
+          display: block;
+        }
+        .content {
+          font-size: $font-size;
+          line-height: $font-size;
+          margin: 0 0 ($font-size * .5) 0;
+        }
+        .timestamp {
+          display: block;
+          font-size: $font-size * .65;
+          line-height: ($font-size * .65) * 1.2;
+        }
+      }
+      .pull-right {
+        margin: .7em 0;
+        a {
+          color: $main-blue;
+          font-size: $font-size * .75;
+          font-weight: bold;
+        }
+        .label {
+          border-right: 1px solid $lt-grey;
+          padding-right: $font-size * .75;
+          margin-right: $font-size * .75;
+        }
+      }
+    }
+  }
+  article > ul + .form-actions {
+    width: 100%;
+    margin: 1.4em 0 0 0;
+  }
+  // end

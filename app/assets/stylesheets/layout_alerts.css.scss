@@ -1,0 +1,24 @@
+  //styles for notices
+#success_explanation {
+background: lighten($main-green, 15%);
+color: $wht;
+box-shadow: 0 1px 0 rgba(0,0,0,.2);
+width: 50%;
+margin: 0 auto;
+text-align: center;
+font-size: ($font-size * .8);
+padding: 1em .8em .8em;
+margin-top: -1em;
+@include hardEdge-top;
+}
+
+ #error_explanation,
+#notice_explanation {
+float: left;
+color: $main-red;
+font-size: ($font-size * .8);
+line-height: $leading;
+letter-spacing: .1em;
+margin: 0 0 1em 0;
+}
+  //end

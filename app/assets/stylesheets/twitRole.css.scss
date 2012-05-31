@@ -1,3 +1,11 @@
+//MOVED FROM CONTENT_LAYOUT
+.twtr-widget {
+    border: 1px solid $lt-grey;
+    .twtr-ft {
+      display: none;
+    }
+  }
+//END
 .twtr-widget {
 	position: relative;
 	font-size: 1.4em;

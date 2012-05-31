@@ -67,7 +67,8 @@ SlinggitWebapp::Application.configure do
   STATUS_PENDING = "PND"
   STATUS_RESOLVED = "RES"
   STATUS_PRIMARY = "PRM"
-
+  STATUS_UNREAD = "UNR"
+  STATUS_READ = "RED"
 
   ## ROLES ##
   ROLE_ADMIN = "ADM"
