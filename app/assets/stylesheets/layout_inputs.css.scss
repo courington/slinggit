@@ -22,6 +22,9 @@ input[type="text"].hardEdge-right {
 	clear: left;
 	float: left;
 }
+.hardEdge_left {
+	@include hardEdge-left;
+}
 .col_oneThird {
 width: 50%;
 margin: 0;
@@ -108,7 +111,7 @@ label {
 	font-size: $font-size - .2em;
 	display: block;
 }
-.add-on {
+.add_on {
 	@include hardEdge-left;
 	background: $lt-grey;
 	padding: .45em;
@@ -122,17 +125,10 @@ label {
 	float: left;
 	width: auto;
 }
-//.input-append {
-//overflow:hidden;
-//width: 100%;
-//}
-// create post form
-/*.col_oneThird,
 .form-actions {
 width: 33%;
 float: left;
-}*/
-.col_twoThird,
+}
 #photoControlGroup {
 float: left;
 margin: 0 0 0 5%;
