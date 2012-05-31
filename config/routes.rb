@@ -12,6 +12,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/destroy', :to => 'users#destroy', via: :delete
   match 'users/delete_account', :to => 'users#delete_account', via: :get
   match 'users/verify_email(/:id)', :to => 'users#verify_email#id'
+  match 'users/new(/:id)', :to => 'users#new#id'
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
   match 'networks/add_api_account', :to => 'networks#add_api_account', via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
@@ -19,6 +20,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
 
   resources :users
+  resources :messages
   resources :sessions, only: [:new, :create, :destroy, :index]
   resources :posts, only: [:new, :create, :destroy, :edit, :show, :update]
   resources :networks, only: [:index, :create, :destroy]
@@ -34,6 +36,7 @@ SlinggitWebapp::Application.routes.draw do
   root to: 'static_pages#home'
 
   match '/signup', to: 'users#new'
+  match '/request_invitation', to: 'users#request_invitation'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 

@@ -41,7 +41,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @user_feedbacks = UserFeedback.all(:conditions => ['user_id = ?', user.id])
     @reactive_url = "#{BASEURL}/users/reactivate/#{user.account_reactivation_code}"
-    mail(:to => EXECUTIVES, :from =>'From Beyond The Grave <deleted_account@slinggit.com>', :subject => "User deleted account")
+    mail(:to => EXECUTIVES, :from => 'From Beyond The Grave <deleted_account@slinggit.com>', :subject => "User deleted account")
   end
 
   def invitation_request(email)
@@ -51,6 +51,14 @@ class UserMailer < ActionMailer::Base
   def invitation_approved(invitation)
     @activation_code = invitation.activation_code
     mail(:to => invitation.email, :subject => "Slinggit invitation approved", :bcc => EXECUTIVES)
+  end
+
+  def new_message(message)
+    @message_object = message
+    @recipient_user = User.first(:conditions => ['id = ?', message.recipient_user_id], :select => 'email,name')
+    if not @recipient_user.blank?
+      mail(:to => @recipient_user.email, :subject => "You have a new message")
+    end
   end
 
 end

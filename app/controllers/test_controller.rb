@@ -5,6 +5,19 @@ class TestController < ApplicationController
     render :text => 'Your in the test controller'
   end
 
+  def create_new_message
+    Message.create(
+        :creator_user_id => current_user.id,
+        :recipient_user_id => current_user.id,
+        :source => 'post',
+        :source_id => nil,
+        :contact_info_json => '{"email":"dlogan21@gmail.com","phone_number":"3035505964"}',
+        :body => 'This is me lettin you know that I am interested in what you are selling... get back at me so I can buy it big dog boss man',
+        :send_email => true
+    )
+    render :nothing => true
+  end
+
   def raise_exception
     if not params[:exception].blank?
       raise params[:exception]
