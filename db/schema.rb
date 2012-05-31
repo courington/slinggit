@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120527233817) do
+ActiveRecord::Schema.define(:version => 20120531031416) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -54,6 +54,22 @@ ActiveRecord::Schema.define(:version => 20120527233817) do
     t.integer  "source_user_id"
     t.string   "activation_code"
   end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "creator_user_id"
+    t.integer  "recipient_user_id"
+    t.string   "source"
+    t.integer  "source_id"
+    t.string   "contact_info_json"
+    t.string   "body",              :limit => 1200
+    t.string   "status",                            :default => "UNR"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+  end
+
+  add_index "messages", ["creator_user_id"], :name => "index_messages_on_creator_user_id"
+  add_index "messages", ["source"], :name => "index_messages_on_source"
+  add_index "messages", ["status"], :name => "index_messages_on_status"
 
   create_table "mobile_sessions", :force => true do |t|
     t.integer  "user_id"
@@ -197,8 +213,8 @@ ActiveRecord::Schema.define(:version => 20120527233817) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
