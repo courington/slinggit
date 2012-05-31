@@ -169,6 +169,10 @@
 		//}
 
 		.postInfo{
+			.col2, .col3{
+				width: ($sixCols * 3);
+				float: left;
+			}
 
 			dl{
 				font-size: $font-size * .7 !important;
