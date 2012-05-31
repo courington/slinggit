@@ -11,34 +11,45 @@ body {
 }
 
 //COLUMNS and OFFSETS
-.col1,
-.offset1 {
+.col1 {
 	width: $sixCols;
 	display: inline-block;
 }
-.col2,
-.offset2 {
+.col2 {
 	width: ($sixCols * 2);
 	display: inline-block;
 }
-.col3,
-.offset3 {
+.col3 {
 	width: ($sixCols * 3);
 	display: inline-block;
 }
-.col4,
-.offset4 {
+.col4 {
 	width: ($sixCols * 4);
 	display: inline-block;
 }
-.col5,
-.offset5 {
+.col5 {
 	width: ($sixCols * 5);
 	display: inline-block;
 }
 .col6 {
 	width: 100%;
 	display: block;
+}
+
+.offset1 {
+ margin-left: $sixCols;
+}
+.offset2 {
+ margin-left: ($sixCols * 2);
+}
+.offset3 {
+  margin-left: ($sixCols * 3);
+}
+.offset4 {
+  margin-left: ($sixCols * 4);
+}
+.offset5 {
+  margin-left: ($sixCols * 5);
 }
 
 //RIGHT or LEFT
