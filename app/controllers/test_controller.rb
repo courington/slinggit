@@ -12,7 +12,7 @@ class TestController < ApplicationController
         :source => 'post',
         :source_id => nil,
         :contact_info_json => '{"email":"dlogan21@gmail.com","phone_number":"3035505964"}',
-        :body => 'This is me lettin you know that I am interested in what you are selling... get back at me so I can buy it big dog boss man',
+        :body => 'This is me lettin you know that I am interested in what you are selling get back at me so I can buy it big dog boss man This is me lettin you know that I am interested in what you are selling get back at me so I can buy it big dog boss man This is me lettin you know that I am interested in what you are selling get back at me so I can buy it big dog boss man',
         :send_email => true
     )
     render :nothing => true
