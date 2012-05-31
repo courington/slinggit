@@ -44,20 +44,25 @@
 	margin-top: 20px;
 }
 
-#postReply{
+#postReplyWrapper{
 
-	vertical-align: top;
-	margin-top: 20px;
-	background-color: $white;
-	@include rounded-corners(3px);
-	border: 1px solid $lt-grey;
+	padding-left: 10px;
+	
+	#postReply{
 
-	.contentHeader{
-		border-bottom: 1px solid $lt-grey;
+		vertical-align: top;
+		margin-top: 20px;
+		background-color: $white;
+		@include rounded-corners(3px);
+		border: 1px solid $lt-grey;
+
+		.contentHeader{
+			border-bottom: 1px solid $lt-grey;
+		}
+
+		.innerHeader {
+			padding: 20px;
+		}
+
 	}
-
-	.innerHeader {
-		padding: 20px;
-	}
-
 }

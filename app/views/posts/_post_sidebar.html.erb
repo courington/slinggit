@@ -1,39 +1,51 @@
 <!-- Reply to container -->
-<div class="row contentHeader">
-  <div class="innerHeader">
-    <h2>Reply to Seller</h2>
-  </div>  
-</div> 
-<div class="row">
-  <% if not @twitter_post.blank? %>
-    <p>Reply directly to
-      <a href="https://twitter.com/#!/<%= @api_account.user_name %>/status/<%= @twitter_post.twitter_post_id %>" target="_blank">@<%= @api_account.user_name %></a>
-    via Twitter</p>  
-  <% end %>  
-</div>
-<div class="row">
-  <% if not signed_in? %>
+<div id="postReply">
+  <div class="row contentHeader">
+    <div class="innerHeader">
+      <h2>Reply to Seller via:</h2>
+    </div>  
+  </div> 
 
-    <div class="col6">
+  <div class="row">
+    <div class="col4 offset1">
+
+      <% if not @twitter_post.blank? %>
+        <div class="row">
+          <%= button_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_medium", method: "get" %>
+        </div> 
+      <% end %>  
+
       <div class="row">
-        Placeholder stuff.  Going to put form here.
-      </div>  
-      <div class="row">
-        <h4 class="alert-heading"><%= link_to "Sign in", signin_path %> to reply to this post</h4>
-      </div>
-      <div class="row">
-        <p>New to slinggit? <%= link_to "Sign up now!", signup_path %></p>
-      </div>
+        <%= button_to "slinggit", user_path, class: "col6 btn_medium", method: "get" %>
+      </div> 
+
     </div>
-  <% end %>
-</div>  
+  </div>
 
-<div class="row">
-  
-    <% if current_user?(@user) %>
-      <% if current_user.status != "suspended"%>
-        <h6 class="pull-right"><%= link_to "edit", edit_post_path(@post), class: "btn" %></h6>
-      <% end %> 
+  <div class="row">
+    <% if not signed_in? %>
+
+      <div class="col6">
+        <div class="row">
+          Placeholder stuff.  Going to put form here.
+        </div>  
+        <div class="row">
+          <h4 class="alert-heading"><%= link_to "Sign in", signin_path %> to reply to this post</h4>
+        </div>
+        <div class="row">
+          <p>New to slinggit? <%= link_to "Sign up now!", signup_path %></p>
+        </div>
+      </div>
     <% end %>
+  </div>  
 
+  <div class="row">
+    
+      <% if current_user?(@user) %>
+        <% if current_user.status != "suspended"%>
+          <h6 class="pull-right"><%= link_to "CLOSE", edit_post_path(@post), class: "btn" %></h6>
+        <% end %> 
+      <% end %>
+
+  </div>
 </div>
