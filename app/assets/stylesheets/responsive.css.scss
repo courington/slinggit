@@ -151,5 +151,17 @@
 	.page_contentContainer #session_email {
 	
 	}
+	.postDetails {
+		.col4, .col2 {
+		display: block;
+		float: none;
+		clear: both;
+		width: 100%;
+		}
+		//.col3 {
+		//	display: block;
+		//	width: 100%;
+		//}
+	}
 }
 //end
