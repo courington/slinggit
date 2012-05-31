@@ -1,13 +1,4 @@
   .createPost {
-    article {
-      padding-bottom: 1.4em;
-      &:first-child {
-        float: left;
-        width: 60%;
-      }
-      &:last-child {
-        float: right;
-        width: 30%;
         header {
           padding: 0 2.5% 0 0;
           text-align: right;
@@ -20,20 +11,15 @@
             line-height: ($font-size * .65) * 1.2;
           }
         }
-        /*a:link {
-          float: left;
-        }*/
-      }
       &[role="complementary"] {
         float: none;
         clear: both;
         width: 50%;
       }
-    }
   	img.obj {
     	width: 300px;
   	}
-  }
+}
 
 
 .twitterPostAccount {

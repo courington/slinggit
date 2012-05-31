@@ -1,7 +1,7 @@
 // small handheld device
 @media all and (min-width: 320px) and (max-width: 640px) {
 	.wrapper {
-		width: 98%;
+		width: 96%;
 		max-width: 640px;
 		padding: 0;
 	}
@@ -190,10 +190,6 @@
 	}
 	
 	//responsive styles for posts_create
-	.createPost {
-	width: 95%;
-	padding: 0;
-	}
 	.createPost article:last-child {
 	display: none;
 	}
