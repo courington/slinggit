@@ -1,10 +1,16 @@
+@import "sass_variables.css.scss";
 @import "reset.css.scss";
-@import "contentLayout.css.scss";
-@import "headFoot.css.scss";
-@import "inputs.css.scss";
-@import "dropdown.css.scss";
-@import "responsive.css.scss";
-@import "admin.css.scss";
-@import "viewPosts.css.scss";
-@import "posts_create.css.scss";
 
+@import "layout_pageContent.css.scss";
+@import "layout_headerFooter.css.scss";
+@import "layout_responsive.css.scss";
+@import "layout_inputs.css.scss";
+@import "layout_alerts.css.scss";
+
+@import "dropdown.css.scss";
+
+@import "posts_viewDetail.css.scss";
+@import "posts_create.css.scss";
+@import "posts_userPosts.css.scss";
+
+@import "admin.css.scss";
