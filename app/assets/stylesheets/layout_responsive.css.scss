@@ -153,15 +153,35 @@
 	}
 	.posts {
 		.col4, .col2 {
-		display: block;
-		float: none;
-		clear: both;
-		width: 100%;
+			display: block;
+			float: none;
+			clear: both;
+			width: 100%;
+		}
+
+		.offset1 {
+			margin-left: 0;
 		}
 		//.col3 {
 		//	display: block;
 		//	width: 100%;
 		//}
+
+		.postInfo{
+
+			dl{
+				font-size: $font-size * .7 !important;
+
+				dt{
+					padding: 3px 3px;
+				}
+
+				dd{
+					padding: 3px 3px;
+				}
+			}
+
+		}
 	}
 }
 //end
