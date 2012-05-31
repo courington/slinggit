@@ -13,7 +13,7 @@
 			</div>	
 
 			<div class="row postDetails">
-				<div class="col3 postInfo">
+				<div class="col3 pull_left postInfo">
 					 <dl>
 					    <dt class="col2">Location</dt>
 					    <dd class="col3"><%= @post.location %></dd>
@@ -33,7 +33,7 @@
 	    				<dd class="col6"><%= @post.content %></dd>
 					</dl>
 				</div>
-				<div class="col3">
+				<div class="col3 pull_left">
 					<% if @post.photo_file_name.blank? %>
 						<%= image_tag "300x300_placeholder.png" %>
 					<% else %>
@@ -45,7 +45,7 @@
 	</div>
 
 	<div class="row">
-		<div id="comments" class="col4">
+		<div id="comments" class="col4 pull_left">
 			<div class="row">
 				<%= render 'posts/post_comment_form' %>
 			</div>
@@ -58,7 +58,7 @@
 				<% end %>  
 			</div>
 		</div>
-		<div id="postReply" class="col2">
+		<div id="postReply" class="col2 pull_left">
 			<%= render 'posts/post_sidebar' %>
 		</div>	
 	</div>

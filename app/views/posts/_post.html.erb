@@ -1,6 +1,6 @@
 <li class="row">
   <div class="row">
-		<div class="col2">
+		<div class="col2 pull_left">
 		<%= link_to(post_path(post)) do %>
         	<div class="photo">
           	<% if post.photo_file_name.blank? %>
@@ -12,7 +12,7 @@
     <% end %>
 		</div>
     
-		<div class="col4">
+		<div class="col4 pull_left">
 			<h2 class="item"><%= post.hashtag_prefix %></h2>
 			<p><%= post.content %></p>
 			<small class="timestamp">Posted <%= time_ago_in_words(post.created_at) %> ago.</small>
