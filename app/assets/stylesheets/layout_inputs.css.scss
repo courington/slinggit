@@ -22,6 +22,9 @@ input[type="text"].hardEdge-right {
 	clear: left;
 	float: left;
 }
+.hardEdge_left {
+	@include hardEdge-left;
+}
 .col_oneThird {
 width: 50%;
 margin: 0;
