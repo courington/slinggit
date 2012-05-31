@@ -13,49 +13,48 @@
 				</div>	
 			</div>	
 
-
-
 			<div class="row postDetails">
-
 				<div class="col4 pull_left">
+
 					<div class="row">
-							<div class="col3 pull_right">
-									<% if @post.photo_file_name.blank? %>
-										<%= image_tag "300x300_placeholder.png" %>
-									<% else %>
-										<%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%" %>
-									<% end %>
-								</div>
-							<div class="col3 pull_left postInfo">
-								 <dl>
-								    <dt class="col2">Location</dt>
-								    <dd class="col3"><%= @post.location %></dd>
-								    <dt class="col2">Price</dt>
-								    <dd class="col3"><%= @post.price %></dd>
-								    <dt class="col2">Interested</dt>
-								    <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
-								    <dt class="col2">Status</dt>
-								    <dd class="col3">
-								      <% if @post.open? %>
-								        Open
-								      <% else %>  
-								        Closed
-								      <% end %>
-								    </dd>
-								</dl>
-							</div>
+						<div class="col3 pull_right">
+							<% if @post.photo_file_name.blank? %>
+								<%= image_tag "300x300_placeholder.png" %>
+							<% else %>
+								<%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%" %>
+							<% end %>
+						</div>
+
+						<div class="col3 pull_left postInfo">
+							<dl>
+							    <dt class="col2">Location</dt>
+							    <dd class="col3"><%= @post.location %></dd>
+							    <dt class="col2">Price</dt>
+							    <dd class="col3"><%= @post.price %></dd>
+							    <dt class="col2">Interested</dt>
+							    <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
+							    <dt class="col2">Status</dt>
+							    <dd class="col3">
+							      <% if @post.open? %>
+							        Open
+							      <% else %>  
+							        Closed
+							      <% end %>
+							    </dd>
+							</dl>
+						</div>
 					</div>
+
 					<div class="row">
 						<p><strong>Description</strong></p>
 				    	<p><%= @post.content %></p>
 					</div>	
+					
 				</div>
 				<div id="postReplyWrapper" class="col2 pull_right">
 					<%= render 'posts/post_sidebar' %>
 				</div>
 			</div>
-
-
 
 		</div>
 	</div>
@@ -63,15 +62,15 @@
 	<div class="row">
 		<div id="comments" class="col4 pull_left">
 			<div class="row">
-				<%= render 'posts/post_comment_form' %>
-			</div>
-			<div class="row">
 				<% if @comments.any? %>
 					<ul class="comments">
 						<%= render @comments %>
 					</ul>
 					<%= will_paginate @comments %>
 				<% end %>  
+			</div>
+			<div class="row">
+				<%= render 'posts/post_comment_form' %>
 			</div>
 		</div>
 	</div>

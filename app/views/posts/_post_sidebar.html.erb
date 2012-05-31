@@ -23,23 +23,6 @@
   </div>
 
   <div class="row">
-    <% if not signed_in? %>
-
-      <div class="col6">
-        <div class="row">
-          Placeholder stuff.  Going to put form here.
-        </div>  
-        <div class="row">
-          <h4 class="alert-heading"><%= link_to "Sign in", signin_path %> to reply to this post</h4>
-        </div>
-        <div class="row">
-          <p>New to slinggit? <%= link_to "Sign up now!", signup_path %></p>
-        </div>
-      </div>
-    <% end %>
-  </div>  
-
-  <div class="row">
     
       <% if current_user?(@user) %>
         <% if current_user.status != "suspended"%>
