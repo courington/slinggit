@@ -1,7 +1,7 @@
 <% provide(:title, @post.hashtag_prefix) %>
-<section class="wrapper posts">
+<section id="post" class="wrapper">
 
-	<div id="post" class="row">
+	<div id="postContent" class="row">
 		<div class="col6">
 
 			<div class="row contentHeader">
@@ -59,16 +59,16 @@
 		</div> <!-- -->
 	</div>
 
-	<div class="row">
-		<section id="comments" class="col4 pull_left">
+	<div id="comments" class="row">
+		<div class="col4 pull_left">
 			<% if signed_in? %>
-				<div class="row">	
+				<div id="commentInput" class="row">	
 					<div class="col6"> 
 					<%= render 'posts/post_comment_form' %>
 					</div>
 				</div>
 			<% end %>
-			<div class="row">
+			<div id ="commentContent" class="row">
 				<div class="col6"> 
 					<% if @comments.any? %>
 						<%= render @comments %>
@@ -77,21 +77,22 @@
 				</div>
 			</div>
 			<% if not signed_in? %>
-				<div class="row">	
-					<div id="signUpWrapper" class="col6">
+				<div id="signUpWrapper" class="row">	
+					<div class="col6">
 						<%= render 'posts/post_comments_signup' %>
 					</div>
 				</div>
 			<% end %>
 			
-		</section>
+		</div>
 	</div>
 
-	<div class="row adminActions">
+		
+	<% if is_signed_in_and_admin? %>
 		<!-- ADMIN ONLY FUNCTIONALITY -->
-		<% if is_signed_in_and_admin? %>
+		<div class="row adminActions">
 			<%= link_to "DELETE", @post, method: :delete, confirm: "You sure?" %>
-		<% end %>
-	 </div> 		
+		 </div> 
+	<% end %>		
 
 </section>

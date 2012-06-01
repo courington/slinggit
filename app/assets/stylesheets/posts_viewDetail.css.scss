@@ -1,84 +1,93 @@
 // Specfic styles for the posts sidebar
-#post{
-	//background-color: $white;
-	//@include rounded-corners(3px);
-	//border: 1px solid $lt-grey;
-	padding: 10px 10px 10px 0px;
+#post {
 
-	.contentHeader{
-		border-bottom: 1px solid $lt-grey;
-	}
+	#postContent{
+		padding: 10px 10px 10px 0px;
 
-	.innerHeader {
-		padding: 10px 10px 0px 10px;
-	}
-
-	#postDetails{
-		margin-top: 10px;
-		background-color: white;
-		padding: 20px;
-		border: 1px solid #e8e8e8;
-
-		.postInfo{
-			vertical-align: top;
-
-			dl{
-				margin-top: 10px;
-				padding: 10px;
-				font-size: $font-size * 1.1;
-
-				dt{
-					padding: 5px 5px;
-					font-weight: 600;
-				}
-
-				dd{
-					text-align: right;
-					padding: 5px 5px;
-				}
-			}
-
+		.contentHeader{
+			border-bottom: 1px solid $lt-grey;
 		}
 
-	}
+		.innerHeader {
+			padding: 10px 10px 0px 10px;
+		}
 
-	#postReplyWrapper{
-		margin-top: 10px;
-		padding-left: 10px;
-		vertical-align: top;
-		
-		#postReply{
+		#postDetails{
+			margin-top: 10px;
 			background-color: white;
 			padding: 20px;
 			border: 1px solid #e8e8e8;
+			@include rounded-corners(3px);
 
-			.contentHeader{
-				//border-bottom: 1px solid $lt-grey;
-			}
+			.postInfo{
+				vertical-align: top;
 
-			.innerHeader {
-				padding: 20px;
-			}
+				dl{
+					margin-top: 10px;
+					padding: 10px;
+					font-size: $font-size * 1.1;
 
-			#postReplyActions{
-				padding: 20px 0 20px;
+					dt{
+						padding: 5px 5px;
+						font-weight: 600;
+					}
+
+					dd{
+						text-align: right;
+						padding: 5px 5px;
+					}
+				}
+
 			}
 
 		}
-	}
+
+		#postReplyWrapper{
+			margin-top: 10px;
+			padding-left: 10px;
+			vertical-align: top;
+			
+			#postReply{
+				background-color: white;
+				padding: 20px;
+				border: 1px solid #e8e8e8;
+				@include rounded-corners(3px);
+
+				.contentHeader{
+					//border-bottom: 1px solid $lt-grey;
+				}
+
+				.innerHeader {
+					padding: 20px;
+				}
+
+				#postReplyActions{
+					padding: 20px 0 20px;
+
+					.row {
+						margin-bottom: 20px;
+					}
+			
+				}
+
+			}
+		}
 
 
+	}// end #postContent
 
-}
-#comments{
+	#comments{
 
-	.row {
-		margin-top: 25px;
-	}
+		.row {
+			margin-top: 25px;
+		}
 
-	#signUpWrapper{
-		background-color: white;
-		padding: 20px;
-		border: 1px solid #e8e8e8;
-	}
-}
+		#signUpWrapper{
+			background-color: white;
+			padding: 20px;
+			border: 1px solid #e8e8e8;
+			@include rounded-corners(3px);
+		}
+	}// end #comments
+
+}// end #post

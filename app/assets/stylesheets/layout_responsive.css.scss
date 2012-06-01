@@ -136,48 +136,64 @@
 	.page_contentContainer #session_email {
 	
 	}
-	.posts {
+
+	// styles for post (not comments)
+	#post {
 		.col4, .col2 {
 			display: block;
 			float: none;
 			clear: both;
 			width: 100%;
 		}
-
-		.offset1 {
-			margin-left: 0;
-		}
-		//.col3 {
-		//	display: block;
-		//	width: 100%;
-		//}
-
-		.postInfo{
-			.col2, .col3{
-				width: ($sixCols * 3);
-				float: left;
-			}
-
-			dl{
-				font-size: $font-size * .8 !important;
-
-				dt{
-					padding: 3px 3px;
+		#postContent{
+			//ask Chase why I have to put !important here. Sure it's a load order thing.
+			padding: 0px 0px 0px 0px !important;;
+			#postDetails{
+				.postInfo{
+					.col2, .col3{
+						width: ($sixCols * 3);
+						float: left;
+					}
+					dl{
+						//ask Chase why I have to put !important here. Sure it's a load order thing.
+						font-size: $font-size * .8 !important;
+						dt{
+							padding: 3px 3px;
+						}
+						dd{
+							padding: 3px 3px;
+						}
+					}
 				}
+			}// end #postDetails
+			#postReplyWrapper{
+				//ask Chase why I have to put !important here. Sure it's a load order thing.
+				padding: 0px 0px 0px 0px !important;
+				.offset1 {
+					margin-left: 0;
 
-				dd{
-					padding: 3px 3px;
 				}
-			}
+				#postReply{
+					#postReplyActions{
+						.row {
+							//ask Chase why I have to put !important here. Sure it's a load order thing.
+							margin-bottom: 0px !important;
+						}
+					}
+				}
+			}// end #postReplyWrapper
 
-		}
-
+		}// end #post
 		#comments {
-			p{
-				font-size: $font-size * .7;
+
+			#commentContent{
+				p{
+					font-size: $font-size * .7;
+				}
+
 			}
-		}
-	}
+		}// end #comments
+	}// end #posts
 	
 	//responsive styles for posts_create
 	.createPost {
