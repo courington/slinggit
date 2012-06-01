@@ -13,8 +13,11 @@
 		padding: 10px 10px 0px 10px;
 	}
 
-	.postDetails{
+	#postDetails{
 		margin-top: 10px;
+		background-color: white;
+		padding: 20px;
+		border: 1px solid #e8e8e8;
 
 		.postInfo{
 			vertical-align: top;
@@ -37,8 +40,34 @@
 
 		}
 
-
 	}
+
+	#postReplyWrapper{
+		margin-top: 10px;
+		padding-left: 10px;
+		vertical-align: top;
+		
+		#postReply{
+			background-color: white;
+			padding: 20px;
+			border: 1px solid #e8e8e8;
+
+			.contentHeader{
+				//border-bottom: 1px solid $lt-grey;
+			}
+
+			.innerHeader {
+				padding: 20px;
+			}
+
+			#postReplyActions{
+				padding: 20px 0 20px;
+			}
+
+		}
+	}
+
+
 
 }
 #comments{
@@ -46,29 +75,10 @@
 	.row {
 		margin-top: 25px;
 	}
-}
 
-#postReplyWrapper{
-
-	padding-left: 10px;
-	vertical-align: top;
-	
-	#postReply{
-		//background-color: $white;
-		//@include rounded-corners(3px);
-		//border: 1px solid $lt-grey;
-
-		.contentHeader{
-			//border-bottom: 1px solid $lt-grey;
-		}
-
-		.innerHeader {
-			padding: 20px;
-		}
-
-		#postReplyActions{
-			padding: 20px 0 20px;
-		}
-
+	#signUpWrapper{
+		background-color: white;
+		padding: 20px;
+		border: 1px solid #e8e8e8;
 	}
 }
