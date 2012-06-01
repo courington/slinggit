@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120531031416) do
+ActiveRecord::Schema.define(:version => 20120601060838) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20120531031416) do
     t.string   "location"
     t.string   "recipient_api_account_ids"
     t.string   "status",                                 :default => "ACT"
+    t.string   "id_hash"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"
@@ -215,8 +216,8 @@ ActiveRecord::Schema.define(:version => 20120531031416) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"

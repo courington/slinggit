@@ -16,7 +16,7 @@
       <% end %>  
 
       <div class="row">
-        <%= button_to "slinggit", user_path, class: "col6 btn_medium", method: "get", type: "button" %>
+        <%= button_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_medium", method: "get", type: "button" %>
       </div> 
 
     </div>

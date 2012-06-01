@@ -21,6 +21,11 @@ class MessagesController < ApplicationController
   end
 
   def new
+    if not params[:id].blank?
+      if @post = Post.first(:conditions => ['id_hash = ?', params[:id]])
+
+      end
+    end
   end
 
   def create

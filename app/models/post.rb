@@ -22,7 +22,9 @@
 class Post < ActiveRecord::Base
   before_save :create_post_history
 
-  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open, :status
+  before_create :create_id_hash
+
+  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open, :status, :id_hash
 
   belongs_to :user
   has_many :comments, dependent: :destroy
@@ -53,6 +55,10 @@ class Post < ActiveRecord::Base
         PostHistory.create(current_post_before_save.attributes)
       end
     end
+  end
+
+  def create_id_hash
+    self.id_hash = Digest::SHA1.hexdigest(self.id.to_s + Time.now.to_s)
   end
 
   def price=(num)
