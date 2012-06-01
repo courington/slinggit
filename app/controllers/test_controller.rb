@@ -5,6 +5,12 @@ class TestController < ApplicationController
     render :text => 'Your in the test controller'
   end
 
+  def get_messages
+    steve = Message.all
+    wtf = steve.first.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')
+    puts wtf
+  end
+
   def create_new_message
     Message.create(
         :creator_user_id => current_user.id,

@@ -728,6 +728,39 @@ class MobileController < ApplicationController
     end
   end
 
+  def get_messages
+    if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+        mesages = Message.all(:conditions => ['recipient_user_id = ? AND status != ?', user.id, STATUS_DELETED], :select => 'creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
+
+        render_success_response(
+            :rows_found => messages.length,
+            :messages => messages.map { |m|
+              m.attributes.merge(
+                  :created_at_time => m.created_at.strftime("%H:%M"),
+                  :created_at_date => m.created_at.strftime("%m-%d-%Y"),
+                  :source_object_data => m.source_object.blank? ? nil : m.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content').attributes
+              )
+            }
+        )
+      else
+        render_error_response(
+            :error_location => 'get_messages',
+            :error_reason => 'user not found',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_messages',
+          :error_reason => 'mobile session not found',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
 #TODO IMPLEMENT AND DOCUMENT
   def change_password
 
