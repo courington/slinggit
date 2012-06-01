@@ -19,6 +19,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'sessions/sign_out_of_device', :to => 'sessions#sign_out_of_device', via: :post
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
 
+  match 'messages/delete(/:id)', :to => 'messages#delete#id'
+
   resources :users
   resources :messages
   resources :sessions, only: [:new, :create, :destroy, :index]

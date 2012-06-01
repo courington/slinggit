@@ -729,33 +729,68 @@ class MobileController < ApplicationController
   end
 
   def get_messages
-    if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
-      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        mesages = Message.all(:conditions => ['recipient_user_id = ? AND status != ?', user.id, STATUS_DELETED], :select => 'creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
+    if not params[:offset].blank?
+      if not params[:limit].blank?
+        if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
+          if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+            #offset can be 0
+            offset = params[:offset].to_i
+            offset = 0 if offset < 0
 
-        render_success_response(
-            :rows_found => messages.length,
-            :messages => messages.map { |m|
-              m.attributes.merge(
-                  :created_at_time => m.created_at.strftime("%H:%M"),
-                  :created_at_date => m.created_at.strftime("%m-%d-%Y"),
-                  :source_object_data => m.source_object.blank? ? nil : m.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content').attributes
-              )
-            }
-        )
+            #limit cannot be 0
+            limit = params[:limit].to_i
+            limit = 1 if limit <= 0
+
+            #starting_message_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
+            starting_message_id = params[:starting_message_id]
+            starting_message_id = Message.count() + 1 if (starting_message_id.blank? or starting_post_id.to_i <= 0)
+            starting_message_id = starting_message_id.to_i
+
+            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id <= ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
+
+            render_success_response(
+                :rows_found => messages.length,
+                :filters_used => {:offset => offset, :limit => limit, :starting_message_id => starting_message_id},
+                :messages => messages.map { |m|
+                  source_object = m.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')
+                  source_object_attributes = nil
+                  source_object_attributes = source_object.attributes if not source_object.blank?
+                  m.attributes.merge(
+                      :created_at_time => m.created_at.strftime("%H:%M"),
+                      :created_at_date => m.created_at.strftime("%m-%d-%Y"),
+                      :source_object_data => source_object_attributes
+                  )
+                }
+            )
+          else
+            render_error_response(
+                :error_location => 'get_messages',
+                :error_reason => 'user not found',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'get_messages',
+              :error_reason => 'mobile session not found',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
       else
         render_error_response(
             :error_location => 'get_messages',
-            :error_reason => 'user not found',
-            :error_code => '404',
+            :error_reason => 'missing required_paramater - limit',
+            :error_code => '403',
             :friendly_error => 'Oops, something went wrong.  Please try again later.'
         )
       end
     else
       render_error_response(
           :error_location => 'get_messages',
-          :error_reason => 'mobile session not found',
-          :error_code => '404',
+          :error_reason => 'missing required_paramater - offset',
+          :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
     end
