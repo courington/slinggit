@@ -1,17 +1,16 @@
 <div class="row">
-  <h4>Signin or Signup to ask a question</h4>
+  <p>Signin or Signup to ask a question</p>
   <hr>
 </div>
 
 <div class="row">
 
   <div class="col2 pull_left">
-    <%= button_to "Sign in", signin_path, class: "btn" %>
+    <%= link_to "Sign in", signin_path, class: "btn col4 offset1" %>
   </div>  
 
   <div class="col4 pull_right">
-    <p>New to slinggit?  Signing up is the easiest way to interact with buyers and sellers.</p>
-    <%= button_to "Sign up", signup_path, class: "btn" %>
+    <p>New to slinggit?  Signing up is the easiest way to interact with buyers and sellers.  <%= link_to " Sign up new!", signup_path %></p>
   </div>
 
 </div>

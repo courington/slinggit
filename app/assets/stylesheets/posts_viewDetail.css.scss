@@ -8,7 +8,7 @@
 #post {
 
 	#postContent{
-		padding: 10px 10px 10px 0px;
+		padding: 10px 0px 10px 0px;
 
 		.contentHeader{
 			border-bottom: 1px solid $lt-grey;
@@ -98,13 +98,43 @@
 
 	#comments{
 
-		.row {
-			margin-top: 25px;
-		}
-
-		#signUpWrapper{
+		&> div {
 			@include borderBackgroundCorners;
 			padding: 20px;
+
+			#commentContent {
+
+				&> div > p{
+					font-size: $font-size * 1.1;
+				}
+
+				h3{
+					padding: 0px 0px 10px 0px;
+					margin: 0px 0px 20px 0px;
+					border-bottom: 1px solid $lt-grey;
+
+					strong{
+						font-weight: 600;
+					}
+				}
+
+			}
+
+			#signUpWrapper{
+				margin-top: 20px;
+				background-color: $lter-grey;
+				border: 1px solid #e8e8e8;
+				@include rounded-corners(3px);
+
+				&> div {
+					padding: 20px;
+
+					.col2{
+						margin-top: 5px;
+					}
+				}
+			}
+
 		}
 	}// end #comments
 

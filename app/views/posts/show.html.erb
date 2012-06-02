@@ -62,8 +62,11 @@
 			<div id ="commentContent" class="row">
 				<div class="col6"> 
 					<% if @comments.any? %>
+						<h3>Questions to <strong><%= @user.name %></strong></h3>
 						<%= render @comments %>
 						<%= will_paginate @comments %>
+					<% else %>
+						<%= render 'posts/post_no_comments' %>
 					<% end %>  
 				</div>
 			</div>
