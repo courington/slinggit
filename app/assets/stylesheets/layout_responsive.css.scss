@@ -195,13 +195,29 @@
 
 		}// end #post
 		#comments {
+			margin-top: 10px;
 
 			#commentContent{
 				p{
 					font-size: $font-size * .7;
 				}
 
+				.comment{
+
+					.col5{
+						margin: 0 !important;
+					}
+				}
 			}
+			#signUpWrapper{
+				p{
+					font-size: $font-size * .8;
+				}
+				.col4{
+					margin-top: 10px;
+				}
+			}	
+
 		}// end #comments
 	}// end #posts
 	

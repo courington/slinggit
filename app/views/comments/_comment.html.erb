@@ -1,16 +1,23 @@
-<div class="row">
+<div class="row comment">
+
 	<div class="col1 pull_left">
-  		<%= gravatar_for User.find(comment.user_id) %>
-  	</div>
+  	<%= gravatar_for User.find(comment.user_id) %>
+  </div>
 
-  	<div class="col5 pull_right">
-  		<% if User.find(comment.user_id) == @user %> 
-  			<strong>Item Owner</strong>
-  		<% end %>
-
-  		<p><%= comment.body %></p>
+	<div class="col5 pull_left">
+		<% if User.find(comment.user_id) == @user %> 
+      <div class="row">
+			   <strong>Item Owner</strong>
+      </div>
+		<% end %>
+    <div class="row">
+		  <p><%= comment.body %></p>
+    </div?
+    <div class="row">
   		<span class="timestamp">
     		Posted <%= time_ago_in_words(comment.created_at) %> ago.
   		</span>
-  	</div>	
-</div>	
+    </div>
+	</div>	
+
+</div>
