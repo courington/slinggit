@@ -47,7 +47,8 @@ class ApplicationController < ActionController::Base
 
   #returns a key value pair of system preferences
   def system_preferences
-    if session[:system_preferences].blank?
+    #TODO remove true from the following line after presentation.  Dont want the invitation only session to get bogged up during pres
+    if true or session[:system_preferences].blank?
       active_preferences = HashWithIndifferentAccess.new()
       system_preferences = SystemPreference.all(:conditions => ['active = ?', true])
       system_preferences.each do |preference|

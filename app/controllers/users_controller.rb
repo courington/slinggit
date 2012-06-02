@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       if not params[:email].blank?
         if invitation = Invitation.first(:conditions => ['email = ?', params[:email]], :select => 'status')
           if invitation.status == 'approved'
-            flash.now[:success] = "Your invitation has already been approved.  Please follow the link in your approval email."
+            flash.now[:notice] = "Your invitation has already been approved.  Please follow the link in your approval email."
           elsif invitation.status == 'active'
             flash.now[:notice] = "Your invitation has already been activated.  Please log in with your email and password"
           else
