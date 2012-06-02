@@ -23,15 +23,30 @@ class MessagesController < ApplicationController
   def new
     @message ||= Message.new
 
+    #this is used to populate what tehy had entered before we detected that the email address they entered was already registered.  (not signed in user))
+    if not session[:message_data_before_login].blank?
+      @email_entered = session[:message_data_before_login][:email]
+      @message_entered = session[:message_data_before_login][:body]
+      session.delete(:message_data_before_login)
+    end
+
     if not params[:id].blank?
       session.delete(:message_post)
-      if post = Post.first(:conditions => ['id_hash = ?', params[:id]])
-        session[:message_post] = post
+      if post = Post.first(:conditions => ['id_hash = ? AND status != ? AND open = ?', params[:id], [STATUS_DELETED], true])
+        if not signed_in? or (signed_in? and not post.user_id == current_user.id)
+          session[:message_post] = post
+        else
+          flash[:error] = 'Something tells me you didnt really mean to reply to your-self... right?'
+          redirect_to root_path
+        end
       end
     end
 
     if not session[:message_post].blank?
       @message_post = session[:message_post]
+    else
+      flash[:error] = 'Sad news, the post you are trying to reply to has either been closed or deleted.'
+      redirect_to root_path
     end
   end
 
@@ -42,6 +57,15 @@ class MessagesController < ApplicationController
           @message = Message.new(params[:message])
           if signed_in?
             @message.contact_info_json = current_user.email
+          elsif not @message.contact_info_json.blank?
+            #the above if elsif statment is invalid once we start collection additional contect info
+            #this will need to rip the email field out first then validate it.
+            if user = User.first(:conditions => ['email = ?', @message.contact_info_json], :select => 'email')
+              flash[:notice] = "The email you provided belongs to a registered Slinggit user.  Please sign in first."
+              session[:return_to] = url_for :controller => :messages, :action => :new, :id => session[:message_post].id_hash
+              session[:message_data_before_login] = {:email => @message.contact_info_json, :body => @message.body}
+              redirect_to :controller => :sessions, :action => :new, :email => user.email and return
+            end
           end
 
           @message.creator_user_id = signed_in? ? current_user.id : nil
