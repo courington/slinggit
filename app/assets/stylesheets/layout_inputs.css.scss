@@ -69,18 +69,16 @@ input[type="button"] {
 		text-shadow: $btn-active-txt;
 	}
 }
-input.submitBTN,
-.btn_large,
-.btn_medium,
-.btn_small,
-.btn_cancel{
+
+.btn {
 	cursor: pointer;
 	padding: .4em;
 	color: $wht;
 	font-size: $font-size;
 	font-family: $main-font;
-	background: $main-green;
+	background: $main-grey;
 	border: 1px solid $main-grey;
+	text-align: center;
 	box-shadow: $btn-shading;
 	@include rounded-corners($radius);
 	//text-shadow: $btn-txt-shading;
@@ -97,8 +95,25 @@ input.submitBTN,
 	}
 }
 
-.btn_cancel{
-  background: $main-red;
+.btn_green {
+	@extend .btn;
+	background: $main-green;
+}
+.btn_blue {
+	@extend .btn;
+	background: $main-blue;
+}
+.btn_red {
+	@extend .btn;
+	background: $main-red;
+}
+.btn_yellow {
+	@extend .btn;
+	background: $main-yellow;
+}
+.btn_darkGrey {
+	@extend .btn;
+	background: $dk-grey;
 }
 
 label {
@@ -117,10 +132,6 @@ label {
 	float: left;
 	width: auto;
 	margin: .1em 0 0 0;
-}
-.form-actions {
-width: 33%;
-float: left;
 }
 #photoControlGroup {
 float: left;

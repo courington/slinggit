@@ -3,9 +3,10 @@
 
 @import "layout_pageContent.css.scss";
 @import "layout_headerFooter.css.scss";
-@import "layout_responsive.css.scss";
 @import "layout_inputs.css.scss";
 @import "layout_alerts.css.scss";
+
+@import "user_signUp.css.scss";
 
 @import "dropdown.css.scss";
 
@@ -14,3 +15,4 @@
 @import "posts_userPosts.css.scss";
 
 @import "admin.css.scss";
+@import "layout_responsive.css.scss";

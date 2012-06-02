@@ -1,4 +1,10 @@
 // Specfic styles for the posts sidebar
+@mixin borderBackgroundCorners{
+	background-color: white;
+	border: 1px solid #e8e8e8;
+	@include rounded-corners(3px);
+}
+
 #post {
 
 	#postContent{
@@ -19,12 +25,11 @@
 			border: 1px solid #e8e8e8;
 			@include rounded-corners(3px);
 
-			.postInfo{
+			#postInfo{
 				vertical-align: top;
 
 				dl{
 					margin-top: 10px;
-					padding: 10px;
 					font-size: $font-size * 1.1;
 
 					dt{
@@ -36,6 +41,14 @@
 						text-align: right;
 						padding: 5px 5px;
 					}
+				}
+
+			}
+
+			#postDescription {
+				p{
+					padding: 15px 5px 5px 5px;
+					font-size: $font-size;
 				}
 
 			}
@@ -83,10 +96,8 @@
 		}
 
 		#signUpWrapper{
-			background-color: white;
+			@include borderBackgroundCorners;
 			padding: 20px;
-			border: 1px solid #e8e8e8;
-			@include rounded-corners(3px);
 		}
 	}// end #comments
 

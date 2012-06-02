@@ -11,12 +11,12 @@
 
       <% if not @twitter_post.blank? %>
         <div class="row">
-          <%= button_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_medium", method: "get", type: "button" %>
+          <%= link_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_blue" %>
         </div> 
       <% end %>  
 
       <div class="row">
-        <%= button_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_medium", method: "get", type: "button" %>
+        <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
       </div> 
 
     </div>
@@ -26,7 +26,7 @@
     
       <% if current_user?(@user) %>
         <% if current_user.status != "suspended"%>
-          <h6 class="pull-right"><%= link_to "CLOSE", edit_post_path(@post), class: "btn" %></h6>
+          <%= link_to "CLOSE", edit_post_path(@post), class: "btn_darkGrey" %>
         <% end %> 
       <% end %>
 
