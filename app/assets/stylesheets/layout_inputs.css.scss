@@ -78,6 +78,7 @@ input[type="button"] {
 	font-family: $main-font;
 	background: $main-grey;
 	border: 1px solid $main-grey;
+	text-align: center;
 	box-shadow: $btn-shading;
 	@include rounded-corners($radius);
 	//text-shadow: $btn-txt-shading;
@@ -132,10 +133,6 @@ label {
 	width: auto;
 	margin: .1em 0 0 0;
 }
-/*.form-actions {
-width: 33%;
-float: left;
-}*/
 #photoControlGroup {
 float: left;
 margin: 0 0 0 5%;
