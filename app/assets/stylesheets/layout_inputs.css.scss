@@ -120,7 +120,7 @@ input[type="button"] {
 	background: $dk-grey;
 }
 
-.twitIcon {
+.twitIconSmall {
 	background: url("icons/twitter/twitterBird_44x16.png") no-repeat -22px 0;
 	height: 16px;
 	width: 22px;
@@ -128,7 +128,20 @@ input[type="button"] {
 	margin: 2px 2px -2px 0;
 }
 
-.twitIconDark {
+.twitIconSmall_dark {
+	@extend .twitIcon;
+	background-position: 0 0;
+}
+
+.twitIcon {
+	background: url("icons/twitter/twitterBird_88x32.png") no-repeat -44px 0;
+	height: 32px;
+	width: 44px;
+	display: inline-block;
+	margin: 2px 2px -2px 0;
+}
+
+.twitIcon_dark {
 	@extend .twitIcon;
 	background-position: 0 0;
 }
