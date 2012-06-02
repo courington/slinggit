@@ -1,31 +1,40 @@
 <% provide(:title, "Sign in") %>
 
 <section class="wrapper">
-	
-	<header class="row">
-		<h1>Sign in</h1>
-		<p>Sign in</p>
-	</header>
 
-	<%= form_for(:session, url: sessions_path) do |f| %>
-	
-	<fieldset class="row form_initialFields">
-    	<%= f.label :email, for: "session_email", class: "col6" %>
-      	<%= f.email_field :email, class: "col2 form_singleLine", :value => @email, placeholder: "Email" %>
-	</fieldset>
+  <header class="row">
+    <h1>Sign in</h1>
 
-	<fieldset class="row form_initialFields">
-    	<%= f.label :password, for: "session_password", class: "col6" %>
-      	<%= f.password_field :password, class: "col2 form_singleLine", placeholder: "Password" %>
-	</fieldset>
+    <p>Sign in</p>
+  </header>
 
-	<fieldset class="row form_initialFields">
-    	<%= f.button "Sign in", class: "col2 btn_green" %>
-	</fieldset>
+  <%= form_for(:session, url: sessions_path) do |f| %>
 
-	<% end %>
+      <fieldset class="row form_initialFields">
+        <%= f.label :email, for: "session_email", class: "col6" %>
+        <%= f.email_field :email, class: "col2 form_singleLine", :value => @email || params[:email], placeholder: "Email" %>
+      </fieldset>
 
-	<%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, class: "row", :id => 'forgot_password' %>
-	<%= link_to "New User? Sign Up!", signup_path, class: "row" %>
+      <fieldset class="row form_initialFields">
+        <%= f.label :password, for: "session_password", class: "col6" %>
+        <%= f.password_field :password, class: "col2 form_singleLine", placeholder: "Password" %>
+      </fieldset>
+
+      <fieldset class="row form_initialFields">
+        <%= f.button "Sign in", class: "col2 btn_green" %>
+      </fieldset>
+
+  <% end %>
+
+  <%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, class: "row", :id => 'forgot_password' %>
+  <%= link_to "New User? Sign Up!", signup_path, class: "row" %>
 
 </section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        <% if not params[:email].blank? %>
+        $('#session_password').focus();
+        <% end %>
+    });
+</script>
