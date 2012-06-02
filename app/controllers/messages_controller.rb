@@ -25,13 +25,21 @@ class MessagesController < ApplicationController
 
     if not params[:id].blank?
       session.delete(:message_post)
-      if post = Post.first(:conditions => ['id_hash = ?', params[:id]])
-        session[:message_post] = post
+      if post = Post.first(:conditions => ['id_hash = ? AND status != ? AND open = ?', params[:id], [STATUS_DELETED], true])
+        if not signed_in? or (signed_in? and not post.user_id == current_user.id)
+          session[:message_post] = post
+        else
+          flash[:error] = 'Something tells me you didnt really mean to reply to your-self... right?'
+          redirect_to root_path
+        end
       end
     end
 
     if not session[:message_post].blank?
       @message_post = session[:message_post]
+    else
+      flash[:error] = 'Sad news, the post you are trying to reply to has either been closed or deleted.'
+      redirect_to root_path
     end
   end
 
