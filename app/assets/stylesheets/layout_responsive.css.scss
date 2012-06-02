@@ -161,7 +161,7 @@
 				.col3.pull_left.postInfo {
 				width: 65%;
 				}
-				.postInfo{
+				#postInfo{
 					.col2, .col3{
 						width: auto;
 						float: left;
@@ -173,11 +173,18 @@
 						padding-left: 0px !important;
 						dt.col2{
 							padding: 3px 3px;
-							width: 42%;
+							width: 45%;
 						}
 						dd{
 							padding: 3px 3px;
 						}
+					}
+				}
+
+				#postDescription{
+					width: 100%;
+					p{
+						font-size: $font-size * .9;
 					}
 				}
 			}// end #postDetails
