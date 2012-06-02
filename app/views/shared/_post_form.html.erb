@@ -51,9 +51,9 @@
 		<fieldset class="row">
         	<% if @cant_post %>
           	<div>You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.</div>
-            <%= f.button "Post Item", type: "submit", class: "btn_medium", id: "submitNewPost", disabled: "disabled" %>
+            <%= f.button "Post Item", type: "submit", class: "btn_grey", id: "submitNewPost", disabled: "disabled" %>
         	<% else %>
-            <%= f.button "Post Item", type: "submit", class: "btn_medium", id: "submitNewPost" %>
+            <%= f.button "Post Item", type: "submit", class: "btn_green", id: "submitNewPost" %>
         	<% end %>
 		</fieldset>
 <% end %>

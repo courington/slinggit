@@ -11,12 +11,12 @@
 
       <% if not @twitter_post.blank? %>
         <div class="row">
-          <%= link_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_medium" %>
+          <%= link_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn" %>
         </div> 
       <% end %>  
 
       <div class="row">
-        <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_medium" %>
+        <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn" %>
       </div> 
 
     </div>

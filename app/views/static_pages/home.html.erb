@@ -5,13 +5,13 @@
     	<% if current_user.blank? %>
         <p>Looking for something? Want to sell something? Slinggit.</p>
         <% if invite_only? %>
-            <%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "btn_large" %>
+            <%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "btn_darkGrey" %>
         <% else %>
-            <%= link_to "Sign up now!", signup_path, class: "btn_large" %>
+            <%= link_to "Sign up now!", signup_path, class: "btn_blue" %>
         <% end %>
     	<% elsif not current_user.blank? %>
         <p>Welcome back <%= current_user.name %>!</p>
-        <p>Got some old junk laying around?  <%= link_to "Slinggit", new_post_path, class: "btn_large" %></p>
+        <p>Got some old junk laying around?  <%= link_to "Slinggit", new_post_path, class: "btn_green" %></p>
     	<% end %>
 		</div>
     <!-- BEGIN IMAGE CYCLE CODE -->
