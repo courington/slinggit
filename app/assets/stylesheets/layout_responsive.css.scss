@@ -183,6 +183,9 @@
 
 				#postDescription{
 					width: 100%;
+					p{
+						font-size: $font-size * .9;
+					}
 				}
 			}// end #postDetails
 			#postReplyWrapper{
