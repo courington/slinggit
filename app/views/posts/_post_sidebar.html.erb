@@ -1,22 +1,29 @@
 <!-- Reply to container -->
 <div id="postReply">
   <div class="row contentHeader">
-    <div class="innerHeader">
-      <h4>Reply to Seller via:</h4>
+    <div class="col5 innerHeader">
+      <p>Reply to <strong><%= @user.name %></strong></p>
     </div>  
   </div> 
 
   <div id="postReplyActions" class="row">
-    <div class="col4 offset1">
-
-      <% if not @twitter_post.blank? %>
-        <div class="row">
-          <%= link_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_blue" %>
-        </div> 
-      <% end %>  
-
+    <% if not @twitter_post.blank? %>
       <div class="row">
-        <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
+        <div class="col1">
+          <p>twitter</p>
+        </div>
+        <div class="col5">
+          <%= link_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter" %>
+        </div>
+      </div>
+    <% end %> 
+    
+    <div class="row">
+      <div class="col1">
+        <p>slinggit</p>
+      </div>
+      <div class="col5">
+          <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
       </div> 
 
     </div>
