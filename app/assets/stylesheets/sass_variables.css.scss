@@ -103,3 +103,7 @@ $side-br: bottom-right;
 	#{$wk}border-#{$side-tl}-radius: $radius;
 	border-#{$side-tl}-radius: $radius;
 }
+
+// -- SHADOWS -- 
+$head-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.25), inset 0 3px 13px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, .15);
+$foot-shadow: 0 -1px 1px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .5);
