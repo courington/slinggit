@@ -17,7 +17,7 @@
     <% if current_user?(@user) %>
       <% if not current_user.is_suspended? %>
         <div class="form-actions">
-        	<%= link_to "Create New Post", new_post_path, class: "btn_medium" %>
+        	<%= link_to "Create New Post", new_post_path, class: "btn_green" %>
         </div>
       <% end %>  
     <% end %>

@@ -22,8 +22,8 @@
 	<div class="row" id="emailAvailabilityNotification"></div>
 
 	<fieldset class="row form-actions" id="form_signUpActions">
-		<%= f.button "Sign Up with Twitter", type: "button", class: "col2 btn_medium", onclick: "javascript:void(0)", id: 'twitterBTN' %>
-		<%= f.button "Don't Use Twitter", type: "button", class: "col1 btn_small", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+		<%= f.button "Sign Up with Twitter", type: "button", class: "col2 btn_blue", onclick: "javascript:void(0)", id: 'twitterBTN' %>
+		<%= f.button "Don't Use Twitter", type: "button", class: "col1 btn_green", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
 		<%= hidden_field_tag :twitter_authenticate, nil %>
 	</fieldset>
 
@@ -38,7 +38,7 @@
 	</fieldset>
 
 	<fieldset class="row form_hiddenFields">
-		<%= f.button "Create my account", class: "col2 btn_large" %>
+		<%= f.button "Create my account", class: "col2 btn_green" %>
 		<%= link_to 'start over', nil, :onclick => "javascript:void(0)", class: "col6", :id => 'signUpStartOverLink' %>
 	</fieldset>
 
