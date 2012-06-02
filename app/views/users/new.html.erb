@@ -4,7 +4,6 @@
 		<h1>Sign up</h1>
 		<p>Sign Up</p>
 	</header>
-  
 
 	<%= form_for(@user) do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
@@ -22,7 +21,12 @@
 	<div class="row" id="emailAvailabilityNotification"></div>
 
 	<fieldset class="row form-actions" id="form_signUpActions">
-		<%= f.button "Sign Up with Twitter", type: "button", class: "col2 btn_blue", onclick: "javascript:void(0)", id: 'twitterBTN' %>
+		
+		<%= link_to("#", :class => "col2 btn_blue", :onclick => "javascript:void(0)", :id => "twitterBTN") do %>
+			<span class="twitIcon"></span>
+			Sign Up with Twitter
+		<% end %>
+		
 		<%= f.button "Don't Use Twitter", type: "button", class: "col1 btn_green", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
 		<%= hidden_field_tag :twitter_authenticate, nil %>
 	</fieldset>
