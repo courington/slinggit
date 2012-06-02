@@ -21,6 +21,8 @@ class MessagesController < ApplicationController
   end
 
   def new
+    @message ||= Message.new
+
     if not params[:id].blank?
       session.delete(:message_post)
       if post = Post.first(:conditions => ['id_hash = ?', params[:id]])
@@ -35,23 +37,35 @@ class MessagesController < ApplicationController
 
   def create
     if request.post?
-      #TODO make contact info optional as the user may be logged in
-      #TODO make the source and source_id more flexible to other options
-      #TODO parse the contact_info for phone numbers and emails, force email and put the rest in the json
       if session[:message_post]
-        contact_info = params[:contact_info]
-        message = params[:message]
-        Message.create(
-            :creator_user_id => signed_in? ? current_user.user_id : nil,
-            :recipient_user_id => session[:message_post].user_id,
-            :source => 'post',
-            :source_id => session[:message_post].id,
-            :contact_info_json => {:email => params[:contact_info]}.to_json,
-            :body => params[:message],
-            :send_email => true
-        )
-        flash[:succcess] = "Message has been sent."
-        redirect_to :controller => :posts, :action => :show, :id => session[:message_post].id
+        if params[:message]
+          @message = Message.new(params[:message])
+          if signed_in?
+            @message.contact_info_json = current_user.email
+          end
+
+          @message.creator_user_id = signed_in? ? current_user.id : nil
+          @message.recipient_user_id = session[:message_post].user_id
+          @message.source = 'post'
+          @message.source_id = session[:message_post].id
+          @message.send_email = true
+
+          if @message.save
+            flash[:succcess] = "Message has been sent."
+            redirect_to :controller => :posts, :action => :show, :id => session[:message_post].id
+          else
+            @message_post = session[:message_post]
+            render 'new'
+          end
+        else
+          #TODO redirect to report an issue
+          flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
+          redirect_to root_path
+        end
+      else
+        #TODO redirect to report an issue
+        flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
+        redirect_to root_path
       end
     end
   end

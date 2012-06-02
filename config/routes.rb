@@ -20,6 +20,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
 
   match 'messages/delete(/:id)', :to => 'messages#delete#id'
+  match 'messages/new(/:id)', :to => 'messages#new#id'
+
 
   resources :users
   resources :messages
