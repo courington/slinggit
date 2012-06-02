@@ -15,7 +15,7 @@
     <% if not @twitter_post.blank? %>
       <div class="row">
         <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter pull_left" do %>
-           <span class="twitIcon"></span>
+           <span class="twitIconSmall"></span>
            Twitter
         <% end %>
       </div>

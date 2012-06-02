@@ -148,8 +148,7 @@
 			width: 100%;
 		}
 		#postContent{
-			//ask Chase why I have to put !important here. Sure it's a load order thing.
-			padding: 0px 0px 0px 0px !important;;
+			padding: 0px 0px 0px 0px;
 			#postDetails{
 				.col3.pull_right {
 				width: 35%;
@@ -167,10 +166,9 @@
 						float: left;
 					}
 					dl{
-						//ask Chase why I have to put !important here. Sure it's a load order thing.
-						font-size: $font-size * .8 !important;
-						padding-top: 0px !important;
-						padding-left: 0px !important;
+						font-size: $font-size * .8;
+						padding-top: 0px;
+						padding-left: 0px;
 						dt.col2{
 							padding: 3px 3px;
 							width: 54%;
@@ -189,18 +187,14 @@
 				}
 			}// end #postDetails
 			#postReplyWrapper{
-				//ask Chase why I have to put !important here. Sure it's a load order thing.
-				padding: 0px 0px 0px 0px !important;
+				padding: 0px 0px 0px 0px;
 				.offset1 {
 					margin-left: 0;
 
 				}
 				#postReply{
+					padding-bottom: 5px;
 					#postReplyActions{
-						.row {
-							//ask Chase why I have to put !important here. Sure it's a load order thing.
-							margin-bottom: 0px !important;
-						}
 					}
 				}
 			}// end #postReplyWrapper
