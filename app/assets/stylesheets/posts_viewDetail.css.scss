@@ -70,7 +70,7 @@
 				}
 
 				.innerHeader {
-					padding: 20px;
+					padding: 0px 0px 10px 0px;
 
 					strong{
 						font-weight: 600;
@@ -78,10 +78,14 @@
 				}
 
 				#postReplyActions{
-					padding: 20px 0 20px;
+					padding: 20px 0px 0px 0px;
 
 					.row {
 						margin-bottom: 20px;
+
+						.col2{
+							min-width: 70px;
+						}
 					}
 			
 				}
