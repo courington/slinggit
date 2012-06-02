@@ -72,7 +72,7 @@ input[type="button"] {
 
 .btn {
 	cursor: pointer;
-	padding: .4em;
+	padding: .5em;
 	color: $wht;
 	font-size: $font-size;
 	font-family: $main-font;
@@ -102,6 +102,10 @@ input[type="button"] {
 .btn_blue {
 	@extend .btn;
 	background: $main-blue;
+}
+.btn_twitter {
+	@extend .btn;
+	background: $twitter-blue;
 }
 .btn_red {
 	@extend .btn;

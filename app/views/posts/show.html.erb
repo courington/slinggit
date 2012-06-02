@@ -59,13 +59,6 @@
 
 	<div id="comments" class="row">
 		<div class="col4 pull_left">
-			<% if signed_in? %>
-				<div id="commentInput" class="row">	
-					<div class="col6"> 
-					<%= render 'posts/post_comment_form' %>
-					</div>
-				</div>
-			<% end %>
 			<div id ="commentContent" class="row">
 				<div class="col6"> 
 					<% if @comments.any? %>
@@ -74,7 +67,13 @@
 					<% end %>  
 				</div>
 			</div>
-			<% if not signed_in? %>
+			<% if signed_in? %>
+				<div id="commentInput" class="row">	
+					<div class="col6"> 
+					<%= render 'posts/post_comment_form' %>
+					</div>
+				</div>
+			<% else %>
 				<div id="signUpWrapper" class="row">	
 					<div class="col6">
 						<%= render 'posts/post_comments_signup' %>
