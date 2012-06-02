@@ -1,4 +1,10 @@
 // Specfic styles for the posts sidebar
+@mixin borderBackgroundCorners{
+	background-color: white;
+	border: 1px solid #e8e8e8;
+	@include rounded-corners(3px);
+}
+
 #post {
 
 	#postContent{
@@ -83,10 +89,8 @@
 		}
 
 		#signUpWrapper{
-			background-color: white;
+			@include borderBackgroundCorners;
 			padding: 20px;
-			border: 1px solid #e8e8e8;
-			@include rounded-corners(3px);
 		}
 	}// end #comments
 
