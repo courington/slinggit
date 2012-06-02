@@ -12,24 +12,15 @@ input[type="text"] {
 }
 input[type="text"].hardEdge-right {
 	@include hardEdge-right;
-	//width: 75%;
 	clear: left;
 	float: left;
 }
 .hardEdge_left {
 	@include hardEdge-left;
 }
-.col_oneThird {
-width: 50%;
-margin: 0;
-float: left;
-}
 #post_price {
 width: 45%;
 }
-//#post_location {
-//width: 100%;
-//}
 textarea {
 	@include textInput;
 	@include rounded-corners($radius);
@@ -164,24 +155,24 @@ label {
 	margin: .1em 0 0 0;
 }
 #photoControlGroup {
-float: left;
-margin: 0 0 0 5%;
-width: 38%;
+	float: left;
+	margin: 0 0 0 5%;
+	width: 38%;
 }
 #photoControlGroup {
-margin: 0;
-width: 50%;
+	margin: 0;
+	width: 50%;
 }
 .col_twoThird + fieldset {
-clear: left;
-width: 100%;
+	clear: left;
+	width: 100%;
 	> input {
-	width: 75%;
+		width: 75%;
 	}
 }
 label[for="post_photo"] {
-float: left;
-display: inline-block;
+	float: left;
+	display: inline-block;
 }
 .controls.thumbnail {
 	font-size: $font-size;
@@ -190,17 +181,10 @@ display: inline-block;
 	text-decoration: underline;
 }
 fieldset > input[type="checkbox"] {
-width: auto;
-margin: 0;
-display: block;
-clear: left;
-}
-//#new_post fieldset:last-child {
-//clear: both;
-//margin: $font-size 0;
-//}
-#submitNewPost {
-width: 50%;
+	width: auto;
+	margin: 0;
+	display: block;
+	clear: left;
 }
 // end
 // posts page open & edit btns
