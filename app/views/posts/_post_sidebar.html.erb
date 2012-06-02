@@ -2,25 +2,22 @@
 <div id="postReply">
   <div class="row contentHeader">
     <div class="col5 innerHeader">
-      <p>Reply to <strong><%= @user.name %></strong></p>
+      <p>Reply to <strong><%= link_to "#{@user.name}", user_path(@user.name) %></strong></p>
     </div>  
   </div> 
 
   <div id="postReplyActions" class="row">
 
     <div class="row">
-      <div class="col2 pull_left">
-        <p>Directly:</p>
-      </div>
-      <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col4 btn_green pull_left" %>
+      <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green pull_left" %>
     </div>
 
     <% if not @twitter_post.blank? %>
       <div class="row">
-        <div class="col2 pull_left">
-          <p>Or, via:</p>
-        </div>
-        <%= link_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col4 btn_twitter pull_left" %>
+        <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter pull_left" do %>
+           <span class="twitIcon"></span>
+           Twitter
+        <% end %>
       </div>
     <% end %> 
 
