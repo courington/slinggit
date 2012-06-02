@@ -245,6 +245,14 @@
 				width: 100%;
 			}
 	}
+	  //styles for notices
+	#success_explanation,
+	#error_explanation,
+	#notice_explanation {
+		width: 98%;
+		text-align: left;
+	} 
+	  //end
 }
 //this bracket closes the 320-640 media query	
 //end
