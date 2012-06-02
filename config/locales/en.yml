@@ -9,3 +9,7 @@
          name: "Username"
        post:
          recipient_api_account_ids: "Twitter accounts"
+       message:
+         contact_info_json: "Email"
+         body: "Message"
+

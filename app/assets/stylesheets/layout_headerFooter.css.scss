@@ -1,7 +1,3 @@
-// -- SHADOWS -- 
-$head-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.25), inset 0 3px 13px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, .15);
-$foot-shadow: 0 -1px 1px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .5);
-
 body > header:first-child {
 	width: 100%;
 	height:9.6em;
@@ -10,35 +6,29 @@ body > header:first-child {
 	box-shadow: $head-shadow;
 	position:relative;
 	z-index:9000;
-	h1 {
-		text-indent: -99999px;
-	}
-	.logo {
-		display: inline-block;
-		width: 20%;
-		float: left;
-		margin: -1.84em 0 0 0;
-		img {
-			width: 100%;
-			float: left;
-			margin: .2em 0;
+	hgroup.col2{
+		margin: -$font-size 0 0 0;
+		h1 {
+			text-indent: -99999px;
 		}
-		h6 {
-			font-size: 1em;
-			color: #F0F0F0;
-			position: relative;
-			top: -1.6em;
-			left: 85%;
+		.col5 {
+			margin: -1.84em 0 0 0;
+			img {
+				max-width: 100%;
+				width: auto;
+			}
+		}
+		.col2 {
+			font-size: $font-size;
+			color: $wht;
 		}
 	}
 	nav {
 		font-size: $font-size;
 		color: $wht;
 		text-shadow: $txt-shdw;
-		float: left;
 		margin: ($font-size - .6em) 0 0 0;
 		overflow: hidden;
-		padding: 0 0 0 50%;
 			span {
 				cursor:pointer;	
 				&:last-child {
@@ -49,20 +39,18 @@ body > header:first-child {
 					color: $lt-grey;
 				}
 				a {
-					color: $wht;
-					@include transition;
+					&:link,
+					&:visited,
+					&:active {
+						color: $wht;
+						@include transition;
+					}
 					&:hover {
 						color: $lt-grey;
 					}
 				}
 			}
-			.head_aside {
-			float: left;
-			margin: ($font-size - 1em) $font-size ($font-size - 1em) 0;
-			}
 			#accountDropDown {
-				float: left;
-				//width: 15%;
 				.BTN_nav_dropDown {
 					width: 100%;
 					color: $wht;
@@ -72,17 +60,17 @@ body > header:first-child {
 					}
 				}
 				.nav_dropDown {
-				clear: left;
-				position: relative;
-				top: 0;
-				left: 0;
-				z-index: 9999;
-				background: $lt-grey;
-				padding: $padding;
-				@include rounded-corners(.5em);
-				width:125%;
-				box-shadow: 0 0 20px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .3);
-				border: 1px solid lighten($main-grey, 25%);
+					clear: left;
+					position: relative;
+					top: 0;
+					left: 0;
+					z-index: 9999;
+					background: $lt-grey;
+					padding: $padding;
+					@include rounded-corners($font-size * .125);
+					width: auto;
+					box-shadow: 0 0 20px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .3);
+					border: 1px solid lighten($main-grey, 25%);
 				li {
 					margin:.7em 0;
 					line-height:1.2em;
@@ -96,11 +84,11 @@ body > header:first-child {
 				}
 			}
 			#quickSearchWrapper {
-			width: 90%;
-			input[name="quickSearch"] {
-				font-size: .8em;
-				@include rounded-corners(.5em);
-				width: 100%;
+				input[name="quickSearch"] {
+					font-size: ($font-size * .5);
+					@include rounded-corners($font-size);
+					padding-left: $font-size;
+					width: 100%;
 				}
 			}
 	}

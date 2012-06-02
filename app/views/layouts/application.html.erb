@@ -15,7 +15,7 @@
 <%= render 'layouts/header' %>
 <div class="page_contentContainer">
   <% flash.each do |key, value| %>
-      <div id="<%= key %>_explanation">
+      <div id="<%= key %>_explanation_bubble">
         <div class="alert alert-<%= key %>"><%= value %></div>
       </div>
   <% end %>

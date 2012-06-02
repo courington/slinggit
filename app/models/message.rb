@@ -14,7 +14,12 @@ class Message < ActiveRecord::Base
   attr_accessor :send_email
 
   before_create :create_id_hash
+  before_create :format_contact_info_json
   after_create :send_new_message_email
+
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :contact_info_json, presence: true, format: {with: VALID_EMAIL_REGEX}
+  validates :body, presence: true
 
   def contact_info
     contact_info_hash = HashWithIndifferentAccess.new
@@ -36,6 +41,11 @@ class Message < ActiveRecord::Base
 
   def create_id_hash
     self.id_hash = Digest::SHA1.hexdigest(self.id.to_s + Time.now.to_s)
+  end
+
+  def format_contact_info_json
+    #once we allow for more contact types, add them to the hash and set up regix to find and parse each type
+    self.contact_info_json = {:email => self.contact_info_json}.to_json
   end
 
   def source_object(fields_to_select = nil)
