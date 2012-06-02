@@ -681,7 +681,7 @@ class MobileController < ApplicationController
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
           if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
             if comment = Comment.first(:conditions => ['post_id = ? and id = ?', mobile_session.user_id, params[:comment_id]])
-              comment.udpate_attribute(:status, STATUS_DELETED)
+              comment.update_attribute(:status, STATUS_DELETED)
               render_success_response(
                   :comment_id => comment.id,
                   :status => comment.status
