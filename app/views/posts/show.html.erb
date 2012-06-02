@@ -25,7 +25,7 @@
 							<% end %>
 						</div>
 
-						<div class="col3 pull_left postInfo">
+						<div id="postInfo" class="col3 pull_left">
 							<dl>
 							    <dt class="col2">Location</dt>
 							    <dd class="col3"><%= @post.location %></dd>
@@ -44,8 +44,10 @@
 							</dl>
 						</div>
 						<div id="postDescription" class="col3">
-							<p><strong>Description</strong></p>
-					    	<p><%= @post.content %></p>
+							<dl>
+							    <dt class="col6">Description</dt>
+							    <dd class="col6"><%= @post.content %></dd>
+							</dl>
 						</div>	
 					</div>
 
