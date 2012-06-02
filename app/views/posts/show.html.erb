@@ -19,7 +19,7 @@
 					<div class="row">
 						<div class="col3 pull_right">
 							<% if @post.photo_file_name.blank? %>
-								<%= image_tag "300x300_placeholder.png" %>
+								<%= image_tag "300x300_placeholder.png", :class => "img_border", :height => "auto", :width => "100%" %>
 							<% else %>
 								<%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%" %>
 							<% end %>

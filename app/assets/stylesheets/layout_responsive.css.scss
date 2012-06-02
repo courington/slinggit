@@ -124,13 +124,19 @@
 			display: block;
 		}
 	}
+	input.submitBTN,
 	.btn_large,
 	.btn_medium,
-	.btn_small {
+	.btn_small,
+	.btn_cancel {
 		display: block;
 		width: 95%;
-		margin: $font-size auto;
+		margin: 0 auto;
 		text-align: center;
+		padding: ($font-size * .5) .4em;
+		font-size: $font-size * 1.2;
+		font-weight: bold;
+		text-shadow: $txt-shdw;
 	}
 	.page_contentContainer #session_password,
 	.page_contentContainer #session_email {
@@ -149,9 +155,19 @@
 			//ask Chase why I have to put !important here. Sure it's a load order thing.
 			padding: 0px 0px 0px 0px !important;;
 			#postDetails{
+				.col3.pull_right {
+				width: 35%;
+					.img_border {
+					position: relative;
+					z-index: 9999;
+					}
+				}
+				.col3.pull_left.postInfo {
+				width: 65%;
+				}
 				.postInfo{
 					.col2, .col3{
-						width: ($sixCols * 3);
+						width: auto;
 						float: left;
 					}
 					dl{
@@ -159,8 +175,9 @@
 						font-size: $font-size * .8 !important;
 						padding-top: 0px !important;
 						padding-left: 0px !important;
-						dt{
+						dt.col2{
 							padding: 3px 3px;
+							width: 42%;
 						}
 						dd{
 							padding: 3px 3px;
