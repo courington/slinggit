@@ -50,10 +50,11 @@
 
 		<fieldset class="row">
         	<% if @cant_post %>
-          	<div>You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.</div>
-            <%= f.button "Post Item", type: "submit", class: "btn_grey", id: "submitNewPost", disabled: "disabled" %>
+          	<p class="notice_text">You have reached your 24 hours post limit.</p>
+			<p>Please <%= link_to "contact customer service", contact_path %> if you wish to increase this limit.</p>
+            <%= f.button "Post Item", type: "submit", class: "col3 btn", id: "submitNewPost", disabled: "disabled" %>
         	<% else %>
-            <%= f.button "Post Item", type: "submit", class: "btn_green", id: "submitNewPost" %>
+            <%= f.button "Post Item", type: "submit", class: "col3 btn btn_green", id: "submitNewPost" %>
         	<% end %>
 		</fieldset>
 <% end %>
