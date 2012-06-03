@@ -111,11 +111,36 @@
 				h3{
 					padding: 0px 0px 10px 0px;
 					margin: 0px 0px 20px 0px;
-					border-bottom: 1px solid $lt-grey;
+					border-bottom: 1px solid $dk-grey;
 
 					strong{
 						font-weight: 600;
 					}
+				}
+
+				.comment{
+					border-bottom: 1px solid $lt-grey;
+					padding: 4px 0 4px;
+					.col1{
+						max-width: 90px;
+					}
+
+					.col5{
+						padding-left: 10px;
+						margin-top: 10px;
+
+						strong{
+							color: $white;
+							padding: 3px 5px 3px 5px;
+							line-height: $font-size * 1.1;
+							@include rounded-corners;
+							background-color: $main-yellow;
+							text-shadow: $txt-shdw;
+						}
+					}
+				}
+				hr{
+					background-color: green;
 				}
 
 			}
@@ -130,7 +155,7 @@
 					padding: 20px;
 
 					.col2{
-						margin-top: 5px;
+						margin-top: 3px;
 					}
 				}
 			}
