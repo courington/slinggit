@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     # CMK: added condition to check for status != deleted
     @user = User.first(:conditions => ['name = ?', params[:id]])
     if not @user.blank? and not @user.is_considered_deleted?
-      @posts = Post.paginate(page: params[:page], :per_page => 2, :conditions => ['user_id = ?', @user.id])
+      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ?', @user.id])
     else
       if signed_in?
         redirect_to current_user

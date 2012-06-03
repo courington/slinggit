@@ -31,9 +31,9 @@
       <%= gravatar_for @user %>
     </div>
     
-    <div class="row">
+    <% if is_signed_in_and_admin? && !current_user?(@user) %>
+      <div class="row">
       <!-- ADMIN ONLY FUNCTIONALITY -->
-      <% if is_signed_in_and_admin? && !current_user?(@user) %>
 
         <%if !@user.is_considered_deleted? %>
           <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
@@ -43,8 +43,8 @@
           <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
         <% end %>  
 
-      <% end %> 
-    </div>  
+      </div>
+    <% end %>   
 
 	</article>   
 

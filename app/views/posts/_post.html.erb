@@ -4,9 +4,9 @@
 		<%= link_to(post_path(post)) do %>
         	<div class="photo">
           	<% if post.photo_file_name.blank? %>
-            	<%= image_tag "300x300_placeholder.png", :height => "auto", :width => "100%" %>
+            	<%= image_tag "80x80_placeholder.png", :height => "auto", :width => "100%" %>
           	<% else %>
-            	<%= image_tag post.photo.url(:medium) %>
+            	<%= image_tag post.photo.url(:search) %>
           	<% end %>
         	</div>
     <% end %>
