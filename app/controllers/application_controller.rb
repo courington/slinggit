@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
           redirect_to :controller => :users, :action => :show, :id => user.id
         elsif redirect = Redirect.first(:conditions => ['key_code = ?', redirect_info], :select => 'target_uri,clicks,id')
           redirect.update_attribute(:clicks, redirect.clicks += 1)
+          redirect_to redirect.target_uri
         else
           redirect_to '/404.html'
         end
