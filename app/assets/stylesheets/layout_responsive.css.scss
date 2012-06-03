@@ -192,7 +192,12 @@
 					padding: 20px 20px 5px 20px;
 				}
 			}// end #postReplyWrapper
-
+			#closedPostWrapper{
+				padding: 0px 0px 0px 0px;
+				#closedPost{
+					padding: 20px 20px 20px 20px;
+				}
+			}
 		}// end #post
 		#comments {
 			margin-top: 10px;

@@ -14,7 +14,7 @@
 			</div>	
 
 			<div class="row">
-				<div id="postDetails" class="col4 pull_left">
+				<div id="postDetails" class="col4 pull_left <%=@post.open_class%>">
 
 					<div class="row">
 						<div class="col3 pull_right">
@@ -30,11 +30,11 @@
 							    <dt class="col2">Location</dt>
 							    <dd class="col3"><%= @post.location %></dd>
 							    <dt class="col2">Price</dt>
-							    <dd class="col3"><%= @post.price %></dd>
+							    <dd class="col3">$<%= @post.price %></dd>
 							    <dt class="col2">Interested</dt>
 							    <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
 							    <dt class="col2">Status</dt>
-							    <dd class="col3">
+							    <dd id="postStatus" class="col3 <%=@post.open?%>">
 							      <% if @post.open? %>
 							        Open
 							      <% else %>  
@@ -49,16 +49,22 @@
 					</div>
 
 				</div>
-				<div id="postReplyWrapper" class="col2 pull_right">
-					<%= render 'posts/post_sidebar' %>
-				</div>
+				<% if @post.open? %>
+					<div id="postReplyWrapper" class="col2 pull_right">
+						<%= render 'posts/post_sidebar' %>
+					</div>
+				<% else %>
+					<div id="closedPostWrapper" class="col2 pull_right">
+						<%= render 'posts/post_closed_sidebar' %>
+					</div>
+				<% end %>
 			</div>
 
 		</div> <!-- -->
 	</div>
 
 	<div id="comments" class="row">
-		<div class="col4 pull_left">
+		<div class="col4 pull_left <%=@post.open_class%>">
 			<div id ="commentContent" class="row">
 				<div class="col6"> 
 					<% if @comments.any? %>

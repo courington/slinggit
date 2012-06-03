@@ -86,4 +86,8 @@ class Post < ActiveRecord::Base
     self.status == STATUS_DELETED
   end  
 
+  def open_class
+    "transparent_background" if not self.open?
+  end
+
 end

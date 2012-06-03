@@ -12,16 +12,16 @@
 	@include hardEdge-top;
 }
 
-  #error_explanation_bubble {
+#error_explanation_bubble {
     @extend #success_explanation_bubble;
     background: lighten($main-red, 15%);
-  }
+}
 
-  #notice_explanation_bubble {
+#notice_explanation_bubble {
     @extend #success_explanation_bubble;
     background: lighten($main-yellow, 15%);
     color: $main-grey;
-  }
+}
 
 #error_explanation {
 	float: left;
@@ -30,6 +30,12 @@
 	line-height: $leading;
 	letter-spacing: .1em;
 	margin: 0 0 1em 0;
+}
+
+#friendly_explanation_bubble{
+	@extend #success_explanation_bubble;
+	background: lighten($main-blue, 20%);
+	color: $dk-grey;
 }
 
 #notice_explanation {

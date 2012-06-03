@@ -4,6 +4,11 @@
 	border: 1px solid #e8e8e8;
 	@include rounded-corners(3px);
 }
+@mixin sidbarWrapper{
+	margin-top: 10px;
+	padding-left: 10px;
+	vertical-align: top;
+}
 
 #post {
 
@@ -41,6 +46,13 @@
 						text-align: right;
 						padding: 5px 5px;
 					}
+
+					#postStatus.true{
+						color: darken($main_green, 20%);
+					}
+					#postStatus.false{
+						color: darken($main_yellow, 20%);
+					}
 				}
 
 			}
@@ -56,15 +68,11 @@
 		}
 
 		#postReplyWrapper{
-			margin-top: 10px;
-			padding-left: 10px;
-			vertical-align: top;
+			@include sidbarWrapper;
 			
 			#postReply{
-				background-color: white;
+				@include borderBackgroundCorners;
 				padding: 20px;
-				border: 1px solid #e8e8e8;
-				@include rounded-corners(3px);
 
 				.contentHeader{
 				}
@@ -90,6 +98,28 @@
 			
 				}
 
+			}
+		}
+
+		#closedPostWrapper{
+			@include sidbarWrapper;
+
+			#closedPost{
+				@include borderBackgroundCorners;
+				padding: 20px;
+				text-align: center;
+
+				.innerHeader {
+					padding: 0px 0px 10px 0px;
+				}
+
+				p{
+					font-size: $font-size * 1.2;
+				}
+
+				#findSimilar{
+					margin-top: 15px;
+				}
 			}
 		}
 
@@ -135,6 +165,14 @@
 					background-color: green;
 				}
 
+			}
+
+			#commentInput{
+				margin-top: 20px;
+
+				textarea{
+					width: 100%;
+				}
 			}
 
 			#signUpWrapper{
