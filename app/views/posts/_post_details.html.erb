@@ -1,0 +1,35 @@
+<div id="postDetails" class="col4 pull_left <%=@post.open_class%>">
+
+	<div class="row">
+		<div class="col3 pull_right">
+			<% if @post.photo_file_name.blank? %>
+				<%= image_tag "300x300_placeholder.png", :class => "img_border", :height => "auto", :width => "100%" %>
+			<% else %>
+				<%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%" %>
+			<% end %>
+		</div>
+
+		<div id="postInfo" class="col3 pull_left">
+			<dl>
+			    <dt class="col2">Location</dt>
+			    <dd class="col3"><%= @post.location %></dd>
+			    <dt class="col2">Price</dt>
+			    <dd class="col3">$<%= @post.price %></dd>
+			    <dt class="col2">Interested</dt>
+			    <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
+			    <dt class="col2">Status</dt>
+			    <dd id="postStatus" class="col3 <%=@post.open?%>">
+			      <% if @post.open? %>
+			        Open
+			      <% else %>  
+			        Closed
+			      <% end %>
+			    </dd>
+			</dl>
+		</div>
+		<div id="postDescription" class="col3">
+			<p class="col6"><%= @post.content %></p>
+		</div>	
+	</div>
+
+</div>

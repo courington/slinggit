@@ -43,6 +43,9 @@ class MessagesController < ApplicationController
     end
 
     if not session[:message_post].blank?
+      # Dan, if you change this to @post, you can use the
+      # views/posts/_post_details.html.erb partial.
+      # <%= render 'posts/post_details' %>
       @message_post = session[:message_post]
     else
       flash[:error] = 'Sad news, the post you are trying to reply to has either been closed or deleted.'
