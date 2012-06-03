@@ -40,7 +40,7 @@ class Redirect < ActiveRecord::Base
   end
 
   def get_short_url
-    return "#{HOSTURL}/#{self.key_code}"
+    return "#{BASEURL}/#{self.key_code}"
   end
 
 end
