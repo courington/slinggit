@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
-<section class="wrapper">	
+<section id="userPostsWrapper" class="wrapper">	
 
   <div class="col2 pull_right">
 
@@ -26,32 +26,34 @@
     <% end %> 
 
   </div>
-  
-  <div class="col4 pull_left">
 
-    <div class="row">
-      <div class="col3 pull_left">
-        <header>
-          <h1>Posts (<%= @posts.count %>)</h1>
-          <p>Posts (<%= @posts.count %>)</p>
-        </header>
-      </div>
-      <div class="col3 pull_right">
+  <div id="userPosts" class="col4 pull_left">
+
+    <div class="row title_row">
+      <div class="col6 pull_left">
+        <div class="row">
+          <header>
+            <h1>Posts (<%= @posts.count %>)</h1>
+            <p>Posts (<%= @posts.count %>)</p>
+          </header>
+        </div>
+        <div class="row">
         <% if current_user?(@user) %>
           <% if not current_user.is_suspended? %>
-            <div class="form-actions">
-              <%= link_to "Create New Post", new_post_path, class: "btn_green" %>
-            </div>
+              <%= link_to "Create New Post", new_post_path, class: "col3 btn_green" %>
           <% end %>  
         <% end %>
+        </div>
       </div>
     </div>
 
-    <% if @user.posts.any? %>
-      <%= will_paginate @posts%>
-        <%= render @posts %>
-      <%= will_paginate @posts%>
-    <% end %>
+    <div id="postArticlesWrapper">
+      <% if @user.posts.any? %>
+        <%= will_paginate @posts%>
+          <%= render @posts %>
+        <%= will_paginate @posts%>
+      <% end %>
+    </div>
 
   </div>
 

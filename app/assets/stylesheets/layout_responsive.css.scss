@@ -1,4 +1,10 @@
 // small handheld device
+@mixin colNoFloatClearFix{
+	display: block;
+	float: none;
+	clear: both;
+	width: 100%;
+}
 @media all and (min-width: 320px) and (max-width: 640px) {
 	.wrapper {
 		width: 96%;
@@ -139,13 +145,46 @@
 	
 	}
 
+	// style for user show (with list of posts) and post search
+	#userPostsWrapper, #searchPostWrapper{
+		.col2, .col4{
+			@include colNoFloatClearFix;
+		}
+
+		#userPosts, #postSearchResults{
+			.title_row{
+
+				.btn_green{
+					width: 100%;
+				}
+			}
+			.postArticle{
+				.col1{
+					width: ($sixCols * 2);
+
+					img{
+						width: 80px;
+					}
+				}
+				.col5{
+					width: ($sixCols * 4);
+
+					h4{
+						font-size: $font-size * .9;
+					}
+
+					p{
+						font-size: $font-size * .8;
+					}
+				}
+			}
+		}
+	}
+
 	// styles for post (not comments)
 	#post {
 		.col4, .col2 {
-			display: block;
-			float: none;
-			clear: both;
-			width: 100%;
+			@include colNoFloatClearFix;
 		}
 		#postContent{
 			padding: 0px 0px 0px 0px;

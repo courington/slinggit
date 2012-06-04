@@ -1,17 +1,30 @@
-<style type="text/css">
-    tr.postResult {
-        cursor: pointer;
-    }
-</style>
+<% provide(:title, "Post Search") %>
+<section id="searchPostWrapper" class="wrapper"> 
 
-<% provide(:title, 'Search Results') %>
-<h2>Search Results</h2>
+  <div class="col2 pull_right">
 
-  <% if not @posts.blank? %>
-      <ul class="posts">
+  </div>
+
+  <div id="postSearchResults" class="col4 pull_left">
+    
+    <div class="row title_row">
+      <div class="col3 pull_left">
+        <header>
+          <h1>Search Results</h1>
+          <p>Search Results</p>
+        </header>
+      </div>
+    </div>
+
+    <div id="postArticlesWrapper">
+      <% if not @posts.blank? %>
         <%= render @posts %>
-      </ul>
-  <% end %>
+      <% end %>
+  </div>
+
+  </div>
+
+</section>
 
 <script type="text/javascript">
 
@@ -23,8 +36,6 @@
                 document.location.href = "/posts/" + post_id;
             });
         });
-
-        $("table").tablesorter(); 
     });
 
 </script>

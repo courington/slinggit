@@ -1,4 +1,4 @@
-<article class="row">
+<article class="row postArticle">
 
   <div class="col1 pull_left">
     <%= link_to(post_path(post)) do %>
@@ -6,7 +6,7 @@
             <% if post.photo_file_name.blank? %>
               <%= image_tag "80x80_placeholder.png", :height => "auto", :width => "100%" %>
             <% else %>
-              <%= image_tag post.photo.url(:search) %>
+              <%= image_tag post.photo.url(:search), class: "img_border" %>
             <% end %>
           </div>
     <% end %>
@@ -15,22 +15,20 @@
   <div class="col5 pull_right">
 
     <div class="row">
-      <h2 class="item"><%= post.hashtag_prefix %></h2>
+      <h4 class="item"><%= post.hashtag_prefix %></h4>
       <p><%= post.content %></p>
-      <small class="timestamp">Posted <%= time_ago_in_words(post.created_at) %> ago.</small>
-      <small class="timestamp">Updated <%= time_ago_in_words(post.updated_at) %> ago.</small>
     </div>
     
-    <div class="row">  
-      <div class="col4 pull_right">
+    <div class="row secondary">
+      <div class="col5 pull_left">
+        <small class="timestamp">Posted <%= time_ago_in_words(post.created_at) %> ago.</small>
+      </div>  
+      <div class="col1 pull_right">
           <% if post.open? %>
-            <p class="label label-success">Open</p>
+            <span class="label label_green">Open</span>
           <% else %>  
-            <p class="label label">Closed</p>
+            <span class="label">Closed</span>
           <% end %>  
-          <% if current_user?(post.user) %>
-            <%= link_to "edit", edit_post_path(post) %>
-          <% end %>
       </div>
     </div>
 

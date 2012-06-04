@@ -1,0 +1,39 @@
+#userPostsWrapper, #searchPostWrapper{
+
+	#userPosts, #postSearchResults{
+
+		.title_row{
+			header{
+				padding-bottom: 10px;
+			}
+		}
+
+		#postArticlesWrapper{
+			background-color: white;
+			padding: 20px;
+			border: 1px solid #e8e8e8;
+			@include rounded-corners(3px);
+			
+			.postArticle{
+				border-bottom: 1px solid $lt-grey;
+				padding: 8px 0 8px;
+
+				.col5{
+					h4{
+						font-weight: 600;
+					}
+					p{
+						font-size: $font-size * .9;
+					}
+
+					.secondary{
+						margin-top: 10px;
+					}
+				}
+			}
+
+		}
+
+	}
+
+}
