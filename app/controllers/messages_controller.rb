@@ -36,8 +36,8 @@ class MessagesController < ApplicationController
         if not signed_in? or (signed_in? and not post.user_id == current_user.id)
           session[:message_post] = post
         else
-          flash[:error] = 'Something tells me you didnt really mean to reply to your-self... right?'
-          redirect_to root_path
+          flash[:error] = "I'm gonna take a shot in the dark here and assume you didn't really want to send a message to your self."
+          redirect_to current_user and return
         end
       end
     end
@@ -49,7 +49,7 @@ class MessagesController < ApplicationController
       @message_post = session[:message_post]
     else
       flash[:error] = 'Sad news, the post you are trying to reply to has either been closed or deleted.'
-      redirect_to root_path
+      redirect_to root_path and return
     end
   end
 
