@@ -61,4 +61,9 @@ class UserMailer < ActionMailer::Base
     end
   end
 
+  def flagged_content_notification(flagged_content)
+    @flagged_content = flagged_content
+    mail(:to => EXECUTIVES, :subject => "Content has been flagged")
+  end
+
 end

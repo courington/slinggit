@@ -1223,7 +1223,6 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT
   def report_abuse
 
   end

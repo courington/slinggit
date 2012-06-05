@@ -10,9 +10,9 @@
 
 <p>
   <% if @message_object.source == 'post' %>
-      You have received a new message in your Slinggit account regarding a post.
+      You received a new message in your Slinggit account regarding a post.
   <% else %>
-      You have received a new message in your Slinggit account.
+      You received a new message in your Slinggit account.
   <% end %>
 </p>
 
@@ -24,7 +24,7 @@
 </p>
 
 <p>
-  To view more information about this message, please visit your <a href="<%= url_for :controller => :messages, :only_path => false, :host => HOSTURL %>">Slinggit inbox</a>.
+  To view more information about this message, please visit your <a href="<%= url_for :controller => :messages, :only_path => false, :host => HOSTURL, :protocol => "https://" %>">Slinggit inbox</a>.
 </p>
 
 <p>Sincerely,</p>
