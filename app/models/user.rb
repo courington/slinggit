@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   before_save :downcase_attributes
   before_save :create_remember_token
   after_create :create_limitation_records
+  after_update :send_profile_update_emails
 
   # Allows letters, numbers and underscore
   VALID_USERNAME_REGEX = /\A[a-z0-9_-]{,20}\z/i
@@ -41,8 +42,8 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: {with: VALID_EMAIL_REGEX},
             uniqueness: {case_sensitive: false}
-  validates :password, length: {minimum: 6}
-  validates :password_confirmation, presence: true
+  validates :password, length: {minimum: 6}, :if => lambda { new_record? || !password.nil? }
+  validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.nil? }
 
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
@@ -84,6 +85,18 @@ class User < ActiveRecord::Base
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
+  end
+
+  def send_profile_update_emails
+    #TODO create email that sends out the verification link again
+    if not self.changed_attributes['email'].blank?
+
+    end
+
+    #TODO create email that informs user of password change
+    if not self.changed_attributes[:password_digest].blank?
+
+    end
   end
 
   def downcase_attributes

@@ -11,10 +11,7 @@ class TestController < ApplicationController
   end
 
   def test_change_password
-    current_user.password = 'duck'
-    current_user.password_confirmation = 'duck'
-    current_user.save
-    puts current_user
+    current_user.update_attribute(:email, 'dlogan21@gmail+1.com')
   end
 
   def get_messages
