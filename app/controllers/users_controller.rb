@@ -132,7 +132,12 @@ class UsersController < ApplicationController
 
   def update
     # @user = User.find(params[:id])  !Not needed because of :correct_user before_filter
-    if @user.update_attributes(params[:user])
+
+    # we dont want to force the user to pass in all attributes, but rather, just the ones they want to change
+    user_updates = params[:user]
+    user_updates.delete_if{|key, value| value.blank?}
+
+    if @user.update_attributes(user_updates)
       flash[:success] = "Profile updated"
       sign_in @user
       reset_session
