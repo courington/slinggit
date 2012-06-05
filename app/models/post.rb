@@ -84,7 +84,15 @@ class Post < ActiveRecord::Base
 
   def is_deleted?
     self.status == STATUS_DELETED
-  end  
+  end
+
+  def has_photo?
+    if self.photo_file_name.blank? or self.photo.url.include? '/missing.png'
+      return false
+    else
+      return true
+    end
+  end
 
   def open_class
     "transparent_background" if not self.open?
