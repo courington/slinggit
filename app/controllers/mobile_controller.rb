@@ -271,7 +271,7 @@ class MobileController < ApplicationController
                     :photo => @file
                 )
 
-                #if not post.photo_file_name.blank?
+                #if not post.has_photo?
                 #  File.delete(tmp_file_path)
                 #end
 
@@ -395,7 +395,7 @@ class MobileController < ApplicationController
                 :price => post.price.to_i,
                 :location => post.location,
                 :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
-                :image_uri => post.photo_file_name.blank? ? nil : "#{BASEURL}/#{post.photo.url(:search)}",
+                :image_uri => post.has_photo? ? "#{BASEURL}/#{post.photo.url(:search)}" : nil,
                 :created_at_date => post.created_at.strftime("%m-%d-%Y"),
                 :created_at_time => post.created_at.strftime("%H:%M")
             }
@@ -907,37 +907,100 @@ class MobileController < ApplicationController
     end
   end
 
-  #TODO IMPLEMENT
   def send_message
+    if not params[:recipient_user_id].blank?
+      if not params[:body].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if recipient = User.first(:conditions => ['id = ? AND status != ?', params[:recipient_user_id].to_i, STATUS_DELETED], :select => 'email')
+            message = Message.new(
+                :send_email => true,
+                :creator_user_id => mobile_session.user_id,
+                :recipient_user_id => params[:recipient_user_id].to_i,
+                :contact_in_json => recipient.email,
+                :body => params[:body]
+            )
 
+            if not params[:post_id].blank?
+              if Post.exists?(['id = ?', params[:post_id]])
+                message.source = 'post'
+                message.source_id = params[:post_id].to_i
+              end
+            end
+
+            if message.save
+              render_success_response(
+                  :message_id => message.id,
+                  :email_sent => true
+              )
+            else
+              render_error_response(
+                  :error_location => 'send_message',
+                  :error_reason => message.errors.messages,
+                  :error_code => '404',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+
+          else
+            render_error_response(
+                :error_location => 'send_message',
+                :error_reason => 'recipient user object was either not found or has been deleted',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'send_message',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'send_message',
+            :error_reason => 'missing required_paramater - body',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'send_message',
+          :error_reason => 'missing required_paramater - recipient_user_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
-  #TODO IMPLEMENT
+#TODO IMPLEMENT
   def delete_message
 
   end
 
-  #TODO IMPLEMENT
+#TODO IMPLEMENT
   def change_password
 
   end
 
-  #TODO IMPLEMENT
+#TODO IMPLEMENT
   def change_email
 
   end
 
-  #TODO IMPLEMENT
+#TODO IMPLEMENT
   def get_active_session_list
 
   end
 
-  #TODO IMPLEMENT
+#TODO IMPLEMENT
   def logout_of_active_session
 
   end
 
-  #TODO IMPLEMENT
+#TODO IMPLEMENT
   def report_abuse
 
   end
