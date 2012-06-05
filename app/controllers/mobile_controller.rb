@@ -975,9 +975,48 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT
   def delete_message
+    if not params[:message_ids].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
 
+        messages_deleted = 0
+        messages_not_deleted = 0
+
+        #grabbing all messages before verifying owner such that if for some reason its a mixed bag I can report back to the app that some were deleted and others werent so we can fix the problem.
+        messages = Message.all(:conditions => ['id in (?)', params[:message_ids].join(',')], :select => 'id,user_id,status')
+        messages.each do |message|
+          if message.recipient_user_id == mobile_session.user_id
+            message.update_attribute(:status, STATUS_DELETED)
+            messages_deleted += 1
+          else
+            messages_not_deleted += 1
+          end
+        end
+
+        render_success_response(
+            :message_ids => params[:message_ids],
+            :logged_in_user_id => mobile_session.user_id,
+            :rows_found => messages.length,
+            :messages_deleted => messages_deleted,
+            :messages_not_deleted => messages_not_deleted,
+            :note => 'Messages not deleted should never be greater than 0.  If it is greater than 0, that means message ids are being passed in that dont belong to the logged in user'
+        )
+      else
+        render_error_response(
+            :error_location => 'delete_message',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'delete_message',
+          :error_reason => 'missing required_paramater - message_ids',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
 #TODO IMPLEMENT
