@@ -1019,13 +1019,13 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT
+#TODO SEND EMAIL TO INFORM OF PASSWORD CHANGE
   def change_password
     if not params[:old_password].blank?
       if not params[:new_password].blank?
         if params[:new_password].length >= 6
           if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-            if user = User.first(:conditions => ['id = ?', mobile_session.user_id])
+            if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,password')
               if user.authenticate(params[:old_password])
                 user.password = params[:new_password]
                 user.password_confirmation = params[:new_password]
@@ -1092,9 +1092,61 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT
+#TODO SEND EMAIL TO VERIFY NEW EMAIL
   def change_email
-
+    if not params[:new_email].blank?
+      if params[:new_email] =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,email')
+            user.email = params[:new_email]
+            user.status = STATUS_UNVERIFIED
+            if user.save
+              render_success_response(
+                  :email_changed => true,
+                  :new_email => params[:new_email],
+                  :user_status => STATUS_UNVERIFIED,
+                  :logged_in_user_id => mobile_session.user_id
+              )
+            else
+              render_error_response(
+                  :error_location => 'change_email',
+                  :error_reason => user.errors.messages,
+                  :error_code => '404',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+          else
+            render_error_response(
+                :error_location => 'change_email',
+                :error_reason => 'not found - user',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'change_email',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'change_email',
+            :error_reason => 'new email address is not a valid format',
+            :error_code => '404',
+            :friendly_error => 'The email address entered is not valid.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'change_email',
+          :error_reason => 'missing required_paramater - new_email',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
 #TODO IMPLEMENT
