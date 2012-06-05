@@ -20,6 +20,7 @@ class Message < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :contact_info_json, presence: true, format: {with: VALID_EMAIL_REGEX}
   validates :body, presence: true
+  validates_length_of :body, :maximum => 1000
 
   def contact_info
     contact_info_hash = HashWithIndifferentAccess.new
