@@ -10,6 +10,13 @@ class TestController < ApplicationController
     puts steve
   end
 
+  def test_change_password
+    current_user.password = 'duck'
+    current_user.password_confirmation = 'duck'
+    current_user.save
+    puts current_user
+  end
+
   def get_messages
     steve = Message.all
     wtf = steve.first.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')

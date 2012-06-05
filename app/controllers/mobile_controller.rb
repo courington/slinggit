@@ -1021,7 +1021,75 @@ class MobileController < ApplicationController
 
 #TODO IMPLEMENT
   def change_password
-
+    if not params[:old_password].blank?
+      if not params[:new_password].blank?
+        if params[:new_password].length >= 6
+          if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+            if user = User.first(:conditions => ['id = ?', mobile_session.user_id])
+              if user.authenticate(params[:old_password])
+                user.password = params[:new_password]
+                user.password_confirmation = params[:new_password]
+                if user.save
+                  render_success_response(
+                      :password_changed => true,
+                      :logged_in_user_id => mobile_session.user_id
+                  )
+                else
+                  render_error_response(
+                      :error_location => 'change_password',
+                      :error_reason => user.errors.messages,
+                      :error_code => '404',
+                      :friendly_error => 'Oops, something went wrong.  Please try again later.'
+                  )
+                end
+              else
+                render_error_response(
+                    :error_location => 'change_password',
+                    :error_reason => 'authentication with old password failed',
+                    :error_code => '401',
+                    :friendly_error => 'Current password is incorrect'
+                )
+              end
+            else
+              render_error_response(
+                  :error_location => 'change_password',
+                  :error_reason => 'not found - user',
+                  :error_code => '404',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+          else
+            render_error_response(
+                :error_location => 'change_password',
+                :error_reason => 'not found - mobile_session',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'change_password',
+              :error_reason => 'password is too short',
+              :error_code => '401',
+              :friendly_error => 'New password needs to be at least 6 characters.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'change_password',
+            :error_reason => 'missing required_paramater - new_password',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'change_password',
+          :error_reason => 'missing required_paramater - old_password',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
 #TODO IMPLEMENT
