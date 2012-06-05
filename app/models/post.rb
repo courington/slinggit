@@ -94,4 +94,8 @@ class Post < ActiveRecord::Base
     end
   end
 
+  def open_class
+    "transparent_background" if not self.open?
+  end
+
 end

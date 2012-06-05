@@ -7,7 +7,7 @@
 	<div class="col5 pull_left">
 		<% if User.find(comment.user_id) == @user %> 
       <div class="row">
-			   <strong>Item Owner</strong>
+			   <span class="label label_yellow">Item Owner</span>
       </div>
 		<% end %>
     <div class="row">
@@ -15,7 +15,7 @@
     </div?
     <div class="row">
   		<span class="timestamp">
-    		Posted <%= time_ago_in_words(comment.created_at) %> ago.
+    		Asked <%= time_ago_in_words(comment.created_at) %> ago.
   		</span>
     </div>
 	</div>	

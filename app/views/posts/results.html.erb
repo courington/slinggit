@@ -1,0 +1,42 @@
+<% provide(:title, "Post Search") %>
+<section id="searchPostWrapper" class="wrapper"> 
+
+  <div class="col2 pull_right">
+
+  </div>
+
+  <div id="postSearchResults" class="col4 pull_left">
+    
+    <div class="row title_row">
+      <div class="col3 pull_left">
+        <header>
+          <h1>Search Results</h1>
+          <p>Search Results</p>
+        </header>
+      </div>
+    </div>
+
+    <div id="postArticlesWrapper">
+      <% if not @posts.blank? %>
+        <%= render @posts %>
+      <% end %>
+  </div>
+
+  </div>
+
+</section>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("[id^=postResult_]").each(function (key) {
+            $('#' + this.id).click(function (e) {
+                e.preventDefault();
+                var post_id = this.id.split('_')[1];
+                document.location.href = "/posts/" + post_id;
+            });
+        });
+    });
+
+</script>
+

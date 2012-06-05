@@ -66,6 +66,9 @@ body {
 	overflow: hidden;
 	display: block;
 }
+.title_row{
+  margin-bottom: 20px;
+}
 
 //BASIC TYPOGRAPHY
 h1 {
@@ -168,4 +171,9 @@ clear: none;
   border: 1px solid #D7D7D7;
   border-radius: .3em;
   background-color: #E3E3E3;
+}
+
+.transparent_background {
+  background-color: transparent !important;
+  border-color: transparent !important;
 }

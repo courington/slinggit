@@ -1,39 +1,18 @@
 <% provide(:title, @user.name) %>
-<section class="wrapper posts">	
+<section id="userPostsWrapper" class="wrapper">	
 
-	<article class="col4">
-    <% if @user.posts.any? %>
-    	<header>
-        	<h1>Posts (<%= @posts.count %>)</h1>
-  			<p>Posts (<%= @posts.count %>)</p>
-  		</header>
-		  <%= will_paginate @posts%>
-      <ul class="posts">
-      	<%= render @posts %>
-      </ul>
-      <%= will_paginate @posts%>
-    <% end %>
+  <div class="col2 pull_right">
 
-    <% if current_user?(@user) %>
-      <% if not current_user.is_suspended? %>
-        <div class="form-actions">
-        	<%= link_to "Create New Post", new_post_path, class: "btn_green" %>
-        </div>
-      <% end %>  
-    <% end %>
-  </article>
-
-	<article class="col2">
     <div class="row">
-    	<header>
-      	<h1><%= @user.name %></h1>
-  		</header>
+      <header>
+        <h1><%= @user.name %></h1>
+      </header>
       <%= gravatar_for @user %>
     </div>
     
-    <div class="row">
+    <% if is_signed_in_and_admin? && !current_user?(@user) %>
+      <div class="row">
       <!-- ADMIN ONLY FUNCTIONALITY -->
-      <% if is_signed_in_and_admin? && !current_user?(@user) %>
 
         <%if !@user.is_considered_deleted? %>
           <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
@@ -43,10 +22,40 @@
           <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
         <% end %>  
 
-      <% end %> 
-    </div>  
+      </div>
+    <% end %> 
 
-	</article>   
+  </div>
+
+  <div id="userPosts" class="col4 pull_left">
+
+    <div class="row title_row">
+      <div class="col6 pull_left">
+        <div class="row">
+          <header>
+            <h1>Posts (<%= @posts.count %>)</h1>
+            <p>Posts (<%= @posts.count %>)</p>
+          </header>
+        </div>
+        <div class="row">
+        <% if current_user?(@user) %>
+          <% if not current_user.is_suspended? %>
+              <%= link_to "Create New Post", new_post_path, class: "col3 btn_green" %>
+          <% end %>  
+        <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div id="postArticlesWrapper">
+      <% if @user.posts.any? %>
+        <%= will_paginate @posts%>
+          <%= render @posts %>
+        <%= will_paginate @posts%>
+      <% end %>
+    </div>
+
+  </div>
 
 </section>
 
