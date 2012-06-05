@@ -93,6 +93,8 @@ body > header:first-child {
 					@include rounded-corners($font-size);
 					padding-left: $font-size;
 					width: 100%;
+					background: $wht url("icons/search/searchGlass_16x16.png") no-repeat 2%;
+					display: block;
 				}
 			}
 	}

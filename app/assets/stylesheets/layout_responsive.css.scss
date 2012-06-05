@@ -38,6 +38,7 @@
 			}
 			&.col4.pull_right > .row:last-child,
 			&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
+				margin-top: .075em;
 				padding-bottom: .25em;
 			}
 			#accountDropDown .nav_dropDown {
@@ -63,7 +64,8 @@
 			color: $wht;
 		}
 		#quickSearchWrapper input[name="quickSearch"] {
-			padding: .25em;
+			padding: .25em 0 .25em 7.5%;
+			background: $wht url("icons/search/searchGlass_12x12.png") no-repeat 2%;
 		}
 	}
 }
