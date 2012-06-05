@@ -28,6 +28,22 @@ body > header:first-child {
 		color: $wht;
 		text-shadow: $txt-shdw;
 		margin: 1em 0 0 0;
+		&.col4.pull_right > .row:last-child,
+		&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
+		margin-top: .5em;
+		padding-bottom: .25em;
+		}
+		a {
+			&:link,
+			&:visited,
+			&:active {
+				color: $wht;
+				@include transition;
+			}
+			&:hover {
+				color: $lt-grey;
+			}
+		}
 			span {
 				cursor:pointer;	
 				&:last-child {
@@ -36,17 +52,6 @@ body > header:first-child {
 				}
 				&:hover {
 					color: $lt-grey;
-				}
-				a {
-					&:link,
-					&:visited,
-					&:active {
-						color: $wht;
-						@include transition;
-					}
-					&:hover {
-						color: $lt-grey;
-					}
 				}
 			}
 			#accountDropDown {

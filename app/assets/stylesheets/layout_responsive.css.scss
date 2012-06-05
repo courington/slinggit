@@ -35,15 +35,17 @@
 			width: 100%;
 			margin-left: 0;
 			margin-bottom: .5em;
-			&> .row {
-				overflow: visible;
+			}
+			&.col4.pull_right > .row:last-child,
+			&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
+				padding-bottom: .25em;
 			}
 			#accountDropDown .nav_dropDown {
 				@include hardEdge-top;
 				left: -2.5em;
 				width: 8.85em;
 				text-align: right;
-				margin-top: .4em;
+				margin-top: .65em;
 					li:first-child {
 						margin-top: -.05em;
 					}
@@ -55,13 +57,13 @@
 						box-shadow: inset 0 1px 0 rgba(($wht), .75);
 					}
 				}
-			}
+			
 		div a:link,
 		div a:visited {
 			color: $wht;
 		}
-		#quickSearchWrapper {
-			//display: none;
+		#quickSearchWrapper input[name="quickSearch"] {
+			padding: .25em;
 		}
 	}
 }
@@ -84,9 +86,6 @@
 	float: left;
 	width: 100%;
 	}
-	/*input[type="text"].hardEdge-right {
-	width: 75%;	
-	}*/
 	.page_contentContainer .twoCol:first-child {
 	margin: 1.4em auto;
 	//border-bottom: 1px solid #F8F8F8;
@@ -117,7 +116,7 @@
 	}
 	.form-actions {
 		float: right;
-		span {
+		&> span {
 			display: block;
 		}
 	}
@@ -299,6 +298,11 @@
 		text-align: left;
 	} 
 	  //end
+	// hide the image slideshow on the homepage 
+	.pics {
+	display: none;
+	}
+	//end
 }
 //this bracket closes the 320-640 media query	
 //end

@@ -56,10 +56,11 @@
                 	<% else %>
                     	<%= link_to "Sign Up", signup_path %>
                 	<% end %>
-              	</div>
+				</div>
 			</div>
           <% else %>
 			<div class="row">
+				<div class="col3 offset3 head_aside">
               	<div class="col3 pull_left head_aside">
                 	<%= link_to "Sign In", signin_path %>
               	</div>
@@ -70,6 +71,7 @@
                     <%= link_to "Sign Up", signup_path %>
                 <% end %>
               	</div>
+				</div>
 			</div>
           <% end %>
       <% end %>
