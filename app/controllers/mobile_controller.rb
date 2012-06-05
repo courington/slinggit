@@ -9,11 +9,12 @@ class MobileController < ApplicationController
   before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   around_filter :catch_exceptions
 
-  ERROR_STATUS = "error"
-  SUCCESS_STATUS = "success"
-  NATIVE_APP = "native_app"
-  NATIVE_APP_WEB_VIEW = "native_app_web_view"
+  ERROR_STATUS = 'error'
+  SUCCESS_STATUS = 'success'
+  NATIVE_APP = 'native_app'
+  NATIVE_APP_WEB_VIEW = 'native_app_web_view'
   MOBILE_VIEW_ACTIONS = [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  PLACEHOLDER_IMAGE_STYLES = ['80x80_placeholder', '300x300_placeholder']
 
   def user_signup
     if not params[:user_name].blank?
@@ -394,7 +395,7 @@ class MobileController < ApplicationController
                 :price => post.price.to_i,
                 :location => post.location,
                 :recipient_api_account_ids => post.recipient_api_account_ids.blank? ? '' : post.recipient_api_account_ids,
-                :image_uri => post.photo_file_name.blank? ? "#{BASEURL}/assets/80x80_placeholder.png" : "#{BASEURL}/#{post.photo.url(:search)}",
+                :image_uri => post.photo_file_name.blank? ? nil : "#{BASEURL}/#{post.photo.url(:search)}",
                 :created_at_date => post.created_at.strftime("%m-%d-%Y"),
                 :created_at_time => post.created_at.strftime("%H:%M")
             }
@@ -422,6 +423,41 @@ class MobileController < ApplicationController
       render_error_response(
           :error_location => 'get_slinggit_post_data',
           :error_reason => 'missing required_paramater - offset',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def get_single_slinggit_post_data
+    if not params[:post_id].blank?
+      if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
+        comments_array = []
+        post.comments.each do |comment|
+          if comment.status == STATUS_ACTIVE
+            comments_array << comment.attributes.merge!(
+                :user_name => comment.user.name,
+                :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
+                :created_at_time => comment.created_at.strftime("%H:%M")
+            )
+          end
+        end
+
+        render_success_response(
+            post.attributes.merge!(:comments => comments_array)
+        )
+      else
+        render_error_response(
+            :error_location => 'get_individual_slinggit_post_data',
+            :error_reason => 'not found - post',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_individual_slinggit_post_data',
+          :error_reason => 'missing required_paramater - post_id',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
@@ -587,41 +623,6 @@ class MobileController < ApplicationController
       render_error_response(
           :error_location => 'password_reset',
           :error_reason => 'missing required_paramater - email_or_username',
-          :error_code => '403',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
-    end
-  end
-
-  def get_single_slinggit_post_data
-    if not params[:post_id].blank?
-      if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
-        comments_array = []
-        post.comments.each do |comment|
-          if comment.status == STATUS_ACTIVE
-            comments_array << comment.attributes.merge!(
-                :user_name => comment.user.name,
-                :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
-                :created_at_time => comment.created_at.strftime("%H:%M")
-            )
-          end
-        end
-
-        render_success_response(
-            post.attributes.merge!(:comments => comments_array)
-        )
-      else
-        render_error_response(
-            :error_location => 'get_individual_slinggit_post_data',
-            :error_reason => 'not found - post',
-            :error_code => '404',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
-      end
-    else
-      render_error_response(
-          :error_location => 'get_individual_slinggit_post_data',
-          :error_reason => 'missing required_paramater - post_id',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
@@ -796,27 +797,147 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT AND DOCUMENT
+  def delete_post
+    if not params[:post_id].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+        if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id], :select => 'id,status')
+          post.update_attribute(:status, STATUS_DELETED)
+          render_success_response(
+              :post_id => post.id,
+              :status => post.status
+          )
+        else
+          render_error_response(
+              :error_location => 'delete_post',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'delete_post',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'delete_post',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def get_post_image
+    if not params[:image_style].blank?
+
+      #check to see if app is requesting the placeholder image and return it
+      #the app could technically just grab the image with its name, however, if we move it or decide to change the name, this will allow more flexibility
+      if PLACEHOLDER_IMAGE_STYLES.include? params[:image_style]
+        if File.exists? "#{Rails.root}/app/assets/images/#{params[:image_style]}.png"
+          render_success_response(
+              :post_id => post.id,
+              :place_holder => true,
+              :image_uri => "#{BASEURL}/assets/#{params[:image_style]}.png"
+          ) and return
+        else
+          render_error_response(
+              :error_location => 'get_post_image',
+              :error_reason => 'place holder image file does not exist on the server',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          ) and return
+        end
+      end
+
+      if not params[:post_id].blank?
+        if post = Post.first(:conditions => ['id = ?', params[:post_id]], :select => 'id,photo_file_name,photo_content_type,photo_file_size,photo_updated_at,status')
+          if not post.status == STATUS_DELETED
+            if post.has_photo?
+              render_success_response(
+                  :post_id => post.id,
+                  :place_holder => false,
+                  :image_uri => "#{BASEURL}/#{post.photo.url(params[:image_style].to_sym)}"
+              )
+            else
+              render_error_response(
+                  :error_location => 'get_post_image',
+                  :error_reason => 'post does not contain a photo',
+                  :error_code => '404',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+          else
+            render_error_response(
+                :error_location => 'get_post_image',
+                :error_reason => 'post has been deleted',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'get_post_image',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+
+
+      else
+        render_error_response(
+            :error_location => 'get_post_image',
+            :error_reason => 'missing required_paramater - post_id',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_post_image',
+          :error_reason => 'missing required_paramater - image_style',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  #TODO IMPLEMENT
+  def send_message
+
+  end
+
+  #TODO IMPLEMENT
+  def delete_message
+
+  end
+
+  #TODO IMPLEMENT
   def change_password
 
   end
 
-#TODO IMPLEMENT AND DOCUMENT
+  #TODO IMPLEMENT
+  def change_email
+
+  end
+
+  #TODO IMPLEMENT
   def get_active_session_list
 
   end
 
-#TODO IMPLEMENT AND DOCUMENT
+  #TODO IMPLEMENT
   def logout_of_active_session
 
   end
 
-#TODO IMPLEMENT AND DOCUMENT
-  def update_post
-    @mobile_auth_token
-  end
-
-#TODO IMPLEMENT AND DOCUMENT
+  #TODO IMPLEMENT
   def report_abuse
 
   end
