@@ -1149,14 +1149,78 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT
-  def get_active_session_list
-
+  def get_active_sessions
+    if current_mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+      mobile_sessions = MobileSession.all(:conditions => ['user_id = ? AND id != ?', current_mobile_session.user_id, current_mobile_session.id], :select => 'id,user_id,unique_identifier,device,_name,id_address,created_at', :order => 'created_at desc')
+      if mobile_sessions.length > 0
+        render_success_response(
+            :rows_found => mobile_sessions.length,
+            :logged_in_user_id => current_mobile_session.user_id,
+            :mobile_sessions => mobile_sessions.map { |ms|
+              ms.attributes.merge(
+                  :created_at_time => ms.created_at.strftime("%H:%M"),
+                  :created_at_date => ms.created_at.strftime("%m-%d-%Y")
+              )
+            }
+        )
+      else
+        render_success_response(
+            :rows_found => mobile_sessions.length,
+            :logged_in_user_id => current_mobile_session.user_id,
+            :mobile_sessions => nil
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_active_sessions',
+          :error_reason => 'not found - mobile_session',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
-#TODO IMPLEMENT
-  def logout_of_active_session
-
+  def delete_active_session
+    if not params[:session_id].blank?
+      if current_mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+        if session_to_delete = MobileSession.first(:conditions => ['id = ? AND user_id = ?', params[:session_id], current_mobile_session.user_id], :select => 'id')
+          if session_to_delete.destroy
+            render_success_response(
+                :logged_in_user_id => current_mobile_session.user_id,
+                :session_deleted => true
+            )
+          else
+            render_error_response(
+                :error_location => 'delete_active_session',
+                :error_reason => 'unablet to delete session',
+                :error_code => '401',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'delete_active_session',
+              :error_reason => 'not found - session_to_delete',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'delete_active_session',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'delete_active_session',
+          :error_reason => 'not found - session_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
 #TODO IMPLEMENT

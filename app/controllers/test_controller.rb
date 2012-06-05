@@ -14,6 +14,17 @@ class TestController < ApplicationController
     current_user.update_attribute(:email, 'dlogan21@gmail+1.com')
   end
 
+  def create_mobile_session
+    mobile_session = MobileSession.create(
+        :user_id => 12,
+        :unique_identifier => rand(99999).to_s,
+        :device_name => 'mobile_device',
+        :ip_address => '192.168.1.85',
+        :mobile_auth_token => rand(999999999).to_s,
+        :options => nil
+    )
+  end
+
   def get_messages
     steve = Message.all
     wtf = steve.first.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')
