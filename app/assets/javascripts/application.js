@@ -22,4 +22,5 @@
 //= require modernizr.custom.49663
 //= require bootstrap
 //= require happy
+//= hide-address-bar
 //= require_tree .
