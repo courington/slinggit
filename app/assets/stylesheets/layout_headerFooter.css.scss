@@ -28,6 +28,20 @@ body > header:first-child {
 		color: $wht;
 		text-shadow: $txt-shdw;
 		margin: 1em 0 0 0;
+		.btnNavSprite {
+			background: url("icons/navigation/primaryNav_sprite_96x48.png") no-repeat 0 0;
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+		}
+		.btn_navPosts {
+			@extend .btnNavSprite;
+			background-position: -16px -30px;
+		}
+		.btn_navSettings {
+			@extend .btnNavSprite;
+			background-position: 0 -31px;
+		}
 		&.col4.pull_right > .row:last-child,
 		&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
 		margin-top: .5em;
@@ -88,13 +102,19 @@ body > header:first-child {
 				}
 			}
 			#quickSearchWrapper {
+				margin-top: -18px;
+				&> .btn_navSearch {
+					@extend .btnNavSprite;
+					background-position: -62px -32px;
+					position: relative;
+					top: 26px;
+					left: 6px;
+				}
 				input[name="quickSearch"] {
 					font-size: ($font-size * .5);
 					@include rounded-corners($font-size);
 					padding-left: $font-size;
 					width: 100%;
-					background: $wht url("icons/search/searchGlass_16x16.png") no-repeat 2%;
-					display: block;
 				}
 			}
 	}
