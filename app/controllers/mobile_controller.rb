@@ -1149,9 +1149,27 @@ class MobileController < ApplicationController
     end
   end
 
-#TODO IMPLEMENT
-  def get_active_session_list
-
+  def get_mobile_sessions
+    if current_mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+      mobile_sessions = MobileSession.all(:conditions => ['user_id = ? AND id != ?', current_mobile_session.user_id, current_mobile_session.id], :select => 'id,user_id,unique_identifier,device,_name,id_address,created_at', :order => 'created_at desc')
+      render_success_response(
+          :rows_found => mobile_sessions.length,
+          :user_id => current_mobile_session.user_id,
+          :mobile_sessions => mobile_sessions.map { |ms|
+            ms.attributes.merge(
+                :created_at_time => ms.created_at.strftime("%H:%M"),
+                :created_at_date => ms.created_at.strftime("%m-%d-%Y")
+            )
+          }
+      )
+    else
+      render_error_response(
+          :error_location => 'get_mobile_sessions',
+          :error_reason => 'not found - mobile_session',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
 #TODO IMPLEMENT
