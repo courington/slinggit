@@ -45,10 +45,10 @@
             <p>Posts (<%= @posts.count %>)</p>
           </header>
         </div>
-        <div class="row">
+        <div id="createPostAction" class="row">
         <% if current_user?(@user) %>
           <% if not current_user.is_suspended? %>
-              <%= link_to "Create New Post", new_post_path, class: "col3 btn_green" %>
+              <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
           <% end %>  
         <% end %>
         </div>
