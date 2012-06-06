@@ -1,29 +1,33 @@
 <% provide(:title, @user.name) %>
 <section id="userPostsWrapper" class="wrapper">	
 
-  <div class="col2 pull_right">
+  <div id="user" class="col2 pull_right">
 
-    <div class="row">
-      <header>
-        <h1><%= @user.name %></h1>
-      </header>
-      <%= gravatar_for @user %>
-    </div>
-    
-    <% if is_signed_in_and_admin? && !current_user?(@user) %>
+    <div id="userInner">
+
       <div class="row">
-      <!-- ADMIN ONLY FUNCTIONALITY -->
-
-        <%if !@user.is_considered_deleted? %>
-          <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
-        <% end %>  
-
-        <%if !@user.is_suspended? %>
-          <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
-        <% end %>  
-
+        <header>
+          <h1><%= @user.name %></h1>
+        </header>
+        <%= gravatar_for @user %>
       </div>
-    <% end %> 
+      
+      <% if is_signed_in_and_admin? && !current_user?(@user) %>
+        <div class="row">
+        <!-- ADMIN ONLY FUNCTIONALITY -->
+
+          <%if !@user.is_considered_deleted? %>
+            <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
+          <% end %>  
+
+          <%if !@user.is_suspended? %>
+            <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
+          <% end %>  
+
+        </div>
+      <% end %> 
+      
+    </div>
 
   </div>
 

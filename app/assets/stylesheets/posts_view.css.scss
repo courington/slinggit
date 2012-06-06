@@ -1,18 +1,35 @@
 #userPostsWrapper, #searchPostWrapper{
 
+	#user{
+		margin-top: 10px;
+		padding-left: 10px;
+		vertical-align: top;
+
+		#userInner{
+			background-color: white;
+			border: 1px solid #e8e8e8;
+			@include rounded-corners(3px);
+			padding: 20px;
+		}
+	}
+
 	#userPosts, #postSearchResults{
+		margin-top: 10px;
+		background-color: white;
+		padding: 20px;
+		border: 1px solid #e8e8e8;
+		@include rounded-corners(3px);
 
 		.title_row{
+			margin: 0;
+			margin-bottom: 10px;
+			border-bottom: 1px solid $lt-grey;
 			header{
 				padding-bottom: 10px;
 			}
 		}
 
-		#postArticlesWrapper{
-			background-color: white;
-			padding: 20px;
-			border: 1px solid #e8e8e8;
-			@include rounded-corners(3px);
+		#postArticlesWrapper{	
 			
 			.postArticle{
 				border-bottom: 1px solid $lt-grey;
@@ -32,8 +49,8 @@
 				}
 			}
 
-		}
+		}// end #postArticlesWrapper
 
-	}
+	}// end #userPosts, #postSearchResults
 
 }
