@@ -1,6 +1,8 @@
 /*! Normalized address bar hiding for iOS & Android (c) @scottjehl MIT License */
 (function( win ){
 	var doc = win.document;
+
+	alert("alive")
 	
 	// If there's a hash, or addEventListener is undefined, stop here
 	if( !location.hash && win.addEventListener ){
