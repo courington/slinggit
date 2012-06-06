@@ -1,8 +1,6 @@
 /*! Normalized address bar hiding for iOS & Android (c) @scottjehl MIT License */
 (function( win ){
 	var doc = win.document;
-
-	alert("alive")
 	
 	// If there's a hash, or addEventListener is undefined, stop here
 	if( !location.hash && win.addEventListener ){
@@ -25,6 +23,7 @@
 		
 		win.addEventListener( "load", function(){
 			setTimeout(function(){
+				alert("in timeout")
 				//at load, if user hasn't scrolled more than 20 or so...
 				if( getScrollTop() < 20 ){
 					//reset to hide addr bar at onload
