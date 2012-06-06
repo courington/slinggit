@@ -78,7 +78,7 @@ class MessagesController < ApplicationController
           @message.send_email = true
 
           if @message.save
-            flash[:succcess] = "Message has been sent."
+            flash[:success] = "Message has been sent."
             redirect_to :controller => :posts, :action => :show, :id => session[:message_post].id
           else
             @message_post = session[:message_post]
