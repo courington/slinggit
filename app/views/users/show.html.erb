@@ -1,29 +1,37 @@
 <% provide(:title, @user.name) %>
 <section id="userPostsWrapper" class="wrapper">	
 
-  <div class="col2 pull_right">
+  <div id="user" class="col2 pull_right">
 
-    <div class="row">
-      <header>
-        <h1><%= @user.name %></h1>
-      </header>
-      <%= gravatar_for @user %>
-    </div>
-    
-    <% if is_signed_in_and_admin? && !current_user?(@user) %>
-      <div class="row">
-      <!-- ADMIN ONLY FUNCTIONALITY -->
+    <div id="userInner" class="row">
 
-        <%if !@user.is_considered_deleted? %>
-          <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
-        <% end %>  
-
-        <%if !@user.is_suspended? %>
-          <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
-        <% end %>  
-
+      <div class="col2 pull_left">
+        <%= gravatar_for @user %>
       </div>
-    <% end %> 
+
+      <div class="col4 pull_right">
+        <header>
+          <h1><%= @user.name %></h1>
+          <p><%= @user.name %></p>
+        </header>
+      </div>
+      
+      <% if is_signed_in_and_admin? && !current_user?(@user) %>
+        <div class="row">
+        <!-- ADMIN ONLY FUNCTIONALITY -->
+
+          <%if !@user.is_considered_deleted? %>
+            <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
+          <% end %>  
+
+          <%if !@user.is_suspended? %>
+            <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
+          <% end %>  
+
+        </div>
+      <% end %> 
+
+    </div>
 
   </div>
 
@@ -37,10 +45,10 @@
             <p>Posts (<%= @posts.count %>)</p>
           </header>
         </div>
-        <div class="row">
+        <div id="createPostAction" class="row">
         <% if current_user?(@user) %>
           <% if not current_user.is_suspended? %>
-              <%= link_to "Create New Post", new_post_path, class: "col3 btn_green" %>
+              <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
           <% end %>  
         <% end %>
         </div>

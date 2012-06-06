@@ -1,7 +1,7 @@
 <div class="row comment">
 
 	<div class="col1 pull_left">
-  	<%= gravatar_for User.find(comment.user_id) %>
+  	<%= gravatar_for comment.user %>
   </div>
 
 	<div class="col5 pull_left">
@@ -12,10 +12,10 @@
 		<% end %>
     <div class="row">
 		  <p><%= comment.body %></p>
-    </div?
+    </div>
     <div class="row">
   		<span class="timestamp">
-    		Asked <%= time_ago_in_words(comment.created_at) %> ago.
+    		Asked <%= time_ago_in_words(comment.created_at) %> ago by <strong><%= link_to "#{comment.user.name}", user_path(comment.user) %></strong>
   		</span>
     </div>
 	</div>	

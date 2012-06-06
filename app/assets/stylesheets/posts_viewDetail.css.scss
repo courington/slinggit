@@ -95,6 +95,18 @@
 							min-width: 70px;
 						}
 					}
+
+					.grey_well{
+						text-align: center;
+
+						p{
+							font-size: $font-size *.9;
+						}
+						a{
+							font-weight: 600;
+							color: $dk-grey;
+						}
+					}
 			
 				}
 
@@ -154,11 +166,16 @@
 					.col1{
 						max-width: 90px;
 					}
-
 					.col5{
 						padding-left: 10px;
 						margin-top: 10px;
-
+						.timestamp{
+							font-size: $font-size * .7;
+							a{
+								font-weight: 600;
+								color: $dk-grey;
+							}
+						}
 					}
 				}
 				hr{

@@ -2,7 +2,7 @@
 <div id="postReply">
   <div class="row contentHeader">
     <div class="col5 innerHeader">
-      <p>Reply to <strong><%= link_to "#{@user.name}", user_path(@user.name) %></strong></p>
+      <p>Reply to <strong><%= @user.name %></strong></p>
     </div>  
   </div> 
 
@@ -20,6 +20,10 @@
         <% end %>
       </div>
     <% end %> 
+
+    <div class="row grey_well">
+      <p>See more <%= link_to "posts by #{@user.name}", user_path(@user.name) %></p>
+    </div> 
 
   </div>
 </div>

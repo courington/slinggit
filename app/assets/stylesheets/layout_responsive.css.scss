@@ -155,13 +155,29 @@
 
 	// style for user show (with list of posts) and post search
 	#userPostsWrapper, #searchPostWrapper{
-		.col2, .col4{
+		&> .col2, &> .col4{
 			@include colNoFloatClearFix;
+		}
+	}
+	#userPostsWrapper, #searchPostWrapper{
+
+		#user{
+			padding-left: 0;
+
+			#userInner{
+
+				.col4{
+					header{
+						text-align: left;
+					}
+				}
+
+			}
 		}
 
 		#userPosts, #postSearchResults{
+			padding: 20px 10px 20px 10px;
 			.title_row{
-
 				.btn_green{
 					width: 100%;
 				}
@@ -258,6 +274,10 @@
 
 					.col5{
 						margin: 0 !important;
+
+						.timestamp{
+							font-size: $font-size * .5 !important;
+						}
 					}
 				}
 			}
