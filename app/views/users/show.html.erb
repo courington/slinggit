@@ -3,13 +3,17 @@
 
   <div id="user" class="col2 pull_right">
 
-    <div id="userInner">
+    <div id="userInner" class="row">
 
-      <div class="row">
+      <div class="col2 pull_left">
+        <%= gravatar_for @user %>
+      </div>
+
+      <div class="col4 pull_right">
         <header>
           <h1><%= @user.name %></h1>
+          <p><%= @user.name %></p>
         </header>
-        <%= gravatar_for @user %>
       </div>
       
       <% if is_signed_in_and_admin? && !current_user?(@user) %>
@@ -26,7 +30,7 @@
 
         </div>
       <% end %> 
-      
+
     </div>
 
   </div>

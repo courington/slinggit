@@ -155,8 +155,24 @@
 
 	// style for user show (with list of posts) and post search
 	#userPostsWrapper, #searchPostWrapper{
-		.col2, .col4{
+		&> .col2, &> .col4{
 			@include colNoFloatClearFix;
+		}
+	}
+	#userPostsWrapper, #searchPostWrapper{
+
+		#user{
+			padding-left: 0;
+
+			#userInner{
+
+				.col4{
+					header{
+						text-align: left;
+					}
+				}
+
+			}
 		}
 
 		#userPosts, #postSearchResults{
