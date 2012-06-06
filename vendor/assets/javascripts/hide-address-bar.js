@@ -23,11 +23,11 @@
 		
 		win.addEventListener( "load", function(){
 			setTimeout(function(){
-				alert("in timeout")
 				//at load, if user hasn't scrolled more than 20 or so...
 				if( getScrollTop() < 20 ){
 					//reset to hide addr bar at onload
 					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
+					alert("in scroll")
 				}
 			}, 0);
 		} );
