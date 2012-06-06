@@ -18,4 +18,6 @@ class Comment < ActiveRecord::Base
   validates :body, presence: true
 
   default_scope order: 'comments.created_at DESC'
+
+  user = User.find(selft.user_id)
 end

@@ -60,6 +60,13 @@ body {
 	float: left;
 }
 
+.grey_well{
+  background-color: $lter-grey;
+  border: 1px solid #e8e8e8;
+  padding: 15px;
+  @include rounded-corners;
+}
+
 //ROW
 .row {
 	width: 100%;
