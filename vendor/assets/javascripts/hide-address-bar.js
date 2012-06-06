@@ -27,7 +27,6 @@
 				if( getScrollTop() < 20 ){
 					//reset to hide addr bar at onload
 					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
-					alert("in scroll")
 				}
 			}, 0);
 		} );
