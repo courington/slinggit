@@ -25,7 +25,7 @@ class MobileController < ApplicationController
           if not User.exists?(['email = ?', email])
             if not User.exists?(['name = ?', user_name])
               user = User.new(
-                  :user_name => params[:user_name],
+                  :name => params[:user_name],
                   :email => params[:email],
                   :password => params[:password],
                   :password_confirmation => params[:password]
@@ -916,7 +916,7 @@ class MobileController < ApplicationController
                 :send_email => true,
                 :creator_user_id => mobile_session.user_id,
                 :recipient_user_id => params[:recipient_user_id].to_i,
-                :contact_in_json => recipient.email,
+                :contact_info_json => recipient.email,
                 :body => params[:body]
             )
 
@@ -1025,7 +1025,7 @@ class MobileController < ApplicationController
       if not params[:new_password].blank?
         if params[:new_password].length >= 6
           if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-            if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,password')
+            if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id')
               if user.authenticate(params[:old_password])
                 user.password = params[:new_password]
                 user.password_confirmation = params[:new_password]
@@ -1097,7 +1097,7 @@ class MobileController < ApplicationController
     if not params[:new_email].blank?
       if params[:new_email] =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,email')
+          if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,email,name')
             user.email = params[:new_email]
             user.status = STATUS_UNVERIFIED
             if user.save
