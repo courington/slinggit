@@ -67,10 +67,10 @@
 
 		}
 
-		#postReplyWrapper{
+		#postReplyWrapper, #postControlsWrapper{
 			@include sidbarWrapper;
 			
-			#postReply{
+			#postReply, #postControls{
 				@include borderBackgroundCorners;
 				padding: 20px;
 
@@ -85,7 +85,7 @@
 					}
 				}
 
-				#postReplyActions{
+				#postReplyActions, #postContolsActions{
 					padding: 20px 0px 0px 0px;
 
 					.row {

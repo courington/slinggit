@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120605071000) do
+ActiveRecord::Schema.define(:version => 20120607015347) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20120605071000) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "status"
+    t.string   "id_hash"
   end
 
   create_table "posts", :force => true do |t|
