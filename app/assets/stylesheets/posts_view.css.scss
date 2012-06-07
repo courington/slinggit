@@ -1,4 +1,4 @@
-#userPostsWrapper, #searchPostWrapper{
+#userPostsWrapper, #searchPostWrapper, #userMessages{
 
 	#user{
 		margin-top: 10px;
@@ -17,7 +17,7 @@
 		}
 	}
 
-	#userPosts, #postSearchResults{
+	#userPosts, #postSearchResults, #msgArticles{
 		margin-top: 10px;
 		background-color: white;
 		padding: 20px;
@@ -37,7 +37,7 @@
 			}
 		}
 
-		#postArticlesWrapper{	
+		#postArticlesWrapper, #msgArticleWrapper{	
 			strong{
 				font-weight: 600;
 			}
