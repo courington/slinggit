@@ -43,10 +43,7 @@ class MessagesController < ApplicationController
     end
 
     if not session[:message_post].blank?
-      # Dan, if you change this to @post, you can use the
-      # views/posts/_post_details.html.erb partial.
-      # <%= render 'posts/post_details' %>
-      @message_post = session[:message_post]
+      @post = session[:message_post]
     else
       flash[:error] = 'Sad news, the post you are trying to reply to has either been closed or deleted.'
       redirect_to root_path and return
@@ -81,7 +78,7 @@ class MessagesController < ApplicationController
             flash[:success] = "Message has been sent."
             redirect_to :controller => :posts, :action => :show, :id => session[:message_post].id
           else
-            @message_post = session[:message_post]
+            @post = session[:message_post]
             render 'new'
           end
         else

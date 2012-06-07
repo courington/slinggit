@@ -744,10 +744,10 @@ class MobileController < ApplicationController
 
             #starting_message_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
             starting_message_id = params[:starting_message_id]
-            starting_message_id = Message.count() + 1 if (starting_message_id.blank? or starting_post_id.to_i <= 0)
+            starting_message_id = Message.count() + 1 if (starting_message_id.blank? or starting_message_id.to_i <= 0)
             starting_message_id = starting_message_id.to_i
 
-            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id <= ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
+            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id <= ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
 
             render_success_response(
                 :rows_found => messages.length,
@@ -984,7 +984,7 @@ class MobileController < ApplicationController
         messages_not_deleted = 0
 
         #grabbing all messages before verifying owner such that if for some reason its a mixed bag I can report back to the app that some were deleted and others werent so we can fix the problem.
-        messages = Message.all(:conditions => ['id in (?)', params[:message_ids].join(',')], :select => 'id,user_id,status')
+        messages = Message.all(:conditions => ['id in (?)', params[:message_ids].split(',')], :select => 'id,recipient_user_id,status')
         messages.each do |message|
           if message.recipient_user_id == mobile_session.user_id
             message.update_attribute(:status, STATUS_DELETED)
