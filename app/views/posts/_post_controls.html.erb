@@ -1,0 +1,35 @@
+<div id="postControls">
+  <div class="row contentHeader">
+    <div class="col5 innerHeader">
+      <p><strong>Edit post</strong></p>
+    </div>  
+  </div> 
+
+  <div id="postContolsActions" class="row">
+
+    <div class="row">
+      <%= form_for(@post) do |f| %>
+        <% if @post.open? %>
+          <%= f.hidden_field :open, value: false %>
+          <%= f.submit "Close", class: "col6 btn_yellow", confirm: "Are you sure?  This action cannot be undone!" %>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <% if not @twitter_post.blank? and @post.open?%>
+    <div class="row">
+      <div class="col5 innerHeader">
+        <p>View post on:</p>
+      </div>  
+    </div> 
+
+    <div class="row">
+      <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter" do %>
+         <span class="twitIconSmall"></span>
+         Twitter
+      <% end %>
+    </div>
+  <% end %> 
+</div>

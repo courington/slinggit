@@ -2,12 +2,14 @@
 #
 # Table name: invitations
 #
-#  id            :integer         not null, primary key
-#  email_address :string(255)
-#  comment       :text
-#  status        :string(255)     default("pending")
-#  created_at    :datetime        not null
-#  updated_at    :datetime        not null
+#  id              :integer         not null, primary key
+#  email           :string(255)
+#  comment         :text
+#  status          :string(255)     default("pending")
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  source_user_id  :integer
+#  activation_code :string(255)
 #
 
 #create_table :invitations do |t|

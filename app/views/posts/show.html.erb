@@ -16,9 +16,15 @@
 			<div class="row">
 				<%= render 'posts/post_details' %>
 				<% if @post.open? %>
-					<div id="postReplyWrapper" class="col2 pull_right">
-						<%= render 'posts/post_sidebar' %>
-					</div>
+					<% if current_user?(@post.user) %>
+						<div id="postControlsWrapper" class="col2 pull_right">
+							<%= render 'posts/post_controls' %>
+						</div>
+					<% else %>
+						<div id="postReplyWrapper" class="col2 pull_right">
+							<%= render 'posts/post_sidebar' %>
+						</div>
+					<% end %>
 				<% else %>
 					<div id="closedPostWrapper" class="col2 pull_right">
 						<%= render 'posts/post_closed_sidebar' %>

@@ -1,11 +1,14 @@
 # == Schema Information
 #
-#create_table :flagged_contents do |t|
-#  t.integer :creator_user_id
-#  t.string :content_source
-#  t.integer :content_id
-#  t.timestamps
-#end
+# Table name: flagged_contents
+#
+#  id              :integer         not null, primary key
+#  creator_user_id :integer
+#  content_source  :string(255)
+#  content_id      :integer
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#
 
 class FlaggedContent < ActiveRecord::Base
   attr_accessible :creator_user_id, :content_source, :content_id

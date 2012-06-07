@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  id                :integer         not null, primary key
+#  creator_user_id   :integer
+#  recipient_user_id :integer
+#  source            :string(255)
+#  source_id         :integer
+#  contact_info_json :string(255)
+#  body              :string(1200)
+#  status            :string(255)     default("UNR")
+#  id_hash           :string(255)
+#  created_at        :datetime        not null
+#  updated_at        :datetime        not null
+#
+
 #create_table :messages do |t|
 #  t.integer :creator_user_id
 #  t.integer :recipient_user_id

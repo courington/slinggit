@@ -10,12 +10,13 @@
 #  password_digest           :string(255)
 #  remember_token            :string(255)
 #  admin                     :boolean         default(FALSE)
-#  status                    :string(255)     default("active")
+#  status                    :string(255)     default("UVR")
 #  password_reset_code       :string(255)
 #  email_activation_code     :string(255)
 #  time_zone                 :string(255)
 #  account_reactivation_code :string(255)
 #  slug                      :string(255)
+#  role                      :string(255)     default("EXT")
 #
 
 class User < ActiveRecord::Base

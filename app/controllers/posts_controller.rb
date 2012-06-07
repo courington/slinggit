@@ -87,9 +87,10 @@ class PostsController < ApplicationController
 
   def update
     # Don't need to find Post here because of correct_user filter
+    # For now, we're only allowing the user to update open/close status
     if @post.update_attributes(params[:post])
       flash[:success] = "Post updated"
-      redirect_back_or current_user
+      redirect_back_or post_path(@path)
     else
       render 'edit'
     end

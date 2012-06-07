@@ -249,13 +249,13 @@
 					}
 				}
 			}// end #postDetails
-			#postReplyWrapper{
+			#postReplyWrapper, #postControlsWrapper{
 				padding: 0px 0px 0px 0px;
 				#postReply{
 					padding: 20px 20px 5px 20px;
 				}
 			}// end #postReplyWrapper
-			#closedPostWrapper{
+			#closedPostWrapper, #postControls{
 				padding: 0px 0px 0px 0px;
 				#closedPost{
 					padding: 20px 20px 20px 20px;
