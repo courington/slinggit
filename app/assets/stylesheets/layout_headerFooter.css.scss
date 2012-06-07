@@ -29,18 +29,18 @@ body > header:first-child {
 		text-shadow: $txt-shdw;
 		margin: 1em 0 0 0;
 		.btnNavSprite {
-			background: url("icons/navigation/primaryNav_sprite_96x48.png") no-repeat 0 0;
+			background: url("icons/navigation/primaryNav_sprite_159x48.png") no-repeat 0 0;
 			display: inline-block;
 			height: 16px;
 			width: 16px;
 		}
 		.btn_navPosts {
 			@extend .btnNavSprite;
-			background-position: -16px -30px;
+			background-position: -32px -32px;
 		}
 		.btn_navSettings {
 			@extend .btnNavSprite;
-			background-position: 0 -31px;
+			background-position: 0 -32px;
 		}
 		&.col4.pull_right > .row:last-child,
 		&.col4.pull_right > .row:last-child > .col3.offset3 > .row {

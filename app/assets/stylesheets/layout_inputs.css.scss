@@ -112,16 +112,16 @@ input[type="button"] {
 }
 
 .twitIconSmall {
-	background: url("icons/twitter/twitterBird_44x16.png") no-repeat -22px 0;
-	height: 16px;
-	width: 22px;
+	background: url("icons/navigation/primaryNav_sprite_159x48.png") no-repeat -96px -32px;
 	display: inline-block;
+	height: 16px;
+	width: 16px;
 	margin: 2px 2px -2px 0;
 }
 
 .twitIconSmall_dark {
-	@extend .twitIcon;
-	background-position: 0 0;
+	@extend .twitIconSmall;
+	background-position: -126px -32px;
 }
 
 .twitIcon {
