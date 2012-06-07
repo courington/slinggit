@@ -753,6 +753,7 @@ class MobileController < ApplicationController
                 :rows_found => messages.length,
                 :filters_used => {:offset => offset, :limit => limit, :starting_message_id => starting_message_id},
                 :messages => messages.map { |m|
+                  m.contact_info_json = ActiveSupport::JSON.decode(m.contact_info_json)
                   source_object = m.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')
                   source_object_attributes = nil
                   source_object_attributes = source_object.attributes if not source_object.blank?
