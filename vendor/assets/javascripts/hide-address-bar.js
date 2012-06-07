@@ -17,6 +17,7 @@
 				if( doc.body ){
 					clearInterval( bodycheck );
 					scrollTop = getScrollTop();
+					console.log(scrollTop)
 					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
 				}	
 			}, 15 );
@@ -25,6 +26,8 @@
 			setTimeout(function(){
 				//at load, if user hasn't scrolled more than 20 or so...
 				if( getScrollTop() < 20 ){
+					console.log(scrollTop)
+					console.log(getScrollTop())
 					//reset to hide addr bar at onload
 					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
 				}

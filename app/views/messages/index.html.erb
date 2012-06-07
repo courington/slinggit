@@ -1,23 +1,25 @@
 <% provide(:title, "Messages") %>
-<div class="wrapper messages">
-  <article>
-    <% if @messages %>
-        <header>
-          <h1>Messages (<%= @unread %>)</h1>
+<section id="userMessages" class="wrapper">
 
-          <p>Messages (<%= @unread %>)</p>
-        </header>
-        <% @messages.each do |message| %>
-            <div class="row">
-              <div class="col6 pull_left">
-                <p><%= link_to(message.body.to_ellipsis(200), {:action => :show, :id => message.id_hash}, :class => message.status == STATUS_UNREAD ? 'messageUnread' : 'messageRead') %></p>
-                <small class="timestamp">Received <%= time_ago_in_words(message.created_at) %> ago.</small>
-                <%= link_to "delete", {:action => :delete, :id => message.id_hash, :method => :delete}, :confirm => 'Are you sure you want to delete this message?' %>
-              </div>
-            </div>
-            <br/>
+  <section id="msgArticles" class="col4 pull_left">
+
+    <div class="row title_row">
+      <header>
+        <h1>Messages (<%= @unread %>)</h1>
+        <p>Messages (<%= @unread %>)</p>
+      </header>
+    </div>
+
+    <div id="msgArticleWrapper">
+        <% if @messages.any? %>
+          <%= render @messages %>
+          <%= will_paginate @messages %>
+        <% else %>
+          No messages
         <% end %>
-        <%= will_paginate @messages %>
-    <% end %>
-  </article>
-</div>
+    </div>
+
+  </section>
+
+</section>
+
