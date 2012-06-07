@@ -984,7 +984,7 @@ class MobileController < ApplicationController
         messages_not_deleted = 0
 
         #grabbing all messages before verifying owner such that if for some reason its a mixed bag I can report back to the app that some were deleted and others werent so we can fix the problem.
-        messages = Message.all(:conditions => ['id in (?)', params[:message_ids].join(',')], :select => 'id,user_id,status')
+        messages = Message.all(:conditions => ['id in (?)', params[:message_ids].split(',')], :select => 'id,user_id,status')
         messages.each do |message|
           if message.recipient_user_id == mobile_session.user_id
             message.update_attribute(:status, STATUS_DELETED)
