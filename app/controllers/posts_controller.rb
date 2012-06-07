@@ -104,6 +104,7 @@ class PostsController < ApplicationController
   def results
     if not params[:id].blank?
       #I am currently researching how to make this function more like google search.  Faster and more relevent.
+      @searchTerm = params[:id]
       @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
     end
   end
