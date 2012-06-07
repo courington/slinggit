@@ -8,7 +8,7 @@
   <div id="postSearchResults" class="col4 pull_left">
     
     <div class="row title_row">
-      <div class="col3 pull_left">
+      <div class="col6 pull_left">
         <header>
           <h1>Search Results</h1>
           <p>Search Results</p>
@@ -19,6 +19,10 @@
     <div id="postArticlesWrapper">
       <% if not @posts.blank? %>
         <%= render @posts %>
+      <% else %>
+        <div class="row">
+          <p>No posts were found for <strong><%= @searchTerm %></strong></p>
+        </div>
       <% end %>
   </div>
 
@@ -26,17 +30,4 @@
 
 </section>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $("[id^=postResult_]").each(function (key) {
-            $('#' + this.id).click(function (e) {
-                e.preventDefault();
-                var post_id = this.id.split('_')[1];
-                document.location.href = "/posts/" + post_id;
-            });
-        });
-    });
-
-</script>
 

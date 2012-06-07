@@ -38,6 +38,9 @@
 		}
 
 		#postArticlesWrapper{	
+			strong{
+				font-weight: 600;
+			}
 			
 			.postArticle{
 				border-bottom: 1px solid $lt-grey;
