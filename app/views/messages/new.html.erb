@@ -1,40 +1,8 @@
 <% provide(:title, "New Message") %>
 <div class="wrapper messages">
   <article>
-    <% if @message_post %>
-        <div class="row">
-          <div class="col1 pull_left">
-            <p><%= label_tag :location, 'Location:' %></p>
-          </div>
-          <div class="col1 pull_left">
-            <p><%= label_tag :location_value, @message_post.location %></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col1 pull_left">
-            <p><%= label_tag :price, 'Price:' %></p>
-          </div>
-          <div class="col1 pull_left">
-            <p><%= label_tag :price_value, '$' + @message_post.price.to_s %></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col1 pull_left">
-            <p><%= label_tag :status, 'Status:' %></p>
-          </div>
-          <div class="col1 pull_left">
-            <p><%= label_tag :status_value, @message_post.open ? 'Open' : 'Closed' %></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col1 pull_left">
-            <p><%= label_tag :description, 'Description:' %></p>
-          </div>
-          <div class="col1 pull_left">
-            <p><%= label_tag :description_value, @message_post.content %></p>
-          </div>
-        </div>
-        <br/>
+    <% if @post %>
+        <%= render 'posts/post_details' %>
     <% end %>
     <%= form_for(@message) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
