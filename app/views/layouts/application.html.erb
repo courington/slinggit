@@ -10,6 +10,16 @@
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+	  <script type="text/javascript">
+	  // When ready...
+	window.addEventListener("load",function() {
+	  // Set a timeout...
+	  setTimeout(function(){
+	    // Hide the address bar!
+	    window.scrollTo(0, 1);
+	  }, 0);
+	});
+	  </script>
 </head>
 <body>
 <%= render 'layouts/header' %>
