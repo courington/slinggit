@@ -19,10 +19,12 @@
 					<% if current_user?(@post.user) %>
 						<div id="postControlsWrapper" class="col2 pull_right">
 							<%= render 'posts/post_controls' %>
+							<div id="map_canvas" style="width:100%; height:250px"></div>
 						</div>
 					<% else %>
 						<div id="postReplyWrapper" class="col2 pull_right">
 							<%= render 'posts/post_sidebar' %>
+							<div id="map_canvas" style="width:100%; height:250px"></div>
 						</div>
 					<% end %>
 				<% else %>
@@ -74,3 +76,12 @@
 	<% end %>		
 
 </section>
+<script type="text/javascript">
+	$(document).ready(function(){
+		window.getPostMap("<%= @post.location %>")
+	})
+</script>
+
+
+
+
