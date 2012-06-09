@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret, :status, :role
+  attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret, :status, :role, :photo_source
   has_secure_password
   has_many :posts, dependent: :destroy
   # not making comments dependent: :destroy because we may still want comments associated with posts
@@ -71,18 +71,41 @@ class User < ActiveRecord::Base
   end   
 
   def is_self_destroyed?
-    self.status == STATUS_DELETED && self.account_reactivation_code != nil
+    self.status == STATUS_DELETED && !self.account_reactivation_code.blank?
   end  
 
   def is_banned?
-    self.status == STATUS_BANNED && self.account_reactivation_code == nil
+    self.status == STATUS_BANNED && self.account_reactivation_code.blank?
   end  
 
   def is_suspended?
     self.status == STATUS_SUSPENDED
   end  
 
+  def has_photo_source?
+    not self.photo_source.blank?
+  end
+
+  def profile_photo_url
+    # This insures that at least on photo url is returned
+    url = "80x80_placeholder.png"
+    if self.photo_source == SLINGGIT_PHOTO_SOURCE
+      url = "80x80_placeholder.png"
+    elsif self.photo_source == TWITTER_PHOTO_SOURCE
+      url = self.primary_twitter_account.image_url
+    elsif self.photo_source == GRAVATAR_PHOTO_SOURCE
+      url = gravatar_img_url(self)
+    end
+
+    return url
+  end
+
   private
+
+  def gravatar_img_url(user)
+    gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
+    gravatar_url = "https://gravatar.com/avatar/#{gravatar_id}.png"
+  end
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64

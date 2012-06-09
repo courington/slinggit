@@ -6,7 +6,7 @@
     <div id="userInner" class="row">
 
       <div class="col2 pull_left">
-        <%= gravatar_for @user %>
+        <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
       </div>
 
       <div class="col4 pull_right">
@@ -45,6 +45,9 @@
             <p>Posts (<%= @posts.count %>)</p>
           </header>
         </div>
+        <% if !@user.has_photo_source? && current_user?(@user) %>
+          <%= render 'users/select_photo' %>
+        <% end %>
         <div id="createPostAction" class="row">
         <% if current_user?(@user) %>
           <% if not current_user.is_suspended? %>
@@ -60,6 +63,10 @@
         <%= will_paginate @posts%>
           <%= render @posts %>
         <%= will_paginate @posts%>
+      <% elsif !@user.posts.any? and !current_user?(@user) %>
+        <p><strong><%= @user.name %></strong> has not created any posts yet. Check back soon!</p>
+      <% elsif !@user.posts.any? and current_user?(@user) %>
+        <p><strong><%= @user.name %></strong>, you haven't created any posts yet.
       <% end %>
     </div>
 

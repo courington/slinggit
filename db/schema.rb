@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607015347) do
+ActiveRecord::Schema.define(:version => 20120609193043) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(:version => 20120607015347) do
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
+    t.string   "photo_source"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

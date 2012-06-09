@@ -1,38 +1,80 @@
 <% provide(:title, "Edit user") %>
-<section class="wrapper">
+<section id="editUsers" class="wrapper">
 	
 	<header class="row">
 		<h1>Update your profile</h1>
 		<p>Update your profile</p>
 	</header>
 	
+	<div class="row">
 	<% if !@user.is_suspended? %>
+		<article class="col3 pull_right">
+	        <div id="photoSelectorWrapper" class="grey_well">
+		
+				<div class="row">
+					<div class="col6">
+						<p>Select your profile photo</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col2 pull_left">
+						<div class="row">
+							<%= image_tag "80x80_placeholder.png", id: "SPS" %>
+						</div>
+						<div class="row">
+							<p>Slinggit</p>
+						</div>
+					</div>
+
+					<% if not @user.primary_twitter_account.blank? %>
+						<div class="col2 pull_left">
+							<div class="row">
+								<%= image_tag @user.primary_twitter_account.image_url, id: "TPS" %>
+							</div>
+							<div class="row">
+								<p>Twitter</p>
+							</div>
+						</div>
+					<% end %>
+
+					<div class="col2 pull_left">
+						<div class="row">
+							<%= gravatar_for @user %>
+						</div>
+						<div class="row">
+							<p>Gravatar | <a href="https://gravatar.com/emails" target="_blank">change</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+	    </article>
 	
-		<article class="col4 pull_left">
+		<article class="col3 pull_left">
 			
 		<%= form_for @user do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
-			<legend class="row">User Info</legend>
 
 				<fieldset class="row">
 					<%= f.label :name, class: "col6 control-label", for: "user_name" %>
-	                <%= f.text_field :name, class: "col3 form_singleLine" %>
+	                <%= f.text_field :name, class: "col5 form_singleLine" %>
 	            </fieldset>
 
 	            <fieldset class="row">
 					<%= f.label :email, class: "col6 control-label", for: "user_email" %>
-					<%= f.text_field :email, class: "col3 form_singleLine" %>
+					<%= f.text_field :email, class: "col5 form_singleLine" %>
 				</fieldset>
 
 	            <fieldset class="row">
 					<%= f.label :password, class: "col6 control-label", for: "user_password" %>
-					<%= f.password_field :password, class: "col3 form_singleLine" %>
+					<%= f.password_field :password, class: "col5 form_singleLine" %>
 	            </fieldset>
 
 	            <fieldset class="row">
 					<%= f.label :password_confirmation, "Confirm Password", class: "col6 control-label", for: "user_password_confirmation" %>
-					<%= f.password_field :password_confirmation, class: "col3 form_singleLine" %>
+					<%= f.password_field :password_confirmation, class: "col5 form_singleLine" %>
 	            </fieldset>
+
+	            <%= f.hidden_field :photo_source %>
 
 	            <% if !session['access_secret'].nil? && !session['access_token'].nil? %>
 					<%= f.hidden_field :twitter_atoken, value: session['access_token'] %>
@@ -42,6 +84,8 @@
 	              <%= f.submit "Save changes", class: "btn" %>
 		<% end %>
 		</article>
+
+
 	<% else %>
 
 		<div class="row notice">
@@ -49,13 +93,14 @@
       	</div>  
 
 	<% end %>
+	</div>
+	<div class="row" style="margin-top: 20px;">
+    	<a href="<%= url_for :controller => :users, :action => :delete_account %>">Delete Account</a>
+    </div>
 
-	<article class="col2 pull_right">
-		<p class="row">Gravatar</p>
-        <div class="row thumbnail">
-          <%= gravatar_for @user %>
-          <p class="row"><a href="https://gravatar.com/emails" target="_blank">change</a></p>
-        </div>
-        <a href="<%= url_for :controller => :users, :action => :delete_account %>">Delete Account</a>
-    </article>
 </section>
+<script type="text/javascript">
+	$(document).ready(function(){
+		window.initPhotoSelector("<%= @user.id %>", false)
+	})
+</script>

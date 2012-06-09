@@ -4,22 +4,12 @@ input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
+	margin: ($font-size * .5) auto;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
 		border: 1px solid $main-blue;
 		}
-}
-input[type="text"].hardEdge-right {
-	@include hardEdge-right;
-	clear: left;
-	float: left;
-}
-.hardEdge_left {
-	@include hardEdge-left;
-}
-#post_price {
-width: 45%;
 }
 textarea {
 	@include textInput;
@@ -29,15 +19,15 @@ textarea {
 	height: 6.3em;
 	clear: left;
 	float: left;
-	margin: .7em 0 1.4em 0;
-	width: 95%;
+	margin: ($font-size * .5) auto;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
 		border: 1px solid $main-blue;
 		}
 }
-input[type="button"] {
+input[type="button"],
+input[type="submit"] {
 	background: $main-green;
 	padding: .4em;
 	font-size: $font-size;
@@ -64,7 +54,7 @@ input[type="button"] {
 .btn {
 	cursor: pointer;
 	padding: .5em;
-	margin: ($font-size * .4) auto;
+	margin-top: ($font-size * .4);
 	color: $wht;
 	font-size: $font-size;
 	font-family: $main-font;
@@ -73,7 +63,6 @@ input[type="button"] {
 	text-align: center;
 	box-shadow: $btn-shading;
 	@include rounded-corners($radius);
-	//text-shadow: $btn-txt-shading;
 	@include transition;
 	&:hover,
 	&:focus {
@@ -138,38 +127,10 @@ input[type="button"] {
 	background-position: 0 0;
 }
 
-label {
+fieldset > label {
 	font-size: $font-size - .2em;
 	display: block;
-}
-.add_on {
-	@include hardEdge-left;
-	background: $lt-grey;
-	padding: .45em;
-	font-size: $font-size;
-	font-family: $main-font;
-	color: $main-grey;
-	border: 1px solid darken($lt-grey, 10%);
-	box-shadow: $btn-shading;
-	float: left;
-	width: auto;
-	margin: .1em 0 0 0;
-}
-#photoControlGroup {
-	float: left;
-	margin: 0 0 0 5%;
-	width: 38%;
-}
-#photoControlGroup {
-	margin: 0;
-	width: 50%;
-}
-.col_twoThird + fieldset {
-	clear: left;
-	width: 100%;
-	> input {
-		width: 75%;
-	}
+	margin: .8em 0 -.4em 0;
 }
 label[for="post_photo"] {
 	float: left;
@@ -187,7 +148,4 @@ fieldset > input[type="checkbox"] {
 	display: block;
 	clear: left;
 }
-// end
-// posts page open & edit btns
-
 // end

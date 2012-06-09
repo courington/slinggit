@@ -45,7 +45,7 @@ class Post < ActiveRecord::Base
   #VALID_PRICE_REGEX = /\A[0-9]{,20}\z/i
   validates :price, presence: true, :numericality => { :only_integer => true, :message => "must be a number and cannot be longer than 5 characters" }#, length: {maximum: 5}, format: {with: VALID_PRICE_REGEX, :message => "cannot be more than $99999 and cannot include commas"}
   #validates_attachment_presence :photo
-  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg', 'image/x-png']
 
   default_scope order: 'posts.updated_at DESC'
 
