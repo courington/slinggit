@@ -1,8 +1,10 @@
 <% provide(:title, 'Home') %>
 <section class="wrapper">
-    <div class="row grey_well wrapper_twitRoll">
-        <div class="col6"><%= render @post %></div>
-    </div>
+    <% if !@posts.blank? %>
+        <div class="row grey_well wrapper_twitRoll">
+            <div class="col6"><%= render @posts %></div>
+        </div>
+    <% end %>
 	<div class="row white_well">
   		<div class="col6">
             
