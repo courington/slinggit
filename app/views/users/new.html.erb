@@ -1,53 +1,71 @@
 <%= provide(:title, 'Sign up') %>
-<section class="wrapper">
+<section class="wrapper wrapper_newUser">
 	<header class="row">
 		<h1>Sign up</h1>
 		<p>Sign Up</p>
 	</header>
 
+<div class="col3 white_well">
 	<%= form_for(@user) do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
-    
-	<fieldset class="row form_initialFields">
-		<%= f.label :name, "Username", for: "user_name", class: "col6" %>
-		<%= f.text_field :name, placeholder: "Username", class: "col2 form_singleLine" %>
-	</fieldset>
-	<div class="row" id="usernameAvailabilityNotification"></div>
-
-	<fieldset class="row form_initialFields">
-		<%= f.label :email, for: "user_email", class: "col6" %>
-		<%= f.email_field :email, placeholder: "Email", class: "col2 form_singleLine" %>
-	</fieldset>
-	<div class="row" id="emailAvailabilityNotification"></div>
-
-	<fieldset class="row form-actions" id="form_signUpActions">
 		
-		<%= link_to("#", :class => "col2 btn_twitter", :onclick => "javascript:void(0)", :id => "twitterBTN") do %>
-			<span class="twitIconSmall"></span>
-			Sign Up with Twitter
-		<% end %>
-		
-		<%= f.button "Don't Use Twitter", type: "button", class: "col1 btn_green", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
-		<%= hidden_field_tag :twitter_authenticate, nil %>
+<!-- user name -->
+    <div class="row">
+		<fieldset class="col6 form_initialFields">
+			<%= f.label :name, "Username", for: "user_name", class: "row" %>
+			<%= f.text_field :name, placeholder: "Username", class: "row" %>
+		</fieldset>
+		<div class="col6" id="usernameAvailabilityNotification"></div>
+	</div>
+<!-- end -->
+<!-- email -->
+	<div class="row">
+		<fieldset class="col6 form_initialFields">
+			<%= f.label :email, for: "user_email", class: "row" %>
+			<%= f.email_field :email, placeholder: "Email", class: "row" %>
+		</fieldset>
+		<div class="col6" id="emailAvailabilityNotification"></div>
+	</div>
+<!-- end -->
+<!-- authenticate buttons -->
+	<div class="row">
+		<fieldset class="col6 form-actions" id="form_signUpActions">
+			<%= link_to("#", :class => "col4 pull_left btn_twitter", :onclick => "javascript:void(0)", :id => "twitterBTN") do %>
+				<span class="twitIconSmall"></span>
+				Sign Up with Twitter
+			<% end %>
+	
+			<%= f.button "No Twitter", type: "button", class: "col2 pull_right btn_green", onclick: "javascript:void(0)", id: 'noThanksBTN' %>
+			<%= hidden_field_tag :twitter_authenticate, nil %>
+		</fieldset>
+	</div>
+<!-- end -->
+<!-- password field -->
+<div class="row">
+	<fieldset class="col6 form_hiddenFields">
+		<%= f.label :password, "Slinggit Password", for: "user_password", class: "row" %>
+		<%= f.password_field :password, placeholder: "Password", class: "row" %>
 	</fieldset>
-
-	<fieldset class="row form_hiddenFields">
-		<%= f.label :password, "Slinggit Password", for: "user_password", class: "col6" %>
-		<%= f.password_field :password, placeholder: "Password", class: "col2 form_singleLine" %>
+</div>
+<!-- end -->
+<!-- password confirm -->
+<div class="row">
+	<fieldset class="col6 form_hiddenFields">
+		<%= f.label :password_confirmation, "Confirmation", for: "user_password_confirmation", class: "row" %>
+		<%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "row" %>
 	</fieldset>
-
-	<fieldset class="row form_hiddenFields">
-		<%= f.label :password_confirmation, "Confirmation", for: "user_password_confirmation", class: "col6" %>
-		<%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "col2 form_singleLine" %>
+</div>
+<!-- end -->
+<!-- submit -->
+<div class="row">
+	<fieldset class="col6 form_hiddenFields">
+		<%= f.button "Create my account", class: "row btn_green" %>
+		<%= link_to 'start over', nil, :onclick => "javascript:void(0)", class: "row", :id => 'signUpStartOverLink' %>
 	</fieldset>
-
-	<fieldset class="row form_hiddenFields">
-		<%= f.button "Create my account", class: "col2 btn_green" %>
-		<%= link_to 'start over', nil, :onclick => "javascript:void(0)", class: "col6", :id => 'signUpStartOverLink' %>
-	</fieldset>
-
+</div>
+<!-- end -->
 	<% end %>
-
+</div>
 </section>
 
 <style type="text/css">

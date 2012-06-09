@@ -132,6 +132,14 @@
 		}
 	}
 	//end
+<<<<<<< HEAD
+	// styles for user edit
+	#editUsers{
+		.col3{
+			width: 100%;
+		}
+	}
+=======
 	//new user page
 	.wrapper_newUser {
 		.col3, .col4, .col2 {
@@ -140,6 +148,7 @@
 		}
 	}
 	//end
+>>>>>>> d695f1f0f0fd9ad3f9f9fe2d7d112e6a19e70cac
 	// style for user show (with list of posts) and post search
 	#userPostsWrapper, #searchPostWrapper{
 		&> .col2, &> .col4{
