@@ -1,61 +1,62 @@
-<article class="col4 pull_left">
+<article class="col4 pull_left white_well">
 <%= form_for @post do |f| %>
 
-      <fieldset class="row">
-        <%= f.label :hashtag_prefix, "Your item", class: "col6", for: "post_hashtag_prefix" %>
-          <div class="row">
-            <%= f.text_field :hashtag_prefix, class: "hardEdge-right form_singleLine col4", placeholder: "#", maxLength: "10" %>
-            <span class="col2 add_on">forsale</span>
-          </div>
-      </fieldset>
+	<fieldset class="row">
+		<%= f.label :hashtag_prefix, "Your item", class: "col6", for: "post_hashtag_prefix" %>
+		<div class="col6">
+			<%= f.text_field :hashtag_prefix, class: "hardEdge-right col4", placeholder: "#", maxLength: "10" %>
+			<span class="col2 add_on">forsale</span>
+		</div>
+	</fieldset>
 
-<div class="row">
-	    <fieldset class="col2 pull_left">
-        <%= f.label :price, class: "col3", for: "post_price" %>
-          <div class="input-append">
-            <%= f.text_field :price, class: "hardEdge-right form_singleLine", id: "post_price", placeholder: "$", maxLength: "5" %>
-            <span class="col2 add_on">.00</span>
-          </div>
-	    </fieldset>
-
-      <fieldset class="col4 pull_left">
-        <%= f.label :location, "Location", class: "col3", for: "post_hashtag_prefix" %>
-        <%= f.text_field :location, class: "form_singleLine", placeholder: "City, State, or Zip", maxLength: "16" %>
-      </fieldset>
-</div>
-
-      <fieldset class="row">
-        <%= f.label :content, "Quick description", class: "col3", for: "post_content" %>
-        <%= f.text_area :content, class: "col5 form_singleLine", rows: "3", placeholder: "a short description maybe @someone to sling at or tag with #hastags" %>
-      </fieldset>
-
-<div class="row">
-      <fieldset id="photoControlGroup" class="col3">
-        <%= f.label :photo, "Item Photo (optional)", class: "", for: "post_photo" %>
-        <div class="controls thumbnail">
-          <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
-          <a href="#" id="fileSelect">Select a photo</a>
-        </div>
-      </fieldset>
-
-      <fieldset class="col3 twitterPostAccount">
-        <span>Twitter account(s) to post to:</span>
-        <%= check_box_tag "twitter_accounts[#{@slinggit_account_id}]", 'post', true %><span>Slinggit</span>
-        <% @twitter_accounts.each do |twitter_account| %>
-            <%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %><span> <%= twitter_account.user_name %></span>
-        <% end %>
-	  </fieldset>
-	</div>
-<%= render 'shared/error_messages', object: f.object %>
-
-		<fieldset class="row">
-        	<% if @cant_post %>
-          	<p class="notice_text">You have reached your 24 hours post limit.</p>
-			<p>Please <%= link_to "contact customer service", contact_path %> if you wish to increase this limit.</p>
-            <%= f.button "Post Item", type: "submit", class: "col3 btn", id: "submitNewPost", disabled: "disabled" %>
-        	<% else %>
-            <%= f.button "Post Item", type: "submit", class: "col3 btn btn_green", id: "submitNewPost" %>
-        	<% end %>
+	<div class="row">
+		<fieldset class="col2 pull_left">
+			<%= f.label :price, class: "col6", for: "post_price" %>
+			<div class="col6">
+				<%= f.text_field :price, class: "hardEdge-right", id: "post_price", placeholder: "$", maxLength: "5" %>
+				<span class="col2 add_on">.00</span>
+			</div>
 		</fieldset>
+
+		<fieldset class="col4 pull_left">
+			<%= f.label :location, "Location", class: "col3", for: "post_hashtag_prefix" %>
+			<%= f.text_field :location, class: "", placeholder: "City, State, or Zip", maxLength: "16" %>
+		</fieldset>
+	</div>
+
+	<fieldset class="row">
+		<%= f.label :content, "Quick description", class: "col3", for: "post_content" %>
+		<%= f.text_area :content, class: "col5", rows: "3", placeholder: "a short description maybe @someone to sling at or tag with #hastags" %>
+	</fieldset>
+
+	<div class="row">
+		<fieldset id="photoControlGroup" class="col3">
+			<%= f.label :photo, "Item Photo (optional)", class: "", for: "post_photo" %>
+			<div class="controls thumbnail">
+				<%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
+				<a href="#" id="fileSelect">Select a photo</a>
+			</div>
+		</fieldset>
+
+		<fieldset class="col3 twitterPostAccount">
+			<span>Twitter account(s) to post to:</span>
+			<%= check_box_tag "twitter_accounts[#{@slinggit_account_id}]", 'post', true %><span>Slinggit</span>
+			<% @twitter_accounts.each do |twitter_account| %>
+				<%= check_box_tag "twitter_accounts[#{twitter_account.id}]", 'post', true %><span> <%= twitter_account.user_name %></span>
+				<% end %>
+		</fieldset>
+	</div>
+	
+	<%= render 'shared/error_messages', object: f.object %>
+
+	<fieldset class="row">
+		<% if @cant_post %>
+			<p class="notice_text">You have reached your 24 hours post limit.</p>
+			<p>Please <%= link_to "contact customer service", contact_path %> if you wish to increase this limit.</p>
+			<%= f.button "Post Item", type: "submit", class: "col3 btn", id: "submitNewPost", disabled: "disabled" %>
+		<% else %>
+            <%= f.button "Post Item", type: "submit", class: "col3 btn btn_green", id: "submitNewPost" %>
+		<% end %>
+	</fieldset>
 <% end %>
 </article>
