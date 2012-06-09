@@ -1,7 +1,7 @@
 <% provide(:title, "Messages") %>
 	<div class="wrapper message">
 	<% if @message %>
-	<article class="col4 pull_left grey_well">
+	<article class="col4 pull_left white_well">
 		
 		<div class="row">
 			<small class="col6 timestamp">Received <%= time_ago_in_words(@message.created_at) %> ago.</small>
@@ -18,7 +18,7 @@
 
 	</article>
 
-	<aside class="col2 pull_right grey_well">
+	<aside class="col2 pull_right white_well">
 		<%= link_to "Reply", {:action => :reply, :id => @message.id_hash}, :class => "btn btn_green row" %>
 		<%= link_to "Delete", {:action => :delete, :id => @message.id_hash, :method => :delete}, :confirm => 'Are you sure you want to delete this message?', :class => "btn btn_red row" %>
 	</aside>

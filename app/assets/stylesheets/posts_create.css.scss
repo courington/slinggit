@@ -1,5 +1,8 @@
   .createPost {
-        article header {
+	> .contentHeader{
+		border-bottom: 1px solid $lt-grey;
+	}
+        aside header {
           padding: 0 2.5% 0 0;
           text-align: right;
           h1 {
@@ -17,7 +20,6 @@
   	}
 }
 
-
 .twitterPostAccount {
 	font-size: $font-size * .875;
 	span:first-child {
@@ -32,15 +34,4 @@
 			margin: 1em 0 0 2.5%;
 		}
 	}
-}
-
-#new_post {
-	border: 1px solid $lt-grey;
-	padding:0 2.5%;
-	@include rounded-corners;
-	background: #fff;
-}
-
-#new_post > .row {
-margin: 1.4em auto;
 }
