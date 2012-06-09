@@ -14,10 +14,8 @@
 				</div>
 				<!-- end row -->
     			<% elsif not current_user.blank? %>
-					<div class="row">
-        				<p class="col3 pull_left">Welcome back <%= current_user.name %>!</p>
-        				<p class="col3 pull_right">Got some old junk laying around?</p>
-					</div>
+        			<p class="row">Welcome back <%= current_user.name %>!</p>
+        			<p class="row">Got some old junk laying around?</p>
 					<div class="row">
 						<%= link_to "Slinggit", new_post_path, class: "col2 offset2 btn_green" %>
 					</div>
@@ -26,7 +24,7 @@
   </div>
 
 <!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
-<!-- <div class="row">
+<div class="row white_well wrapper_twitRoll">
   <div class="col6">
     <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
     <script type="text/javascript">
@@ -57,5 +55,5 @@
         }).render().setUser('slinggit').start();
     </script>
   </div>
-</div> -->
+</div>
 </section>
