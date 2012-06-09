@@ -841,7 +841,6 @@ class MobileController < ApplicationController
       if PLACEHOLDER_IMAGE_STYLES.include? params[:image_style]
         if File.exists? "#{Rails.root}/app/assets/images/#{params[:image_style]}.png"
           render_success_response(
-              :post_id => post.id,
               :place_holder => true,
               :image_uri => "#{BASEURL}/assets/#{params[:image_style]}.png"
           ) and return
@@ -1013,6 +1012,50 @@ class MobileController < ApplicationController
     else
       render_error_response(
           :error_location => 'delete_message',
+          :error_reason => 'missing required_paramater - message_ids',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def mark_message_read
+    if not params[:message_ids].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+
+        messages_marked_read = 0
+        messages_not_marked_read = 0
+
+        #grabbing all messages before verifying owner such that if for some reason its a mixed bag I can report back to the app that some were deleted and others werent so we can fix the problem.
+        messages = Message.all(:conditions => ['id in (?)', params[:message_ids].split(',')], :select => 'id,recipient_user_id,status')
+        messages.each do |message|
+          if message.recipient_user_id == mobile_session.user_id
+            message.update_attribute(:status, STATUS_READ)
+            messages_marked_read += 1
+          else
+            messages_not_marked_read += 1
+          end
+        end
+
+        render_success_response(
+            :message_ids => params[:message_ids],
+            :logged_in_user_id => mobile_session.user_id,
+            :rows_found => messages.length,
+            :messages_marked_read => messages_marked_read,
+            :messages_not_marked_read => messages_not_marked_read,
+            :note => 'Messages not marked read should never be greater than 0.  If it is greater than 0, that means message ids are being passed in that dont belong to the logged in user'
+        )
+      else
+        render_error_response(
+            :error_location => 'mark_message_read',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'mark_message_read',
           :error_reason => 'missing required_paramater - message_ids',
           :error_code => '404',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
