@@ -1,6 +1,6 @@
 <article class="col4 pull_left white_well">
 <%= form_for @post do |f| %>
-
+	<%= render 'shared/error_messages', object: f.object %>
 	<fieldset class="row">
 		<%= f.label :hashtag_prefix, "Your item", class: "col6", for: "post_hashtag_prefix" %>
 		<div class="col6">
@@ -33,8 +33,13 @@
 		<fieldset id="photoControlGroup" class="col3">
 			<%= f.label :photo, "Item Photo (optional)", class: "", for: "post_photo" %>
 			<div class="controls thumbnail">
-				<%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
-				<a href="#" id="fileSelect">Select a photo</a>
+				<!--[if lt IE 9]>
+					<%= f.file_field :photo %>
+				<![endif]-->
+				<!--[if gt IE 9]><!-->
+					<%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
+					<a href="#" id="fileSelect">Select a photo</a>
+				<!--<![endif]-->
 			</div>
 		</fieldset>
 
@@ -46,8 +51,6 @@
 				<% end %>
 		</fieldset>
 	</div>
-	
-	<%= render 'shared/error_messages', object: f.object %>
 
 	<fieldset class="row">
 		<% if @cant_post %>

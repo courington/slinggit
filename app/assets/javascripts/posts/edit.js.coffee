@@ -21,6 +21,7 @@ class Photo extends Backbone.View
 		if file.type.match imageType
 			img = document.createElement("img")
 			img.classList.add "obj"
+			img.classList.add "img_border"
 			img.file = file
 			$('#fileSelect').remove()
 			$('#photoControlGroup').find('.controls').append(img)
