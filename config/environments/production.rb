@@ -82,6 +82,11 @@ SlinggitWebapp::Application.configure do
   config.slinggit_client_asecret = 'yOe5hXiG5vNLGWkJc11UFTiQyFC7ciH5OsFLMFSJfI'
   config.slinggit_username = 'slinggit'
 
+  ## Photo sources ##
+  SLINGGIT_PHOTO_SOURCE = "SPS"
+  TWITTER_PHOTO_SOURCE = "TPS"
+  GRAVATAR_PHOTO_SOURCE = "GPS"
+
   ## STATUSES ##
   STATUS_UNVERIFIED = "UVR"
   STATUS_DELETED = "DEL"
