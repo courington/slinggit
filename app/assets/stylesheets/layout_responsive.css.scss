@@ -132,6 +132,12 @@
 		}
 	}
 	//end
+	// styles for user edit
+	#editUsers{
+		.col3{
+			width: 100%;
+		}
+	}
 	// style for user show (with list of posts) and post search
 	#userPostsWrapper, #searchPostWrapper{
 		&> .col2, &> .col4{
@@ -326,7 +332,7 @@
 	//end
 	//show messages style
 	#msgArticles {
-		&.col4, &pull_left {
+		&.col4, &.pull_left {
 			width: 100%;
 			float: none;
 		}
