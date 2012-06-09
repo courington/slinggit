@@ -1,54 +1,30 @@
 <% provide(:title, 'Home') %>
 <section class="wrapper">
-	<div class="row">
-  	<div class="col4 pull_left">
-    	<% if current_user.blank? %>
-        <p>Looking for something? Want to sell something? Slinggit.</p>
-        <% if invite_only? %>
-            <%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "btn_darkGrey" %>
-        <% else %>
-            <%= link_to "Sign up now!", signup_path, class: "btn_blue" %>
-        <% end %>
-    	<% elsif not current_user.blank? %>
-        <p>Welcome back <%= current_user.name %>!</p>
-        <p>Got some old junk laying around?  <%= link_to "Slinggit", new_post_path, class: "btn_green" %></p>
-    	<% end %>
+	<div class="row white_well">
+  		<div class="col6">
+    		<% if current_user.blank? %>
+        		<p class="row">Looking for something? Want to sell something? Slinggit.</p>
+				<!-- wrap the greeting/button in a row -->
+				<div class="row">
+        			<% if invite_only? %>
+            			<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col2 offset2 btn_darkGrey" %>
+        			<% else %>
+            			<%= link_to "Sign up now!", signup_path, class: " col2 offset2 btn_blue" %>
+        			<% end %>
+				</div>
+				<!-- end row -->
+    			<% elsif not current_user.blank? %>
+					<div class="row">
+        				<p class="col3 pull_left">Welcome back <%= current_user.name %>!</p>
+        				<p class="col3 pull_right">Got some old junk laying around?</p>
+					</div>
+					<div class="row">
+						<%= link_to "Slinggit", new_post_path, class: "col2 offset2 btn_green" %>
+					</div>
+    		<% end %>
 		</div>
-    <!-- BEGIN IMAGE CYCLE CODE -->
-    <script type="text/javascript" src="http://malsup.github.com/jquery.cycle.all.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#iphoneDemo').cycle({
-                fx:'fade'
-            });
-        })
-    </script>
-    <div class="pics col2 pull_right" id="iphoneDemo">
-      <img src="assets/images/iphone_demo/main.png"/>
-      <img src="assets/images/iphone_demo/createaccount.png"/>
-      <img src="assets/images/iphone_demo/signin.png"/>
-      <img src="assets/images/iphone_demo/newpost.png"/>
-    </div>
-    <!-- END IMAGE CYCLE CODE -->
   </div>
 
-  <style type="text/css">
-      .pics {
-          height: 498px;
-          width: 255px;
-          margin-left: 150px;
-          margin-top: -20px;
-      }
-
-      .pics img {
-          border: 1px solid #ccc;
-          background-color: #eee;
-          width: 255px;
-          height: 500px;
-          top: 0;
-          left: 0
-      }
-  </style>
 <!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
 <!-- <div class="row">
   <div class="col6">

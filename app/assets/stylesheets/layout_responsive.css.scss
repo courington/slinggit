@@ -110,14 +110,28 @@
 	}
  	.btn {
 		display: block;
-		width: 95%;
+		width: 100%;
 		text-align: center;
 		padding: .6em .4em;
 		font-size: $font-size * 1.2;
 		font-weight: bold;
 		text-shadow: $txt-shdw;
 	}
-
+	//homepage responsive styles
+	.offset2 {
+		margin-left: 0;
+	}
+	//end
+	//new session page
+	.wrapper_newSession {
+		.col3 {
+			width: 100%;
+		}
+		.offset4 {
+			margin-left: 0;
+		}
+	}
+	//end
 	// style for user show (with list of posts) and post search
 	#userPostsWrapper, #searchPostWrapper{
 		&> .col2, &> .col4{
