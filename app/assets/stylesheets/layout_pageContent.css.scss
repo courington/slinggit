@@ -68,9 +68,7 @@ body {
 }
 
 .white_well {
-	background-color: $white;
-	border: 1px solid #e8e8e8;
-	padding: 15px;
+	@include white-well;
 	@include rounded-corners;
 }
 
@@ -143,11 +141,7 @@ p {
 	margin-right: ($font-size /2) !important;
 }
 .posts p {
-	//font-size: 1.2em;
-	//line-height: 1.46em;
 	text-rendering: optimizelegibility;
-	//letter-spacing: .1em;
-	//word-spacing: .1em;
 }
 .label.label-success,
 .posts .col4 .pull_right a {
