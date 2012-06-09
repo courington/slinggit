@@ -20,16 +20,12 @@
 	.add_on {
 		@include hardEdge-left;
 		background: $lt-grey;
-		padding: .2em 0 .2em .4em;
+		padding: .5em 0 .5em .2em;
 		font-size: $font-size;
-		//font-family: $main-font;
 		color: $main-grey;
 		border: 1px solid darken($lt-grey, 10%);
-		//box-shadow: $btn-shading;
-		//float: left;
-		//width: auto;
-		//margin: .1em 0 0 0;
-		height: 1.6em;
+		height: 2em;
+		margin: ($font-size * .5) auto;
 	}
 	#photoControlGroup {
 		float: left;
@@ -57,3 +53,12 @@
 		}
 	}
 }
+
+#quickSearchWrapper {
+	margin-top: -1em;
+}
+
+#quickSearch {
+	margin: 0 auto;
+}
+

@@ -4,20 +4,13 @@ input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
+	margin: ($font-size * .5) auto;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
 		border: 1px solid $main-blue;
 		}
 }
-/*input[type="text"].hardEdge-right {
-	@include hardEdge-right;
-	clear: left;
-	float: left;
-}
-.hardEdge_left {
-	@include hardEdge-left;
-}*/
 textarea {
 	@include textInput;
 	@include rounded-corners($radius);
@@ -26,8 +19,7 @@ textarea {
 	height: 6.3em;
 	clear: left;
 	float: left;
-	//margin: .7em 0 1.4em 0;
-	//width: 95%;
+	margin: ($font-size * .5) auto;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -156,7 +148,4 @@ fieldset > input[type="checkbox"] {
 	display: block;
 	clear: left;
 }
-// end
-// posts page open & edit btns
-
 // end
