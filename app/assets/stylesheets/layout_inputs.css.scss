@@ -54,7 +54,7 @@ input[type="submit"] {
 .btn {
 	cursor: pointer;
 	padding: .5em;
-	margin: ($font-size * .4) auto;
+	margin-top: ($font-size * .4);
 	color: $wht;
 	font-size: $font-size;
 	font-family: $main-font;
