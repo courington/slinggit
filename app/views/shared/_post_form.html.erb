@@ -11,8 +11,8 @@
 
 	<div class="row">
 		<fieldset class="col2 pull_left">
-			<%= f.label :price, class: "col6", for: "post_price" %>
-			<div class="col6">
+			<%= f.label :price, class: "row", for: "post_price" %>
+			<div class="row">
 				<%= f.text_field :price, class: "hardEdge-right", id: "post_price", placeholder: "$", maxLength: "5" %>
 				<span class="col2 add_on">.00</span>
 			</div>
