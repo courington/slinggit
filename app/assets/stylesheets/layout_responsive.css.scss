@@ -141,7 +141,6 @@
  	.btn {
 		display: block;
 		width: 95%;
-		margin: 0 auto;
 		text-align: center;
 		padding: .6em .4em;
 		font-size: $font-size * 1.2;
@@ -341,6 +340,35 @@
 	display: none;
 	}
 	//end
+	//show messages style
+	#msgArticles {
+		&.col4, &pull_left {
+			width: 100%;
+			float: none;
+		}
+	}
+	.message {
+		> .col4, .col2, .pull_left, .pull_right {
+			width:100%;
+			float: none;
+		}
+		> aside {
+			margin-top: ($font-size * .5);
+		}
+	}
+	//end
 }
-//this bracket closes the 320-640 media query	
+//this bracket closes the 320-640 media query
 //end
+
+//641px and up
+@media all and (min-width: 641px) {
+	
+}
+//this bracke closes the 641+ media query
+//end
+
+
+
+
+//just a little white space for buffer

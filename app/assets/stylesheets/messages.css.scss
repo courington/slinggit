@@ -1,3 +1,48 @@
+.message {
+	article {
+		&> .row {
+			padding: ($font-size * .2) 0;
+			margin: ($font-size * .2) auto;
+			width: 98%;
+			&:first-child {
+				margin-top: -($font-size * .5);
+			}
+		}
+		small, dl {
+			font-size: ($font-size * .8);
+		}
+		dl {
+			border-bottom: 1px solid $lt-grey;
+		}
+		p {
+			float: none;
+		}
+	}
+}
+
+#msgArticles {
+	#msgArticleWrapper p {
+		margin-bottom: ($font-size * .5);
+	}
+	.timestamp {
+		font-size: ($font-size * .8);
+		padding: ($font-size * .2) 0;
+		margin: ($font-size * .2) auto;
+		line-height: $leading;
+	}
+	.timestamp + a:link,
+	.timestamp + a:visited,
+	.timestamp + a:active {
+		float:right;
+		color: $main-red;
+		font-size: ($font-size * .8);
+	}
+	.timestamp + a:hover,
+	.timestamp + a:focus {
+		color: darken($main-red, 20%);
+	}
+}
+
 a.messageUnread{
   font-weight: bold;
   color: $main-black
