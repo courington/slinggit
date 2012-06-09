@@ -841,7 +841,6 @@ class MobileController < ApplicationController
       if PLACEHOLDER_IMAGE_STYLES.include? params[:image_style]
         if File.exists? "#{Rails.root}/app/assets/images/#{params[:image_style]}.png"
           render_success_response(
-              :post_id => post.id,
               :place_holder => true,
               :image_uri => "#{BASEURL}/assets/#{params[:image_style]}.png"
           ) and return
