@@ -104,39 +104,9 @@
 	float: left;
 	width: 100%;
 	}
-	.page_contentContainer .twoCol:first-child {
-	margin: 1.4em auto;
-	//border-bottom: 1px solid #F8F8F8;
-	padding: 0 5%;
-	//box-shadow: 0 1px 0 rgba(62, 62, 62, .2);
-	}
-	.page_contentContainer .twoCol {
-	width: 100%;
-	float: none;
-	display: block;
-	}
 	.page_contentContainer .form_initialFields input[type="text"], .page_contentContainer .form_initialFields input[type="email"], .page_contentContainer .form_initialFields input[type="password"], .page_contentContainer .form_hiddenFields input[type="text"], .page_contentContainer .form_hiddenFields input[type="email"], .page_contentContainer .form_hiddenFields input[type="password"] {
 	width: 95%;
 	float: left;
-	}
-	.posts article:first-child fieldset.col_oneThird,
-	.posts article:first-child fieldset.col_twoThird {
-	width: 45%;
-	margin: 0;
-	float: left;
-	clear: none;
-	}
-	#post_price {
-	width: 50%;
-	}
-	#post_location {
-	width: 100%;
-	}
-	.form-actions {
-		float: right;
-		&> span {
-			display: block;
-		}
 	}
  	.btn {
 		display: block;
@@ -146,10 +116,6 @@
 		font-size: $font-size * 1.2;
 		font-weight: bold;
 		text-shadow: $txt-shdw;
-	}
-	.page_contentContainer #session_password,
-	.page_contentContainer #session_email {
-	
 	}
 
 	// style for user show (with list of posts) and post search
@@ -321,6 +287,15 @@
 			width: 100%;
 		}
 	}
+	#post_location {
+	width: 100%;
+	}
+	.form-actions {
+		float: right;
+		&> span {
+			display: block;
+		}
+	}
 	  //styles for notices
 	#success_explanation,
 	#error_explanation,
@@ -356,7 +331,7 @@
 //end
 
 //641px and up
-@media all and (min-width: 641px) {
+@media all and (min-width: 641px) and (max-width: 960px) {
 	
 }
 //this bracke closes the 641+ media query
