@@ -54,11 +54,12 @@
 
 	<fieldset class="row">
 		<% if @cant_post %>
-			<p class="notice_text">You have reached your 24 hours post limit.</p>
+			<p id="#notice_explanation_bubble">You have reached your 24 hours post limit.</p>
 			<p>Please <%= link_to "contact customer service", contact_path %> if you wish to increase this limit.</p>
 			<%= f.button "Post Item", type: "submit", class: "col3 btn", id: "submitNewPost", disabled: "disabled" %>
 		<% else %>
             <%= f.button "Post Item", type: "submit", class: "col3 btn btn_green", id: "submitNewPost" %>
+            <%= link_to "Cancel", user_path(current_user), class: "col3 btn btn_red" %>
 		<% end %>
 	</fieldset>
 <% end %>
