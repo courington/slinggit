@@ -5,6 +5,7 @@ class Photo extends Backbone.View
 
 	initialize: ->
 		$("#post_photo").bind("change", @showFile)
+		@changePhotoEl = "<a href='#' id='changeFileSelect'>Change photo</a>"
 
 	events:
 		"click #fileSelect": "trigger"
@@ -15,7 +16,7 @@ class Photo extends Backbone.View
 		e.preventDefault();	
 
 	showFile: (el)->
-		file = this.files[0]
+		file = @files[0]
 		imageType = /image.*/
 
 		if file.type.match imageType
@@ -23,8 +24,11 @@ class Photo extends Backbone.View
 			img.classList.add "obj"
 			img.classList.add "img_border"
 			img.file = file
-			$('#fileSelect').remove()
-			$('#photoControlGroup').find('.controls').append(img)
+			$('#fileSelect').text("Change photo")
+			$controls = $('#photoControlGroup').find('.controls')
+			imageToRemove = $controls.find('.obj')
+			imageToRemove.remove()
+			$controls.remove('.obj').append(img)
 			reader = new FileReader()
 			reader.onload = ((aImg)->
 				(e)-> aImg.src = e.target.result)(img)
