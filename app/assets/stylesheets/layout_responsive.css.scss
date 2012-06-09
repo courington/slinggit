@@ -132,6 +132,14 @@
 		}
 	}
 	//end
+	//new user page
+	.wrapper_newUser {
+		.col3, .col4, .col2 {
+			width: 100%;
+			display: block;
+		}
+	}
+	//end
 	// style for user show (with list of posts) and post search
 	#userPostsWrapper, #searchPostWrapper{
 		&> .col2, &> .col4{
