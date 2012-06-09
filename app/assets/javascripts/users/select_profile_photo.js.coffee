@@ -5,17 +5,18 @@ class PhotoSelector extends Backbone.View
 	initialize: (options)->
 		@$formEl = $("#edit_user_#{@options.i}")
 		@$hidden = $("#user_photo_source")
-		console.log @$formEl
+		@submit = @options.submit
 
 	events:
 		"click img": "selectPhoto"
 
 	selectPhoto: (e)->
+		console.log e.target.id
 		@$hidden.attr("value", e.target.id)
-		@$formEl.submit()
+		@$formEl.submit() if @submit
 
 
 
 ## Exports
-window.initPhotoSelector = (i)->
-	return new PhotoSelector i:i
+window.initPhotoSelector = (i, s)->
+	return new PhotoSelector i:i, submit:s

@@ -17,21 +17,23 @@
 				</div>
 			</div>
 
-			<div class="col2 pull_left">
-				<div class="row">
-					<%= image_tag @user.primary_twitter_account.image_url, id: "TPS" %>
+			<% if not @user.primary_twitter_account.blank? %>
+				<div class="col2 pull_left">
+					<div class="row">
+						<%= image_tag @user.primary_twitter_account.image_url, id: "TPS" %>
+					</div>
+					<div class="row">
+						<p>Twitter</p>
+					</div>
 				</div>
-				<div class="row">
-					<p>Twitter</p>
-				</div>
-			</div>
+			<% end %>
 
 			<div class="col2 pull_left">
 				<div class="row">
 					<%= gravatar_for @user %>
 				</div>
 				<div class="row">
-					<p>Gravatar</p>
+					<p>Gravatar | <a href="https://gravatar.com/emails" target="_blank">change</a></p>
 				</div>
 			</div>
 		</div>
@@ -40,6 +42,6 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
-		window.initPhotoSelector("<%= @user.id %>")
+		window.initPhotoSelector("<%= @user.id %>", true)
 	})
 </script>
