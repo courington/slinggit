@@ -23,9 +23,12 @@
 					background-color: #D8D8D8;
 					cursor: pointer;
 				}
+
+				&.selected{
+					background-color: $main-green;
+				}
 			}
 
 		}
 	}
 }
-

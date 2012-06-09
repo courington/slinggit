@@ -13,6 +13,8 @@ class PhotoSelector extends Backbone.View
 	selectPhoto: (e)->
 		console.log e.target.id
 		@$hidden.attr("value", e.target.id)
+		@$el.find('img').removeClass("selected")
+		$(e.target).addClass("selected")
 		@$formEl.submit() if @submit
 
 
