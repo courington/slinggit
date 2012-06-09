@@ -11,7 +11,7 @@
       <%= form_for(@post) do |f| %>
         <% if @post.open? %>
           <%= f.hidden_field :open, value: false %>
-          <%= f.submit "Close", type: "submit", class: "col6 btn_red", confirm: "Are you sure?  This action cannot be undone!" %>
+          <%= f.button "Close", type: "submit", class: "col6 btn_red", confirm: "Are you sure?  This action cannot be undone!" %>
         <% end %>
       <% end %>
     </div>
