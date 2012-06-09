@@ -31,8 +31,8 @@
 		</fieldset>
 
 		<fieldset class="col3 pull_right">
-			<%= f.label :location, "Location", class: "col3", for: "post_hashtag_prefix" %>
-			<%= f.text_field :location, class: "", placeholder: "City, State, or Zip", maxLength: "16" %>
+			<%= f.label :location, "Location", class: "row", for: "post_hashtag_prefix" %>
+			<%= f.text_field :location, class: "row", placeholder: "City, State, or Zip", maxLength: "16" %>
 		</fieldset>
 		
 	</div>
@@ -44,7 +44,7 @@
 	<fieldset class="row">
 		
 		<%= f.label :content, "Quick description", class: "col3", for: "post_content" %>
-		<%= f.text_area :content, class: "col5", rows: "3", placeholder: "a short description maybe @someone to sling at or tag with #hastags" %>
+		<%= f.text_area :content, class: "row", rows: "3", placeholder: "a short description maybe @someone to sling at or tag with #hastags" %>
 		
 	</fieldset>
 <!-- end description -->

@@ -1,4 +1,7 @@
 .createPost {
+	> .row > article {
+		margin-top: 10px;
+	}
 	> .contentHeader{
 		border-bottom: 1px solid $lt-grey;
 	}
@@ -19,13 +22,17 @@
 	}
 	.add_on {
 		@include hardEdge-left;
-		background: $lt-grey;
+		background: $wht;
 		padding: .5em 0 .5em .2em;
 		font-size: $font-size;
 		color: $main-grey;
-		border: 1px solid darken($lt-grey, 10%);
+		border: 1px solid darken($wht, 10%);
 		height: 2em;
 		margin: ($font-size * .5) auto;
+
+		width: auto;
+		float: left;
+		padding-right: .4em;
 	}
 	#photoControlGroup {
 		float: left;
@@ -35,6 +42,14 @@
 	#photoControlGroup {
 		margin: 0;
 		width: 50%;
+	}
+	.wrapper_userInfo {
+		@include sidbarWrapper;
+		div {
+			header + a:link {
+				text-align: right;
+			}
+		}
 	}
 }
 
@@ -53,12 +68,3 @@
 		}
 	}
 }
-
-#quickSearchWrapper {
-	margin-top: -1em;
-}
-
-#quickSearch {
-	margin: 0 auto;
-}
-
