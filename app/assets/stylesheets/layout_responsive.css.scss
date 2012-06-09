@@ -140,6 +140,13 @@
 		}
 	}
 	//end
+
+	// styles for user edit
+	#editUsers{
+		.col3{
+			width: 100%;
+		}
+	}
 	// style for user show (with list of posts) and post search
 	#userPostsWrapper, #searchPostWrapper{
 		&> .col2, &> .col4{
