@@ -28,7 +28,7 @@ class FacebookPost < ActiveRecord::Base
 
   def do_post
     @start_time = Time.now
-    self.update_attribute(:status, PROCESSING_STATUS)
+    self.update_attribute(:status, STATUS_PROCESSING)
     if not has_been_posted?
       if not self.api_account.blank?
         if not self.api_account.status == STATUS_DELETED
@@ -38,7 +38,7 @@ class FacebookPost < ActiveRecord::Base
             if result['id']
               finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :facebook_post_id => result.attrs['id_str']}) and return
             else
-              finalize(STATUS_FAILED, {:last_result => result}) and return
+              finalize(STATUS_FAILED, {:last_result => result.to_s}) and return
             end
           rescue Exception => e
             finalize(STATUS_FAILED, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
@@ -60,20 +60,14 @@ class FacebookPost < ActiveRecord::Base
     if has_been_posted?
       if not self.api_account.blank?
         begin
-          #uri = URI.parse "DELETE https://graph.facebook.com/#{self.facebook_post_id}?access_token=#{self.api_account.oauth_secret}"
-          #http = Net::HTTP.new(uri.host)
-          #if uri.port == 443
-          #  http.use_ssl = true
-          #  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-          #end
-          #param_string = "access_token=#{self.api_account.oauth_secret}&link=#{redirect.get_short_url}/&name=#{self.name}&message=#{self.message}&description=#{self.description}&caption=#{self.caption}"
-          #if self.post.has_photo?
-          #  param_string << "&picture=#{self.image_url}"
-          #end
-          #return http.post(uri.path, URI.escape(param_string))
-          #
-          #
-          #finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_UNDO_POST, :facebook_post_id => nil}) and return
+          uri = URI.parse "https://graph.facebook.com/#{self.facebook_post_id}?access_token=#{self.api_account.oauth_secret}"
+          http = Net::HTTP.new(uri.host)
+          if uri.port == 443
+            http.use_ssl = true
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          end
+          return http.delete(uri.path, URI.escape(param_string))
+          finalize(STATUS_SUCCESS, {:last_result => SUCCESS_UNDO_POST, :facebook_post_id => nil}) and return
         rescue Exception => e
           finalize(STATUS_FAILED, {:last_result => "deleting_post // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
         end
@@ -115,7 +109,7 @@ class FacebookPost < ActiveRecord::Base
         :target_uri => "#{redirect_url}"
     )
 
-    uri = URI.parse "https://graph.facebook.com/#{self.api_account.api_id.to_i + 22}/feed"
+    uri = URI.parse "https://graph.facebook.com/#{self.api_account.api_id}/feed"
     http = Net::HTTP.new(uri.host)
     if uri.port == 443
       http.use_ssl = true
