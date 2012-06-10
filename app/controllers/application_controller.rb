@@ -153,8 +153,8 @@ class ApplicationController < ActionController::Base
               :user_name => options[:api_object]['username'],
               :image_url => "http://graph.facebook.com/#{options[:api_object]['username']}/picture",
               :description => nil,
-              :language => options[:api_object]['languages'].first['name'],
-              :location => options[:api_object]['location']['name'],
+              :language => options[:api_object]['languages'].blank? ? nil : options[:api_object]['languages'].first['name'],
+              :location => options[:api_object]['location']['name'].blank? ? nil : options[:api_object]['location']['name'],
               :reauth_required => 'no',
               :status => status
           )
