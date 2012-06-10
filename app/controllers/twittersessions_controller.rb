@@ -12,7 +12,7 @@ class TwittersessionsController < ApplicationController
     if signed_in?
       if not params[:denied].blank?
         flash[:success] = "In order to add your Twitter account, we need you to accept the permissions presented by Twitter."
-        redirect_to :action => :index
+        redirect_to :controller => :networks, :action => :index
       else
         request_token = OAuth::RequestToken.new(oauth_consumer, session['rtoken'], session['rsecret'])
         access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
@@ -23,7 +23,7 @@ class TwittersessionsController < ApplicationController
         else
           flash[:error] = result
         end
-        redirect_to :action => :index
+        redirect_to :controller => :networks, :action => :index
       end
     else
       if not params[:denied].blank?
