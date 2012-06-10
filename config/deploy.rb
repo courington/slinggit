@@ -19,7 +19,7 @@ role :db,  "web307.webfaction.com", :primary => true # This is where Rails migra
 
 
 set :user, "slinggit"
-set :scm_username, "MrPlazmaDude"
+set :scm_username, "slinggit"
 set :use_sudo, false
 default_run_options[:pty] = true
 
