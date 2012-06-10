@@ -10,7 +10,7 @@ SlinggitWebapp::Application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
@@ -42,8 +42,12 @@ SlinggitWebapp::Application.configure do
   POST_PHOTO_URL = "/uploads"
 
   #  Our consumer key and secret for our twitter app (DEV)
-   config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
-   config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
+  config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
+  config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
+
+  #  Facebook app id and secret
+  config.facebook_app_id = '282317721866511'
+  config.facebook_app_secret = '201a036f0c6f778a4d1f515428839ed4'
 
   # @slinggit's authentication token and password, generated from the above consumer
   # Probably won't need this again in dev, but just commenting out for now.
@@ -78,5 +82,5 @@ SlinggitWebapp::Application.configure do
   ## ROLES ##
   ROLE_ADMIN = "ADM"
   ROLE_EXTERNAL = "EXT"
-  
+
 end

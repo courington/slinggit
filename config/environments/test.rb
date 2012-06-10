@@ -1,5 +1,5 @@
 SlinggitWebapp::Application.configure do
-  
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -16,14 +16,14 @@ SlinggitWebapp::Application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -51,6 +51,10 @@ SlinggitWebapp::Application.configure do
   #  Our consumer key and secret for our twitter app (DEV)
   config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
   config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
+
+  #  Facebook app id and secret
+  config.facebook_app_id = '282317721866511'
+  config.facebook_app_secret = '201a036f0c6f778a4d1f515428839ed4'
 
   # @slinggit's authentication token and password, generated from the above consumer
   # Probably won't need this again in test, but just commenting out for now.

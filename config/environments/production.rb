@@ -5,7 +5,7 @@ SlinggitWebapp::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
@@ -75,6 +75,10 @@ SlinggitWebapp::Application.configure do
   #  Our consumer key and secret for our twitter app (PROD)
   config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
   config.twitter_consumer_secret = 'rwN7VmydrgRlRdb0kev1XxRi30YSpXHI7oXQEpPgUE'
+
+  #  Facebook app id and secret
+  config.facebook_app_id = '282317721866511'
+  config.facebook_app_secret = '201a036f0c6f778a4d1f515428839ed4'
 
   # @slinggit's authentication token and password, generated from the above consumer
   # key and secret.
