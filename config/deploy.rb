@@ -1,5 +1,5 @@
 set :application, "slinggit_test"
-set :repository,  "https://chrisklein@bitbucket.org/chrisklein/slinggit-webapp-and-services.git"
+set :repository,  "https://MrPlazmaDude@bitbucket.org/chrisklein/slinggit-webapp-and-services.git"
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
@@ -19,7 +19,7 @@ role :db,  "web307.webfaction.com", :primary => true # This is where Rails migra
 
 
 set :user, "slinggit"
-set :scm_username, "chrisklein"
+set :scm_username, "MrPlazmaDude"
 set :use_sudo, false
 default_run_options[:pty] = true
 
