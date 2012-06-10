@@ -113,7 +113,7 @@ class TwitterPost < ActiveRecord::Base
   end
 
   def has_been_posted?
-    if not self.facebook_post_id.blank? or self.status == STATUS_DELETED
+    if not self.twitter_post_id.blank? or self.status == STATUS_DELETED
       return true
     else
       return false
