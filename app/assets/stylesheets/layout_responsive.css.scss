@@ -122,6 +122,28 @@
 		margin-left: 0;
 	}
 	//end
+
+	// HOME PAGE STYLES
+	.wrapper_twitRoll{
+		.col1{
+			width: ($sixCols * 2);
+
+			img{
+				width: 80px;
+			}
+		}
+		.col5{
+			width: ($sixCols * 4);
+
+			h4{
+				font-size: $font-size * .9;
+			}
+
+			p{
+				font-size: $font-size * .8;
+			}
+		}
+	}
 	//new session page
 	.wrapper_newSession {
 		.col3 {

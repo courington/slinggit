@@ -1,7 +1,13 @@
 <% provide(:title, 'Home') %>
 <section class="wrapper">
+    <% if !@posts.blank? %>
+        <div class="row grey_well wrapper_twitRoll">
+            <div class="col6"><%= render @posts %></div>
+        </div>
+    <% end %>
 	<div class="row white_well">
   		<div class="col6">
+            
     		<% if current_user.blank? %>
         		<p class="row">Looking for something? Want to sell something? Slinggit.</p>
 				<!-- wrap the greeting/button in a row -->
@@ -24,7 +30,7 @@
   </div>
 
 <!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
-<div class="row white_well wrapper_twitRoll">
+<!-- <div class="row white_well wrapper_twitRoll">
   <div class="col6">
     <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
     <script type="text/javascript">
@@ -55,5 +61,5 @@
         }).render().setUser('slinggit').start();
     </script>
   </div>
-</div>
+</div> -->
 </section>
