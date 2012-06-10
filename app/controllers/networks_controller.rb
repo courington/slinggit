@@ -19,8 +19,8 @@ class NetworksController < ApplicationController
     if request.post?
       if not params[:api_account_id].blank?
         api_account_id = params[:api_account_id].split('_').last
-        if new_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND id = ?', current_user.id, api_account_id.to_i])
-          if old_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND status = ?', current_user.id, STATUS_PRIMARY])
+        if new_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND id = ?', current_user.id, api_account_id.to_i], :select => 'id,status,api_source')
+          if old_primary_account = ApiAccount.first(:conditions => ['user_id = ? AND status = ? AND api_source = ?', current_user.id, STATUS_PRIMARY, new_primary_account.api_source], :select => 'id,status')
             success = remove_primary_status_from_account(old_primary_account)
             if success
               success = add_primary_status_to_account(new_primary_account)
