@@ -74,8 +74,8 @@ class PostsController < ApplicationController
                     :name => "$#{@post.price}.00",
                     :caption => "Location: #{@post.location}",
                     :description => @post.content,
-                    :image_url => @post.has_photo? ? "http://lib.store.yahoo.net/lib/radioflyer/37.jpg" : "#{BASEURL}/assets/80x80_placeholder.png",
-                    :link_url => nil
+                    :image_url => @post.has_photo? ? "#{BASEURL}#{@post.root_url_path}" : nil,
+                    :link_url => nil #if this is nil it will default to the post
                 ).do_post
               end
             end

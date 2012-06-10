@@ -36,8 +36,13 @@ class FacebookPost < ActiveRecord::Base
       if not self.api_account.blank?
         if not self.api_account.status == STATUS_DELETED
           begin
-            result = post_constructor
-              #finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :facebook_post_id => result.attrs['id_str']}) and return
+            response = post_constructor
+            result = ActiveSupport::JSON.decode(response.body)
+            if result['id']
+              finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :facebook_post_id => result.attrs['id_str']}) and return
+            else
+              finalize(FAILED_STATUS, {:last_result => result}) and return
+            end
           rescue Exception => e
             finalize(FAILED_STATUS, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
           end
@@ -53,7 +58,7 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def undo_post
-
+    #DELETE https://graph.facebook.com/ID?access_token=... HTTP/1.1
   end
 
   def finalize(status, options = {})
@@ -75,7 +80,7 @@ class FacebookPost < ActiveRecord::Base
     end
   end
 
-# Logic for constructing twitter message.
+# Logic for constructing facebook message.
   def post_constructor
     redirect_url = self.link_url
     if redirect_url.blank?
@@ -86,56 +91,17 @@ class FacebookPost < ActiveRecord::Base
         :target_uri => "#{redirect_url}"
     )
 
-    uri = URI.parse "https://graph.facebook.com/#{self.api_account.api_id}/feed"
-    http = Net::HTTP.new uri.host, uri.port
+    uri = URI.parse "https://graph.facebook.com/#{self.api_account.api_id.to_i + 22}/feed"
+    http = Net::HTTP.new(uri.host)
     if uri.port == 443
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-    result = http.post(uri.path, URI.escape("access_token=#{self.api_account.oauth_secret}&link=#{redirect.get_short_url}/&name=#{self.name}&message=#{self.message}&description=#{self.description}&caption=#{self.caption}&picture=#{self.image_url}"))
-
-    #result = `curl -F 'app_id=#{Rails.configuration.facebook_app_id}' -F 'access_token=#{self.api_account.oauth_secret}' -F 'name=#{self.name}&message=#{self.message}&caption=#{self.caption}&description=#{self.description}&picture=#{self.message}&link=#{self.message}' https://graph.facebook.com/#{self.api_account.api_id}/feed`
-    puts result
-    #changed to use our url shortner... if twitter does it for us great... but this will track the number of clicks if we use our own
-    #NOTE... if testing on localhost, the link wont be clickable in twitter... but once a .com is added it will be.
-    #if self.post.photo_file_name.blank?
-    #  return client.update("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}")
-    #else
-    #  return client.update_with_media("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}", File.new(self.post.photo.path(:medium)))
-    #end
-
-    #expanded_width = expanded_height = '398px'
-    #attachment = {
-    #    'name' => video_post.title,
-    #    'caption' =>  @recipient.caption.blank? ? nil : @recipient.caption,
-    #    'description' => @recipient.description.blank? ? nil : @recipient.description,
-    #    'href' => @video_location,
-    #    'media' => [
-    #        {
-    #            'type' => 'flash',
-    #            'swfsrc' => "#{BASEURL}/FacebookPlayer.swf",
-    #            'imgsrc' => self.href_to_image,
-    #            'width' => '90px',
-    #            'height' => '90px',
-    #            'expanded_width' => expanded_width,
-    #            'expanded_height' => expanded_height,
-    #            'flashvars' => flashvars.to_query
-    #        }
-    #    ]
-    #}
-    #
-    #if not @is_original_post
-    #  if api_account = ApiAccount.find(:last, :conditions => ['api_source = "facebook" AND api_id = ? and status = "active"', @recipient.recipient_facebook_id], :select => 'secret')
-    #    access_token = api_account.secret
-    #  end
-    #end
-    #
-    #if @recipient.post_id.nil?
-    #  post_params = {
-    #      'access_token' => access_token,
-    #      'attachment' => attachment.to_json,
-    #      'format' => 'json'
-    #  }
+    param_string = "access_token=#{self.api_account.oauth_secret}&link=#{redirect.get_short_url}/&name=#{self.name}&message=#{self.message}&description=#{self.description}&caption=#{self.caption}"
+    if self.post.has_photo?
+      param_string << "&picture=#{self.image_url}"
+    end
+    return http.post(uri.path, URI.escape(param_string))
   end
 
 end

@@ -8,16 +8,35 @@ class TwittersessionsController < ApplicationController
   end
 
   def callback
-    if not params[:denied].blank?
-      flash[:success] = "You can always add your twitter account later!"
-      redirect_to edit_user_path(current_user)
+    #if they are signed in then its coming from the network controller
+    if signed_in?
+      if not params[:denied].blank?
+        flash[:success] = "In order to add your Twitter account, we need you to accept the permissions presented by Twitter."
+        redirect_to :action => :index
+      else
+        request_token = OAuth::RequestToken.new(oauth_consumer, session['rtoken'], session['rsecret'])
+        access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+        client = Twitter::Client.new(oauth_token: access_token.token, oauth_token_secret: access_token.secret)
+        success, result = create_api_account(:source => :twitter, :user_object => current_user, :api_object => client)
+        if success
+          flash[:success] = "Your Twitter account has been added.  You may now make posts that tweet to this account."
+        else
+          flash[:error] = result
+        end
+        redirect_to :action => :index
+      end
     else
-      request_token = OAuth::RequestToken.new(oauth_consumer, session['rtoken'], session['rsecret'])
-      access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
-      reset_session
-      session['access_token'] = access_token.token
-      session['access_secret'] = access_token.secret
-      redirect_to new_user_path
+      if not params[:denied].blank?
+        flash[:success] = "You can always add your Twitter account later!"
+        redirect_to edit_user_path(current_user)
+      else
+        request_token = OAuth::RequestToken.new(oauth_consumer, session['rtoken'], session['rsecret'])
+        access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
+        reset_session
+        session['access_token'] = access_token.token
+        session['access_secret'] = access_token.secret
+        redirect_to new_user_path
+      end
     end
   end
 
