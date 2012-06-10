@@ -173,7 +173,7 @@ class ApplicationController < ActionController::Base
     if not options.blank?
       case options[:source]
         when :twitter
-          if api_account = ApiAccount.first(:conditions => ['user_id = ? AND api_id = ?', options[:user_object].id, options[:api_object].user['id'].to_s], :select => 'id')
+          if api_account = ApiAccount.first(:conditions => ['user_id = ? AND api_id = ? AND api_source = ?', options[:user_object].id, options[:api_object].user['id'].to_s, options[:source]], :select => 'id')
             api_account.update_attributes(
                 :oauth_token => options[:api_object].oauth_token,
                 :oauth_secret => options[:api_object].oauth_token_secret,
@@ -182,6 +182,11 @@ class ApplicationController < ActionController::Base
                 :location => options[:api_object].user['location'],
             )
           end
+        when :facebook
+          api_account.update_attributes(
+              :oauth_secret => options[:api_object]['access_token'],
+              :oauth_expiration => Time.now.advance(:seconds => options[:api_object]['expires'].to_i)
+          )
         else
           #do nothing
       end
