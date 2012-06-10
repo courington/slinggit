@@ -1,5 +1,5 @@
 set :application, "slinggit_test"
-set :repository,  "https://MrPlazmaDude@bitbucket.org/chrisklein/slinggit-webapp-and-services.git"
+set :repository,  "https://slinggit@bitbucket.org/chrisklein/slinggit-webapp-and-services.git"
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
