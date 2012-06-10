@@ -5,14 +5,6 @@ class NetworksController < ApplicationController
     @api_accounts = ApiAccount.all(:conditions => ['status != ? AND user_id = ?', STATUS_DELETED, current_user.id])
   end
 
-  def create
-
-  end
-
-  def destroy
-
-  end
-
   def set_primary_account
     #this may seem a bit much but we only want to set the new primary if we can make sure and unset the other if there is one
     #so that there arent conflicts... if there isnt one to begin with, we just save the new one and return success

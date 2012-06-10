@@ -27,83 +27,75 @@ class TwitterPost < ActiveRecord::Base
   belongs_to :api_account
   belongs_to :post
 
-  PROCESSING_STATUS = 'processing'
-  FAILED_STATUS = 'failed'
-  SUCCEEDED_STATUS = 'done'
-  SUCCEEDED_LAST_RESULT = 'successful post'
-  SUCCEEDED_REPOST_LAST_RESULT = 'successful - duplicate post not submitted again'
-
-  SUCCEEDED_NEVER_POSTED = 'successful - post was never on twitter'
-  SUCCEEDED_UNDO_POST = 'successful - removed post from twitter'
+  SUCCESS_LAST_RESULT = 'successful post'
+  SUCCESS_REPOST_LAST_RESULT = 'successful - duplicate post not submitted again'
+  SUCCESS_NEVER_POSTED = 'successful - post was never on twitter'
+  SUCCESS_UNDO_POST = 'successful - removed post from twitter'
 
   def do_post
     @start_time = Time.now
-    self.update_attribute(:status, PROCESSING_STATUS)
+    self.update_attribute(:status, STATUS_PROCESSING)
     if not has_been_posted?
       if not self.api_account.blank?
         if not self.api_account.status == STATUS_DELETED
           twitter_client = nil
           if self.api_account
             twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
-          end       
+          end
           if not twitter_client.blank?
             begin
               result = tweet_constructor(twitter_client)
-              finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
+              finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
             rescue Exception => e
               if e.is_a? Twitter::Error::Unauthorized
                 if self.api_account
-                  finalize(FAILED_STATUS, {:api_account_reauth_required => 'yes', :last_result => "api_account-yes // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+                  finalize(STATUS_FAILED, {:api_account_reauth_required => 'yes', :last_result => "api_account-yes // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
                 else
-                  finalize(FAILED_STATUS, {:last_result => "api_account-no // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+                  finalize(STATUS_FAILED, {:last_result => "api_account-no // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
                 end
               else
-                finalize(FAILED_STATUS, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+                finalize(STATUS_FAILED, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
               end
             end
           else
-            finalize(FAILED_STATUS, {:last_result => "twitter client could not be established"}) and return
+            finalize(STATUS_FAILED, {:last_result => "twitter client could not be established"}) and return
           end
         else
-          finalize(FAILED_STATUS, {:last_result => "api account has been deleted"}) and return
+          finalize(STATUS_FAILED, {:last_result => "api account has been deleted"}) and return
         end
       else
-        finalize(FAILED_STATUS, {:last_result => "api_account_id does not exist"}) and return
+        finalize(STATUS_FAILED, {:last_result => "api_account_id does not exist"}) and return
       end
     else
-      finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_REPOST_LAST_RESULT}) and return
+      finalize(STATUS_SUCCESS, {:last_result => SUCCESS_REPOST_LAST_RESULT}) and return
     end
   end
 
   def undo_post
     @start_time = Time.now
-    self.update_attribute(:status, PROCESSING_STATUS)
+    self.update_attribute(:status, STATUS_PROCESSING)
     if has_been_posted?
       if not self.api_account.blank?
-        if not self.api_account.status == STATUS_DELETED
-          twitter_client = nil
-          if self.api_account
-            twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
-          end 
-          if not twitter_client.blank?
-            begin
-              result = twitter_client.status_destroy(self.twitter_post_id)
-              finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_UNDO_POST, :twitter_post_id => nil}) and return
-            rescue Exception => e
-              #were going to ban this person any way so we dont need to tell them that their not authorized
-              finalize(FAILED_STATUS, {:last_result => "deleting_post // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
-            end
-          else
-            finalize(FAILED_STATUS, {:last_result => "deleting_post // twitter client could not be established"}) and return
+        twitter_client = nil
+        if self.api_account
+          twitter_client = Twitter::Client.new(oauth_token: self.api_account.oauth_token, oauth_token_secret: self.api_account.oauth_secret)
+        end
+        if not twitter_client.blank?
+          begin
+            result = twitter_client.status_destroy(self.twitter_post_id)
+            finalize(STATUS_SUCCESS, {:last_result => SUCCESS_UNDO_POST, :twitter_post_id => nil}) and return
+          rescue Exception => e
+            #were going to ban this person any way so we dont need to tell them that their not authorized
+            finalize(STATUS_FAILED, {:last_result => "deleting_post // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
           end
         else
-          finalize(FAILED_STATUS, {:last_result => "deleting_post // api account has been deleted"}) and return
+          finalize(STATUS_FAILED, {:last_result => "deleting_post // twitter client could not be established"}) and return
         end
       else
-        finalize(FAILED_STATUS, {:last_result => "deleting_post // api_account_id does not exist"}) and return
+        finalize(STATUS_FAILED, {:last_result => "deleting_post // api_account_id does not exist"}) and return
       end
     else
-      finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_NEVER_POSTED}) and return
+      finalize(STATUS_SUCCESS, {:last_result => SUCCESS_NEVER_POSTED}) and return
     end
   end
 
@@ -121,10 +113,10 @@ class TwitterPost < ActiveRecord::Base
   end
 
   def has_been_posted?
-    if self.twitter_post_id.blank?
-      return false
-    else
+    if not self.facebook_post_id.blank? or self.status == STATUS_DELETED
       return true
+    else
+      return false
     end
   end
 

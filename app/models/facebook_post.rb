@@ -21,13 +21,10 @@ class FacebookPost < ActiveRecord::Base
   belongs_to :api_account
   belongs_to :post
 
-  PROCESSING_STATUS = 'processing'
-  FAILED_STATUS = 'failed'
-  SUCCEEDED_STATUS = 'done'
-  SUCCEEDED_LAST_RESULT = 'successful post'
-  SUCCEEDED_REPOST_LAST_RESULT = 'successful - duplicate post not submitted again'
-  SUCCEEDED_NEVER_POSTED = 'successful - post was never on facebook'
-  SUCCEEDED_UNDO_POST = 'successful - removed post from facebook'
+  SUCCESS_LAST_RESULT = 'successful post'
+  SUCCESS_REPOST_LAST_RESULT = 'successful - duplicate post not submitted again'
+  SUCCESS_NEVER_POSTED = 'successful - post was never on facebook'
+  SUCCESS_UNDO_POST = 'successful - removed post from facebook'
 
   def do_post
     @start_time = Time.now
@@ -39,26 +36,53 @@ class FacebookPost < ActiveRecord::Base
             response = post_constructor
             result = ActiveSupport::JSON.decode(response.body)
             if result['id']
-              finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_LAST_RESULT, :facebook_post_id => result.attrs['id_str']}) and return
+              finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :facebook_post_id => result.attrs['id_str']}) and return
             else
-              finalize(FAILED_STATUS, {:last_result => result}) and return
+              finalize(STATUS_FAILED, {:last_result => result}) and return
             end
           rescue Exception => e
-            finalize(FAILED_STATUS, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+            finalize(STATUS_FAILED, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
           end
         else
-          finalize(FAILED_STATUS, {:last_result => "api account has been deleted"}) and return
+          finalize(STATUS_FAILED, {:last_result => "api account has been deleted"}) and return
         end
       else
-        finalize(FAILED_STATUS, {:last_result => "api_account_id does not exist"}) and return
+        finalize(STATUS_FAILED, {:last_result => "api_account_id does not exist"}) and return
       end
     else
-      finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_REPOST_LAST_RESULT}) and return
+      finalize(STATUS_SUCCESS, {:last_result => SUCCESS_REPOST_LAST_RESULT}) and return
     end
   end
 
   def undo_post
-    #DELETE https://graph.facebook.com/ID?access_token=... HTTP/1.1
+    @start_time = Time.now
+    self.update_attribute(:status, STATUS_PROCESSING)
+    if has_been_posted?
+      if not self.api_account.blank?
+        begin
+          #uri = URI.parse "DELETE https://graph.facebook.com/#{self.facebook_post_id}?access_token=#{self.api_account.oauth_secret}"
+          #http = Net::HTTP.new(uri.host)
+          #if uri.port == 443
+          #  http.use_ssl = true
+          #  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          #end
+          #param_string = "access_token=#{self.api_account.oauth_secret}&link=#{redirect.get_short_url}/&name=#{self.name}&message=#{self.message}&description=#{self.description}&caption=#{self.caption}"
+          #if self.post.has_photo?
+          #  param_string << "&picture=#{self.image_url}"
+          #end
+          #return http.post(uri.path, URI.escape(param_string))
+          #
+          #
+          #finalize(SUCCEEDED_STATUS, {:last_result => SUCCEEDED_UNDO_POST, :facebook_post_id => nil}) and return
+        rescue Exception => e
+          finalize(STATUS_FAILED, {:last_result => "deleting_post // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
+        end
+      else
+        finalize(STATUS_FAILED, {:last_result => "deleting_post // api_account_id does not exist"}) and return
+      end
+    else
+      finalize(STATUS_SUCCESS, {:last_result => SUCCESS_NEVER_POSTED}) and return
+    end
   end
 
   def finalize(status, options = {})
@@ -73,10 +97,10 @@ class FacebookPost < ActiveRecord::Base
   end
 
   def has_been_posted?
-    if self.facebook_post_id.blank?
-      return false
-    else
+    if not self.facebook_post_id.blank? or self.status == STATUS_DELETED
       return true
+    else
+      return false
     end
   end
 
