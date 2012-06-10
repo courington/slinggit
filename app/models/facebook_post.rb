@@ -61,7 +61,7 @@ class FacebookPost < ActiveRecord::Base
       if not self.api_account.blank?
         begin
           uri = URI.parse "https://graph.facebook.com/#{self.facebook_post_id}?access_token=#{self.api_account.oauth_secret}"
-          http = Net::HTTP.new(uri.host)
+          http = Net::HTTP.new(uri.host, uri.port)
           if uri.port == 443
             http.use_ssl = true
             http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -110,7 +110,7 @@ class FacebookPost < ActiveRecord::Base
     )
 
     uri = URI.parse "https://graph.facebook.com/#{self.api_account.api_id}/feed"
-    http = Net::HTTP.new(uri.host)
+    http = Net::HTTP.new(uri.host, uri.port)
     if uri.port == 443
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
