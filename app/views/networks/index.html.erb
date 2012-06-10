@@ -1,9 +1,9 @@
 <% provide(:title, 'Twitter Accounts') %>
 <section class="wrapper accounts">
   <header>
-    <h1>Manage Your Twitter Accounts</h1>
+    <h1>Manage Your Social Networks</h1>
 
-    <p>Manage Your Twitter Accounts</p>
+    <p>Manage Your Social Networks</p>
   </header>
 
   <article>
@@ -65,11 +65,8 @@
   </article>
 
   <div class="form-actions">
-    <% if @api_accounts.blank? %>
-        <%= link_to "Add Twitter Account", url_for(:controller => :networks, :action => :add_api_account), class: "btn btn-medium btn-info", :id => 'addTwitterbutton' %>
-    <% else %>
-        <%= link_to "Add Another Twitter Account", url_for(:controller => :networks, :action => :add_api_account), class: "btn btn-medium btn-info", :id => 'addTwitterbutton' %>
-    <% end %>
+    <%= link_to "Add Twitter Account", url_for(:controller => :networks, :action => :add_api_account, :id => 'twitter'), class: "btn btn-medium btn-info", :id => 'addTwitterbutton' %>
+    <%= link_to "Add Facebook Account", url_for(:controller => :networks, :action => :add_api_account, :id => 'facebook'), class: "btn btn-medium btn-info", :id => 'addFacebookbutton' %>
   </div>
 
   <!-- CMK  I'm going to refactor this into a Backbone View -->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120609193043) do
+ActiveRecord::Schema.define(:version => 20120610125325) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -27,9 +27,10 @@ ActiveRecord::Schema.define(:version => 20120609193043) do
     t.string   "language"
     t.string   "location"
     t.string   "status"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.string   "reauth_required", :default => "no"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "reauth_required",  :default => "no"
+    t.datetime "oauth_expiration"
   end
 
   create_table "comments", :force => true do |t|
@@ -44,6 +45,23 @@ ActiveRecord::Schema.define(:version => 20120609193043) do
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
   add_index "comments", ["post_id"], :name => "index_comments_on_post_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "facebook_posts", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "api_account_id"
+    t.integer  "post_id"
+    t.string   "name"
+    t.string   "message"
+    t.string   "caption"
+    t.string   "description"
+    t.string   "image_url"
+    t.string   "link_url"
+    t.string   "facebook_post_id"
+    t.string   "status"
+    t.string   "last_result"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "flagged_contents", :force => true do |t|
     t.integer  "creator_user_id"
@@ -225,8 +243,8 @@ ActiveRecord::Schema.define(:version => 20120609193043) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"

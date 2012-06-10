@@ -106,11 +106,11 @@ class ApplicationController < ActionController::Base
   def create_api_account(options = {})
     return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options.blank?
     return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] if options[:source].blank?
-    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter].include? options[:source].to_sym
+    return [false, "Sorry, an unexpected error has occured.  Please try again in a few minutes."] unless [:twitter, :facebook].include? options[:source].to_sym
 
     case options[:source].to_sym
       when :twitter
-        if not ApiAccount.exists?(['user_id = ? AND api_id = ? AND status != ?', options[:user_object].id, options[:api_object].user['id'].to_s, STATUS_DELETED])
+        if not ApiAccount.exists?(['user_id = ? AND api_id = ? AND api_source = ? AND status != ?', options[:user_object].id, options[:api_object].user['id'].to_s, options[:source], STATUS_DELETED])
           status = STATUS_PRIMARY
           if ApiAccount.exists?(['user_id = ? AND status = ? AND api_source = ?', options[:user_object].id, STATUS_PRIMARY, options[:source]])
             status = STATUS_ACTIVE
@@ -119,7 +119,7 @@ class ApplicationController < ActionController::Base
           api_account = ApiAccount.create(
               :user_id => options[:user_object].id,
               :api_id => options[:api_object].user['id'],
-              :api_source => 'twitter',
+              :api_source => options[:source],
               :oauth_token => options[:api_object].oauth_token,
               :oauth_secret => options[:api_object].oauth_token_secret,
               :real_name => options[:api_object].user['name'],
@@ -134,6 +134,33 @@ class ApplicationController < ActionController::Base
           return [true, api_account]
         else
           return [false, "You have alraedy connected that Twitter account."]
+        end
+      when :facebook
+        if not ApiAccount.exists?(['user_id = ? AND api_id = ? AND api_source = ? AND status != ?', options[:user_object].id, options[:api_object]['id'].to_s, options[:source], STATUS_DELETED])
+          status = STATUS_PRIMARY
+          if ApiAccount.exists?(['user_id = ? AND status = ? AND api_source = ?', options[:user_object].id, STATUS_PRIMARY, options[:source]])
+            status = STATUS_ACTIVE
+          end
+
+          api_account = ApiAccount.create(
+              :user_id => options[:user_object].id,
+              :api_id => options[:api_object]['id'],
+              :api_source => options[:source],
+              :oauth_token => nil,
+              :oauth_secret => options[:api_object]['access_token'],
+              :oauth_expiration => Time.now.advance(:seconds => options[:api_object]['expires'].to_i),
+              :real_name => options[:api_object]['name'],
+              :user_name => options[:api_object]['username'],
+              :image_url => "http://graph.facebook.com/#{options[:api_object]['username']}/picture",
+              :description => nil,
+              :language => options[:api_object]['languages'].first['name'],
+              :location => options[:api_object]['location']['name'],
+              :reauth_required => 'no',
+              :status => status
+          )
+          return [true, api_account]
+        else
+          return [false, "You have alraedy connected that Facebook account."]
         end
     end
   end
@@ -182,6 +209,14 @@ class ApplicationController < ActionController::Base
     session['rtoken'] = request_token.token
     session['rsecret'] = request_token.secret
     redirect_to request_token.authorize_url
+  end
+
+  def setup_facebook_call(callback_uri = facebok_callback_url, scope)
+    #state represents a random string that we can check in the callback to prevent cross site request forgery
+    #I have chosen to use a digest of the users email address plus the slinggit secret so that I can build it up again without using session
+
+    state = Digest::SHA1.hexdigest(current_user.email + SLINGGIT_SECRET_HASH)
+    redirect_to "https://graph.facebook.com/oauth/authorize?client_id=#{Rails.configuration.facebook_app_id}&redirect_uri=#{callback_uri}&scope=#{scope}&state=#{state}"
   end
 
   def oauth_consumer

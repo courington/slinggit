@@ -14,8 +14,9 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/verify_email(/:id)', :to => 'users#verify_email#id'
   match 'users/new(/:id)', :to => 'users#new#id'
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
-  match 'networks/add_api_account', :to => 'networks#add_api_account', via: :get
+  match 'networks/add_api_account(/:id)', :to => 'networks#add_api_account#id', via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
+  match 'networks/facebook_callback', :to => 'networks#facebook_callback', via: :get
   match 'sessions/sign_out_of_device', :to => 'sessions#sign_out_of_device', via: :post
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
 
@@ -30,12 +31,14 @@ SlinggitWebapp::Application.routes.draw do
   resources :networks, only: [:index, :create, :destroy]
 
   match '/twitter_callback', :to => 'twittersessions#callback', :as => 'callback'
+  match '/facebook_callback', :to => 'facebooksessions#callback', :as => 'facebook_callback'
   match '/twitter_signup_callback', :to => 'users#twitter_signup_callback'
   match '/reauthorize_twitter', to: 'twittersessions#reauthorize'
   match '/create_reauthorization', to: 'twittersessions#create_reauthorization'
   match '/reauthorize_callback', to: 'twittersessions#reauthorize_callback'
 
   resources :twittersessions
+  resource :facebooksessions
 
   root to: 'static_pages#home'
 

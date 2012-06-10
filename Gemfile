@@ -11,6 +11,7 @@ gem "twitter", "2.2.3"
 gem "oauth", "0.4.6"
 gem "friendly_id", "4.0.6"
 gem "mail", "2.4.4"
+gem "httpclient", "2.2.5"
 
 group :development do
   gem 'sqlite3', '1.3.5'

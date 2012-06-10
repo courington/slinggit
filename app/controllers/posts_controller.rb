@@ -43,30 +43,43 @@ class PostsController < ApplicationController
 
   def create
     recipient_api_account_ids = []
-    twitter_accounts = params[:twitter_accounts]
-    params.delete(:twitter_accounts)
+    selected_networks = params[:selected_networks]
+    params.delete(:selected_networks)
 
     @post = current_user.posts.build(params[:post])
     if not @post.save
       render 'new'
       return
     else
-      if not twitter_accounts.blank?
-        twitter_accounts.each do |id, value|
+      if not selected_networks.blank?
+        selected_networks.each do |id, value|
           # We need to first make sure the user is the owner of this account, or that
           # it is the slinggit account. Should we log a volation here?
-          proposed_api_account = ApiAccount.first(:conditions => ['id = ?', id], :select => 'user_id')
-          if not proposed_api_account.blank?
+          if proposed_api_account = ApiAccount.first(:conditions => ['id = ?', id], :select => 'user_id,api_source')
             if current_user.id == proposed_api_account.user_id || proposed_api_account.user_id == 0
               recipient_api_account_ids << id
-              TwitterPost.create(
-                  :user_id => @post.user_id,
-                  :api_account_id => id.to_i,
-                  :post_id => @post.id,
-                  :content => @post.content
-              ).do_post
+              if proposed_api_account.api_source == 'twitter'
+                TwitterPost.create(
+                    :user_id => @post.user_id,
+                    :api_account_id => id.to_i,
+                    :post_id => @post.id,
+                    :content => @post.content
+                ).do_post
+              elsif proposed_api_account.api_source == 'facebook'
+                FacebookPost.create(
+                    :user_id => @post.user_id,
+                    :api_account_id => id.to_i,
+                    :post_id => @post.id,
+                    :message => "For sale: ##{@post.hashtag_prefix}",
+                    :name => "$#{@post.price}.00",
+                    :caption => "Location: #{@post.location}",
+                    :description => @post.content,
+                    :image_url => @post.has_photo? ? "http://lib.store.yahoo.net/lib/radioflyer/37.jpg" : "#{BASEURL}/assets/80x80_placeholder.png",
+                    :link_url => nil
+                ).do_post
+              end
             end
-          end  
+          end
         end
         if not recipient_api_account_ids.blank?
           @post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
@@ -123,6 +136,7 @@ class PostsController < ApplicationController
 
   def load_api_accounts
     @twitter_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ? AND status != ?', current_user.id, 'twitter', STATUS_DELETED])
+    @facebook_accounts = ApiAccount.all(:conditions => ['user_id = ? AND api_source = ? AND status != ?', current_user.id, 'facebook', STATUS_DELETED])
   end
 
   def get_id_for_slinggit_api_account
