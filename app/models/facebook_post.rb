@@ -117,7 +117,7 @@ class FacebookPost < ActiveRecord::Base
     end
     param_string = "access_token=#{self.api_account.oauth_secret}&link=#{redirect.get_short_url}/&name=#{self.name}&message=#{self.message}&description=#{self.description}&caption=#{self.caption}"
     if self.post.has_photo?
-      param_string << "&picture=#{BASEURL}/#{post.photo.url(:medium)}"
+      param_string << "&picture=#{BASEURL}#{post.photo.url(:medium)}"
     end
     return http.post(uri.path, URI.escape(param_string))
   end
