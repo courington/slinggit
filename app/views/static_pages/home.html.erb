@@ -5,11 +5,13 @@
             <div class="col6"><%= render @posts %></div>
         </div>
     <% end %>
-	<div class="row white_well">
+	<div class="row">
   		<div class="col6">
-            
+
     		<% if current_user.blank? %>
+			<div class="row white_well">
         		<p class="row">Looking for something? Want to sell something? Slinggit.</p>
+
 				<!-- wrap the greeting/button in a row -->
 				<div class="row">
         			<% if invite_only? %>
@@ -19,15 +21,23 @@
         			<% end %>
 				</div>
 				<!-- end row -->
+			</div>	
     			<% elsif not current_user.blank? %>
+			<div class="row">
+				<div class="col4 pull_left white_well">
         			<p class="row">Welcome back <%= current_user.name %>!</p>
         			<p class="row">Got some old junk laying around?</p>
 					<div class="row">
-						<%= link_to "Slinggit", new_post_path, class: "col2 offset2 btn_green" %>
+						<%= link_to "Slinggit", new_post_path, class: "col2 offset1 pull_left btn_green" %>
 					</div>
+				</div>
+				<div class="col2 pull_right grey_well">
+					<p>this is the modal</p>
+				</div>
+			</div>
     		<% end %>
 		</div>
-  </div>
+  	</div>
 
 <!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
 <!-- <div class="row white_well wrapper_twitRoll">
