@@ -79,7 +79,9 @@ class AdminController < ApplicationController
             if status == STATUS_BANNED
               post.update_attribute(:status, STATUS_DELETED)
             elsif status == STATUS_SUSPENDED
-              post.update_attribute(:status, STATUS_DELETED)
+              post.update_attribute(:status, STATUS_ACTIVE)
+            elsif status == STATUS_ACTIVE
+              post.update_attribute(:status, STATUS_ACTIVE)
             end
           end
         end

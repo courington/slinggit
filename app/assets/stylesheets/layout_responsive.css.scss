@@ -190,6 +190,13 @@
 				.col4{
 					header{
 						text-align: left;
+						h1{
+							font-size: $font-size * 1.1;
+						}
+						h6{
+							padding-top: 5px;
+							font-size: $font-size *.9;
+						}
 					}
 				}
 

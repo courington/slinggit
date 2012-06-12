@@ -4,6 +4,8 @@
 			<h1><%= current_user.name %></h1>
   			<h6><%= pluralize(current_user.posts.count, "post") %></h6>
 		</header>
-		<a href="<%= user_path(current_user) %>" class="col2 pull_right"><%= gravatar_for current_user %></a>
+		<a href="<%= user_path(current_user) %>" class="col2 pull_right">
+			<%= image_tag current_user.profile_photo_url, :height => "auto", :width => "100%" %>
+		</a>
 	</div>
 </aside>
