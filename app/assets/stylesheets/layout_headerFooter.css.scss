@@ -126,7 +126,7 @@ body > header:first-child {
 footer {
 	clear:both;
 	font-size: 62.5%;
-	box-shadow: $foot-shadow;
+	box-shadow: $foot-shadow, inset 0 5px 15px rgba(255,255,255,.3);
 	position:relative;
 	z-index:9999;
 		nav {
