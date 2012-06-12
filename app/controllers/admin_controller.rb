@@ -78,8 +78,8 @@ class AdminController < ApplicationController
           user.posts.each do |post|
             if status == STATUS_BANNED
               post.update_attribute(:status, STATUS_DELETED)
-            else
-              post.update_attribute(:status, status)
+            elsif status == STATUS_SUSPENDED
+              post.update_attribute(:status, STATUS_DELETED)
             end
           end
         end
