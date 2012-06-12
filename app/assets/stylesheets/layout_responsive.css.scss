@@ -117,6 +117,10 @@
 		font-weight: bold;
 		text-shadow: $txt-shdw;
 	}
+	.btn_ltGrey{
+		font-weight: 400;
+		text-shadow: none;
+	}
 	
 	//homepage responsive styles
 	.offset2 {
@@ -313,6 +317,11 @@
 			#signUpWrapper{
 				p{
 					font-size: $font-size * .8;
+				}
+				.col2{
+					.offset1{
+						margin-left:0px;
+					}
 				}
 				.col4{
 					margin-top: 10px;
