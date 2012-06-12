@@ -269,6 +269,14 @@ class ApplicationController < ActionController::Base
     return true
   end
 
+  def non_suspended_user
+    if not current_user.is_suspended?
+      return true
+    else
+      redirect_to root_path
+    end
+  end
+
   def set_timezone
     #Time.zone = current_user.time_zone || 'Central Time (US & Canada)'
   end

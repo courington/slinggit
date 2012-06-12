@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
+  before_filter :non_suspended_user, only: [:new]
   before_filter :correct_user, only: [:destroy, :edit, :update]
   before_filter :load_api_accounts, :only => [:new, :create]
   # CMK: I'm not sure I was asking Dan the right questions tonight about

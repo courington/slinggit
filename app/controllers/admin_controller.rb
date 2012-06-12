@@ -55,7 +55,7 @@ class AdminController < ApplicationController
   end
 
   def view_users
-    @users = User.paginate(page: params[:page], :per_page => 100, :select => 'id,email,name,slug,status,created_at')
+    @users = User.paginate(page: params[:page], :per_page => 100, :select => 'id,email,name,slug,status,account_reactivation_code,photo_source,created_at')
   end
 
   def view_user

@@ -6,7 +6,7 @@
 <ul class="users">
   <% @users.each do |user| %>
     <li>
-      <%= gravatar_for user %>
+      <%= image_tag user.profile_photo_url %>
       <%= link_to user.name, {:controller => :admin, :action => :view_user, :id => user.id} %>
 
       <% if current_user.is_admin? && !current_user?(user) && user.is_active? %>

@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret, :status, :role, :photo_source
+  attr_accessible :email, :name, :password, :password_confirmation, :remember_me, :twitter_atoken, :twitter_asecret, :status, :role, :photo_source, :account_reactivation_code
   has_secure_password
   has_many :posts, dependent: :destroy
   # not making comments dependent: :destroy because we may still want comments associated with posts
