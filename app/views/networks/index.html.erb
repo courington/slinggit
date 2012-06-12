@@ -1,7 +1,7 @@
 <% provide(:title, 'Twitter Accounts') %>
 <section class="wrapper accounts">
 	
-  <header>
+  <header class="row contentHeader">
     <h1>Manage Your Social Networks</h1>
     <p>Manage Your Social Networks</p>
   </header>
@@ -70,10 +70,11 @@
 		</article>
 		<!-- end the column -->
 
-	<aside class="col2 pull_right white_well">
-  	<div class="row">
-    	<%= link_to "Add Twitter Account", url_for(:controller => :networks, :action => :add_api_account, :id => 'twitter'), class: "btn btn_twitter col4 offset2", :id => 'addTwitterbutton' %>
-    	<%= link_to "Add Facebook Account", url_for(:controller => :networks, :action => :add_api_account, :id => 'facebook'), class: "btn btn_facebook col4 offset2", :id => 'addFacebookbutton' %>
+	<aside class="col2 pull_right">
+  	<div class="row white_well">
+    	<%= link_to "Add Twitter Account", url_for(:controller => :networks, :action => :add_api_account, :id => 'twitter'), class: "btn btn_twitter col6", :id => 'addTwitterbutton' %>
+			<!-- <span class="twitIconSmall"></span> -->
+    	<%= link_to "Add Facebook Account", url_for(:controller => :networks, :action => :add_api_account, :id => 'facebook'), class: "btn btn_facebook col6", :id => 'addFacebookbutton' %>
   	</div>
 	</aside>
 

@@ -1,15 +1,35 @@
 // networks page styles
 .accounts {
-  article {
-    ul {
-      font-size: ($font-size * .875);
-      li {
-        margin: ($font-size * .25) auto;
-        &:first-child {
-          font-weight: bold;
-        }
-      }
-    }
-  }
+	> .contentHeader{
+		border-bottom: 1px solid $lt-grey;
+	}
+	> .col4, > .col2 {
+		margin-top: 10px;
+	}
+	> .col4 {
+		padding: 20px;
+		> .row > ul {
+			li:nth-of-type(even) {
+			 background: $lt-grey;
+			}
+		}
+	}
+	> .col2 {
+		padding-left: 10px;
+	}
+	article {
+		ul {
+			font-size: ($font-size * .75);
+			li {
+				margin: ($font-size * .25) auto;
+				&:first-child {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+	.twitIconSmall {
+		margin: -24px 0 17px 32px;
+	}
 }
 // end
