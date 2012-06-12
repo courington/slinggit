@@ -108,6 +108,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def delete_post
+    post = Post.first(:conditions => ['id = ?', params[:id]])
+    if not post.blank? and post.user_id == current_user.id
+      if post.update_attribute(:status, STATUS_DELETED)
+        flash[:success] = "Post #{post.hashtag_prefix} successfully removed."
+        redirect_to user_path(current_user)
+      end
+    end
+  end
+
   # def destroy
   #   @post.status = 'deleted'
   #   @post.save

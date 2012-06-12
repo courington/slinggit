@@ -19,6 +19,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'networks/facebook_callback', :to => 'networks#facebook_callback', via: :get
   match 'sessions/sign_out_of_device', :to => 'sessions#sign_out_of_device', via: :post
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
+  match 'posts/delete_post', :to => 'posts#delete_post'
 
   match 'messages/delete(/:id)', :to => 'messages#delete#id'
   match 'messages/new(/:id)', :to => 'messages#new#id'
