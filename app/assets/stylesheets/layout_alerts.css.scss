@@ -1,6 +1,6 @@
   //styles for notices
-#success_explanation_bubble {
-	background: lighten($main-green, 15%);
+#explanation_bubble {
+	background: lighten($dk-grey, 15%);
 	color: $wht;
 	box-shadow: 0 1px 0 rgba(0,0,0,.2);
 	width: 50%;
@@ -12,13 +12,18 @@
 	@include hardEdge-top;
 }
 
+#success_explanation_bubble {
+	@extend #explanation_bubble;
+	background: lighten($main-green, 15%);
+}
+
 #error_explanation_bubble {
-    @extend #success_explanation_bubble;
+    @extend #explanation_bubble;
     background: lighten($main-red, 15%);
 }
 
 #notice_explanation_bubble {
-    @extend #success_explanation_bubble;
+    @extend #explanation_bubble;
     background: lighten($main-yellow, 15%);
     color: $main-grey;
 }
@@ -33,7 +38,7 @@
 }
 
 #friendly_explanation_bubble{
-	@extend #success_explanation_bubble;
+	@extend #explanation_bubble;
 	background: lighten($main-blue, 20%);
 	color: $dk-grey;
 }

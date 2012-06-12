@@ -7,9 +7,15 @@
 
   <div id="postReplyActions" class="row">
 
-    <div class="row">
-      <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
-    </div>
+    <% if not current_user.is_suspended? %>
+      <div class="row">
+        <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
+      </div>
+    <% else %>
+      <div id="notice_explanation_bubble" style="width:100%">
+        You are currently in time out.  As a result of this, you cannot reply to this post.
+      </div>
+    <% end %>
 
     <% if not @twitter_post.blank? %>
       <div class="row">
