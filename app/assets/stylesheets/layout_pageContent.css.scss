@@ -159,25 +159,6 @@ float: left;
 clear: none;
 }
 
-  // networks page styles
-  .accounts {
-    article {
-      ul {
-        float: left;
-        margin: 0 2.5% 0 0;
-        font-size: $font-size;
-        li {
-          margin: ($font-size * .5) auto;
-          &:first-child {
-            font-weight: bold;
-          }
-        }
-      }
-    }
-  }
-  // end
-
-
 .img_border {
   padding: .3em;
   border: 1px solid #D7D7D7;

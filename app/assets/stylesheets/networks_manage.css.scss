@@ -1,0 +1,15 @@
+// networks page styles
+.accounts {
+  article {
+    ul {
+      font-size: ($font-size * .875);
+      li {
+        margin: ($font-size * .25) auto;
+        &:first-child {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+// end

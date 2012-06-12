@@ -88,6 +88,10 @@ input[type="submit"] {
 	@extend .btn;
 	background: $twitter-blue;
 }
+.btn_facebook {
+	@extend .btn;
+	background: $fb-blue;
+}
 .btn_red {
 	@extend .btn;
 	background: $main-red;
