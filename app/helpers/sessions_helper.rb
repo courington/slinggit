@@ -20,11 +20,7 @@ module SessionsHelper
   end
 
   def is_signed_in_and_admin?
-    if !self.current_user.nil?
-      current_user.is_admin?
-    else
-      !self.current_user.nil?
-    end  
+    !self.current_user.nil? && current_user.is_admin? 
   end
 
   # Set current user
