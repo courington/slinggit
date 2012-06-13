@@ -171,6 +171,11 @@ clear: none;
   border-color: transparent !important;
 }
 
-.wrapper_twitRoll {
+.home_featurePost {
 	margin: ($font-size * .5) auto;
+	h1 {
+		border-bottom: 1px solid $lt-grey;
+		margin-bottom: ($font-size * .25);
+		padding-bottom: ($font-size * .125);
+	}
 }
