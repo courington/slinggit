@@ -10,10 +10,10 @@
 
 			<article class="row">
 				<p>Connect with buyers and sellers around the world or stay within your Twitter and Facebook networks.</p>
-				<img src="heroimages/hero_phoneDiagram_818x320.jpg" width="818" height="320" alt="Hero Image iPhone Diagram 818x320" title="Slinggit can help you clean out your storage space" />
+				<%= image_tag "heroimages/hero_phoneDiagram_818x320.jpg", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col4 pull_left offset1" %>
 			</article>
 			
-			<aside class="row white_well">
+			<aside class="row">
 				<% if invite_only? %>
 					<!-- if invites are active -->
 					<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col2 offset2 btn_darkGrey" %>
@@ -55,7 +55,7 @@
 	<!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
 	        <div class="row home_featurePost">
-	            <div class="white_well col6">
+	            <div class="white_well col4 pull_left">
 								<h1 class="row">Feature Post:</h1>
 								<%= render @posts %>
 							</div>
