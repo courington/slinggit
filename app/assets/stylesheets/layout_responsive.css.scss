@@ -19,27 +19,26 @@
 	}
 	body > header:first-child {
 		position: fixed;
-		height:6.5em;
+		height:6.8em;
 		.col4.pull_left {
 		width: 85%;
 		}
-		hgroup.col2 .col2 {
-		font-size: 1em;
-		position: relative;
-		top: -.7em;
-		left: -6.7em;
+		img.col2 {
+			width: 88%;
+		}
+		h6.col2 {
+			margin: -1em 0 0 .8em;
 		}
 		nav {
 			overflow: visible;
-			margin: .2em 0 0 0;
 			&> .row > .col3.offset3 {
 			width: 100%;
 			margin-left: 0;
-			margin-bottom: .5em;
+			margin-bottom: .4em;
 			}
 			&.col4.pull_right > .row:last-child,
 			&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
-				margin-top: .075em;
+				//margin-top: .4em;
 				padding-bottom: .25em;
 			}
 			#accountDropDown .nav_dropDown {
@@ -72,8 +71,9 @@
 				left: 6px;
 				margin-right: 10px;
 			}
-			input[name="quickSearch"] {
+			#quickSearch {
 				padding: .25em 0 .25em 10%;
+				height: 2em;
 			}
 		}
 		.btn_navPosts {
