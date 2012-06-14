@@ -11,6 +11,7 @@
 		max-width: 640px;
 		padding: 0;
 	}
+	//header
 	body > header:first-child .logo a:link {
 	width: 85px;
 	display: block;
@@ -85,6 +86,8 @@
 			}
 		}
 	}
+	//end header
+	//general page styles
 	.page_contentContainer {
 		padding-top: 7.8em;
 	}
@@ -121,39 +124,18 @@
 		font-weight: 400;
 		text-shadow: none;
 	}
-	
-	//homepage responsive styles
-	.offset2 {
-		margin-left: 0;
-	}
 	//end
-
 	//alerts
 	#explanation_bubble {
 		width: 100%;
 	}
-
-	// HOME PAGE STYLES
-	.wrapper_twitRoll{
-		.col1{
-			width: ($sixCols * 2);
-
-			img{
-				width: 80px;
-			}
-		}
-		.col5{
-			width: ($sixCols * 4);
-
-			h4{
-				font-size: $font-size * .9;
-			}
-
-			p{
-				font-size: $font-size * .8;
-			}
+	//home page
+	.homepage {
+		.offset2 {
+		margin-left: 0;
 		}
 	}
+	//end
 	//new session page
 	.wrapper_newSession {
 		.col3 {

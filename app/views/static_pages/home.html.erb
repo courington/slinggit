@@ -1,5 +1,5 @@
 <% provide(:title, 'Home') %>
-<section class="wrapper">
+<section class="wrapper homepage">
 
 <!-- if/else for user sign-in/sign-up homepage states -->
 	<div class="row">
@@ -7,21 +7,22 @@
 
 <!-- if user is not signed in -->
 	<% if current_user.blank? %>
-		<div class="row white_well">
-			<p class="col2 pull_left grey_well">Looking for something? Want to sell something? Slinggit.</p>
-			<p class="col2 pull_left">Looking for something? Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit.</p>
-			<p class="col2 pull_left">Looking for something? Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something?</p>
+
+			<article class="row">
+				<p>Connect with buyers and sellers around the world or stay within your Twitter and Facebook networks.</p>
+				<img src="heroimages/hero_phoneDiagram_818x320.jpg" width="818" height="320" alt="Hero Image iPhone Diagram 818x320" title="Slinggit can help you clean out your storage space" />
+			</article>
 			
-			<div class="row">
+			<aside class="row white_well">
 				<% if invite_only? %>
 					<!-- if invites are active -->
 					<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col2 offset2 btn_darkGrey" %>
 				<% else %>
 					<!-- if invites are NOT active -->
-					<%= link_to "Sign up now!", signup_path, class: " col2 offset2 btn_blue" %>
+					<%= link_to "Sign up now!", signup_path, class: "col2 offset2 btn_blue" %>
 				<% end %>
-			</div>
-		</div>
+			</aside>
+			
 <!-- end user not signed in if/else -->
 
 
@@ -49,8 +50,7 @@
 	
 <!-- end the homepage sign-in/sign-up if/else -->
 		</div> <!-- close col6 -->
-	</div> <!-- close row -->
-	
+	</div> <!-- close row -->	
 	
 	<!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
@@ -62,7 +62,6 @@
 	        </div>
 	    <% end %>
 	<!-- end -->
-	
 
 <!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
 <!-- <div class="row white_well wrapper_twitRoll">
