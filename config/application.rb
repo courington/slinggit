@@ -63,6 +63,6 @@ module SlinggitWebapp
     config.assets.version = '1.0'
 
     #default time zone
-    config.time_zone = 'Mountain Time (US & Canada)'
+    config.time_zone = 'Pacific Time (US & Canada)'
   end
 end
