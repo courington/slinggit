@@ -76,6 +76,7 @@ SlinggitWebapp::Application.configure do
   ## STATUSES ##
   STATUS_UNVERIFIED = "UVR"
   STATUS_DELETED = "DEL"
+  STATUS_CLOSED = "CLO"
   STATUS_BANNED = "BAN"
   STATUS_ACTIVE = "ACT"
   STATUS_SUSPENDED = "SUS"

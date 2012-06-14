@@ -835,6 +835,41 @@ class MobileController < ApplicationController
     end
   end
 
+  def close_post
+    if not params[:post_id].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+        if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id], :select => 'id,status')
+          post.update_attribute(:status, STATUS_CLOSED)
+          render_success_response(
+              :post_id => post.id,
+              :status => post.status
+          )
+        else
+          render_error_response(
+              :error_location => 'close_post',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'close_post',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'close_post',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
   def get_post_image
     if not params[:image_style].blank?
 
@@ -1268,6 +1303,8 @@ class MobileController < ApplicationController
       )
     end
   end
+
+  #TODO IMPLEMENT
 
   def report_abuse
 
