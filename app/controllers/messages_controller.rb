@@ -57,7 +57,7 @@ class MessagesController < ApplicationController
       if post = Post.first(:conditions => ['id_hash = ? AND status != ? AND open = ?', params[:id], [STATUS_DELETED], true])
         if not signed_in? or (signed_in? and not post.user_id == current_user.id)
           @post = post
-          session[:message_post_id_hash] = post.id
+          session[:message_post_id_hash] = post.id_hash
         else
           flash[:error] = "I'm gonna take a shot in the dark here and assume you didn't really want to send a message to your self."
           redirect_to current_user and return
