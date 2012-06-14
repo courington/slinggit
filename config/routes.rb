@@ -23,7 +23,7 @@ SlinggitWebapp::Application.routes.draw do
 
   match 'messages/delete(/:id)', :to => 'messages#delete#id'
   match 'messages/new(/:id)', :to => 'messages#new#id'
-
+  match 'messages/reply(/:id)', :to => 'messages#reply#id'
 
   resources :users
   resources :messages

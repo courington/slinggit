@@ -17,7 +17,13 @@ class MessagesController < ApplicationController
   end
 
   def reply
-
+    @message ||= Message.new
+    if not params[:id].blank?
+      if not @origin_message = Message.first(:conditions => ['id_hash = ? and recipient_user_id = ? AND status != ?', params[:id], current_user.id, STATUS_DELETED])
+        flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
+        redirect_to root_path
+      end
+    end
   end
 
   def new
@@ -52,23 +58,10 @@ class MessagesController < ApplicationController
 
   def create
     if request.post?
-      if session[:message_post]
+      if params[:reply]
         if params[:message]
           @message = Message.new(params[:message])
-          if signed_in?
-            @message.contact_info_json = current_user.email
-          elsif not @message.contact_info_json.blank?
-            #the above if elsif statment is invalid once we start collecting additional contect info
-            #this will need to rip the email field out first then validate it.
-            if user = User.first(:conditions => ['email = ?', @message.contact_info_json], :select => 'email')
-              flash[:notice] = "The email you provided belongs to a registered Slinggit user.  Please sign in first."
-              session[:return_to] = url_for :controller => :messages, :action => :new, :id => session[:message_post].id_hash
-              session[:message_data_before_login] = {:email => @message.contact_info_json, :body => @message.body}
-              redirect_to :controller => :sessions, :action => :new, :email => user.email and return
-            end
-          end
-
-          @message.creator_user_id = signed_in? ? current_user.id : nil
+          @message.creator_user_id = current_user.id
           @message.recipient_user_id = session[:message_post].user_id
           @message.source = 'post'
           @message.source_id = session[:message_post].id
@@ -87,9 +80,45 @@ class MessagesController < ApplicationController
           redirect_to root_path
         end
       else
-        #TODO redirect to report an issue
-        flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
-        redirect_to root_path
+        if session[:message_post]
+          if params[:message]
+            @message = Message.new(params[:message])
+            if signed_in?
+              @message.contact_info_json = current_user.email
+            elsif not @message.contact_info_json.blank?
+              #the above if elsif statment is invalid once we start collecting additional contect info
+              #this will need to rip the email field out first then validate it.
+              if user = User.first(:conditions => ['email = ?', @message.contact_info_json], :select => 'email')
+                flash[:notice] = "The email you provided belongs to a registered Slinggit user.  Please sign in first."
+                session[:return_to] = url_for :controller => :messages, :action => :new, :id => session[:message_post].id_hash
+                session[:message_data_before_login] = {:email => @message.contact_info_json, :body => @message.body}
+                redirect_to :controller => :sessions, :action => :new, :email => user.email and return
+              end
+            end
+
+            @message.creator_user_id = signed_in? ? current_user.id : nil
+            @message.recipient_user_id = session[:message_post].user_id
+            @message.source = 'post'
+            @message.source_id = session[:message_post].id
+            @message.send_email = true
+
+            if @message.save
+              flash[:success] = "Message has been sent."
+              redirect_to :controller => :posts, :action => :show, :id => session[:message_post].id
+            else
+              @post = session[:message_post]
+              render 'new'
+            end
+          else
+            #TODO redirect to report an issue
+            flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
+            redirect_to root_path
+          end
+        else
+          #TODO redirect to report an issue
+          flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
+          redirect_to root_path
+        end
       end
     end
   end

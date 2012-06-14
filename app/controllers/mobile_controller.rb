@@ -361,9 +361,10 @@ class MobileController < ApplicationController
         limit = 1 if limit <= 0
 
         #starting_post_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
+        #always need to inc by 1
         starting_post_id = params[:starting_post_id]
-        starting_post_id = Post.count() + 1 if (starting_post_id.blank? or starting_post_id.to_i <= 0)
-        starting_post_id = starting_post_id.to_i
+        starting_post_id = Post.count if (starting_post_id.blank? or starting_post_id.to_i <= 0)
+        starting_post_id = starting_post_id.to_i + 1
 
         posts = []
         success = false
@@ -743,9 +744,10 @@ class MobileController < ApplicationController
             limit = 1 if limit <= 0
 
             #starting_message_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
+            #we always need to inc by 1
             starting_message_id = params[:starting_message_id]
-            starting_message_id = Message.count() + 1 if (starting_message_id.blank? or starting_message_id.to_i <= 0)
-            starting_message_id = starting_message_id.to_i
+            starting_message_id = Message.count if (starting_message_id.blank? or starting_message_id.to_i <= 0)
+            starting_message_id = starting_message_id.to_i + 1
 
             messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id <= ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
 
@@ -826,6 +828,41 @@ class MobileController < ApplicationController
     else
       render_error_response(
           :error_location => 'delete_post',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def close_post
+    if not params[:post_id].blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+        if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id], :select => 'id,status')
+          post.update_attribute(:status, STATUS_CLOSED)
+          render_success_response(
+              :post_id => post.id,
+              :status => post.status
+          )
+        else
+          render_error_response(
+              :error_location => 'close_post',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'close_post',
+            :error_reason => 'not found - mobile_session',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'close_post',
           :error_reason => 'missing required_paramater - post_id',
           :error_code => '404',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
@@ -1267,8 +1304,54 @@ class MobileController < ApplicationController
     end
   end
 
-  def report_abuse
+  #TODO IMPLEMENT
 
+  def report_abuse
+    if not params[:source].blank?
+      if not params[:source_id].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,email,name')
+            flagged_content = FlaggedContent.create(
+                :creator_user_id => user.id,
+                :source => params[:content_source],
+                :source_id => params[:content_id]
+            )
+
+            render_success_response(
+                flagged_content.attributes
+            )
+          else
+            render_error_response(
+                :error_location => 'report_abuse',
+                :error_reason => 'not found - user',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'report_abuse',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'report_abuse',
+            :error_reason => 'missing required_paramater - source_id',
+            :error_code => '404',
+            :friendly_error => 'The email address entered is not valid.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'report_abuse',
+          :error_reason => 'missing required_paramater - source',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
   private
