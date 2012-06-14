@@ -55,7 +55,7 @@ class AdminController < ApplicationController
   end
 
   def view_users
-    @users = User.paginate(page: params[:page], :per_page => 100, :select => 'id,email,name,slug,status,created_at')
+    @users = User.paginate(page: params[:page], :per_page => 100, :select => 'id,email,name,slug,status,account_reactivation_code,photo_source,created_at')
   end
 
   def view_user
@@ -78,8 +78,10 @@ class AdminController < ApplicationController
           user.posts.each do |post|
             if status == STATUS_BANNED
               post.update_attribute(:status, STATUS_DELETED)
-            else
-              post.update_attribute(:status, status)
+            elsif status == STATUS_SUSPENDED
+              post.update_attribute(:status, STATUS_ACTIVE)
+            elsif status == STATUS_ACTIVE
+              post.update_attribute(:status, STATUS_ACTIVE)
             end
           end
         end

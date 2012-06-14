@@ -8,11 +8,21 @@
   <div id="postContolsActions" class="row">
 
     <div class="row">
-      <%= form_for(@post) do |f| %>
-        <% if @post.open? %>
-          <%= f.hidden_field :open, value: false %>
-          <%= f.button "Close", type: "submit", class: "col6 btn_red", confirm: "Are you sure?  This action cannot be undone!" %>
+      <% if not current_user.is_suspended? %>
+
+        <%= form_for(@post) do |f| %>
+          <% if @post.open? %>
+            <%= f.hidden_field :open, value: false %>
+            <%= f.button "Close", type: "submit", class: "col6 btn_ltGrey", confirm: "Are you sure?  This action cannot be undone!" %>
+          <% end %>
         <% end %>
+
+        <%= link_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
+
+      <% else %>
+        <div id="notice_explanation_bubble" style="width:100%">
+          You are currently in time out.  As a result of this, you cannot edit this post.
+        </div>
       <% end %>
     </div>
 

@@ -1,33 +1,68 @@
 <% provide(:title, 'Home') %>
 <section class="wrapper">
-    <% if !@posts.blank? %>
-        <div class="row grey_well wrapper_twitRoll">
-            <div class="col6"><%= render @posts %></div>
-        </div>
-    <% end %>
-	<div class="row white_well">
+
+<!-- if/else for user sign-in/sign-up homepage states -->
+	<div class="row">
   		<div class="col6">
-            
-    		<% if current_user.blank? %>
-        		<p class="row">Looking for something? Want to sell something? Slinggit.</p>
-				<!-- wrap the greeting/button in a row -->
-				<div class="row">
-        			<% if invite_only? %>
-            			<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col2 offset2 btn_darkGrey" %>
-        			<% else %>
-            			<%= link_to "Sign up now!", signup_path, class: " col2 offset2 btn_blue" %>
-        			<% end %>
-				</div>
-				<!-- end row -->
-    			<% elsif not current_user.blank? %>
-        			<p class="row">Welcome back <%= current_user.name %>!</p>
-        			<p class="row">Got some old junk laying around?</p>
-					<div class="row">
-						<%= link_to "Slinggit", new_post_path, class: "col2 offset2 btn_green" %>
-					</div>
-    		<% end %>
+
+<!-- if user is not signed in -->
+	<% if current_user.blank? %>
+		<div class="row white_well">
+			<p class="col2 pull_left grey_well">Looking for something? Want to sell something? Slinggit.</p>
+			<p class="col2 pull_left">Looking for something? Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit.</p>
+			<p class="col2 pull_left">Looking for something? Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something?</p>
+			
+			<div class="row">
+				<% if invite_only? %>
+					<!-- if invites are active -->
+					<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col2 offset2 btn_darkGrey" %>
+				<% else %>
+					<!-- if invites are NOT active -->
+					<%= link_to "Sign up now!", signup_path, class: " col2 offset2 btn_blue" %>
+				<% end %>
+			</div>
 		</div>
-  </div>
+<!-- end user not signed in if/else -->
+
+
+<!-- if user is signed in -->
+	<% elsif not current_user.blank? %>
+		<div class="row">
+			<div class="col4 pull_left white_well">
+				<div class="row">
+					<p class="col3 pull_left">Welcome back <%= current_user.name %>!</p>
+					<p class="col3 pull_right">Got some old junk laying around? Got some old junk laying around? Got some old junk laying around? Got some old junk laying around?</p>
+					<div class="col6">
+						<div class="row">
+							<%= link_to "Slinggit", new_post_path, class: "col3 pull_left btn_green" %>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+<!-- render user_info partial -->
+			<%= render 'shared/user_info' %>
+		</div>
+<!-- end the user is signed in if/else -->
+	<% end %>
+	
+	
+<!-- end the homepage sign-in/sign-up if/else -->
+		</div> <!-- close col6 -->
+	</div> <!-- close row -->
+	
+	
+	<!-- show latest slinggit post -->
+	    <% if !@posts.blank? %>
+	        <div class="row home_featurePost">
+	            <div class="white_well col6">
+								<h1 class="row">Feature Post:</h1>
+								<%= render @posts %>
+							</div>
+	        </div>
+	    <% end %>
+	<!-- end -->
+	
 
 <!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
 <!-- <div class="row white_well wrapper_twitRoll">

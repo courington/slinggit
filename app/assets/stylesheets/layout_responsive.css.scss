@@ -78,13 +78,13 @@
 		.btn_navPosts {
 			@extend .btnNavSprite;
 			background-position: -32px -30px;
-		}
+			}
 		.btn_navSettings {
 			@extend .btnNavSprite;
 			background-position: 0 -31px;
+			}
 		}
 	}
-}
 	.page_contentContainer {
 		padding-top: 7.8em;
 	}
@@ -117,11 +117,21 @@
 		font-weight: bold;
 		text-shadow: $txt-shdw;
 	}
+	.btn_ltGrey{
+		font-weight: 400;
+		text-shadow: none;
+	}
+	
 	//homepage responsive styles
 	.offset2 {
 		margin-left: 0;
 	}
 	//end
+
+	//alerts
+	#explanation_bubble {
+		width: 100%;
+	}
 
 	// HOME PAGE STYLES
 	.wrapper_twitRoll{
@@ -185,6 +195,13 @@
 				.col4{
 					header{
 						text-align: left;
+						h1{
+							font-size: $font-size * 1.1;
+						}
+						h6{
+							padding-top: 5px;
+							font-size: $font-size *.9;
+						}
 					}
 				}
 
@@ -301,6 +318,11 @@
 				p{
 					font-size: $font-size * .8;
 				}
+				.col2{
+					.offset1{
+						margin-left:0px;
+					}
+				}
 				.col4{
 					margin-top: 10px;
 				}
@@ -318,20 +340,12 @@
 		aside {
 			display: none;
 		}
-		fieldset.col2.pull_left {
-			width: 44%;
-		}
-		fieldset.col4.pull_left {
-			float: right;
-			width: 55%;
-			margin: 0 1% 0 0;
-		}
 		#post_content {
 			width: 100%;
 			height: 4.8em;
 		}
 		#photoControlGroup {
-			display: none;
+			//display: none;
 		}
 		.twitterPostAccount {
 			margin: .4em auto;
@@ -375,6 +389,44 @@
 		}
 		> aside {
 			margin-top: ($font-size * .5);
+		}
+	}
+	//end
+	//social networks page
+	.accounts {
+		.col4, .col2 {
+			width: 100%;
+			display: block;
+		}
+		.col2 {
+			padding-left: 0;
+		}
+		article ul {
+			li {
+				margin-bottom: ($font-size * 1.5);
+				&:first-child {
+				margin-bottom: 0;
+				}
+			}
+			&:last-child li {
+				margin: 1.6em 0;
+				&:first-child {
+					margin-top: .8em;
+				}
+			}
+		}
+		ul.networks_metaData,
+		#account-actions > span {
+			display: none;
+		}
+		ul.col1 {
+			width: 25%;
+		}
+		#account-actions > a:last-child {
+			width: auto;
+		}
+		#account-actions > a:first-child {
+			display: none;
 		}
 	}
 	//end

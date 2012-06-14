@@ -5,7 +5,7 @@ body {
 //	height: 100%;
   font-family: $main-font;
   //overflow-x: hidden;
-  box-shadow: inset 0 0 72px rgba(0, 0, 0, .25);
+  //box-shadow: inset 0 0 72px rgba(0, 0, 0, .25);
   background: $lt-grey;
   color: $dk-grey;
 }
@@ -72,6 +72,10 @@ body {
 	@include rounded-corners;
 }
 
+.margin-top {
+  margin-top: 10px;
+}
+
 //ROW
 .row {
 	width: 100%;
@@ -115,7 +119,7 @@ p {
 }
 
 .page_contentContainer {
-  min-height: 46em;
+  min-height: 64em;
   font-size: 62.5%;
   position: relative;
   z-index: 1;
@@ -155,25 +159,6 @@ float: left;
 clear: none;
 }
 
-  // networks page styles
-  .accounts {
-    article {
-      ul {
-        float: left;
-        margin: 0 2.5% 0 0;
-        font-size: $font-size;
-        li {
-          margin: ($font-size * .5) auto;
-          &:first-child {
-            font-weight: bold;
-          }
-        }
-      }
-    }
-  }
-  // end
-
-
 .img_border {
   padding: .3em;
   border: 1px solid #D7D7D7;
@@ -186,6 +171,11 @@ clear: none;
   border-color: transparent !important;
 }
 
-.wrapper_twitRoll {
+.home_featurePost {
 	margin: ($font-size * .5) auto;
+	h1 {
+		border-bottom: 1px solid $lt-grey;
+		margin-bottom: ($font-size * .25);
+		padding-bottom: ($font-size * .125);
+	}
 }

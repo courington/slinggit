@@ -2,13 +2,13 @@
   padding-bottom: 30px;
 }
 
-div.adminActions {
+.adminActions {
+	padding: 10px;
 
 	a{
-		text-decoration: underline;
+		text-decoration: none;
 		font-size: 8px;
-		width: 100%;
-		display: block;
+		padding: 7px;
 	}
 }
 

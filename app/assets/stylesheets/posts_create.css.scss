@@ -19,6 +19,7 @@
 	}
 	img.obj {
 		width: 300px;
+		margin-top: ($font-size * .5);
 	}
 	.add_on {
 		@include hardEdge-left;

@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
+  before_filter :non_suspended_user, only: [:new]
   before_filter :correct_user, only: [:destroy, :edit, :update]
   before_filter :load_api_accounts, :only => [:new, :create]
   # CMK: I'm not sure I was asking Dan the right questions tonight about
@@ -104,6 +105,16 @@ class PostsController < ApplicationController
       redirect_back_or post_path(@path)
     else
       render 'edit'
+    end
+  end
+
+  def delete_post
+    post = Post.first(:conditions => ['id = ?', params[:id]])
+    if not post.blank? and post.user_id == current_user.id
+      if post.update_attribute(:status, STATUS_DELETED)
+        flash[:success] = "Post #{post.hashtag_prefix} successfully removed."
+        redirect_to user_path(current_user)
+      end
     end
   end
 
