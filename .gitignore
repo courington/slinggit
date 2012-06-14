@@ -8,6 +8,9 @@
 /log/*.log
 /tmp
 
+# Ignore all confir changes
+#/config
+
 # Ignore sample photos
 public/assets/posts/
 public/uploads/posts/
