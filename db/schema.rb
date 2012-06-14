@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120610125325) do
+ActiveRecord::Schema.define(:version => 20120614040552) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(:version => 20120610125325) do
 
   create_table "flagged_contents", :force => true do |t|
     t.integer  "creator_user_id"
-    t.string   "content_source"
-    t.integer  "content_id"
+    t.string   "source"
+    t.integer  "source_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
@@ -243,8 +243,8 @@ ActiveRecord::Schema.define(:version => 20120610125325) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
