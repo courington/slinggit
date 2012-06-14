@@ -1307,7 +1307,51 @@ class MobileController < ApplicationController
   #TODO IMPLEMENT
 
   def report_abuse
+    if not params[:content_source].blank?
+      if not params[:content_id].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,email,name')
+            flagged_content = FlaggedContent.create(
+                :creator_user_id => user.id,
+                :content_source => params[:content_source],
+                :content_id => params[:content_id]
+            )
 
+            render_success_response(
+                flagged_content.attributes
+            )
+          else
+            render_error_response(
+                :error_location => 'report_abuse',
+                :error_reason => 'not found - user',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'report_abuse',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'report_abuse',
+            :error_reason => 'missing required_paramater - content_id',
+            :error_code => '404',
+            :friendly_error => 'The email address entered is not valid.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'report_abuse',
+          :error_reason => 'missing required_paramater - content_source',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
   end
 
   private
