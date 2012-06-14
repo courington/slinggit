@@ -18,16 +18,32 @@ class MessagesController < ApplicationController
 
   def reply
     @message ||= Message.new
+
     if not params[:id].blank?
-      if not @origin_message = Message.first(:conditions => ['id_hash = ? and recipient_user_id = ? AND status != ?', params[:id], current_user.id, STATUS_DELETED])
-        flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
-        redirect_to root_path
+      session.delete(:parent_message)
+      if parent_message = Message.first(:conditions => ['id_hash = ? and recipient_user_id = ? AND status != ?', params[:id], current_user.id, STATUS_DELETED])
+        session[:parent_message] = parent_message
       end
+    end
+
+    if not session[:parent_message].blank?
+      if session[:parent_message].creator_user_id.blank?
+        flash[:error] = 'You appear to be doing something we are not familiar with.  Please let us know what it is you were trying to do.'
+        redirect_to message_path
+      else
+        @parent_message = session[:parent_message]
+      end
+    else
+      flash[:error] = "Sorry, we couldn't find the message you were trying to reply to."
+      redirect_to message_path
     end
   end
 
   def new
     @message ||= Message.new
+
+    #if they hit this account we know they arent replying
+    session.delete(:parent_message)
 
     #this is used to populate what they had entered before we detected that the email address they entered was already registered.  (not signed in user))
     if not session[:message_data_before_login].blank?
@@ -58,21 +74,25 @@ class MessagesController < ApplicationController
 
   def create
     if request.post?
-      if params[:reply]
+      if session[:parent_message]
         if params[:message]
           @message = Message.new(params[:message])
           @message.creator_user_id = current_user.id
-          @message.recipient_user_id = session[:message_post].user_id
-          @message.source = 'post'
-          @message.source_id = session[:message_post].id
+          @message.recipient_user_id = session[:parent_message].creator_user_id
+          @message.source = session[:parent_message].source
+          @message.source_id = session[:parent_message].source_id
+          @message.contact_info_json = ActiveSupport::JSON.decode(session[:parent_message].contact_info_json)['email']
+          @message.parent_source_id = session[:parent_message].id
           @message.send_email = true
 
           if @message.save
             flash[:success] = "Message has been sent."
-            redirect_to :controller => :posts, :action => :show, :id => session[:message_post].id
+            session.delete(:parent_message)
+            redirect_to message_path
           else
-            @post = session[:message_post]
-            render 'new'
+            @parent_message = session[:parent_message]
+            @message = Message.new(params[:message])
+            render 'reply'
           end
         else
           #TODO redirect to report an issue
@@ -104,6 +124,7 @@ class MessagesController < ApplicationController
 
             if @message.save
               flash[:success] = "Message has been sent."
+              session.delete(:message_post)
               redirect_to :controller => :posts, :action => :show, :id => session[:message_post].id
             else
               @post = session[:message_post]
