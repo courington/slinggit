@@ -20,12 +20,12 @@
             <div class="col3 offset3">
 
               <div class="row">
-                <div class="col3 pull_left head_aside <%= 'active' if current_page?(current_user) %>">
+                <div class="col2 pull_left head_aside <%= 'active' if current_page?(current_user) %>">
                   <span class="btnNavSprite btn_navPosts"></span>
                   <%= link_to "Posts", current_user %>
                 </div>
                 <!-- DROP DOWN -->
-                <div id="accountDropDown" class="col3 pull_right head_aside dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
+                <div id="accountDropDown" class="col2 pull_right head_aside dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
                   <span class="btnNavSprite btn_navSettings"></span>
                   <span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings</span>
                   <ul class="nav_dropDown dropdown-menu">
@@ -34,9 +34,6 @@
                     </li>
                     <li class="<%= 'active' if current_page?(networks_path) %>">
                       <%= link_to "Social Networks", networks_path %>
-                    </li>
-                    <li>
-                      <%= link_to "Messages (#{Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])})", messages_path %>
                     </li>
                     <li>
                       <%= link_to "Sign Out", signout_path, method: "delete" %>
@@ -48,6 +45,10 @@
                         </li>
                     <% end %>
                   </ul>
+                </div>
+                <div>
+                  <span class="col2 pull_left head_aside <%= 'active' if current_page?(current_user) %>"></span>
+                  <%= link_to "Messages #{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? '(' + count.to_s + ')' : ''}", messages_path %>
                 </div>
                 <!--end col3 -->
 
