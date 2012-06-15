@@ -492,6 +492,18 @@
 //641px and up
 @media all and (min-width: 641px) and (max-width: 960px) {
 	
+	//REQUEST INVITE
+	.request_invite {
+		.page_contentContainer {
+			.row.grey_well {
+				label {
+					padding-left: 1.4em;
+				}
+			}
+		}
+	}
+	//END
+	
 }
 //this bracke closes the 641+ media query
 //end
