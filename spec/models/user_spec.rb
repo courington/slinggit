@@ -17,6 +17,7 @@
 #  account_reactivation_code :string(255)
 #  slug                      :string(255)
 #  role                      :string(255)     default("EXT")
+#  photo_source              :string(255)
 #
 
 require 'spec_helper'

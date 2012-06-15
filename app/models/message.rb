@@ -13,6 +13,7 @@
 #  id_hash           :string(255)
 #  created_at        :datetime        not null
 #  updated_at        :datetime        not null
+#  parent_source_id  :integer
 #
 
 #create_table :messages do |t|

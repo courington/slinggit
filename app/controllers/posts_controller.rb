@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
+  before_filter :user_verified, only: [:create, :destroy, :eidt, :new]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
   before_filter :non_suspended_user, only: [:new]
   before_filter :correct_user, only: [:destroy, :edit, :update]
   before_filter :load_api_accounts, :only => [:new, :create]
-  # CMK: I'm not sure I was asking Dan the right questions tonight about
-  # where to put this, but this seems cleaner than putting it the model.
   before_filter :get_id_for_slinggit_api_account, :only => [:new, :create]
 
   def index
+    @posts = Post.paginate(page: params[:page], :per_page => 10, :conditions => ['open = ? AND status != ?', true, STATUS_DELETED], :order => 'id desc')
   end
 
   def show

@@ -412,6 +412,7 @@
 		}
 	}
 	//end
+<<<<<<< HEAD
 	//REQUEST INVITE
 	.request_invite {
 		.col1, .col2, .col3, .col4, .col5 {
@@ -471,6 +472,18 @@
 		}
 	}
 	//END
+=======
+	// email reverification page
+		#emailVerificationWrapper{
+			.col3{
+				width: 100%;
+				p{
+					font-size: $font-size * .8;
+				}
+			}
+		}
+	//end
+>>>>>>> a160dc96b52ec29b2d70bf741fc96471c167896a
 }
 //this bracket closes the 320-640 media query
 //end

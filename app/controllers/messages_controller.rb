@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_filter :signed_in_user, :except => [:new, :create]
+  before_filter :user_verified, only: [:index, :show, :new, :create, :delete, :reply]
 
   def index
     @messages = Message.paginate(page: params[:page], :per_page => 10, :conditions => ['recipient_user_id = ? AND status != ?', current_user.id, STATUS_DELETED], :order => 'id desc, status desc')

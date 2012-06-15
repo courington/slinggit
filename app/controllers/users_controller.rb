@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account]
   before_filter :correct_user, only: [:edit, :update]
+  before_filter :user_verified, only: [:edit, :update, :destroy]
   #before_filter :admin_user, only: [:index]
 
   USERS_PATH = "/users"
@@ -35,7 +36,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    # CMK: added condition to check for status != deleted
     @user = User.first(:conditions => ['name = ?', params[:id]])
     if not @user.blank? and not @user.is_considered_deleted?
       @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ?', @user.id, STATUS_ACTIVE])
@@ -124,6 +124,26 @@ class UsersController < ApplicationController
     else
       flash[:notice] = "We are not currently accepting new users without an invitation."
       redirect_to :action => :request_invitation and return
+    end
+  end
+
+  def edit_user_email_for_verification
+    @user = User.first(:conditions => ['name = ?', params[:id]])
+  end
+
+  def update_email_and_send_verification
+    user_updates = params[:user]
+    @user = User.find(user_updates[:id])
+
+    if current_user.id == @user.id
+      if @user.update_attributes(user_updates)
+        @user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(@user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH))
+        UserMailer.welcome_email(@user).deliver
+        flash[:success] = "A verification email has been sent to #{@user.email}"
+        redirect_to user_path(@user)
+      else  
+        render 'edit_user_email_for_verification'
+      end
     end
   end
 

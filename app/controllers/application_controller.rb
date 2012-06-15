@@ -277,6 +277,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def user_verified
+    ## This method should not be used with a non-signed in user, becuase it doesn't make any
+    ## sense to.  So, I'm not checking for signed in users here, only that their email is 
+    ## verified.
+    if signed_in?
+      if current_user.email_is_verified?
+        return true
+      else
+        flash[:notice] = "Before you can get started, we need you to verify your email address.  |  #{ActionController::Base.helpers.link_to "Resend Verification Email", "/edit_email_for_verification?id=#{current_user.name}"}".html_safe
+        redirect_to user_path(current_user)
+      end
+    end
+  end
+
   def set_timezone
     #Time.zone = current_user.time_zone || 'Central Time (US & Canada)'
   end

@@ -1,4 +1,4 @@
-#userPostsWrapper, #searchPostWrapper, #userMessages{
+#userPostsWrapper, #searchPostWrapper, #viewPostsWrapper, #userMessages{
 
 	#user{
 		margin-top: 10px;
@@ -41,6 +41,15 @@
 			.btn_green{
 				min-width: 190px;
 				margin-bottom: 20px;
+			}
+
+			#createPostAction{
+				p{
+					padding-bottom: 15px;
+					strong{
+						font-weight: 600;
+					}
+				}
 			}
 		}
 

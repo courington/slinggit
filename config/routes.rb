@@ -4,6 +4,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/reset_page_session', :to => 'users#reset_page_session', via: :get
   match 'users/verify_email_availability', :to => 'users#verify_email_availability', via: :post
   match 'users/verify_username_availability', :to => 'users#verify_username_availability', via: :post
+  match 'users/update_email_and_send_verification', :to => 'users#update_email_and_send_verification', via: :put
+  match '/edit_email_for_verification', :to => 'users#edit_user_email_for_verification', :as => 'prep_for_reverification'
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
 
   match 'users/enter_new_password/(:id)', :to => 'users#enter_new_password#id'
