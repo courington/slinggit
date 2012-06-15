@@ -1012,6 +1012,69 @@ class MobileController < ApplicationController
     end
   end
 
+  def reply_to_message
+    if not params[:parent_message_id].blank?
+      if not params[:body].blank?
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+          if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ? AND status != ?', params[:parent_message_id], current_user.id, STATUS_DELETED])
+            message = Message.new(
+                :creator_user_id => mobile_session.user_id,
+                :recipient_user_id => parent_message.creator_user_id,
+                :source => parent_message.source,
+                :source_id => parent_message.source_id,
+                :body => params[:body],
+                :contact_info_json => ActiveSupport::JSON.decode(parent_message.contact_info_json)['email'],
+                :parent_source_id => parent_message.id,
+                :send_email => true
+            )
+
+            if message.save
+              render_success_response(
+                  :message_id => message.id,
+                  :email_sent => true
+              )
+            else
+              render_error_response(
+                  :error_location => 'reply_to_message',
+                  :error_reason => message.errors.messages,
+                  :error_code => '404',
+                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
+              )
+            end
+          else
+            render_error_response(
+                :error_location => 'reply_to_message',
+                :error_reason => 'not found - parent_message',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'reply_to_message',
+              :error_reason => 'not found - mobile_session',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'reply_to_message',
+            :error_reason => 'missing required_paramater - body',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'reply_to_message',
+          :error_reason => 'missing required_paramater - parent_message_id',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
   def delete_message
     if not params[:message_ids].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
@@ -1303,8 +1366,6 @@ class MobileController < ApplicationController
       )
     end
   end
-
-  #TODO IMPLEMENT
 
   def report_abuse
     if not params[:source].blank?
