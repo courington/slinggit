@@ -20,9 +20,9 @@ test: &test
 
 production:
   adapter: mysql2
-  database: slinggit_prod
+  database: slinggit_integ
   host: localhost
-  username: slinggit_prod
+  username: slinggit_integ
   password: g!t&sl1nG
 
 cucumber:

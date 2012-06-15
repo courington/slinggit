@@ -1,10 +1,10 @@
-set :application, "slinggit"
+set :application, "slinggit_test"
 set :repository,  "https://slinggit@bitbucket.org/chrisklein/slinggit-webapp-and-services.git"
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-set :deploy_to, "/home/slinggit/webapps/slinggit"
+set :deploy_to, "/home/slinggit/webapps/slinggit_test"
 
 set :default_environment, {
   'PATH' => "#{deploy_to}/bin:$PATH",
