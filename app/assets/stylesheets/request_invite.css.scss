@@ -1,0 +1,35 @@
+body.request_invite,
+.page_contentContainer {
+	background: $main-blue;
+	box-shadow: inset 0 10px 0 $lt-grey;
+	.wrapper {
+		margin-top: 2.6em ;
+	}
+	p.col2.pull_left {
+		font-size: 1.8em;
+		line-height: 1.6em;
+		color: $wht;
+		padding: 1.4em 0 0 .8em;
+		border-left: 1px solid darken($main-blue, 10%);
+		box-shadow: inset 1px 0 0 rgba($wht, .25);
+		margin-top: -1.4em;
+		}
+		
+		.row.grey_well {
+			margin: 1.8em auto;
+			p {
+				line-height: 1.8em;
+			}
+			label {
+				font-size: 1.6em;
+				margin: 1.2em 0 0 0;
+				color: $main-blue;
+				padding-left: 2.8em;
+			}
+		}
+		
+	.invite_footer a {
+		text-indent: -9999px;
+		margin: 0 0 0 $font-size;
+	}
+}

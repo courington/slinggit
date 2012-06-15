@@ -1,25 +1,39 @@
 <%= provide(:title, 'Request Invitation') %>
 
-<section class="wrapper requestInvite">
+<section class="wrapper invite_wrapper">
 	
-  <header class="row">
-    <h1>Request Invitation</h1>
-    <p>Request Invitation</p>
-  </header>
+	<article class="row">
+		<%= image_tag "logos/slinggit_logotype_blue_417x162.png", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col2 offset1 pull_left" %>
+		<p class="col2 pull_left">Sell to friends, sell locally. Slinggit is a simple way to leverage your existing networks to sell stuff from your mobile device or desktop.</p>
+	</article>
 
+
+<div class="col4 offset1">
   <%= form_tag do |f| %>
-      <div class="row">
-        <div class="col6">
-          <%= label_tag :email, "Email", for: "invitation_email", class: "col4 offset2" %>
-					<div class="row">
-          	<%= email_field_tag :email, @email, placeholder: "Email", class: "col4 offset2", size: "30" %>
-					</div>
-        </div>
-      </div>
+      <div class="row grey_well">
 
-      <div class="row">
-        <%= button_tag "Send Request", class: "btn btn_blue col3 offset3", :type => 'submit' %>
+					<p class="col6">We&rsquo;re getting ready to launch. Be one of the first to start slingging!</p>
+          <%= label_tag :email, "Email:", for: "invitation_email", class: "col1 pull_left" %>
+					<div class="col4 pull_left">
+          	<%= email_field_tag :email, @email, placeholder: "Email", class: "row", size: "30" %>
+					</div>
+
+
+					<div class="row">
+	        	<%= button_tag "Request Invitation", class: "btn btn_green col2 offset3", :type => 'submit' %>
+					</div>
+
       </div>
   <% end %>
+
+	<div class="row invite_footer">
+		<small class="col2 pull_left">&copy;2012 Slinggit</small>
+		<nav class="col2 pull_right">
+			<a href="http://twitter.com/#!/slinggit" title="Twitter" class="pull_right btnNavSprite twitIcon" >Twitter</a>
+			<a href="https://www.facebook.com/Slinggit" title="Facebook" class="pull_right btnNavSprite facebookIcon">Facebook</a>
+		</nav>
+	</div>
+	
+	</div>
 
 </section>

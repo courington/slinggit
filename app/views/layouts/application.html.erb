@@ -10,32 +10,38 @@
 
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-
-
-	 <!-- <script type="text/javascript">
-	  // When ready...
-	window.addEventListener("load",function() {
-	  // Set a timeout...
-	  setTimeout(function(){
-	    // Hide the address bar!
-	    window.scrollTo(0, 1);
-	  }, 0);
-	});
-	  </script> -->
-	
+  <%= csrf_meta_tags %>	
 	
 </head>
-<body>
-<%= render 'layouts/header' %>
-<div class="page_contentContainer">
-  <% flash.each do |key, value| %>
-      <div id="<%= key %>_explanation_bubble">
-        <div class="alert alert-<%= key %>"><%= value %></div>
-      </div>
-  <% end %>
-  <%= yield %>
-</div>
-<%= render 'layouts/footer' %>
-</body>
+
+<% if not invite_only? %>
+
+	<body>
+	<%= render 'layouts/header' %>
+	<div class="page_contentContainer">
+	  <% flash.each do |key, value| %>
+	      <div id="<%= key %>_explanation_bubble">
+	        <div class="alert alert-<%= key %>"><%= value %></div>
+	      </div>
+	  <% end %>
+	  <%= yield %>
+	</div>
+	<%= render 'layouts/footer' %>
+	</body>
+	
+	<% else %>
+	
+	<body class="request_invite">
+	<div class="page_contentContainer">
+	  <% flash.each do |key, value| %>
+	      <div id="<%= key %>_explanation_bubble">
+	        <div class="alert alert-<%= key %>"><%= value %></div>
+	      </div>
+	  <% end %>
+	  <%= yield %>
+	</div>
+	</body>
+
+<% end %>
+
 </html>

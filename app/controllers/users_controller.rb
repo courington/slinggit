@@ -25,8 +25,8 @@ class UsersController < ApplicationController
               :email => params[:email],
               :comment => params[:comment]
           )
-          flash[:succcess] = "Invitation request has been sent.  We will approve it as soon as possible."
-          redirect_to :controller => :static_pages, :action => :home
+          flash.now[:success] = "Invitation request has been sent.  We will approve it as soon as possible."
+          #redirect_to :controller => :static_pages, :action => :home
         end
       else
         flash.now[:error] = "Please give us your email address so we can contact you when your invitation is approved."

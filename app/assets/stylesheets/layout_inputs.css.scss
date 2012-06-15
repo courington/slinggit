@@ -151,11 +151,17 @@ input[type="submit"] {
 }
 
 .twitIcon {
-	background: url("icons/twitter/twitterBird_88x32.png") no-repeat -44px 0;
-	height: 32px;
-	width: 44px;
+	background: url("icons/navigation/primaryNav_sprite_191x48.png") no-repeat -96px 0;
 	display: inline-block;
-	margin: 2px 2px -2px 0;
+	height: 32px;
+	width: 32px;
+}
+
+.facebookIcon {
+	background: url("icons/navigation/primaryNav_sprite_191x48.png") no-repeat -160px 0;
+	display: inline-block;
+	height: 32px;
+	width: 32px;
 }
 
 .twitIcon_dark {
