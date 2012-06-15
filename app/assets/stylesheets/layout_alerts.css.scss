@@ -24,8 +24,8 @@
 
 #notice_explanation_bubble {
     @extend #explanation_bubble;
-    background: lighten($main-yellow, 15%);
-    color: $main-grey;
+    background: lighten($main-yellow, 35%);
+    color: darken($main-yellow, 25%);
 }
 
 #error_explanation {

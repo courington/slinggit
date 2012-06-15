@@ -50,9 +50,17 @@
         <% end %>
         <div id="createPostAction" class="row">
         <% if current_user?(@user) %>
+
           <% if not current_user.is_suspended? %>
+
+            <% if current_user.email_is_verified? %>
               <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
+            <% else %>
+              <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your email address.</p>  
+              <p>If you haven't recieved an email from us, check your spam folder or you can always have us <%= link_to "resend it.", "/edit_email_for_verification?id=#{current_user.name}" %></p>
+            <% end %>
           <% end %>  
+
         <% end %>
         </div>
       </div>
@@ -66,7 +74,9 @@
       <% elsif !@user.posts.any? and !current_user?(@user) %>
         <p><strong><%= @user.name %></strong> has not created any posts yet. Check back soon!</p>
       <% elsif !@user.posts.any? and current_user?(@user) %>
-        <p><strong><%= @user.name %></strong>, you haven't created any posts yet.
+        <% if current_user.email_is_verified? %>
+          <p><strong><%= @user.name %></strong>, you haven't created any posts yet.
+        <% end %>
       <% end %>
     </div>
 

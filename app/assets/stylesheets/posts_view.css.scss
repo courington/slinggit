@@ -42,6 +42,15 @@
 				min-width: 190px;
 				margin-bottom: 20px;
 			}
+
+			#createPostAction{
+				p{
+					padding-bottom: 15px;
+					strong{
+						font-weight: 600;
+					}
+				}
+			}
 		}
 
 		#postArticlesWrapper, #msgArticleWrapper{	

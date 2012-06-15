@@ -1,20 +1,23 @@
 # == Schema Information
 #
-#create_table :facebook_posts do |t|
-#  t.integer :user_id
-#  t.integer :api_account_id
-#  t.integer :post_id
-#  t.string :name #name
-#  t.string :message #message
-#  t.string :caption #caption
-#  t.string :description #description
-#  t.string :image_url #picture
-#  t.string :link_url #link
-#  t.string :facebook_post_id
-#  t.string :status
-#  t.string :last_result
-#  t.timestamps
-#end
+# Table name: facebook_posts
+#
+#  id               :integer         not null, primary key
+#  user_id          :integer
+#  api_account_id   :integer
+#  post_id          :integer
+#  name             :string(255)
+#  message          :string(255)
+#  caption          :string(255)
+#  description      :string(255)
+#  image_url        :string(255)
+#  link_url         :string(255)
+#  facebook_post_id :string(255)
+#  status           :string(255)
+#  last_result      :string(255)
+#  created_at       :datetime        not null
+#  updated_at       :datetime        not null
+#
 
 class FacebookPost < ActiveRecord::Base
   attr_accessible :user_id, :api_account_id, :post_id, :name, :message, :caption, :description, :image_url, :link_url, :facebook_post_id, :status, :last_result
