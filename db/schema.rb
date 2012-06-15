@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614040552) do
+ActiveRecord::Schema.define(:version => 20120614055851) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20120614040552) do
     t.string   "id_hash"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
+    t.integer  "parent_source_id"
   end
 
   add_index "messages", ["creator_user_id"], :name => "index_messages_on_creator_user_id"
