@@ -9,7 +9,9 @@
 	<% if current_user.blank? %>
 
 			<article class="row">
-				<p>Connect with buyers and sellers around the world or stay within your Twitter and Facebook networks.</p>
+				<p>Slinggit is a fast and carefree way to connect with buyers and sellers in your Twitter and Facebook networks.</p> 
+
+				<p>Slinggit to your network of trusted friends and family on Facebook.  Slinggit to the world on  Twitter.  Slinggit to both.  It’s fun and easy and we’re sure you’ll love it.  Enjoy!</p>
 				<%= image_tag "heroimages/hero_phoneDiagram_960x524.jpg", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col6" %>
 			</article>
 			
@@ -31,8 +33,7 @@
 		<div class="row">
 			<div class="col4 pull_left white_well">
 				<div class="row">
-					<p class="col3 pull_left">Welcome back <%= current_user.name %>!</p>
-					<p class="col3 pull_right">Got some old junk laying around? Got some old junk laying around? Got some old junk laying around? Got some old junk laying around?</p>
+					<p class="col3 pull_left">Welcome back <strong><%= current_user.name %></strong!</p>
 					<div class="col6">
 						<div class="row">
 							<%= link_to "Slinggit", new_post_path, class: "col3 pull_left btn_green" %>
@@ -56,9 +57,9 @@
 	    <% if !@posts.blank? %>
 	        <div class="row home_featurePost">
 	            <div class="white_well col4 pull_left">
-								<h1 class="row">Feature Post:</h1>
-								<%= render @posts %>
-							</div>
+					<h1 class="row">Feature Post:</h1>
+					<%= render @posts %>
+				</div>
 	        </div>
 	    <% end %>
 	<!-- end -->
