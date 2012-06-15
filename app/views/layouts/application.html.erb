@@ -14,8 +14,6 @@
 	
 </head>
 
-<% if not invite_only? %>
-
 	<body>
 	<%= render 'layouts/header' %>
 	<div class="page_contentContainer">
@@ -28,20 +26,5 @@
 	</div>
 	<%= render 'layouts/footer' %>
 	</body>
-	
-<% else %>
-	
-	<body class="request_invite">
-	<div class="page_contentContainer">
-	  <% flash.each do |key, value| %>
-	      <div id="<%= key %>_explanation_bubble">
-	        <div class="alert alert-<%= key %>"><%= value %></div>
-	      </div>
-	  <% end %>
-	  <%= yield %>
-	</div>
-	</body>
-
-<% end %>
 
 </html>
