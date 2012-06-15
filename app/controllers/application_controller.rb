@@ -286,6 +286,7 @@ class ApplicationController < ActionController::Base
     else
       flash.now[:notice] = "Before you can get started, we need you to verify your email address."
       redirect_to user_path(current_user)
+    end
   end
 
   def set_timezone
