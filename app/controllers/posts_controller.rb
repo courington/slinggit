@@ -7,6 +7,7 @@ class PostsController < ApplicationController
   before_filter :get_id_for_slinggit_api_account, :only => [:new, :create]
 
   def index
+    @posts = Post.paginate(page: params[:page], :per_page => 10, :conditions => ['open = ? AND status != ?', true, STATUS_DELETED], :order => 'id desc')
   end
 
   def show

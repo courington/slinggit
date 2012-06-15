@@ -1,22 +1,25 @@
 <%= provide(:title, 'Request Invitation') %>
 
-<section class="wrapper page_col singleWide">
-  <header>
+<section class="wrapper requestInvite">
+	
+  <header class="row">
     <h1>Request Invitation</h1>
-
     <p>Request Invitation</p>
   </header>
 
   <%= form_tag do |f| %>
       <div class="row">
         <div class="col6">
-          <%= label_tag :email, "Email", for: "invitation_email" %>
-          <%= email_field_tag :email, @email, placeholder: "Email", class: "form_singleLine", size: "30" %>
+          <%= label_tag :email, "Email", for: "invitation_email", class: "col4 offset2" %>
+					<div class="row">
+          	<%= email_field_tag :email, @email, placeholder: "Email", class: "col4 offset2", size: "30" %>
+					</div>
         </div>
       </div>
 
-      <div class="col6">
-        <%= button_tag "Send Request", class: "btn", :type => 'submit' %>
+      <div class="row">
+        <%= button_tag "Send Request", class: "btn btn_blue col3 offset3", :type => 'submit' %>
       </div>
   <% end %>
+
 </section>

@@ -1,0 +1,36 @@
+<% provide(:title, "Posts") %>
+<section id="postWrapper" class="wrapper">
+
+  <div class="col2 pull_right">
+
+  </div>
+
+  <div id="postSearchResults" class="col4 pull_left">
+
+    <div class="row title_row">
+      <div class="col6 pull_left">
+        <header>
+          <h1>Browse Items for Sale</h1>
+
+          <p>Browse Items for Sale</p>
+        </header>
+      </div>
+    </div>
+
+    <section id="msgArticles" class="col4 pull_left">
+      <div id="postArticlesWrapper">
+        <% if not @posts.blank? %>
+            <%= render @posts %>
+            <%= will_paginate @posts %>
+        <% else %>
+            <div class="row">
+              <p>No posts were found for <strong><%= @searchTerm %></strong></p>
+            </div>
+        <% end %>
+      </div>
+    </section>
+
+  </div>
+
+</section>
+

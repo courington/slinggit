@@ -122,7 +122,7 @@ class TwitterPost < ActiveRecord::Base
 
 # Logic for constructing twitter message.
   def tweet_constructor(client)
-    content = self.post.content.truncate(60, :omission => "...")
+    content = self.post.content.truncate(55, :omission => "...")
     redirect = Redirect.get_or_create(
         :target_uri => "#{BASEURL}/posts/#{self.post.id}"
     )
