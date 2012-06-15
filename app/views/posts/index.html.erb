@@ -1,5 +1,5 @@
 <% provide(:title, "Posts") %>
-<section id="postWrapper" class="wrapper">
+<section id="viewPostsWrapper" class="wrapper">
 
   <div class="col2 pull_right">
 
@@ -17,7 +17,6 @@
       </div>
     </div>
 
-    <section id="msgArticles" class="col4 pull_left">
       <div id="postArticlesWrapper">
         <% if not @posts.blank? %>
             <%= render @posts %>
@@ -28,7 +27,6 @@
             </div>
         <% end %>
       </div>
-    </section>
 
   </div>
 
