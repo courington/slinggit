@@ -1,5 +1,5 @@
 <% provide(:title, 'Home') %>
-<section class="wrapper">
+<section class="wrapper homepage">
 
 <!-- if/else for user sign-in/sign-up homepage states -->
 	<div class="row">
@@ -7,21 +7,22 @@
 
 <!-- if user is not signed in -->
 	<% if current_user.blank? %>
-		<div class="row white_well">
-			<p class="col2 pull_left grey_well">Looking for something? Want to sell something? Slinggit.</p>
-			<p class="col2 pull_left">Looking for something? Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit.</p>
-			<p class="col2 pull_left">Looking for something? Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something? Slinggit. Want to sell something?</p>
+
+			<article class="row">
+				<p>Connect with buyers and sellers around the world or stay within your Twitter and Facebook networks.</p>
+				<%= image_tag "heroimages/hero_phoneDiagram_818x320.jpg", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col4 pull_left offset1" %>
+			</article>
 			
-			<div class="row">
+			<aside class="row">
 				<% if invite_only? %>
 					<!-- if invites are active -->
 					<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col2 offset2 btn_darkGrey" %>
 				<% else %>
 					<!-- if invites are NOT active -->
-					<%= link_to "Sign up now!", signup_path, class: " col2 offset2 btn_blue" %>
+					<%= link_to "Sign up now!", signup_path, class: "col2 offset2 btn_blue" %>
 				<% end %>
-			</div>
-		</div>
+			</aside>
+			
 <!-- end user not signed in if/else -->
 
 
@@ -49,20 +50,18 @@
 	
 <!-- end the homepage sign-in/sign-up if/else -->
 		</div> <!-- close col6 -->
-	</div> <!-- close row -->
-	
+	</div> <!-- close row -->	
 	
 	<!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
 	        <div class="row home_featurePost">
-	            <div class="white_well col6">
+	            <div class="white_well col4 pull_left">
 								<h1 class="row">Feature Post:</h1>
 								<%= render @posts %>
 							</div>
 	        </div>
 	    <% end %>
 	<!-- end -->
-	
 
 <!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
 <!-- <div class="row white_well wrapper_twitRoll">

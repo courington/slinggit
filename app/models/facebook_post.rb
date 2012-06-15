@@ -115,7 +115,15 @@ class FacebookPost < ActiveRecord::Base
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
-    param_string = "access_token=#{self.api_account.oauth_secret}&link=#{redirect.get_short_url}/&name=#{self.name}&message=#{self.message}&description=#{self.description}&caption=#{self.caption}"
+
+    access_token = self.api_account.oauth_secret
+    link_to_post = redirect.get_short_url
+    name = self.name
+    message = self.message
+    description = self.description
+    caption = self.caption
+
+    param_string = "access_token=#{access_token}&link=#{link_to_post}&name=#{name}&message=#{message}&description=#{description}&caption=#{caption}"
     if self.post.has_photo?
       param_string << "&picture=#{BASEURL}#{post.photo.url(:medium)}"
     end

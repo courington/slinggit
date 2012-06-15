@@ -1,0 +1,46 @@
+<% provide(:title, "Message Reply") %>
+
+<div class="wrapper message">
+  <% if @parent_message %>
+      <article class="col4 pull_left white_well">
+
+        <div class="row">
+          <small class="col6 timestamp">Received <%= time_ago_in_words(@parent_message.created_at) %> ago.</small>
+        </div>
+
+        <dl class="row">
+          <dt class="col1 pull_left">From:</dt>
+          <dd class="col5 pull_left"><%= @parent_message.contact_info[:email] %></dd>
+        </dl>
+
+        <div class="row">
+          <p class="col6"><%= @parent_message.body %></p>
+        </div>
+
+      </article>
+  <% end %>
+</div><br/>
+
+<div class="wrapper message">
+  <article class="col4 pull_left white_well">
+
+    <dl class="row">
+      <dt class="col1 pull_left">Response:</dt>
+    </dl>
+
+    <%= form_for(@message) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="row">
+          <div class="col6 pull_left">
+            <%= f.text_area :body, "maxLength" => 1000, :value => @message.body %>
+          </div>
+        </div>
+        <br/>
+        <%= submit_tag 'Send Message', class: "btn btn_green" do %>
+            <%= f.submit 'Send Message', class: "btn btn_green" %>
+            <%= f.hidden_field :reply, true %>
+        <% end %>
+    <% end %>
+
+  </article>
+</div>

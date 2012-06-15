@@ -1,6 +1,6 @@
 body > header:first-child {
 	width: 100%;
-	height:9.6em;
+	height:5.6em;
 	font-size: 62.5%;
 	background: $main-blue;
 	box-shadow: $head-shadow;
@@ -11,15 +11,15 @@ body > header:first-child {
 		h1 {
 			text-indent: -99999px;
 		}
-		.col5 {
-			margin: -1.84em 0 0 0;
+		.col2 {
 			img {
 				max-width: 100%;
+				height: 100%;
 				width: auto;
 			}
 		}
 		.col2 {
-			font-size: $font-size;
+			font-size: ($font-size * .5);
 			color: $wht;
 		}
 	}
@@ -27,7 +27,7 @@ body > header:first-child {
 		font-size: $font-size;
 		color: $wht;
 		text-shadow: $txt-shdw;
-		margin: 1em 0 0 0;
+		margin: -($font-size * .5) 0 0 0;
 		.btnNavSprite {
 			background: url("icons/navigation/primaryNav_sprite_191x48.png") no-repeat 0 0;
 			display: inline-block;
@@ -37,14 +37,16 @@ body > header:first-child {
 		.btn_navPosts {
 			@extend .btnNavSprite;
 			background-position: -32px -32px;
+			vertical-align: middle;
 		}
 		.btn_navSettings {
 			@extend .btnNavSprite;
 			background-position: 0 -32px;
+			vertical-align: middle;
 		}
 		&.col4.pull_right > .row:last-child,
-		&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
-		margin-top: .5em;
+		&.col4.pull_right > .row:last-child > #quickSearchWrapper > .row {
+		margin-top: .4em;
 		padding-bottom: .25em;
 		}
 		a {
@@ -53,6 +55,7 @@ body > header:first-child {
 			&:active {
 				color: $wht;
 				@include transition;
+				vertical-align: middle;
 			}
 			&:hover {
 				color: $lt-grey;
@@ -72,7 +75,9 @@ body > header:first-child {
 				.BTN_nav_dropDown {
 					width: 100%;
 					padding: 5px 2px 15px 0;
+					line-height: 1.2em;
 					color: $wht;
+					vertical-align: middle;
 					@include transition;
 					&:hover {
 						color: $lt-grey;
@@ -103,12 +108,11 @@ body > header:first-child {
 				}
 			}
 			#quickSearchWrapper {
-				margin-top: -1em;
 				&> .btn_navSearch {
 					@extend .btnNavSprite;
 					background-position: -62px -32px;
 					position: relative;
-					top: 26px;
+					top: 21px;
 					left: 6px;
 				}
 				input[name="quickSearch"] {
@@ -119,6 +123,7 @@ body > header:first-child {
 				}
 				#quickSearch {
 					margin: 0 auto;
+					height: 1.6em;
 				}
 			}
 	}

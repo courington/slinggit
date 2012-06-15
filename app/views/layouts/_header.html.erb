@@ -1,93 +1,98 @@
 <header>
   <div class="row wrapper">
-    	<hgroup class="col2 pull_left">
-      		<h1>Slinggit</h1>
-      		<%= link_to image_tag("logos/slinggit_logotype_blue_417x162.png", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col4 pull_left"), :action => 'home', :controller => 'static_pages' %>
-      		<h6 class="col2 pull_right">beta</h6>
-    	</hgroup>
+    <hgroup class="col2 pull_left">
+      <h1>Slinggit</h1>
+      <%= link_to image_tag("logos/slinggit_logotype_blue_417x162.png", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col2 pull_left"), :action => 'home', :controller => 'static_pages' %>
+      <h6 class="col2 pull_left">beta</h6>
+    </hgroup>
 
-    	<nav class="col4 pull_right">
-      		<div class="row">
-				    <div class="col3 offset3" id="quickSearchWrapper">
-					     <span class="btnNavSprite btn_navSearch"></span>	
-        	     <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
-				    </div>
-      		</div> <!--end row -->
-      	  <% if signed_in? %>
-			       <div class="row">
+    <nav class="col4 pull_right">
+      <div class="row">
+        <div class="col3 offset3" id="quickSearchWrapper">
+          <span class="btnNavSprite btn_navSearch"></span>
+          <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+        </div>
+      </div>
+      <!--end row -->
+      <% if signed_in? %>
+          <div class="row">
 
-			 	       <div class="col3 offset3">
+            <div class="col3 offset3">
 
-					      <div class="row">
-        					 <div class="col3 pull_left head_aside <%= 'active' if current_page?(current_user) %>">
-										  <span class="btnNavSprite btn_navPosts"></span>
-										  <%= link_to "Posts", current_user %>
-        					 </div>
-                                <!-- DROP DOWN -->
-                    <div id="accountDropDown" class="col3 pull_right head_aside dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
-                          <span class="btnNavSprite btn_navSettings"></span>
-                          <span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings</span>
-                          <ul class="nav_dropDown dropdown-menu">
-                              <li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
-                                <%= link_to "Profile", edit_user_path(current_user) %>
-                              </li>
-                              <li class="<%= 'active' if current_page?(networks_path) %>">
-                                <%= link_to "Social Networks", networks_path %>
-                              </li>
-                              <li>
-                                <%= link_to "Messages", messages_path %>
-                              </li>
-                              <li>
-                                <%= link_to "Sign Out", signout_path, method: "delete" %>
-                              </li>
+              <div class="row">
+                <div class="col2 pull_left head_aside <%= 'active' if current_page?(current_user) %>">
+                  <span class="btnNavSprite btn_navPosts"></span>
+                  <%= link_to "Posts", current_user %>
+                </div>
+                <!-- DROP DOWN -->
+                <div id="accountDropDown" class="col2 pull_right head_aside dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
+                  <span class="btnNavSprite btn_navSettings"></span>
+                  <span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings</span>
+                  <ul class="nav_dropDown dropdown-menu">
+                    <li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
+                      <%= link_to "Profile", edit_user_path(current_user) %>
+                    </li>
+                    <li class="<%= 'active' if current_page?(networks_path) %>">
+                      <%= link_to "Social Networks", networks_path %>
+                    </li>
+                    <li>
+                      <%= link_to "Sign Out", signout_path, method: "delete" %>
+                    </li>
 
-                              <% if current_user.is_admin? %>
-                                 <li class="<%= 'active' if current_page?(users_path) %>">
-                                    <%= link_to "Admin", admin_path %>
-                                 </li>
-                              <% end %>
-                          </ul>
-                    </div> <!--end col3 -->
-
-
-						    </div> <!--end row -->
-        			     
-
-              </div> <!--end col3 -->
+                    <% if current_user.is_admin? %>
+                        <li class="<%= 'active' if current_page?(users_path) %>">
+                          <%= link_to "Admin", admin_path %>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
+                <div>
+                  <span class="col2 pull_left head_aside <%= 'active' if current_page?(current_user) %>"></span>
+                  <%= link_to "Messages #{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? '(' + count.to_s + ')' : ''}", messages_path %>
+                </div>
+                <!--end col3 -->
 
 
-          			
-					</div><!--end row 17 -->
+              </div>
+              <!--end row -->
 
-			<!-- 	</div> --> <!--end col4 pull_right -->
 
-			<!-- </div> -->
+            </div>
+            <!--end col3 -->
+
+
+          </div>
+          <!--end row 17 -->
+
+          <!-- 	</div> --> <!--end col4 pull_right -->
+
+          <!-- </div> -->
       <% else %> <!--else if signed_in? -->
           <% if current_page?(signin_path) %>
-      			<div class="row">
-      				<div class="col3 offset3 head_aside">
-                      	<% if invite_only? %>
-                          	<%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
-                      	<% else %>
-                          	<%= link_to "Sign Up", signup_path %>
-                      	<% end %>
-      				</div>
-      			</div>
-                <% else %>
-      			<div class="row">
-      				<div class="col3 offset3 head_aside">
-                    	<div class="col3 pull_left head_aside">
-                      	<%= link_to "Sign In", signin_path %>
-                    	</div>
-                    	<div class="col3 pull_left head_aside">
-                      <% if invite_only? %>
-                         	<%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
-                     	<% else %>
-                          <%= link_to "Sign Up", signup_path %>
-                      <% end %>
-                    	</div>
-      				</div>
-      			</div>
+              <div class="row">
+                <div class="col3 offset3 head_aside">
+                  <% if invite_only? %>
+                      <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
+                  <% else %>
+                      <%= link_to "Sign Up", signup_path %>
+                  <% end %>
+                </div>
+              </div>
+          <% else %>
+              <div class="row">
+                <div class="col3 offset3 head_aside">
+                  <div class="col3 pull_left head_aside">
+                    <%= link_to "Sign In", signin_path %>
+                  </div>
+                  <div class="col3 pull_left head_aside">
+                    <% if invite_only? %>
+                        <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
+                    <% else %>
+                        <%= link_to "Sign Up", signup_path %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
           <% end %>
       <% end %>
     </nav>

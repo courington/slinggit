@@ -27,7 +27,7 @@
 #end
 
 class Message < ActiveRecord::Base
-  attr_accessible :creator_user_id, :recipient_user_id, :source, :source_id, :contact_info_json, :body, :status, :send_email
+  attr_accessible :creator_user_id, :recipient_user_id, :source, :source_id, :contact_info_json, :body, :status, :send_email, :parent_source_id
   attr_accessor :send_email
 
   before_create :create_id_hash
@@ -93,4 +93,5 @@ class Message < ActiveRecord::Base
       end
     end
   end
+
 end
