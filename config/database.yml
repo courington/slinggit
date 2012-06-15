@@ -23,7 +23,7 @@ production:
   database: slinggit_prod
   host: localhost
   username: slinggit_prod
-  password: &!t&sl1nGG
+  password: g!t&sl1nG
 
 cucumber:
   <<: *test
