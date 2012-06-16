@@ -45,8 +45,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-a {
+a:link, a:visited, a:active, a:hover, a:focus {
 	text-decoration: none;
+	//color: darken($main-grey, 10%);
 }
 img {
 

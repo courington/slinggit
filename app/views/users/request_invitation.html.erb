@@ -27,10 +27,21 @@
   <% end %>
 
 	<div class="row invite_footer">
-		<small class="col2 pull_left">&copy;2012 Slinggit</small>
-		<nav class="col2 pull_right">
-			<a href="http://twitter.com/#!/slinggit" title="Twitter" class="pull_right btnNavSprite twitIcon" >Twitter</a>
-			<a href="https://www.facebook.com/Slinggit" title="Facebook" class="pull_right btnNavSprite facebookIcon">Facebook</a>
+		
+		<div class="col3 pull_left">
+			<%= link_to(about_path, :class => "row") do %>
+				<span class="coloradoIcon"></span>
+				<span>Handbuilt at 5280'</span>
+			<% end %>
+			
+			<small class="row">&copy;2012 Slinggit</small>
+		</div>
+		
+		<nav class="col3 pull_right">
+			<ul class="row">
+			<li><a href="http://twitter.com/#!/slinggit" title="Twitter" class="pull_right btnNavSprite twitIcon" >Twitter</a></li>
+			<li><a href="https://www.facebook.com/Slinggit" title="Facebook" class="pull_right btnNavSprite facebookIcon">Facebook</a></li>
+			</ul>
 		</nav>
 	</div>
 	
