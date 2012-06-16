@@ -5,11 +5,18 @@
 		<div class="col6">
 
 			<div class="row contentHeader">
-				<div class="innerHeader">
-					<header class="row">
+				<div class="innerHeader row">
+					<header class="col3 pull_left">
 						<h1><%= @post.hashtag_prefix %></h1>
-						<p><%= @post.hashtag_prefix %></p>	  		
+						<p><%= @post.hashtag_prefix %></p>	
 					</header>
+					<p id="postStatus" class="col3 <%=@post.open?%> pull_right">
+		      			<% if @post.open? %>
+		        			Open
+		      			<% else %>  
+		        			Closed
+		      			<% end %>
+					</p>	
 				</div>	
 			</div>	
 

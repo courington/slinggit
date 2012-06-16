@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614055851) do
+ActiveRecord::Schema.define(:version => 20120616185324) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -244,8 +244,8 @@ ActiveRecord::Schema.define(:version => 20120614055851) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "time_zone"
     t.string   "email_activation_code"
+    t.string   "time_zone"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
@@ -265,5 +265,15 @@ ActiveRecord::Schema.define(:version => 20120614055851) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
+
+  create_table "watchedposts", :force => true do |t|
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "watchedposts", ["created_at"], :name => "index_watchedposts_on_created_at"
+  add_index "watchedposts", ["user_id", "post_id"], :name => "by_user_and_post", :unique => true
 
 end

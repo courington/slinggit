@@ -17,18 +17,19 @@
 			    <dd class="col3">$<%= @post.price %></dd>
 			    <dt class="col2">Interested</dt>
 			    <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
-			    <dt class="col2">Status</dt>
-			    <dd id="postStatus" class="col3 <%=@post.open?%>">
-			      <% if @post.open? %>
-			        Open
-			      <% else %>  
-			        Closed
-			      <% end %>
-			    </dd>
 			</dl>
 		</div>
 		<div id="postDescription" class="col3">
 			<p class="col6"><%= @post.content %></p>
+			<% if signed_in? %>
+				<div class="row">
+					<% if !current_user.post_in_watch_list?(@post.id) %>
+						<%= link_to "Interested", {:controller => :watchedposts, :action => :interested, :post => @post.id}, class: "col2 btn_ltGrey" %>
+					<% else %>
+						<%= link_to "Uninterested", {:controller => :watchedposts, :action => :uninterested, :post => @post.id}, class: "col2 btn_ltGrey" %>
+					<% end %>
+				</div>
+			<% end %>
 		</div>	
 	</div>
 

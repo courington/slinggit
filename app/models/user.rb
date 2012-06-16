@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   # not making comments dependent: :destroy because we may still want comments associated with posts
   # even if the user is destroyed.  If this is wrong, let's change it.
   has_many :comments
+  has_many :watchedposts, :before_add => :validates_watchedpost, dependent: :destroy
 
   before_save :downcase_attributes
   before_save :create_remember_token
@@ -101,7 +102,24 @@ class User < ActiveRecord::Base
     return url
   end
 
+  def post_in_watch_list? post_id
+    watched = self.watchedposts.first(:conditions => ['post_id = ?', post_id])
+    if watched.blank?
+      return false
+    else
+      return true
+    end
+  end
+
   private
+
+  def validates_watchedpost(watchedpost)
+    watched = self.watchedposts.first(:conditions => ['user_id = ? AND post_id = ?', watchedpost.user_id, watchedpost.post_id])
+    if not watched.blank?
+      raise ActiveRecord::Rollback 
+      # TODO redirect to what are you trying to do page
+    end
+  end
 
   def gravatar_img_url(user)
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)

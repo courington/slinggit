@@ -227,12 +227,19 @@
 		}
 		#postContent{
 			padding: 0px 0px 0px 0px;
+
+			.innerHeader {
+				p{
+					text-align: center;
+				}
+			}
+
 			#postDetails{
 				.col3.pull_right {
-				width: 35%;
+					width: 35%;
 					.img_border {
-					position: relative;
-					z-index: 9999;
+						position: relative;
+						z-index: 9999;
 					}
 				}
 				.col3.pull_left.postInfo {
@@ -261,6 +268,9 @@
 					width: 100%;
 					p{
 						font-size: $font-size * .9;
+					}
+					a{
+						width: 30%;
 					}
 				}
 			}// end #postDetails

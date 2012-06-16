@@ -10,6 +10,16 @@
 
 		.innerHeader {
 			padding: 10px 10px 0px 10px;
+
+			#postStatus{
+				text-align: right;
+			}
+			#postStatus.true{
+				color: darken($main_green, 20%);
+			}
+			#postStatus.false{
+				color: darken($main_yellow, 20%);
+			}
 		}
 
 		#postDetails{
@@ -35,21 +45,16 @@
 						text-align: right;
 						padding: 5px 5px;
 					}
-
-					#postStatus.true{
-						color: darken($main_green, 20%);
-					}
-					#postStatus.false{
-						color: darken($main_yellow, 20%);
-					}
 				}
-
 			}
 
 			#postDescription {
 				p{
 					padding: 15px 5px 5px 5px;
 					font-size: $font-size;
+				}
+				a{
+					font-size: $font-size * .7;
 				}
 
 			}

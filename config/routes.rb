@@ -23,6 +23,9 @@ SlinggitWebapp::Application.routes.draw do
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
   match 'posts/delete_post', :to => 'posts#delete_post'
 
+  match 'watchedposts/interested', :to => 'watchedposts#interested'
+  match 'watchedposts/uninterested', :to => 'watchedposts#uninterested'
+
   match 'messages/delete(/:id)', :to => 'messages#delete#id'
   match 'messages/new(/:id)', :to => 'messages#new#id'
   match 'messages/reply(/:id)', :to => 'messages#reply#id'
@@ -32,6 +35,7 @@ SlinggitWebapp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy, :index]
   resources :posts, only: [:new, :create, :destroy, :edit, :show, :update]
   resources :networks, only: [:index, :create, :destroy]
+  resources :watchedposts
 
   match '/twitter_callback', :to => 'twittersessions#callback', :as => 'callback'
   match '/facebook_callback', :to => 'facebooksessions#callback', :as => 'facebook_callback'
