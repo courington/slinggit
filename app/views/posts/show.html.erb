@@ -66,7 +66,7 @@
 	</div>
 
 		
-	<% if is_signed_in_and_admin? %>
+	<% if is_signed_in_and_admin? && !current_user?(@user) %>
 		<!-- ADMIN ONLY FUNCTIONALITY -->
 		<div class="row margin-top">
 			<div class="col4">

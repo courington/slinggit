@@ -8,8 +8,8 @@
 	
 	<div class="row">
 	<% if !@user.is_suspended? %>
-		<article class="col3 pull_right">
-	        <div id="photoSelectorWrapper" class="grey_well">
+		<div class="col3 pull_left">
+	        <div id="photoSelectorWrapper" class="white_well">
 		
 				<div class="row">
 					<div class="col6">
@@ -47,31 +47,33 @@
 					</div>
 				</div>
 			</div>
-	    </article>
+	    </div>
+	</div>
 	
-		<article class="col3 pull_left">
+	<div class="row">
+		<div id="editUserFormWrapper" class="col3 pull_left">
 			
 		<%= form_for @user do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 
 				<fieldset class="row">
-					<%= f.label :name, class: "col6 control-label", for: "user_name" %>
-	                <%= f.text_field :name, class: "col5 form_singleLine" %>
+					<%= f.label :name, class: "col6 control-label" %>
+	                <p class="col6"><%= @user.name %></p>
 	            </fieldset>
 
 	            <fieldset class="row">
 					<%= f.label :email, class: "col6 control-label", for: "user_email" %>
-					<%= f.text_field :email, class: "col5 form_singleLine" %>
+					<%= f.text_field :email, class: "col6 form_singleLine" %>
 				</fieldset>
 
 	            <fieldset class="row">
 					<%= f.label :password, class: "col6 control-label", for: "user_password" %>
-					<%= f.password_field :password, class: "col5 form_singleLine" %>
+					<%= f.password_field :password, class: "col6 form_singleLine" %>
 	            </fieldset>
 
 	            <fieldset class="row">
 					<%= f.label :password_confirmation, "Confirm Password", class: "col6 control-label", for: "user_password_confirmation" %>
-					<%= f.password_field :password_confirmation, class: "col5 form_singleLine" %>
+					<%= f.password_field :password_confirmation, class: "col6 form_singleLine" %>
 	            </fieldset>
 
 	            <%= f.hidden_field :photo_source %>
@@ -83,7 +85,7 @@
 
 	              <%= f.submit "Save changes", class: "btn" %>
 		<% end %>
-		</article>
+		</div>
 
 
 	<% else %>

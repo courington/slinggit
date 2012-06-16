@@ -1,34 +1,49 @@
-#photoSelectorWrapper{
-	.col6{
-		text-align: center;
-		border-bottom: 1px solid $lt-grey;
-		padding-bottom: 5px;
-		margin-bottom:15px;
+#editUsers{
+	#editUserFormWrapper{
+		margin-top: 20px;
+		p{
+			display: block;
+			background-color: $wht;
+			color: $main-grey;
+			margin-top: 10px;
+			padding: 4px 0px 4px 4px;
+			border: 1px solid $lt-grey;
+			border-top: 2px solid $lt-grey;
+		}
 	}
-	.col2{
-		.row{
+
+	#photoSelectorWrapper{
+		.col6{
 			text-align: center;
-			p{
-				font-size: $font-size * .7;
-			}
-			img{
-				padding: .3em;
-					border: 1px solid #D7D7D7;
-					border-radius: .3em;
-					background-color: #E3E3E3;
-				width: 54px;
+			border-bottom: 1px solid $lt-grey;
+			padding-bottom: 5px;
+			margin-bottom:15px;
+		}
+		.col2{
+			.row{
+				text-align: center;
+				p{
+					font-size: $font-size * .7;
+				}
+				img{
+					padding: .3em;
+						border: 1px solid #D7D7D7;
+						border-radius: .3em;
+						background-color: #E3E3E3;
+					width: 54px;
 
-				&:hover{
-					border-color: #B8B8B8;
-					background-color: #D8D8D8;
-					cursor: pointer;
+					&:hover{
+						border-color: #B8B8B8;
+						background-color: #D8D8D8;
+						cursor: pointer;
+					}
+
+					&.selected{
+						background-color: $main-green;
+					}
 				}
 
-				&.selected{
-					background-color: $main-green;
-				}
 			}
-
 		}
 	}
 }
