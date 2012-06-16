@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  before_filter :invite_only_home_redirect, only: [:home]
+
   def home
     @posts = Post.first(:conditions => ['status = ?', STATUS_ACTIVE])
     if signed_in?
