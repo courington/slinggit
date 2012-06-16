@@ -68,32 +68,13 @@
 
           <!-- </div> -->
       <% else %> <!--else if signed_in? -->
-          <% if current_page?(signin_path) %>
-              <div class="row">
-                <div class="col3 offset3 head_aside">
-                  <% if invite_only? %>
-                      <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
-                  <% else %>
-                      <%= link_to "Sign Up", signup_path %>
-                  <% end %>
-                </div>
-              </div>
-          <% else %>
-              <div class="row">
-                <div class="col3 offset3 head_aside">
-                  <div class="col3 pull_left head_aside">
-                    <%= link_to "Sign In", signin_path %>
-                  </div>
-                  <div class="col3 pull_left head_aside">
-                    <% if invite_only? %>
-                        <%= link_to "Request Invitation", :controller => :users, :action => :request_invitation %>
-                    <% else %>
-                        <%= link_to "Sign Up", signup_path %>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-          <% end %>
+        <div class="row">
+          <div class="col3 offset3 head_aside">
+            <div class="col3 pull_right head_aside">
+              <%= link_to "Sign In", signin_path %>
+            </div>
+          </div>
+        </div>
       <% end %>
     </nav>
   </div>

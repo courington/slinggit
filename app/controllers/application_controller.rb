@@ -243,7 +243,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  ###BEFORE FILTERS####
+  ################################
+  ##       BEFORE FILTERS       ##
+  ################################
+
   def verify_good_standing
     if signed_in?
       # suspended users are allowed to login, they're just notified that their accounts are suspeneded.
@@ -267,6 +270,14 @@ class ApplicationController < ActionController::Base
       end
     end
     return true
+  end
+
+  def invite_only_home_redirect
+    if not signed_in?
+      if system_preferences[:invitation_only] and system_preferences[:invitation_only] == "on"
+        redirect_to request_invitation_path
+      end
+    end
   end
 
   def non_suspended_user

@@ -46,7 +46,7 @@ SlinggitWebapp::Application.routes.draw do
   root to: 'static_pages#home'
 
   match '/signup', to: 'users#new'
-  match '/request_invitation', to: 'users#request_invitation'
+  match '/request_invitation', to: 'users#request_invitation', :as => 'request_invitation'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
