@@ -29,7 +29,7 @@ body > header:first-child {
 		text-shadow: $txt-shdw;
 		margin: -($font-size * .5) 0 0 0;
 		.btnNavSprite {
-			background: url("icons/navigation/primaryNav_sprite_217x48.png") no-repeat 0 0;
+			background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat 0 0;
 			display: inline-block;
 			height: 16px;
 			width: 16px;
@@ -128,68 +128,41 @@ body > header:first-child {
 			}
 	}
 }
-footer {
+footer.pageFoot {
 	clear:both;
 	font-size: 62.5%;
 	box-shadow: $foot-shadow, inset 0 5px 15px rgba(255,255,255,.3);
 	position:relative;
 	z-index:9999;
+	padding-bottom: $font-size;
 		nav {
 			font-size: $font-size;
 			color: $main-grey;
 			text-shadow: $txt-shdw;
 			margin-top: $font-size * .5;
-			//border-left: 1px solid #F8F8F8;
-			//box-shadow: inset 1px 0 0 rgba(0, 0, 0, .25);
-			width:30%;
-			float:left;
 			ul {
 				li {
-					margin: .5em 1em;
 					a {
 						color: $main-grey;
 						@include transition;
 						&:hover {
-						color: $dk-grey;
+							color: $dk-grey;
 						}
 					}	
 				}
 			}
 		}
-		form {
-			width: 45%;
-			float: right;
-			margin:1.4em 0 0 0;
-			fieldset {
-				width: 75%;
-				float: left;
-				&:last-child {
-					width: 20%;
-					float: left;
-				}
-				input[type="email"],
-				textarea {
-					@include rounded-corners(.5em);
-					margin: .2em 0;
-					width: 90%;
-				}
-				input[type="button"] {
-					width: 100%;
-					margin: 5.5em 0 0 0;
-				}
-			}
-		}
-		small {
-			clear: left;
-			display: block;
-			margin: 1.4em;
-			font-size: 1.1em;
+	small {
+		font-size: 1.1em;
+		color: $main-grey;
+		a {
 			color: $main-grey;
-			a {
-				color: $main-grey;
-			}
 		}
-		.wrapper {
-		padding-bottom: $font-size * .5;
-		}
+	}
+	.coloradoIcon {
+		background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -191px 0;
+		display: inline-block;
+		height: 29px;
+		width: 29px;
+	}
 }

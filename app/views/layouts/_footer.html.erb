@@ -1,38 +1,32 @@
-<footer class="footer">
-  <section class="wrapper">
-    <nav>
-      <ul>
-        <li class="<%= 'active' if current_page?(sessions_path) %>">
-          <%= link_to "Mobile Sessions", sessions_path %>
-        </li>
+<footer class="pageFoot">
+	<div class="wrapper">
+		
+		<nav class="row">
+			<ul class="col3 pull_left">
+				<li class="<%= 'active' if current_page?(sessions_path) %>"><%= link_to "Mobile Sessions", sessions_path %></li>
+				<li><%= link_to "About", about_path %></li>
+				<li><%= link_to "Help", help_path %></li>
+				<li><%= link_to "Contact", contact_path %></li>
+			</ul>
+			<ul class="col3 pull_right">
+				<li><a href="http://twitter.com/#!/slinggit" title="Twitter" class="pull_right btnNavSprite twitIcon" >Twitter</a></li>
+				<li><a href="https://www.facebook.com/Slinggit" title="Facebook" class="pull_right btnNavSprite facebookIcon">Facebook</a></li>
+			</ul>
+		</nav>
 
-        <li><%= link_to "About", about_path %></li>
-        <li><%= link_to "Help", help_path %></li>
-        <li><%= link_to "Contact", contact_path %></li>
-      </ul>
-      <% if signed_in? %>
-			<span id="footerLoggedInUser"><%= "#{current_user.email}
-                                              " %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
-      <% else %>
-      <% end %>
-    </nav>
+    	<div class="row">
+      		<% if signed_in? %>
+			<span id="footerLoggedInUser"><%= "#{current_user.email}" %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
+      		<% else %>
+      		<% end %>	
+		</div>
+	
+		<div class="row">
+		<%= link_to(about_path, :class => "row") do %><span class="coloradoIcon"></span><span>Handbuilt at 5280'</span><% end %>
+    	<small>&copy;2012 <a href="https://slinggit.com/">slinggit</a></small>
+		</div>
 
-    <!-- ><form>
-         <fieldset>
-             <input type="email" size="100" placeholder="Email Address" name="emailAddress" />
-         </fieldset>
-         <fieldset>
-             <textarea type="text" size="100" placeholder="Message" name="description" /></textarea>
-         </fieldset>
-         <fieldset>
-             <input type="button" for="inputSmall" value="Send" class="submitBTN">
-         </fieldset>
-     </form> -->
-
-    <small>
-      &copy;2012 <a href="https://slinggit.com/">slinggit</a>
-    </small>
-  </section>
-  <%= debug(params) if Rails.env.development? %>
-
+  <!-- <%= debug(params) if Rails.env.development? %> -->
+	
+	</div>
 </footer>
