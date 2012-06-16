@@ -1423,7 +1423,7 @@ class MobileController < ApplicationController
     if not filter_data[:search_term].blank?
       matches = Post.all(:conditions => ["status = ? AND open = ? AND id < ? AND(content like ? OR hashtag_prefix like ? OR location like ?)", STATUS_ACTIVE, true, filter_data[:starting_post_id], "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%", "%#{filter_data[:search_term]}%"], :order => 'created_at desc', :limit => filter_data[:limit].to_i, :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at,user_id')
     else
-      matches = Post.all(:conditions => ["status = ? AND open = ? AND id < ?", STATUS_ACTIVE, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at,user_id')
+      matches = Post.all(:conditions => ["status = ? AND open = ? AND id < ?", STATUS_ACTIVE, true, filter_data[:starting_post_id]], :order => 'created_at desc', :limit => filter_data[:limit], :offset => filter_data[:offset], :select => 'id,content,hashtag_prefix,price,open,location,recipient_api_account_ids,created_at,photo_file_name,photo_content_type,photo_file_size,photo_updated_at,user_id')
     end
     return [true, matches]
   end
