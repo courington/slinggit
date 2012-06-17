@@ -148,7 +148,7 @@ class MobileController < ApplicationController
 
   def user_login_status
     if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
-      user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'name')
+      user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'name,id')
       render_success_response(
           :logged_in => true,
           :user_name => user.name,
@@ -217,6 +217,11 @@ class MobileController < ApplicationController
 
   def add_twitter_account
     setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
+  end
+
+  #TODO IMPLEMENT
+  def add_facebook_account
+
   end
 
   def add_twitter_account_callback
