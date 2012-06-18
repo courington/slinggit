@@ -1,23 +1,27 @@
 <div class="row comment">
 
-	<div class="col1 pull_left">
-  	<%= gravatar_for comment.user %>
+  <div class="col1 pull_left">
+    <%= gravatar_for comment.user %>
   </div>
 
-	<div class="col5 pull_left">
-		<% if User.find(comment.user_id) == @user %> 
-      <div class="row">
-			   <span class="label label_yellow">Item Owner</span>
-      </div>
-		<% end %>
+  <div class="col5 pull_left">
+    <% if User.find(comment.user_id) == @user %>
+        <div class="row">
+          <span class="label label_yellow">Item Owner</span>
+        </div>
+    <% end %>
     <div class="row">
-		  <p><%= comment.body %></p>
+      <p><%= comment.body %></p>
     </div>
     <div class="row">
   		<span class="timestamp">
-    		Asked <%= time_ago_in_words(comment.created_at) %> ago by <strong><%= link_to "#{comment.user.name}", user_path(comment.user) %></strong>
+    		Asked <%= time_ago_in_words(comment.created_at) %>
+            ago by <strong><%= link_to "#{comment.user.name}", user_path(comment.user) %></strong>
   		</span>
+      <% if (signed_in? and current_user.id == comment.user_id) %>
+          | <%= link_to "delete", :controller => :comments, :action => :delete, :id => comment.id_hash %>
+      <% end %>
     </div>
-	</div>	
+  </div>
 
 </div>
