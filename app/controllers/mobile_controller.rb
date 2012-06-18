@@ -5,7 +5,7 @@ class MobileController < ApplicationController
   before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
   before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
   before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
-  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account, :add_facebook_account_callback, :finalize_add_facebook_account]
+  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account, :add_facebook_account_callback, :finalize_add_facebook_account, :password_reset]
   before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
   around_filter :catch_exceptions
 
@@ -252,38 +252,34 @@ class MobileController < ApplicationController
         if params[:state] == Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH)
           redirect_uri = url_for :controller => :mobile, :action => :add_facebook_account_callback, :user_name => params[:user_name]
           access_token_url = URI.escape("https://graph.facebook.com/oauth/access_token?client_id=#{Rails.configuration.facebook_app_id}&redirect_uri=#{redirect_uri}&client_secret=#{Rails.configuration.facebook_app_secret}&code=#{params[:code]}")
-          begin
-            client = HTTPClient.new
-            access_token_response = client.get_content(access_token_url)
+          client = HTTPClient.new
+          access_token_response = client.get_content(access_token_url)
 
-            if not access_token_response.blank?
-              if access_token_response.include? 'error'
-                decoded_error_response = ActiveSupport::JSON.decode(access_token_response)
-                redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Facebook account later!', :error_reason => 'User denied permission'
-              else
-                access_token_and_expiration = parse_nested_query(access_token_response)
-                basic_user_info_response = client.get_content("https://graph.facebook.com/me?access_token=#{access_token_and_expiration['access_token']}")
-                if not basic_user_info_response.blank?
-                  if user = User.first(:conditions => ['name = ?', params[:user_name]])
-                    decoded_basic_user_info = ActiveSupport::JSON.decode(basic_user_info_response)
-                    decoded_basic_user_info.merge!(access_token_and_expiration)
-                    success, result = create_api_account(:source => :facebook, :user_object => user, :api_object => decoded_basic_user_info)
-                    if success
-                      redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => SUCCESS_STATUS
-                    else
-                      redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => result
-                    end
-                  else
-                    redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "User object not found for given user_name"
-                  end
-                end
-              end
+          if not access_token_response.blank?
+            if access_token_response.include? 'error'
+              redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Facebook account later!', :error_reason => 'User denied permission'
             else
-              redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "No access token response"
+              access_token_and_expiration = parse_nested_query(access_token_response)
+              basic_user_info_response = client.get_content("https://graph.facebook.com/me?access_token=#{access_token_and_expiration['access_token']}")
+              if not basic_user_info_response.blank?
+                if user = User.first(:conditions => ['name = ?', params[:user_name]])
+                  decoded_basic_user_info = ActiveSupport::JSON.decode(basic_user_info_response)
+                  decoded_basic_user_info.merge!(access_token_and_expiration)
+                  success, result = create_api_account(:source => :facebook, :user_object => user, :api_object => decoded_basic_user_info)
+                  if success
+                    redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => SUCCESS_STATUS
+                  else
+                    redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => result
+                  end
+                else
+                  redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "User object not found for given user_name"
+                end
+              else
+                redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "Cant get user data"
+              end
             end
-          rescue Exception => exception
-            create_problem_report(exception)
-            redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "Exception caught - #{exception.to_s}"
+          else
+            redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "No access token response"
           end
         else
           redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => "Uh oh, we couldn't verify the authenticity of your request.  Please try again later'.", :error_reason => "Request not authentic"
