@@ -142,6 +142,7 @@ footer.pageFoot {
 			margin-top: $font-size * .5;
 			ul {
 				li {
+					margin: ($font-size * .5) 0;
 					a {
 						color: $main-grey;
 						@include transition;
@@ -155,14 +156,24 @@ footer.pageFoot {
 	small {
 		font-size: 1.1em;
 		color: $main-grey;
+		line-height: 1.2em;
 		a {
 			color: $main-grey;
 		}
 	}
 	.coloradoIcon {
 		background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -191px 0;
-		display: inline-block;
 		height: 29px;
 		width: 29px;
+		margin-top: 1.8em;
+		margin-bottom: 1em;
+		+ span {
+			font-size: $font-size * .75;
+			color: $main-grey;
+			margin-top: 2.6em;
+		}
+	}
+	ul.col3.pull_right li > a {
+	margin: 0 0 0 ($font-size * .5);
 	}
 }
