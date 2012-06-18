@@ -11,7 +11,7 @@ class FacebooksessionsController < ApplicationController
   def callback
     if params[:error].blank?
       if not params[:code].blank? and not params[:state].blank?
-        if params[:state] == Digest::SHA1.hexdigest(current_user.email + SLINGGIT_SECRET_HASH)
+        if params[:state] == Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH)
           redirect_uri = facebook_callback_url
           access_token_url = URI.escape("https://graph.facebook.com/oauth/access_token?client_id=#{Rails.configuration.facebook_app_id}&redirect_uri=#{redirect_uri}&client_secret=#{Rails.configuration.facebook_app_secret}&code=#{params[:code]}")
           begin
