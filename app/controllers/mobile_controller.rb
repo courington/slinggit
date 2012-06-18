@@ -1,12 +1,12 @@
 class MobileController < ApplicationController
   before_filter :set_source
-  #before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
   around_filter :catch_exceptions
 
   ERROR_STATUS = 'error'
@@ -221,7 +221,7 @@ class MobileController < ApplicationController
 
   #TODO IMPLEMENT
   def add_facebook_account
-    setup_facebook_call(url_for :controller => :mobile, :action => :add_facebook_account_callback, :user_name => params[:user_name])
+    setup_facebook_call(url_for(:controller => :mobile, :action => :add_facebook_account_callback, :user_name => params[:user_name]), 'publish_stream')
   end
 
   def add_twitter_account_callback

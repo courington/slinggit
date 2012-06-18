@@ -218,7 +218,6 @@ class ApplicationController < ActionController::Base
 
   def setup_facebook_call(callback_uri = facebok_callback_url, scope)
     #state represents a random string that we can check in the callback to prevent cross site request forgery
-    #I have chosen to use a digest of the users email address plus the slinggit secret so that I can build it up again without using session
 
     state = Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH)
     redirect_to "https://graph.facebook.com/oauth/authorize?client_id=#{Rails.configuration.facebook_app_id}&redirect_uri=#{callback_uri}&scope=#{scope}&state=#{state}"
