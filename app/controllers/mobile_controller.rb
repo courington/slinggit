@@ -1,4 +1,6 @@
 class MobileController < ApplicationController
+  include Rack::Utils
+
   before_filter :set_source
   before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
   before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account, :add_facebook_account_callback, :finalize_add_facebook_account]
