@@ -333,13 +333,48 @@ class MobileController < ApplicationController
                     :photo => @file
                 )
 
-                #if not post.has_photo?
-                #  File.delete(tmp_file_path)
-                #end
+                if not post.has_photo?
+                  File.delete(tmp_file_path)
+                end
 
                 if post.save
+                  recipient_api_account_ids = []
+                  if not params[:api_account_ids].blank?
+                    params[:api_account_ids].split(',').each do |api_account_id|
+                      if proposed_api_account = ApiAccount.first(:conditions => ['id = ?', api_account_id], :select => 'user_id,api_source')
+                        if mobile_session.user_id == proposed_api_account.user_id || proposed_api_account.user_id == 0
+                          recipient_api_account_ids << id
+                          if proposed_api_account.api_source == 'twitter'
+                            TwitterPost.create(
+                                :user_id => post.user_id,
+                                :api_account_id => api_account_id.to_i,
+                                :post_id => post.id,
+                                :content => post.content
+                            ).do_post
+                          elsif proposed_api_account.api_source == 'facebook'
+                            FacebookPost.create(
+                                :user_id => post.user_id,
+                                :api_account_id => api_account_id.to_i,
+                                :post_id => post.id,
+                                :message => "For sale: ##{post.hashtag_prefix}",
+                                :name => "$#{post.price}.00",
+                                :caption => "Location: #{post.location}",
+                                :description => post.content,
+                                :image_url => post.has_photo? ? "#{BASEURL}#{post.root_url_path}" : nil,
+                                :link_url => nil #if this is nil it will default to the post
+                            ).do_post
+                          end
+                        end
+                      end
+                    end
+                    if not recipient_api_account_ids.blank?
+                      post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
+                    end
+                  end
+
                   render_success_response(
-                      :post_id => post.id
+                      :post_id => post.id,
+                      :recipient_api_account_ids => recipient_api_account_ids
                   )
                 else
                   if post.errors.messages.length > 0
