@@ -1,6 +1,6 @@
 .invite_wrapper {
 	article > div.col4.offset1 {
-		background: url('heroimages/invite_denver_638x425.jpg') no-repeat 0 -115px;
+		background: url('heroimages/invite_trike_638x424.jpg') no-repeat 0 -115px;
 		padding: 22px 12px;
 		@include rounded-corners(3px);
 		text-align: right;
@@ -19,7 +19,7 @@
 		#{$ms}text-shadow: 0 2px 3px rgba(0,0,0,.75);
 		#{$wk}text-shadow: 0 2px 3px rgba(0,0,0,.75);
 		text-shadow: 0 2px 3px rgba(0,0,0,.75);
-		border-bottom: 1px solid $main-blue;
+		border-bottom: 1px solid $dk_grey;
 		padding: 0 10px 14px 0;
 		text-rendering: optimizelegibility;
 	}
