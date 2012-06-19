@@ -10,6 +10,15 @@ body {
   color: $dk-grey;
 }
 
+.nixie {
+	font-family: 'Nixie One', 'helvetica neue', helvetica, arial, sans-serif;
+}
+.nixie_bold {
+	@extend .nixie;
+	font-size: 7.2em;
+	letter-spacing: .03em;
+}
+
 //COLUMNS and OFFSETS
 .col1 {
 	width: $sixCols;
