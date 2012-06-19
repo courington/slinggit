@@ -85,6 +85,16 @@
 				border-bottom: 1px solid $lt-grey;
 				padding: 8px 0 8px;
 
+				&:hover{
+					background-color: lighten($lt-grey, 12%) !important;
+				}
+
+				&> a{
+					color: $dk-grey;
+
+				}
+				
+
 				.col5{
 					h4{
 						font-weight: 600;
