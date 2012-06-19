@@ -32,4 +32,8 @@ body.request_invite,
 		text-indent: -9999px;
 		margin: 0 0 0 $font-size;
 	}
+h2 {
+		background: url('/heroimages/invite_trike_638x424.jpg') no-repeat 0 0;
+		color: $main-red;
+	}
 }
