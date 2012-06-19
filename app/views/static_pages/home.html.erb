@@ -3,18 +3,18 @@
 
 <!-- if/else for user sign-in/sign-up homepage states -->
 	<div class="row">
-  		<div class="col6">
+  		<div class="col6 white_well">
 
 <!-- if user is not signed in -->
 	<% if current_user.blank? %>
 
 			<article class="row">
-
-				<p>Slinggit is a fast and carefree way to connect with buyers and sellers in your Twitter and Facebook networks.</p> 
-
-				<p>Slinggit to your network of trusted friends and family on Facebook.  Slinggit to the world on  Twitter.  Slinggit to both.  It’s fun and easy and we’re sure you’ll love it.  Enjoy!</p>
-
-				<%= image_tag "heroimages/hero_phoneDiagram_960x524.jpg", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col6" %>
+				<div class="col6">
+					<p>Slinggit is a fast and carefree way to connect with buyers and sellers in your Twitter and Facebook networks.</p> 
+					<p>Slinggit to your network of trusted friends and family on Facebook.  Slinggit to the world on  Twitter.  Slinggit to both.  It’s fun and easy and we’re sure you’ll love it.  Enjoy!</p>
+				</div>
+				<!-- <%= image_tag "heroimages/hero_phoneDiagram_960x524.jpg", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col6" %> -->
+				
 			</article>
 			
 			<aside class="row">
@@ -58,8 +58,8 @@
 	<!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
 	        <div class="row home_featurePost">
-	            <div class="white_well col4 pull_left">
-					<h1 class="row">Feature Post:</h1>
+	            <div class="white_well col6 pull_left">
+					<h1 class="row">Recent Items:</h1>
 					<%= render @posts %>
 				</div>
 	        </div>
