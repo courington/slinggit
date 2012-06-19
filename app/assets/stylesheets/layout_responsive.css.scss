@@ -193,8 +193,15 @@
 		#userPosts, #postSearchResults{
 			padding: 20px 10px 20px 10px;
 			.title_row{
+				header{
+					margin-bottom: 0px;
+					padding-bottom: 5px;
+				}
 				.btn_green{
 					width: 100%;
+				}
+				#postsFilters{
+					//text-align: center;
 				}
 			}
 			.postArticle{

@@ -51,6 +51,29 @@
 					}
 				}
 			}
+			#postsFilters{
+				margin-bottom: 5px;
+				a{
+					display: inline-block;
+					padding: 10px 10px 10px 10px;
+					text-decoration: none;
+					font-size: $font-size * .9;
+					color: $dk-grey;
+					border: 1px solid transparent;
+
+					&:hover{
+						background-color: lighten($lt-grey, 12%);
+						border: 1px solid lighten($lt-grey, 8%);
+						@include rounded-corners(3px);
+					}
+				}
+				a.active{
+					background-color: lighten($lt-grey, 10%);
+					color: $dk-grey;
+					border: 1px solid lighten($lt-grey, 5%);
+					@include rounded-corners(3px);
+				}
+			}
 		}
 
 		#postArticlesWrapper, #msgArticleWrapper{	
@@ -61,6 +84,16 @@
 			.postArticle{
 				border-bottom: 1px solid $lt-grey;
 				padding: 8px 0 8px;
+
+				&:hover{
+					background-color: lighten($lt-grey, 12%) !important;
+				}
+
+				&> a{
+					color: $dk-grey;
+
+				}
+				
 
 				.col5{
 					h4{
