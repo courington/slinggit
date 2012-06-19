@@ -96,25 +96,30 @@
 
 <script type="text/javascript">
 
-  $('input, textarea').focus(function(field){
-      if(field.target.getAttribute('counterMax') != null){
-          displayCounter(field.target.id, field.target.getAttribute('counterMax'));
+  $('input, textarea').focus(function(field_object){
+      if(field_object.target.getAttribute('counterMax') != null){
+          displayCounter(field_object.target.id, field_object.target.getAttribute('counterMax'));
       }
   })
 
-  function displayCounter(field, max){
-      if($('#counter_' + field).length == 0){
-          $('#' + field).parent().prepend('<div id="counter_' + field + '" class="pull_right">' + $('#' + field).val().length.toString() + '/' + max.toString() + '</div>');
+  function displayCounter(field_name, max){
+      var field_object = $('#' + field_name);
+
+      if($('#counter_' + field_name).length == 0){
+          field_object.parent().prepend('<div id="counter_' + field_name + '" class="pull_right">' + field_object.val().length + '/' + max.toString() + '</div>');
       }else{
-          $('#counter_' + field).show();
+          $('#counter_' + field_name).show();
       }
 
-      $('#' + field).blur(function(){
-          $('#counter_' + field).hide();
+      field_object.blur(function(){
+          $('#counter_' + field_name).hide();
       }).keyup(function () {
-          $('#counter_' + field).html($('#' + field).val().length.toString() + '/' + max);
-      }).focus(function(field){
-          displayCounter(field.target.id, field.target.getAttribute('counterMax'));
+          if(parseInt(field_object.val().length) < max){
+              $('#counter_' + field_name).html(field_object.val().length + '/' + max);
+          }else{
+              $('#counter_' + field_name).html(max + '/' + max);
+              field_object.val(field_object.val().substring(0,300));
+          }
       })
   }
 
