@@ -125,10 +125,30 @@ class PostsController < ApplicationController
   # end
 
   def results
+    #rework this again later
+    search_terms = []
+    @posts = []
     if not params[:id].blank?
-      #I am currently researching how to make this function more like google search.  Faster and more relevent.
-      @searchTerm = params[:id]
-      @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
+      search_terms = params[:id].split(' ')
+      if search_terms.length > 1
+        @posts = Post.all(:conditions => ["(content in (?) OR hashtag_prefix in (?) OR location in (?)) AND open = ? AND status = ?", search_terms, search_terms, search_terms, true, STATUS_ACTIVE], :order => 'created_at desc')
+        if @posts.length == 0
+          search_terms = [search_terms[0], search_terms[1], search_terms[2]] #limit to 3 search terms
+          search_terms.each do |search_term|
+            search_term = search_term.strip[1, search_term.length - 1]
+            @posts | Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms}%", "%#{search_terms}%", "%#{search_terms}%", true, STATUS_ACTIVE], :order => 'created_at desc')
+          end
+        end
+      elsif search_terms.length == 1
+        @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms[0]}%", "%#{search_terms[0]}%", "%#{search_terms[0]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
+        if @posts.length == 0
+          search_term = search_terms[0].strip[1,search_terms.length - 1]
+          @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", search_term, search_term, search_term, true, STATUS_ACTIVE], :order => 'created_at desc')
+        end
+      end
+    else
+      flash[:error] = "Oops... it would appear that I had nothing to search for.  Here is a list of items sorted by most recent."
+      redirect_to :controller => :posts, :action => :index
     end
   end
 
