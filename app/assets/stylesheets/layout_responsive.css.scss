@@ -431,7 +431,7 @@
 	//end
 
 	//REQUEST INVITE
-	.request_invite {
+	.invite_wrapper {
 		.col1, .col2, .col3, .col4, .col5 {
 			width: 100%;
 		}
@@ -442,52 +442,26 @@
 			clear: both;
 			float: none;
 		}
-		.page_contentContainer {
-			padding-top: $font-size;
-			box-shadow: inset 0 10px 0 $lt-grey, inset 0 0 40px rgba(0,0,0,.25);
-			.wrapper {
-				margin-top: 0 ;
-			}
-			.row.grey_well {
-				label {
-					padding-left: 0;
+		> article.row {
+			> .col4.offset1 {
+				h2.nixie {
+					font-size: ($font-size * 1.4);
+					text-align: left;
 				}
-			}
-			img + p.col2.pull_left {
-				color: $wht;
-				line-height: 1.8em;
-				text-rendering: optimizelegibility;
-				width: 95%;
-				margin: 0 2.5%;
-				font-size: 1.8em;
-				border-left: none;
-				box-shadow: none;
-				padding: 0;
-			}
-			img[alt="Slinggit Logo"] {
-				width: 66.6666667%;
-				margin: 0 0 0 15.675%;
-			}
-			input[type="password"], input[type="email"], input[type="text"] {
-				height: 2.6em;
-			}
-			.invite_footer {
-				padding-bottom: $font-size;
-				.pull_left {
-					float: left;
-					clear: none;
-				}
-				.pull_right {
-					float: right;
-					clear: none;
-				}
-				.col2 {
-					width: ($sixCols * 2);
-					display: inline-block;
+				p.row {
+					text-align: left;
+					
 				}
 			}
 		}
-		
+		.row.grey_well {
+			label, p {
+				padding-left: 0;
+			}
+		}
+		input[type="password"], input[type="email"], input[type="text"] {
+			height: 2.6em;
+		}
 	}
 	//END
 

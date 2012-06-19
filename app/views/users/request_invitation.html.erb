@@ -3,8 +3,10 @@
 <section class="wrapper invite_wrapper">
 	
 	<article class="row">
-		<h2 class="col4 pull_left offset1 nixie nixie_bold">Welcome to Slinggit.</h2>
-		<p class="col4 pull_left offset1">Connect with the people and organizations in your social networks to buy and sell items.</p>
+		<div class="col4 offset1">
+			<h2 class="row nixie nixie_bold">Welcome to Slinggit.</h2>
+			<p class="row">Connect with the people in your social networks to buy &amp; sell items.</p>
+		</div>
 	</article>
 
 
@@ -12,7 +14,7 @@
   <%= form_tag do |f| %>
       <div class="row grey_well">
 
-					<p class="col6">We&rsquo;re getting ready to launch. Be one of the first to start slingging!</p>
+					<p class="col6">We&rsquo;re getting ready to launch. Be one of the first to Slinggit!</p>
           <%= label_tag :email, "Email:", for: "invitation_email", class: "col1 pull_left" %>
 					<div class="col4 pull_left">
           	<%= email_field_tag :email, @email, placeholder: "Email", class: "row", size: "30" %>
@@ -23,26 +25,5 @@
 
       </div>
   <% end %>
-<!--
-	<div class="row invite_footer">
-		
-		<div class="col3 pull_left">
-			<%= link_to(about_path, :class => "row") do %>
-				<span class="coloradoIcon"></span>
-				<span>Handbuilt at 5280'</span>
-			<% end %>
-			
-			<small class="row">&copy;2012 Slinggit</small>
-		</div>
-		
-		<nav class="col3 pull_right">
-			<ul class="row">
-			<li><a href="http://twitter.com/#!/slinggit" title="Twitter" class="pull_right btnNavSprite twitIcon" >Twitter</a></li>
-			<li><a href="https://www.facebook.com/Slinggit" title="Facebook" class="pull_right btnNavSprite facebookIcon">Facebook</a></li>
-			</ul>
-		</nav>
-	</div>
-	
-	</div>
--->
+
 </section>
