@@ -1,12 +1,14 @@
 class MobileController < ApplicationController
+  include Rack::Utils
+
   before_filter :set_source
-  #before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
-  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  #before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account]
+  before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
+  before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account, :add_facebook_account_callback, :finalize_add_facebook_account]
+  before_filter :validate_request_authenticity, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
+  before_filter :set_state, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
+  before_filter :set_device_name, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
+  before_filter :set_mobile_auth_token, :except => [:user_signup, :user_login, :add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account, :add_facebook_account_callback, :finalize_add_facebook_account, :password_reset]
+  before_filter :set_options, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
   around_filter :catch_exceptions
 
   ERROR_STATUS = 'error'
@@ -221,14 +223,14 @@ class MobileController < ApplicationController
 
   #TODO IMPLEMENT
   def add_facebook_account
-
+    setup_facebook_call(url_for(:controller => :mobile, :action => :add_facebook_account_callback, :user_name => params[:user_name]), 'publish_stream')
   end
 
   def add_twitter_account_callback
     rtoken = session['rtoken']
     rsecret = session['rsecret']
     if not params[:denied].blank?
-      redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!  For now, all we need is a Slinggit password to get you started.', :error_reason => 'user denied permission'
+      redirect_to :controller => :mobile, :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Twitter account later!', :error_reason => 'user denied permission'
     else
       request_token = OAuth::RequestToken.new(oauth_consumer, rtoken, rsecret)
       access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
@@ -246,7 +248,60 @@ class MobileController < ApplicationController
     end
   end
 
+  def add_facebook_account_callback
+    if params[:error].blank?
+      if not params[:code].blank? and not params[:state].blank?
+        if params[:state] == Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH)
+          redirect_uri = url_for :controller => :mobile, :action => :add_facebook_account_callback, :user_name => params[:user_name]
+          access_token_url = URI.escape("https://graph.facebook.com/oauth/access_token?client_id=#{Rails.configuration.facebook_app_id}&redirect_uri=#{redirect_uri}&client_secret=#{Rails.configuration.facebook_app_secret}&code=#{params[:code]}")
+          client = HTTPClient.new
+          access_token_response = client.get_content(access_token_url)
+
+          if not access_token_response.blank?
+            if access_token_response.include? 'error'
+              redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'You can always add your Facebook account later!', :error_reason => 'User denied permission'
+            else
+              access_token_and_expiration = parse_nested_query(access_token_response)
+              basic_user_info_response = client.get_content("https://graph.facebook.com/me?access_token=#{access_token_and_expiration['access_token']}")
+              if not basic_user_info_response.blank?
+                if user = User.first(:conditions => ['name = ?', params[:user_name]])
+                  decoded_basic_user_info = ActiveSupport::JSON.decode(basic_user_info_response)
+                  decoded_basic_user_info.merge!(access_token_and_expiration)
+                  success, result = create_api_account(:source => :facebook, :user_object => user, :api_object => decoded_basic_user_info)
+                  if success
+                    redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => SUCCESS_STATUS
+                  else
+                    redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => result
+                  end
+                else
+                  redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "User object not found for given user_name"
+                end
+              else
+                redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "Cant get user data"
+              end
+            end
+          else
+            redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "No access token response"
+          end
+        else
+          redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => "Uh oh, we couldn't verify the authenticity of your request.  Please try again later'.", :error_reason => "Request not authentic"
+        end
+      else
+        redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => "No code was passed back from Facebook"
+      end
+    else
+      redirect_to :controller => :mobile, :action => :finalize_add_facebook_account, :result_status => ERROR_STATUS, :friendly_error => "In order to add your Facebook account, we need you to accept the permissions presented by Facebook.", :error_reason => "User denied permission"
+    end
+  end
+
   def finalize_add_twitter_account
+    #This will never get hit because the mobile page view intercepts it and prevents it from redirecting here.
+    #It is not necessary for this to contain an attached view or render any thing what so ever
+    #It is however, necessary for this definition to be present for rails url_for routing purposes and so that we have a distinct url that
+    #indicates to the mobile device that the call is over.
+  end
+
+  def finalize_add_facebook_account
     #This will never get hit because the mobile page view intercepts it and prevents it from redirecting here.
     #It is not necessary for this to contain an attached view or render any thing what so ever
     #It is however, necessary for this definition to be present for rails url_for routing purposes and so that we have a distinct url that
@@ -276,13 +331,48 @@ class MobileController < ApplicationController
                     :photo => @file
                 )
 
-                #if not post.has_photo?
-                #  File.delete(tmp_file_path)
-                #end
+                if not post.has_photo?
+                  File.delete(tmp_file_path)
+                end
 
                 if post.save
+                  recipient_api_account_ids = []
+                  if not params[:api_account_ids].blank?
+                    params[:api_account_ids].split(',').each do |api_account_id|
+                      if proposed_api_account = ApiAccount.first(:conditions => ['id = ?', api_account_id], :select => 'user_id,api_source')
+                        if mobile_session.user_id == proposed_api_account.user_id || proposed_api_account.user_id == 0
+                          recipient_api_account_ids << id
+                          if proposed_api_account.api_source == 'twitter'
+                            TwitterPost.create(
+                                :user_id => post.user_id,
+                                :api_account_id => api_account_id.to_i,
+                                :post_id => post.id,
+                                :content => post.content
+                            ).do_post
+                          elsif proposed_api_account.api_source == 'facebook'
+                            FacebookPost.create(
+                                :user_id => post.user_id,
+                                :api_account_id => api_account_id.to_i,
+                                :post_id => post.id,
+                                :message => "For sale: ##{post.hashtag_prefix}",
+                                :name => "$#{post.price}.00",
+                                :caption => "Location: #{post.location}",
+                                :description => post.content,
+                                :image_url => post.has_photo? ? "#{BASEURL}#{post.root_url_path}" : nil,
+                                :link_url => nil #if this is nil it will default to the post
+                            ).do_post
+                          end
+                        end
+                      end
+                    end
+                    if not recipient_api_account_ids.blank?
+                      post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
+                    end
+                  end
+
                   render_success_response(
-                      :post_id => post.id
+                      :post_id => post.id,
+                      :recipient_api_account_ids => recipient_api_account_ids
                   )
                 else
                   if post.errors.messages.length > 0
@@ -609,7 +699,7 @@ class MobileController < ApplicationController
   def password_reset
     @email_or_username = params[:email_or_username]
     if not @email_or_username.blank?
-      if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name')
+      if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name,slug')
         if user.password_reset_code.blank?
           user.update_attribute(:password_reset_code, Digest::SHA1.hexdigest("#{rand(999999)}-#{Time.now}-#{@email}"))
         end

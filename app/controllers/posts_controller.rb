@@ -13,7 +13,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.first(:conditions => ['id = ?', params[:id]])
     if not @post.blank? and not @post.is_deleted?
-      @comments = @post.comments.paginate(page: params[:page])
+      @comments = @post.comments.paginate(page: params[:page], :conditions => ['status = ?', STATUS_ACTIVE])
       # creating user object to compare against current_user
       # in order to display edit option.  Dan, if there's a
       # better way, fell free to change this.
@@ -129,6 +129,25 @@ class PostsController < ApplicationController
       #I am currently researching how to make this function more like google search.  Faster and more relevent.
       @searchTerm = params[:id]
       @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
+    end
+  end
+
+  def report_abuse
+    if not params[:id].blank?
+      if post = Post.first(:conditions => ['id_hash = ?', params[:id]])
+        FlaggedContent.create(
+            :creator_user_id => signed_in? ? current_user.id : nil,
+            :source => 'post',
+            :source_id => post.id
+        )
+        flash[:success] = "Post has been flagged and will be reviewed as soon as possible."
+      end
+    end
+
+    if not request.referer.blank?
+      redirect_to request.referer
+    else
+      redirect_to post_path
     end
   end
 

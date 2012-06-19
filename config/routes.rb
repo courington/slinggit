@@ -23,6 +23,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'sessions/sign_out_of_device', :to => 'sessions#sign_out_of_device', via: :post
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
   match 'posts/delete_post', :to => 'posts#delete_post'
+  match 'posts/report_abuse(/:id)', :to => 'posts#report_abuse#id'
 
   match 'watchedposts/interested', :to => 'watchedposts#interested'
   match 'watchedposts/uninterested', :to => 'watchedposts#uninterested'
@@ -68,6 +69,8 @@ SlinggitWebapp::Application.routes.draw do
   resources :posts do
     resources :comments
   end
+  match 'comments/delete(/:id)', :to => 'comments#delete#id'
+
 
   ##MOBILE CONTROLLER##
   match 'mobile' => 'mobile#index'

@@ -8,7 +8,7 @@
         <%= f.label :hashtag_prefix, "Your item", class: "col6", for: "post_hashtag_prefix" %>
 
         <div class="col6">
-          <%= f.text_field :hashtag_prefix, class: "hardEdge-right col4 pull_left", placeholder: "#", maxLength: "15" %>
+          <%= f.text_field :hashtag_prefix, class: "hardEdge-right col4 pull_left", placeholder: "#", maxLength: "15", counterMax: "15" %>
           <span class="col2 pull_right add_on">forsale</span>
         </div>
 
@@ -22,14 +22,14 @@
         <fieldset class="col3 pull_left">
           <%= f.label :price, class: "row", for: "post_price" %>
           <div class="row">
-            <%= f.text_field :price, class: "hardEdge-right col4 pull_left", id: "post_price", placeholder: "$", maxLength: "5" %>
+            <%= f.text_field :price, class: "hardEdge-right col4 pull_left", id: "post_price", placeholder: "$", maxLength: "6", counterMax: "6"  %>
             <span class="col2 pull_right add_on">.00</span>
           </div>
         </fieldset>
 
         <fieldset class="col3 pull_right">
           <%= f.label :location, "Location", class: "row", for: "post_hashtag_prefix" %>
-          <%= f.text_field :location, class: "row", placeholder: "City, State, or Zip", maxLength: "16" %>
+          <%= f.text_field :location, class: "row", placeholder: "City, State, or Zip", maxLength: "16", counterMax: "16"  %>
         </fieldset>
 
       </div>
@@ -40,7 +40,7 @@
       <fieldset class="row">
 
         <%= f.label :content, "Quick description", class: "col3", for: "post_content" %>
-        <%= f.text_area :content, class: "row", rows: "3", placeholder: "a short description maybe @someone to sling at or tag with #hastags" %>
+        <%= f.text_area :content, class: "row", rows: "3", placeholder: "a short description maybe @someone to sling at or tag with #hastags", counterMax: "300" %>
 
       </fieldset>
       <!-- end description -->
@@ -93,3 +93,29 @@
       </fieldset>
   <% end %>
 </article>
+
+<script type="text/javascript">
+
+  $('input, textarea').focus(function(field){
+     displayCounter(field.target.id, field.target.getAttribute('counterMax'));
+  })
+
+  function displayCounter(field, max){
+      if($('#counter_' + field).length == 0){
+          $('#' + field).parent().html('<div id="counter_' + field + '" class="pull_right">' + $('#' + field).val().length.toString() + '/' + max.toString() + '</div>' + $('#' + field).parent().html());
+      }else{
+          $('#counter_' + field).show();
+      }
+
+      $('#' + field).focus();
+
+      $('#' + field).blur(function(){
+          $('#counter_' + field).hide();
+      }).keyup(function () {
+          $('#counter_' + field).html($('#' + field).val().length.toString() + '/' + max);
+      }).focus(function(field){
+          displayCounter(field.target.id, field.target.getAttribute('counterMax'));
+      })
+  }
+
+</script>

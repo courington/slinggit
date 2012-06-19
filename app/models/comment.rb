@@ -16,7 +16,13 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   attr_accessible :body, :user_id, :post_id, :status
 
+  before_create :create_id_hash
+
   validates :body, presence: true
 
   default_scope order: 'comments.created_at DESC'
+
+  def create_id_hash
+    self.id_hash = Digest::SHA1.hexdigest(self.id.to_s + Time.now.to_s)
+  end
 end
