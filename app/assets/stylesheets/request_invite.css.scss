@@ -1,25 +1,25 @@
 .invite_wrapper {
 	article > div.col4.offset1 {
-		background: url('heroimages/invite_denver_638x425.jpg') no-repeat 0 -115px;
-		padding: 22px 12px;
-		@include rounded-corners(3px);
+		background: url('heroimages/slinggit_icons_183x350.png') no-repeat 0 0;
+		padding: 22px 12px 122px 0;
+	//	@include rounded-corners(3px);
 		text-align: right;
 		p.row {
-			color: $lt-grey;
-			text-align: center;
+//			color: $main-blue;
+			text-align: right;
 			margin: 12px 0 0 0;
 			letter-spacing: .03em;
 			text-rendering: optimizelegibility;
 		}
 	}
 	h2.nixie {
-		color: $wht;
-		#{$ff}text-shadow: 0 2px 3px rgba(0,0,0,.75);
-		#{$o}text-shadow: 0 2px 3px rgba(0,0,0,.75);
-		#{$ms}text-shadow: 0 2px 3px rgba(0,0,0,.75);
-		#{$wk}text-shadow: 0 2px 3px rgba(0,0,0,.75);
-		text-shadow: 0 2px 3px rgba(0,0,0,.75);
-		border-bottom: 1px solid $main-blue;
+		color: $main-blue;
+		#{$ff}text-shadow: 0 2px 3px rgba(0,0,0,.5);
+		#{$o}text-shadow: 0 2px 3px rgba(0,0,0,.5);
+		#{$ms}text-shadow: 0 2px 3px rgba(0,0,0,.5);
+		#{$wk}text-shadow: 0 2px 3px rgba(0,0,0,.5);
+		text-shadow: 0 2px 3px rgba(0,0,0,.5);
+		//border-bottom: 1px solid $main-blue;
 		padding: 0 10px 14px 0;
 		text-rendering: optimizelegibility;
 	}
