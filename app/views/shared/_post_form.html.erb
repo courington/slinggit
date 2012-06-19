@@ -104,20 +104,22 @@
 
   function displayCounter(field_name, max){
       var field_object = $('#' + field_name);
+      var counter_object = $('#counter_' + field_name);
 
-      if($('#counter_' + field_name).length == 0){
+      if(counter_object.length == 0){
           field_object.parent().prepend('<div id="counter_' + field_name + '" class="pull_right">' + field_object.val().length + '/' + max.toString() + '</div>');
+          counter_object = $('#counter_' + field_name);
       }else{
-          $('#counter_' + field_name).show();
+          counter_object.show();
       }
 
       field_object.blur(function(){
-          $('#counter_' + field_name).hide();
+          counter_object.hide();
       }).keyup(function () {
           if(parseInt(field_object.val().length) < max){
-              $('#counter_' + field_name).html(field_object.val().length + '/' + max);
+              counter_object.html(field_object.val().length + '/' + max);
           }else{
-              $('#counter_' + field_name).html(max + '/' + max);
+              counter_object.html(max + '/' + max);
               field_object.val(field_object.val().substring(0,300));
           }
       })
