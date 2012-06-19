@@ -101,13 +101,21 @@
   })
 
   function displayCounter(field, max){
-      $('#' + field).parent().html('<div id="counter" class="pull_right">' + $('#' + field).val().length.toString() + '/' + max.toString() + '</div>' + $('#' + field).parent().html());
-      $('#' + field.target.id).blur(function(){
-          $('#counter').remove();
-      });
-      $('#' + field).keyup(function () {
-          $('#counter').html($('#' + field).val().length.toString() + '/' + max);
-      });
+      if($('#counter_' + field).length == 0){
+          $('#' + field).parent().html('<div id="counter_' + field + '" class="pull_right">' + $('#' + field).val().length.toString() + '/' + max.toString() + '</div>' + $('#' + field).parent().html());
+      }else{
+          $('#counter_' + field).show();
+      }
+
+      $('#' + field).focus();
+
+      $('#' + field).blur(function(){
+          $('#counter_' + field).hide();
+      }).keyup(function () {
+          $('#counter_' + field).html($('#' + field).val().length.toString() + '/' + max);
+      }).focus(function(field){
+          displayCounter(field.target.id, field.target.getAttribute('counterMax'));
+      })
   }
 
 </script>
