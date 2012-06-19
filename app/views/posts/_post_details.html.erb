@@ -24,9 +24,9 @@
 			<% if signed_in? %>
 				<div class="row">
 					<% if !current_user.post_in_watch_list?(@post.id) %>
-						<%= link_to "Interested", {:controller => :watchedposts, :action => :interested, :post => @post.id}, class: "col2 btn_ltGrey" %>
+						<%= link_to "Watch", {:controller => :watchedposts, :action => :interested, :post => @post.id}, class: "col2 btn_ltGrey" %>
 					<% else %>
-						<%= link_to "Uninterested", {:controller => :watchedposts, :action => :uninterested, :post => @post.id}, class: "col2 btn_ltGrey" %>
+						<%= link_to "Unwatch", {:controller => :watchedposts, :action => :uninterested, :post => @post.id}, class: "col2 btn_ltGrey" %>
 					<% end %>
 				</div>
 			<% end %>

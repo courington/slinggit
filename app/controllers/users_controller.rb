@@ -6,6 +6,8 @@ class UsersController < ApplicationController
 
   USERS_PATH = "/users"
 
+  respond_to :json
+
   def request_invitation
 
     #check to see if the user already exists in the users table as well
@@ -36,9 +38,29 @@ class UsersController < ApplicationController
   end
 
   def show
+    @label = "My"
     @user = User.first(:conditions => ['name = ?', params[:id]])
     if not @user.blank? and not @user.is_considered_deleted?
       @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ?', @user.id, STATUS_ACTIVE])
+    else
+      if signed_in?
+        redirect_to current_user
+      else
+        redirect_to new_user_path
+      end
+    end
+  end
+
+  def get_watched
+    @label = "Watched"
+    @user = User.first(:conditions => ['name = ?', params[:user]])
+    if not @user.blank? and not @user.is_considered_deleted? and @user.id == current_user.id
+      @posts = []
+      Watchedpost.find_each(:conditions => ['user_id = ?', @user.id], :select => 'post_id') do |watched_post|
+        @posts << Post.first(:conditions => ['id = ?', watched_post.post_id])
+      end
+      @posts = @posts.paginate(:page => params[:page], :per_page => 20)
+      render 'show'
     else
       if signed_in?
         redirect_to current_user

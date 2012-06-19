@@ -41,33 +41,38 @@
       <div class="col6 pull_left">
         <div class="row">
           <header>
-            <h1>Posts (<%= @posts.count %>)</h1>
-            <p>Posts (<%= @posts.count %>)</p>
+            <h1><%=@label%> Posts (<%= @posts.count %>)</h1>
+            <p><%=@label%> Posts (<%= @posts.count %>)</p>
           </header>
         </div>
         <% if !@user.has_photo_source? && current_user?(@user) %>
           <%= render 'users/select_photo' %>
         <% end %>
-        <div id="createPostAction" class="row">
+
         <% if current_user?(@user) %>
+          <div id="createPostAction" class="row">
 
-          <% if not current_user.is_suspended? %>
+            <% if not current_user.is_suspended? %>
 
-            <% if current_user.email_is_verified? %>
-              <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
-            <% else %>
-              <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your email address.</p>  
-              <p>If you haven't recieved an email from us, check your spam folder or you can always have us <%= link_to "resend it.", "/edit_email_for_verification?id=#{current_user.name}" %></p>
-            <% end %>
-          <% end %>  
+              <% if current_user.email_is_verified? %>
+                <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
+              <% else %>
+                <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your email address.</p>  
+                <p>If you haven't recieved an email from us, check your spam folder or you can always have us <%= link_to "resend it.", "/edit_email_for_verification?id=#{current_user.name}" %></p>
+              <% end %>
+            <% end %>  
 
+          </div>
+          <div id="postsFilters" class="row">
+            <%= link_to "My Posts", current_user, class: "#{"active" if @label == "My"}" %>
+            <%= link_to "Watched Posts", {:controller => :users, :action => :get_watched, :user => @user.name}, class: "#{"active" if @label == "Watched"}" %>
+          </div>
         <% end %>
-        </div>
       </div>
     </div>
 
     <div id="postArticlesWrapper">
-      <% if @user.posts.any? %>
+      <% if @posts.any? %>
         <%= will_paginate @posts%>
           <%= render @posts %>
         <%= will_paginate @posts%>
@@ -83,4 +88,9 @@
   </div>
 
 </section>
+
+
+
+
+
 
