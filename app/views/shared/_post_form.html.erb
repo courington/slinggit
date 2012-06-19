@@ -22,7 +22,7 @@
         <fieldset class="col3 pull_left">
           <%= f.label :price, class: "row", for: "post_price" %>
           <div class="row">
-            <%= f.text_field :price, class: "hardEdge-right col4 pull_left", id: "post_price", placeholder: "$", maxLength: "6", counterMax: "6"  %>
+            <%= f.text_field :price, class: "hardEdge-right col4 pull_left", id: "post_price", placeholder: "$", maxLength: "6"  %>
             <span class="col2 pull_right add_on">.00</span>
           </div>
         </fieldset>
@@ -97,17 +97,17 @@
 <script type="text/javascript">
 
   $('input, textarea').focus(function(field){
-     displayCounter(field.target.id, field.target.getAttribute('counterMax'));
+      if(field.target.getAttribute('counterMax') != null){
+          displayCounter(field.target.id, field.target.getAttribute('counterMax'));
+      }
   })
 
   function displayCounter(field, max){
       if($('#counter_' + field).length == 0){
-          $('#' + field).parent().html('<div id="counter_' + field + '" class="pull_right">' + $('#' + field).val().length.toString() + '/' + max.toString() + '</div>' + $('#' + field).parent().html());
+          $('#' + field).parent().prepend('<div id="counter_' + field + '" class="pull_right">' + $('#' + field).val().length.toString() + '/' + max.toString() + '</div>');
       }else{
           $('#counter_' + field).show();
       }
-
-      $('#' + field).focus();
 
       $('#' + field).blur(function(){
           $('#counter_' + field).hide();
