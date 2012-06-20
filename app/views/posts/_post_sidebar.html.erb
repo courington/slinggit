@@ -1,21 +1,21 @@
 <div id="postReply">
   <div class="row contentHeader">
     <div class="col5 innerHeader">
-      <p>Reply to <strong><%= @user.name %></strong></p>
+      <p>Contact <strong><%= @user.name %></strong></p>
     </div>  
   </div> 
 
   <div id="postReplyActions" class="row">
 
     <div class="row">
-      <%= link_to "slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
+      <%= link_to "Contact Using Slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
     </div>
 
     <% if not @twitter_post.blank? %>
       <div class="row">
         <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter" do %>
            <span class="twitIconSmall"></span>
-           Twitter
+           Contact Using Twitter
         <% end %>
       </div>
     <% end %> 
