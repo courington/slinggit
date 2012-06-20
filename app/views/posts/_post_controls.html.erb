@@ -29,7 +29,7 @@
   </div>
 
   
-  <% if (not @twitter_post.blank? and @twitter_post.status != "FAL") or (not @facebook_post.blank? and @facebook_post.status != "FAL")%>
+  <% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC")%>
     <div id="networkActions" class="row">
       <div class="row">
         <div class="col5 innerHeader">
@@ -46,9 +46,11 @@
       <% end %>
 
        <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? %>
-         <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_post.facebook_post_id}", class: "col6 b", target: "_blank" do %>
+        <div class="row">  
+         <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 b", target: "_blank" do %>
             Facebook &rarr;
           <% end %>
+        </div>
        <% end %>
     </div> 
   <% end %> 

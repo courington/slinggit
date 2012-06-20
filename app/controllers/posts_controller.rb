@@ -37,12 +37,20 @@ class PostsController < ApplicationController
         end
 
         if not @facebook_account.blank?
+          @facebook_truncated_id = nil
           @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @facebook_account.id])
-          delims = @facebook_post.id.to_s.split("_")
-          @facebook_truncated_id = delims[1]
+          if @facebook_post != nil and @facebook_post.facebook_post_id != nil
+            delims = @facebook_post.facebook_post_id.to_s.split("_")
+            @facebook_truncated_id = delims[1]
+          end
         else
+          @facebook_truncated_id = nil
           @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND user_id = ? ', @post.id, @user.id])
           @facebook_account = ApiAccount.first(:conditions => ['id = ?', @facebook_post.api_account_id], :select => 'user_name') unless @facebook_post == nil
+          if @facebook_post != nil and @facebook_post.facebook_post_id != nil
+            delims = @facebook_post.facebook_post_id.to_s.split("_")
+            @facebook_truncated_id = delims[1]
+          end
         end
 
         # Since we give an non-singed in user the option to sign in, we
