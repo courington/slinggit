@@ -74,6 +74,7 @@ SlinggitWebapp::Application.configure do
   GRAVATAR_PHOTO_SOURCE = "GPS"
 
   ## STATUSES ##
+  STATUS_SUCCESS = "SUC"
   STATUS_UNVERIFIED = "UVR"
   STATUS_DELETED = "DEL"
   STATUS_CLOSED = "CLO"
