@@ -327,8 +327,6 @@ class UsersController < ApplicationController
     rtoken = session['rtoken']
     rsecret = session['rsecret']
 
-    reset_session #start new
-
     if not params[:name].blank? and not params[:email].blank?
       session[:user] = User.new(
           :name => params[:name],

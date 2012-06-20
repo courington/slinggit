@@ -41,15 +41,19 @@ class FacebookPost < ActiveRecord::Base
             if result['id']
               finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :facebook_post_id => result['id']}) and return
             else
+              send_problem_report_no_execption result.to_s
               finalize(STATUS_FAILED, {:last_result => result.to_s}) and return
             end
           rescue Exception => e
+            send_problem_report e
             finalize(STATUS_FAILED, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
           end
         else
+          send_problem_report_no_execption "api account has been deleted"
           finalize(STATUS_FAILED, {:last_result => "api account has been deleted"}) and return
         end
       else
+        send_problem_report_no_execption "api_account_id does not exist"
         finalize(STATUS_FAILED, {:last_result => "api_account_id does not exist"}) and return
       end
     else
@@ -72,9 +76,11 @@ class FacebookPost < ActiveRecord::Base
           return http.delete(uri.path, URI.escape(param_string))
           finalize(STATUS_SUCCESS, {:last_result => SUCCESS_UNDO_POST, :facebook_post_id => nil}) and return
         rescue Exception => e
+          send_problem_report e
           finalize(STATUS_FAILED, {:last_result => "deleting_post // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
         end
       else
+        send_problem_report_no_execption "deleting_post // api_account_id does not exist"
         finalize(STATUS_FAILED, {:last_result => "deleting_post // api_account_id does not exist"}) and return
       end
     else
@@ -131,6 +137,25 @@ class FacebookPost < ActiveRecord::Base
       param_string << "&picture=#{BASEURL}#{post.photo.url(:medium)}"
     end
     return http.post(uri.path, URI.escape(param_string))
+  end
+
+  # Problem reports
+  def send_problem_report exception
+    ProblemReport.create(
+        :exception_message => exception.message,
+        :exception_class => exception.class.to_s,
+        :exception_backtrace => exception.backtrace,
+        :signed_in_user_id => self.user_id != nil ? self.user_id : nil,
+        :send_email => true
+    )
+  end
+
+  def send_problem_report_no_execption str
+    ProblemReport.create(
+        :exception_message => str,
+        :signed_in_user_id => self.user_id != nil ? self.user_id : nil,
+        :send_email => send_email
+    )
   end
 
 end

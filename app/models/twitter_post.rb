@@ -45,26 +45,31 @@ class TwitterPost < ActiveRecord::Base
           if not twitter_client.blank?
             begin
               result = tweet_constructor(twitter_client)
-              debugger
               finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
             rescue Exception => e
               if e.is_a? Twitter::Error::Unauthorized
                 if self.api_account
+                  send_problem_report e
                   finalize(STATUS_FAILED, {:api_account_reauth_required => 'yes', :last_result => "api_account-yes // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
                 else
+                  send_problem_report e
                   finalize(STATUS_FAILED, {:last_result => "api_account-no // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
                 end
               else
+                send_problem_report e
                 finalize(STATUS_FAILED, {:last_result => "caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
               end
             end
           else
+            send_problem_report_no_execption "twitter client could not be established"
             finalize(STATUS_FAILED, {:last_result => "twitter client could not be established"}) and return
           end
         else
+          send_problem_report_no_execption "api account has been deleted"
           finalize(STATUS_FAILED, {:last_result => "api account has been deleted"}) and return
         end
       else
+        send_problem_report_no_execption "api_account_id does not exist"
         finalize(STATUS_FAILED, {:last_result => "api_account_id does not exist"}) and return
       end
     else
@@ -87,12 +92,15 @@ class TwitterPost < ActiveRecord::Base
             finalize(STATUS_SUCCESS, {:last_result => SUCCESS_UNDO_POST, :twitter_post_id => nil}) and return
           rescue Exception => e
             #were going to ban this person any way so we dont need to tell them that their not authorized
+            send_problem_report e
             finalize(STATUS_FAILED, {:last_result => "deleting_post // caught exception // #{e.class.to_s}-#{e.to_s}"}) and return
           end
         else
+          send_problem_report_no_execption "deleting_post // twitter client could not be established"
           finalize(STATUS_FAILED, {:last_result => "deleting_post // twitter client could not be established"}) and return
         end
       else
+        send_problem_report_no_execption "deleting_post // api_account_id does not exist"
         finalize(STATUS_FAILED, {:last_result => "deleting_post // api_account_id does not exist"}) and return
       end
     else
@@ -136,4 +144,22 @@ class TwitterPost < ActiveRecord::Base
     end
   end
 
+  # Problem reports
+  def send_problem_report exception
+    ProblemReport.create(
+        :exception_message => exception.message,
+        :exception_class => exception.class.to_s,
+        :exception_backtrace => exception.backtrace,
+        :signed_in_user_id => self.user_id != nil ? self.user_id : nil,
+        :send_email => true
+    )
+  end
+
+  def send_problem_report_no_execption str
+    ProblemReport.create(
+        :exception_message => str,
+        :signed_in_user_id => self.user_id != nil ? self.user_id : nil,
+        :send_email => send_email
+    )
+  end
 end
