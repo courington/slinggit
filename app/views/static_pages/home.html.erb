@@ -3,17 +3,17 @@
 
 <!-- if/else for user sign-in/sign-up homepage states -->
 	<div class="row">
-  		<div class="col6 white_well">
+		<%= image_tag "heroimages/slinggit_icons_326x634.png", width: "100%", height: "auto", title: "Slinggit icons", alt: "Icons representing Slinggit brand", id: "home_slinggitIcons", class: "col1 pull_left" %>
+  		<div class="col5">
 
 <!-- if user is not signed in -->
 	<% if current_user.blank? %>
 
 			<article class="row">
 				<div class="col6">
-					<p>Slinggit is a fast and carefree way to connect with buyers and sellers in your Twitter and Facebook networks.</p> 
-					<p>Slinggit to your network of trusted friends and family on Facebook.  Slinggit to the world on  Twitter.  Slinggit to both.  It’s fun and easy and we’re sure you’ll love it.  Enjoy!</p>
+					<h2 class="row nixie nixie_bold">Welcome to Slinggit.</h2>
+					<h3 class="row nixie">An easy way to connect with your social networks to git the things you want and sling the ones you don&rsquo;t.</h3>
 				</div>
-				<!-- <%= image_tag "heroimages/hero_phoneDiagram_960x524.jpg", width: "100%", height: "auto", title: "Slinggit Logo blue", alt: "Slinggit Logo", class: "col6" %> -->
 				
 			</article>
 			
@@ -28,24 +28,27 @@
 			</aside>
 			
 <!-- end user not signed in if/else -->
-
+	
 
 <!-- if user is signed in -->
 	<% elsif not current_user.blank? %>
-		<div class="row">
-			<div class="col4 pull_left white_well">
-				<div class="row">
-					<p class="col3 pull_left">Welcome back <strong><%= current_user.name %></strong!</p>
-					<div class="col6">
-						<div class="row">
-							<%= link_to "Slinggit", new_post_path, class: "col3 pull_left btn_green" %>
-						</div>
-					</div>
-				</div>
+	<div class="row">
+		
+		<div class="col4 pull_left">
+			<h2 class="row nixie">Welcome back <strong><%= current_user.name %></strong!</h2>
+			<p class="row nixie"> Have something to Sling?</p>
+		</div>
+		
+<!-- USER INFO PARTIAL RENDERS AS .col2 -->
+		<%= render 'shared/user_info' %>
+<!-- END PARTIAL -->
+
+		<div class="col3 offset1">
+			<div class="row">
+				<%= link_to "Slinggit", new_post_path, class: "col3 pull_left btn_green" %>
 			</div>
-			
-<!-- render user_info partial -->
-			<%= render 'shared/user_info' %>
+		</div>
+		
 		</div>
 <!-- end the user is signed in if/else -->
 	<% end %>
@@ -58,7 +61,7 @@
 	<!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
 	        <div class="row home_featurePost">
-	            <div class="white_well col6 pull_left">
+	            <div class="white_well col4 offset1 pull_left">
 					<h1 class="row">Recent Items:</h1>
 					<%= render @posts %>
 				</div>
@@ -66,37 +69,4 @@
 	    <% end %>
 	<!-- end -->
 
-<!-- // REMOVE THE TWITTER WIDGET FOR NOW -CC -->
-<!-- <div class="row white_well wrapper_twitRoll">
-  <div class="col6">
-    <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
-    <script type="text/javascript">
-        new TWTR.Widget({
-            version:2,
-            type:'profile',
-            rpp:20,
-            interval:30000,
-            width:'auto',
-            height:550,
-            theme:{
-                shell:{
-                    background:'#f8f8f8',
-                    color:'#777777'
-                },
-                tweets:{
-                    background:'#f8f8f8',
-                    color:'#777777',
-                    links:'#488de2'
-                }
-            },
-            features:{
-                scrollbar:true,
-                loop:false,
-                live:true,
-                behavior:'all'
-            }
-        }).render().setUser('slinggit').start();
-    </script>
-  </div>
-</div> -->
 </section>
