@@ -158,8 +158,13 @@ class PostsController < ApplicationController
           @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", search_term, search_term, search_term, true, STATUS_ACTIVE], :order => 'created_at desc')
         end
       end
+
+      if @posts.length == 0
+        flash[:notice] = "Shucks, we couldn't find anything matching your search terms.  So, here is a list of items for you to browse.'"
+        redirect_to :controller => :posts, :action => :index
+      end
     else
-      flash[:error] = "Oops... it would appear that I had nothing to search for.  Here is a list of items sorted by most recent."
+      flash[:notice] = "We didn't have anything to search on, so, here is a list of items for you to browse."
       redirect_to :controller => :posts, :action => :index
     end
   end

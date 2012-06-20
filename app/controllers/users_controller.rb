@@ -8,6 +8,14 @@ class UsersController < ApplicationController
 
   respond_to :json
 
+  def index
+    if signed_in?
+      redirect_to current_user
+    else
+      redirect_to new_user_path
+    end
+  end
+
   def request_invitation
 
     #check to see if the user already exists in the users table as well
@@ -51,10 +59,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def get_watched
+  def watching
     @label = "Watched"
-    @user = User.first(:conditions => ['name = ?', params[:user]])
-    if not @user.blank? and not @user.is_considered_deleted? and @user.id == current_user.id
+    if signed_in? and not current_user.is_considered_deleted?
+      @user = current_user
       @posts = []
       Watchedpost.find_each(:conditions => ['user_id = ?', @user.id], :select => 'post_id') do |watched_post|
         @posts << Post.first(:conditions => ['id = ?', watched_post.post_id])
@@ -163,7 +171,7 @@ class UsersController < ApplicationController
         UserMailer.welcome_email(@user).deliver
         flash[:success] = "A verification email has been sent to #{@user.email}"
         redirect_to user_path(@user)
-      else  
+      else
         render 'edit_user_email_for_verification'
       end
     end
@@ -177,7 +185,7 @@ class UsersController < ApplicationController
 
     # we dont want to force the user to pass in all attributes, but rather, just the ones they want to change
     user_updates = params[:user]
-    user_updates.delete_if{|key, value| value.blank?}
+    user_updates.delete_if { |key, value| value.blank? }
 
     if @user.update_attributes(user_updates)
       flash[:success] = "Profile updated"
