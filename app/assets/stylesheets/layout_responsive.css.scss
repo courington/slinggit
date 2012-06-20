@@ -5,6 +5,9 @@
 	clear: both;
 	width: 100%;
 }
+
+
+//small handheld
 @media all and (min-width: 320px) and (max-width: 640px) {
 	.wrapper {
 		width: 96%;
@@ -467,13 +470,14 @@
 		}
 		
  		article > .col3.grey_well {
-			ul {
-				li {
-					float: left;
-					padding: 0 20%;
-					width: 50%;
-				}
-			}
+			display: none;
+			//ul {
+			//	li {
+				//	float: left;
+				//	padding: 0 20%;
+				//	width: 50%;
+			//	}
+		//	}
 		}
 		
 		.row.grey_well {
@@ -506,8 +510,32 @@
 //this bracket closes the 320-640 media query
 //end
 
-//641px and up
-@media all and (min-width: 641px) and (max-width: 960px) {
+@media all and (min-width: 500px) and (max-width: 640px) {
+	
+	//REQUEST INVITE
+	.invite_wrapper {
+		article{
+		
+			> #home_slinggitIcons {
+			width: 15%;
+			max-width: none;
+			margin-left: 2.5%;
+			}
+		
+			> .col3.pull_left h3.row {
+			width: 100%;
+			margin-left: 0;
+			}
+		
+		}
+	}
+	//END REQUEST INVITE
+}
+//this bracke closes the 801-960 media query
+//end
+
+//641px to 800px
+@media all and (min-width: 641px) and (max-width: 800px) {
 	
 	//REQUEST INVITE
 	.invite_wrapper {
@@ -537,37 +565,97 @@
 		}
 		
  		article > .col3.grey_well {
-			width: ($sixCols * 6);
-			float: right;
+			float: left;
+			font-size: ($font-size * .5);
+		    width: 20%;
 			ul {
-				li {
+				li:first-child {
 					float: left;
-					padding: 0 20%;
-					width: 50%;
+				}
+				li:last-child {
+					float: right;
+					padding-right: 0 20%;
 				}
 			}
 		}
 		
-		.row.grey_well {
-			label, p {
-				padding-left: 0;
+		article > .col4.offset1 {
+			width: 75%;
+			float: right;
+			.row.grey_well {
+				margin: .6em 0 0 0;
+				label, p {
+					padding-left: 10%;
+				}
+				button.col2 {
+					width:50%;
+					margin:0 0 0 25%;
+				}
 			}
-			button.col2 {
-				width:50%;
-				margin:0 0 0 25%;
+			input[type="password"], input[type="email"], input[type="text"] {
+				height: 2.6em;
+				width: 80%;
+				margin: .6em 0 1.2em 10%;
 			}
-		}
-		input[type="password"], input[type="email"], input[type="text"] {
-			height: 2.6em;
 		}
 	}
-	//END
-	
+	//END REQUEST INVITE
 }
 //this bracke closes the 641+ media query
 //end
 
-
+@media all and (min-width: 801px) and (max-width: 960px) {
+	
+	//REQUEST INVITE
+	.invite_wrapper {
+		article{
+			> #home_slinggitIcons {
+				width: ($sixCols * 1.5);
+				margin-left: ($sixCols * .25);
+				margin-right: ($sixCols * .25);
+			}
+			> .col3.pull_left {
+				width: ($sixCols * 4);
+			}
+			.nixie.nixie_bold {
+				font-size: 7.2em;
+			}
+			h3.row.nixie {
+				font-size: 3.6em;
+			}
+			> .col3.grey_well {
+				margin-top: 0;
+				margin-left: 0;
+				width: ($sixCols * 2);
+				font-size: ($font-size * .5);
+				clear: left;
+				float: left;
+				.twitIcon {
+					margin-left: $sixCols;
+					margin-right: $sixCols;
+				}
+				.facebookIcon {
+					margin-left: $sixCols;
+				}
+			}
+			> .col4.offset1 {
+				margin-left: 0;
+				margin-top: 0;
+				clear: right;
+				float: right;
+				.row.grey_well {
+					margin: 0;
+					label, p {
+						padding-left: 2.4em;
+					}
+				}
+			}
+		}
+	}
+	//END REQUEST INVITE
+}
+//this bracke closes the 801-960 media query
+//end
 
 
 //just a little white space for buffer

@@ -45,6 +45,7 @@ class TwitterPost < ActiveRecord::Base
           if not twitter_client.blank?
             begin
               result = tweet_constructor(twitter_client)
+              debugger
               finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :twitter_post_id => result.attrs['id_str']}) and return
             rescue Exception => e
               if e.is_a? Twitter::Error::Unauthorized

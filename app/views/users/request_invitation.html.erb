@@ -19,21 +19,23 @@
 			</ul>			
 		</div>
 		
+		<div class="col4 offset1">
+			<%= form_tag do |f| %>
+				<div class="row grey_well">
+					<p class="col6">We&rsquo;re getting ready to launch. Be one of the first to Slinggit!</p>
+		          <%= label_tag :email, "Email:", for: "invitation_email", class: "col1 pull_left" %>
+							<div class="col4 pull_left">
+		          	<%= email_field_tag :email, @email, placeholder: "Email", class: "row", size: "30" %>
+							</div>
+					<div class="row">
+			  		<%= button_tag "Request Invitation", class: "btn btn_green col2 offset3", :type => 'submit' %>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		
 	</article>
 
-<div class="col4 offset1">
-	<%= form_tag do |f| %>
-		<div class="row grey_well">
-			<p class="col6">We&rsquo;re getting ready to launch. Be one of the first to Slinggit!</p>
-          <%= label_tag :email, "Email:", for: "invitation_email", class: "col1 pull_left" %>
-					<div class="col4 pull_left">
-          	<%= email_field_tag :email, @email, placeholder: "Email", class: "row", size: "30" %>
-					</div>
-		<div class="row">
-	  	<%= button_tag "Request Invitation", class: "btn btn_green col2 offset3", :type => 'submit' %>
-	</div>
-		</div>
-	<% end %>
-</div>
+
 
 </section>
