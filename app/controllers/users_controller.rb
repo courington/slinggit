@@ -281,7 +281,7 @@ class UsersController < ApplicationController
     @email_or_username = params[:email_or_username]
     if request.post?
       if not @email_or_username.blank?
-        if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name')
+        if user = User.first(:conditions => ['email = ? or name = ?', @email_or_username.downcase, @email_or_username.downcase], :select => 'id,email,password_reset_code,name,slug')
           if user.password_reset_code.blank?
             user.update_attribute(:password_reset_code, Digest::SHA1.hexdigest("#{rand(999999)}-#{Time.now}-#{@email}"))
           end
