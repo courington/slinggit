@@ -56,7 +56,12 @@
               <% if not current_user.is_suspended? %>
 
                   <% if current_user.email_is_verified? %>
-                      <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
+                      <div class="row">
+                        <div class="col6">
+                          <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
+                          <%= link_to "Browse Recent Postings", {:controller => :posts, :action => :index}, class: "col2 btn" %>
+                        </div>
+                      </div>
                   <% else %>
                       <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your
                         email address.</p>
