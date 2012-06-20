@@ -11,25 +11,37 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.first(:conditions => ['id = ?', params[:id]])
-    if not @post.blank? and not @post.is_deleted?
-      @comments = @post.comments.paginate(page: params[:page], :conditions => ['status = ?', STATUS_ACTIVE])
-      # creating user object to compare against current_user
-      # in order to display edit option.  Dan, if there's a
-      # better way, fell free to change this.
-      @user = User.find(@post.user_id)
-      @api_account = @user.primary_twitter_account
-      if not @api_account.blank?
-        @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+    if not params[:id].blank?
+
+      #this conditional is only until we know we have handled all links that still pass in the standard id
+      if params[:id].length == 40
+        @post = Post.first(:conditions => ['id_hash = ?', params[:id]])
+      else
+        @post = Post.first(:conditions => ['id = ?', params[:id]])
       end
-      # Since we give an non-singed in user the option to sign in, we
-      # want to return them to the post after signin.
-      unless signed_in?
-        store_location
+
+      if not @post.blank? and not @post.is_deleted?
+        @comments = @post.comments.paginate(page: params[:page], :conditions => ['status = ?', STATUS_ACTIVE])
+        # creating user object to compare against current_user
+        # in order to display edit option.  Dan, if there's a
+        # better way, fell free to change this.
+        @user = User.find(@post.user_id)
+        @api_account = @user.primary_twitter_account
+        if not @api_account.blank?
+          @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+        end
+        # Since we give an non-singed in user the option to sign in, we
+        # want to return them to the post after signin.
+        unless signed_in?
+          store_location
+        end
+      else
+        flash[:error] = 'Oops, we were unable to find the post you were looking for.'
+        redirect_to :controller => 'static_pages', :action => 'home'
       end
     else
-      flash[:error] = 'Oops, we were unable to find the post you were looking for.'
-      redirect_to :controller => 'static_pages', :action => 'home'
+      flash[:error] = 'Sorry, but we couldnt find the post you were looking for.  Check out these other posts.'
+      redirect_to :controller => 'posts'
     end
   end
 
@@ -142,7 +154,7 @@ class PostsController < ApplicationController
       elsif search_terms.length == 1
         @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms[0]}%", "%#{search_terms[0]}%", "%#{search_terms[0]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
         if @posts.length == 0
-          search_term = search_terms[0].strip[1,search_terms.length - 1]
+          search_term = search_terms[0].strip[1, search_terms.length - 1]
           @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", search_term, search_term, search_term, true, STATUS_ACTIVE], :order => 'created_at desc')
         end
       end
