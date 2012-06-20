@@ -39,7 +39,7 @@ class FacebookPost < ActiveRecord::Base
             response = post_constructor
             result = ActiveSupport::JSON.decode(response.body)
             if result['id']
-              finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :facebook_post_id => result.attrs['id_str']}) and return
+              finalize(STATUS_SUCCESS, {:last_result => SUCCESS_LAST_RESULT, :facebook_post_id => result['id']}) and return
             else
               finalize(STATUS_FAILED, {:last_result => result.to_s}) and return
             end

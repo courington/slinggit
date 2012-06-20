@@ -95,7 +95,7 @@ class MessagesController < ApplicationController
           if @message.save
             flash[:success] = "Message has been sent."
             session.delete(:parent_message_id_hash)
-            redirect_to message_path
+            redirect_to :controller => :messages, :action => :index
           else
             @parent_message = parent_message
             @message = Message.new(params[:message])
@@ -133,7 +133,7 @@ class MessagesController < ApplicationController
             if @message.save
               flash[:success] = "Message has been sent."
               session.delete(:message_post_id_hash)
-              redirect_to :controller => :messages
+              redirect_to :controller => :messages, :action => :index
             else
               @post = message_post
               render 'new'
