@@ -1,6 +1,42 @@
 <%= provide(:title, 'Request Invitation') %>
 
 <section class="wrapper invite_wrapper">
+<<<<<<< HEAD
+	
+	<article class="row">
+		
+		<%= image_tag "heroimages/slinggit_icons_326x634.png", width: "100%", height: "auto", title: "Slinggit icons", alt: "Icons representing Slinggit brand", id: "home_slinggitIcons", class: "col1 offset1 pull_left" %>
+		
+		<div class="col3 pull_left">			
+			<h2 class="row nixie nixie_bold">Welcome to Slinggit.</h2>
+			<h3 class="row nixie">An easy way to connect with your social networks to git items you want and sling items you don&rsquo;t.</h3>	
+		</div>
+		
+		<div class="col3 grey_well">
+			<p class="row">Integrating with:</p>
+			<ul class="row">
+				<li><a href="http://twitter.com/#!/slinggit" title="Twitter" class="offset2 pull_left btnNavSprite twitIcon" >Twitter</a></li>
+				<li><a href="https://www.facebook.com/Slinggit" title="Facebook" class="offset1 pull_left btnNavSprite facebookIcon">Facebook</a></li>
+			</ul>			
+		</div>
+		
+	</article>
+
+<div class="col4 offset1">
+	<%= form_tag do |f| %>
+		<div class="row grey_well">
+			<p class="col6">We&rsquo;re getting ready to launch. Be one of the first to Slinggit!</p>
+          <%= label_tag :email, "Email:", for: "invitation_email", class: "col1 pull_left" %>
+					<div class="col4 pull_left">
+          	<%= email_field_tag :email, @email, placeholder: "Email", class: "row", size: "30" %>
+					</div>
+		<div class="row">
+	  	<%= button_tag "Request Invitation", class: "btn btn_green col2 offset3", :type => 'submit' %>
+	</div>
+		</div>
+	<% end %>
+</div>
+=======
 
   <article class="row">
     <%= image_tag "heroimages/slinggit_icons_326x634.png", width: "100%", height: "auto", title: "Slinggit icons", alt: "Icons representing Slinggit brand", id: "home_slinggitIcons", class: "col1 offset1 pull_left" %>
@@ -34,5 +70,6 @@
         </div>
     <% end %>
   </div>
+>>>>>>> 2935105eff94f15ba3f89698a61a659c7da30c60
 
 </section>
