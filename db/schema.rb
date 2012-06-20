@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618054235) do
+ActiveRecord::Schema.define(:version => 20120620024552) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -34,12 +34,12 @@ ActiveRecord::Schema.define(:version => 20120618054235) do
   end
 
   create_table "comments", :force => true do |t|
-    t.text     "body"
+    t.string   "body",       :limit => 350
     t.integer  "post_id"
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.string   "status",     :default => "ACT"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.string   "status",                    :default => "ACT"
     t.string   "id_hash"
   end
 

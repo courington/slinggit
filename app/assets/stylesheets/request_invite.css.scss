@@ -1,27 +1,41 @@
 .invite_wrapper {
-	article > div.col4.offset1 {
-		//background: url('heroimages/slinggit_icons_326x634.png') no-repeat 0 0;
-		//padding: 22px 12px 122px 0;
-	//	@include rounded-corners(3px);
-		//text-align: right;
+	article > .col3 {
+		h2.nixie {
+			color: $main-blue;
+			//#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			//#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			//#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			//#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			text-shadow: 1px 1px 0 rgba($wht, 1), 2px 2px 0px rgba($main-blue, .5);
+			padding: 0 10px 14px 12px;
+			text-rendering: optimizelegibility;
+		}
+		h3.row,
 		p.row {
-//			color: $main-blue;
-			text-align: right;
-			margin: 12px 0 0 0;
+			padding: 0 0 0 12px;
+			line-height: $leading;
 			letter-spacing: .03em;
 			text-rendering: optimizelegibility;
 		}
 	}
-	h2.nixie {
-		color: $main-blue;
-		#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-		#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-		#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-		#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-		text-shadow: 0 1px 4px rgba(0,0,0,.4);
-		//border-bottom: 1px solid $main-blue;
-		padding: 0 10px 14px 0;
-		text-rendering: optimizelegibility;
+ 	article > .col3.grey_well {
+		margin-top: .6em;
+		p {
+			text-align: center;
+		}
+		ul {
+			margin-top: 1em;
+			padding-top: 1em;
+			border-top: 1px solid $lt-grey;
+			li {
+				.twitIcon {
+					//margin-left: 15%;
+				}
+				.facebookIcon {
+					//margin-right: 15%;
+				}
+			}
+		}
 	}
 	.row.grey_well {
 			margin: 1.8em auto;
