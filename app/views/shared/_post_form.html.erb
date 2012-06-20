@@ -92,37 +92,5 @@
         <% end %>
       </fieldset>
   <% end %>
+  
 </article>
-
-<script type="text/javascript">
-
-  $('input, textarea').focus(function(field_object){
-      if(field_object.target.getAttribute('counterMax') != null){
-          displayCounter(field_object.target.id, field_object.target.getAttribute('counterMax'));
-      }
-  })
-
-  function displayCounter(field_name, max){
-      var field_object = $('#' + field_name);
-      var counter_object = $('#counter_' + field_name);
-
-      if(counter_object.length == 0){
-          field_object.parent().prepend('<div id="counter_' + field_name + '" class="counter col1 pull_right">' + field_object.val().length + '/' + max.toString() + '</div>');
-          counter_object = $('#counter_' + field_name);
-      }else{
-          counter_object.show();
-      }
-
-      field_object.blur(function(){
-          counter_object.hide();
-      }).keyup(function () {
-          if(parseInt(field_object.val().length) < max){
-              counter_object.html(field_object.val().length + '/' + max);
-          }else{
-              counter_object.html(max + '/' + max);
-              field_object.val(field_object.val().substring(0,300));
-          }
-      })
-  }
-
-</script>
