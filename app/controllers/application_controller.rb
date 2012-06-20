@@ -282,9 +282,7 @@ class ApplicationController < ActionController::Base
   def invite_only_home_redirect
     if not signed_in?
       if invite_only?
-        if params[:twitter_authenticate].blank?
-          redirect_to request_invitation_path
-        end
+        redirect_to request_invitation_path
       end
     end
   end
