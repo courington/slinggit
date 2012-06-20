@@ -37,16 +37,18 @@
         </div>  
       </div> 
 
-      <% if not @twitter_post.blank? and @twitter_post.status != "FAL" and @post.open? %>
+      <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and @post.open? %>
         <div class="row">
-          <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b", target: "_blank" do %>
+          <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b", target: "_blank" do %>
             Twitter &rarr;
           <% end %>
         </div>
       <% end %>
 
-       <% if not @facebook_post.blank? and @facebook_post.status != "FAL" and @post.open? %>
-        Facebook
+       <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? %>
+         <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_post.facebook_post_id}", class: "col6 b", target: "_blank" do %>
+            Facebook &rarr;
+          <% end %>
        <% end %>
     </div> 
   <% end %> 
