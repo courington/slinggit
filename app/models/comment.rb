@@ -18,7 +18,7 @@ class Comment < ActiveRecord::Base
 
   before_create :create_id_hash
 
-  validates :body, presence: true
+  validates :body, presence: true, length: {maximum: 300}
 
   default_scope order: 'comments.created_at DESC'
 
