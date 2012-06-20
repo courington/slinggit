@@ -37,7 +37,9 @@
 
     <% if not @twitter_post.blank? and @twitter_post.status != "FAL" and @post.open? %>
       <div class="row">
-        <%= link_to "Twitter", "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b" %>
+        <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b" do %>
+          Twitter &rarr;
+        <% end %>
       </div>
     <% end %>
 

@@ -25,4 +25,8 @@ class Comment < ActiveRecord::Base
   def create_id_hash
     self.id_hash = Digest::SHA1.hexdigest(self.id.to_s + Time.now.to_s)
   end
+
+  def post(fields = '*')
+    Post.first(:conditions => ['id = ?', self.post_id], :select => fields)
+  end
 end
