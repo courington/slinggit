@@ -9,7 +9,17 @@ body {
   background: $lt-grey;
   color: $dk-grey;
 }
-
+//WEB FONTS FOR HEADLINES
+.nixie {
+	font-family: 'Nixie One', 'helvetica neue', helvetica, arial, sans-serif;
+}
+.nixie_bold {
+	@extend .nixie;
+	font-size: 7.2em;
+	letter-spacing: .03em;
+	line-height: ($leading * .875);
+}
+//END
 //COLUMNS and OFFSETS
 .col1 {
 	width: $sixCols;

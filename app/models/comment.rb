@@ -18,11 +18,15 @@ class Comment < ActiveRecord::Base
 
   before_create :create_id_hash
 
-  validates :body, presence: true
+  validates :body, presence: true, length: {maximum: 300}
 
   default_scope order: 'comments.created_at DESC'
 
   def create_id_hash
     self.id_hash = Digest::SHA1.hexdigest(self.id.to_s + Time.now.to_s)
+  end
+
+  def post(fields = '*')
+    Post.first(:conditions => ['id = ?', self.post_id], :select => fields)
   end
 end

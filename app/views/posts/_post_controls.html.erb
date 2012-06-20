@@ -28,18 +28,24 @@
 
   </div>
 
-  <% if not @twitter_post.blank? and @post.open?%>
+  <% if not @twitter_post.blank? or not @facebook_post.blank? %>
     <div class="row">
       <div class="col5 innerHeader">
-        <p>View post on:</p>
+        <p>Posted on:</p>
       </div>  
     </div> 
 
-    <div class="row">
-      <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter" do %>
-         <span class="twitIconSmall"></span>
-         Twitter
-      <% end %>
-    </div>
+    <% if not @twitter_post.blank? and @twitter_post.status != "FAL" and @post.open? %>
+      <div class="row">
+        <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b" do %>
+          Twitter &rarr;
+        <% end %>
+      </div>
+    <% end %>
+
+     <% if not @facebook_post.blank? and @facebook_post.status != "FAL" and @post.open? %>
+      Facebook
+     <% end %>
+    
   <% end %> 
 </div>

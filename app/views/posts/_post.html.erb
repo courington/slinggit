@@ -1,7 +1,7 @@
 <article class="row postArticle">
-
+<%= link_to(post_path(post)) do %>
   <div class="col1 pull_left">
-    <%= link_to(post_path(post)) do %>
+    
           <div class="photo">
             <% if post.photo_file_name.blank? %>
               <%= image_tag "80x80_placeholder.png", :height => "auto", :width => "100%" %>
@@ -9,7 +9,7 @@
               <%= image_tag post.photo.url(:search), class: "img_border" %>
             <% end %>
           </div>
-    <% end %>
+    
   </div>
 
   <div class="col5 pull_right">
@@ -42,5 +42,5 @@
     <% end %> 
 
   </div> 
-
+<% end %>
 </article>

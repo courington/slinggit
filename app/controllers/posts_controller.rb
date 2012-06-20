@@ -11,25 +11,38 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.first(:conditions => ['id = ?', params[:id]])
-    if not @post.blank? and not @post.is_deleted?
-      @comments = @post.comments.paginate(page: params[:page], :conditions => ['status = ?', STATUS_ACTIVE])
-      # creating user object to compare against current_user
-      # in order to display edit option.  Dan, if there's a
-      # better way, fell free to change this.
-      @user = User.find(@post.user_id)
-      @api_account = @user.primary_twitter_account
-      if not @api_account.blank?
-        @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+    if not params[:id].blank?
+
+      #this conditional is only until we know we have handled all links that still pass in the standard id
+      if params[:id].length == 40
+        @post = Post.first(:conditions => ['id_hash = ?', params[:id]])
+      else
+        @post = Post.first(:conditions => ['id = ?', params[:id]])
       end
-      # Since we give an non-singed in user the option to sign in, we
-      # want to return them to the post after signin.
-      unless signed_in?
-        store_location
+
+      if not @post.blank? and not @post.is_deleted?
+        @comments = @post.comments.paginate(page: params[:page], :conditions => ['status = ?', STATUS_ACTIVE])
+        # creating user object to compare against current_user
+        # in order to display edit option.  Dan, if there's a
+        # better way, fell free to change this.
+        @user = User.find(@post.user_id)
+        @api_account = @user.primary_twitter_account
+        if not @api_account.blank?
+          @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+          @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+        end
+        # Since we give an non-singed in user the option to sign in, we
+        # want to return them to the post after signin.
+        unless signed_in?
+          store_location
+        end
+      else
+        flash[:error] = 'Oops, we were unable to find the post you were looking for.'
+        redirect_to :controller => 'static_pages', :action => 'home'
       end
     else
-      flash[:error] = 'Oops, we were unable to find the post you were looking for.'
-      redirect_to :controller => 'static_pages', :action => 'home'
+      flash[:error] = 'Sorry, but we couldnt find the post you were looking for.  Check out these other posts.'
+      redirect_to :controller => 'posts'
     end
   end
 
@@ -125,10 +138,35 @@ class PostsController < ApplicationController
   # end
 
   def results
+    #rework this again later
+    search_terms = []
+    @posts = []
     if not params[:id].blank?
-      #I am currently researching how to make this function more like google search.  Faster and more relevent.
-      @searchTerm = params[:id]
-      @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{params[:id]}%", "%#{params[:id]}%", "%#{params[:id]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
+      search_terms = params[:id].split(' ')
+      if search_terms.length > 1
+        @posts = Post.all(:conditions => ["(content in (?) OR hashtag_prefix in (?) OR location in (?)) AND open = ? AND status = ?", search_terms, search_terms, search_terms, true, STATUS_ACTIVE], :order => 'created_at desc')
+        if @posts.length == 0
+          search_terms = [search_terms[0], search_terms[1], search_terms[2]] #limit to 3 search terms
+          search_terms.each do |search_term|
+            search_term = search_term.strip[1, search_term.length - 1]
+            @posts | Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms}%", "%#{search_terms}%", "%#{search_terms}%", true, STATUS_ACTIVE], :order => 'created_at desc')
+          end
+        end
+      elsif search_terms.length == 1
+        @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms[0]}%", "%#{search_terms[0]}%", "%#{search_terms[0]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
+        if @posts.length == 0
+          search_term = search_terms[0].strip[1, search_terms.length - 1]
+          @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", search_term, search_term, search_term, true, STATUS_ACTIVE], :order => 'created_at desc')
+        end
+      end
+
+      if @posts.length == 0
+        flash[:notice] = "Shucks, we couldn't find anything matching your search terms.  So, here is a list of items for you to browse.'"
+        redirect_to :controller => :posts, :action => :index
+      end
+    else
+      flash[:notice] = "We didn't have anything to search on, so, here is a list of items for you to browse."
+      redirect_to :controller => :posts, :action => :index
     end
   end
 

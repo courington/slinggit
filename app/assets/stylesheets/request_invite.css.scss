@@ -1,24 +1,47 @@
-body.request_invite,
-.request_invite .page_contentContainer {
-	background: $main-blue;
-	box-shadow: inset 0 10px 0 $lt-grey;
-	.wrapper {
-		margin-top: 2.6em ;
-	}
-	p.col2.pull_left {
-		font-size: 1.8em;
-		line-height: 1.6em;
-		color: $wht;
-		padding: 1.4em 0 0 .8em;
-		border-left: 1px solid darken($main-blue, 10%);
-		box-shadow: inset 1px 0 0 rgba($wht, .25);
-		margin-top: -.5em;
+.invite_wrapper {
+	article > .col3 {
+		h2.nixie {
+			color: $main-blue;
+			//#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			//#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			//#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			//#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.4);
+			text-shadow: 1px 1px 0 rgba($wht, 1), 2px 2px 0px rgba($main-blue, .5);
+			padding: 0 10px 14px 12px;
+			text-rendering: optimizelegibility;
 		}
-		
-		.row.grey_well {
+		h3.row,
+		p.row {
+			padding: 0 0 0 12px;
+			line-height: $leading;
+			letter-spacing: .03em;
+			text-rendering: optimizelegibility;
+		}
+	}
+ 	article > .col3.grey_well {
+		margin-top: .6em;
+		p {
+			text-align: center;
+		}
+		ul {
+			margin-top: 1em;
+			padding-top: 1em;
+			border-top: 1px solid $lt-grey;
+			li {
+				.twitIcon {
+					//margin-left: 15%;
+				}
+				.facebookIcon {
+					//margin-right: 15%;
+				}
+			}
+		}
+	}
+	.row.grey_well {
 			margin: 1.8em auto;
 			p {
 				line-height: 1.8em;
+				padding-left: 2.8em;
 			}
 			label {
 				font-size: 1.6em;
@@ -28,8 +51,8 @@ body.request_invite,
 			}
 		}
 		
-	.invite_footer a {
-		text-indent: -9999px;
-		margin: 0 0 0 $font-size;
+		.invite_footer a {
+			text-indent: -9999px;
+			margin: 0 0 0 $font-size;
+		}
 	}
-}

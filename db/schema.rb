@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616185324) do
+ActiveRecord::Schema.define(:version => 20120620024552) do
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -34,12 +34,13 @@ ActiveRecord::Schema.define(:version => 20120616185324) do
   end
 
   create_table "comments", :force => true do |t|
-    t.text     "body"
+    t.string   "body",       :limit => 350
     t.integer  "post_id"
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.string   "status",     :default => "ACT"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.string   "status",                    :default => "ACT"
+    t.string   "id_hash"
   end
 
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
@@ -244,8 +245,8 @@ ActiveRecord::Schema.define(:version => 20120616185324) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "time_zone"
     t.string   "email_activation_code"
+    t.string   "time_zone"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
