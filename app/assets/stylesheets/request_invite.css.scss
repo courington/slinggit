@@ -2,11 +2,11 @@
 	article > .col3 {
 		h2.nixie {
 			color: $main-blue;
-			//#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-			//#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-			//#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-			//#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.4);
-			text-shadow: 1px 1px 0 rgba($wht, 1), 2px 2px 0px rgba($main-blue, .5);
+			#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			text-shadow: 0 1px 4px rgba(0,0,0,.25);
 			padding: 0 10px 14px 12px;
 			text-rendering: optimizelegibility;
 		}
