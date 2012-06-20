@@ -103,6 +103,13 @@
 			
 				}
 
+			}// end #postReply, #postControls
+			#networkActions{
+
+				a{
+					font-size: $font-size * 1;
+					color: darken($main-blue, 20%);
+				}
 			}
 		}
 
