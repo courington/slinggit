@@ -133,7 +133,7 @@ class MessagesController < ApplicationController
             if @message.save
               flash[:success] = "Message has been sent."
               session.delete(:message_post_id_hash)
-              redirect_to :controller => :posts, :action => :show, :id => message_post.id
+              redirect_to :controller => :messages
             else
               @post = message_post
               render 'new'
