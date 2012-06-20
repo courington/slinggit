@@ -41,9 +41,15 @@
       <div class="col6 pull_left">
         <div class="row">
           <header>
-            <h1><%= @label %> Posts (<%= @posts.count %>)</h1>
+            <% if signed_in? and params[:id] == current_user.name %>
+                <h1><%= @label %> Posts (<%= @posts.count %>)</h1>
+                <p><%= @label %> Posts (<%= @posts.count %>)</p>
+            <% else %>
+                <h1><%= params[:id] %>'s Posts (<%= @posts.count %>)</h1>
+                <p><%= params[:id] %>'s Posts (<%= @posts.count %>)</p>
+            <% end %>
 
-            <p><%= @label %> Posts (<%= @posts.count %>)</p>
+
           </header>
         </div>
         <% if !@user.has_photo_source? && current_user?(@user) %>
@@ -59,7 +65,6 @@
                       <div class="row">
                         <div class="col6">
                           <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
-                          <%= link_to "Browse Recent Postings", {:controller => :posts, :action => :index}, class: "col2 btn" %>
                         </div>
                       </div>
                   <% else %>
