@@ -88,7 +88,7 @@ class MessagesController < ApplicationController
           @message.recipient_user_id = parent_message.creator_user_id
           @message.source = parent_message.source
           @message.source_id = parent_message.source_id
-          @message.contact_info_json = ActiveSupport::JSON.decode(parent_message.contact_info_json)['email']
+          @message.contact_info_json = current_user.email
           @message.parent_source_id = parent_message.id
           @message.send_email = true
 
