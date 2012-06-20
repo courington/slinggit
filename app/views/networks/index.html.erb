@@ -14,13 +14,13 @@
       		<li>Source</li>
       			<% if not @api_accounts.blank? %>
           		<% @api_accounts.each do |api_account| %>
-          <li id="twitterAccountSource_<%= api_account.id.to_s %>"><%= api_account.api_source %></li>
+          <li id="twitterAccountSource_<%= api_account.id.to_s %>"><%= api_account.api_source.titleize %></li>
           		<% end %>
       			<% end %>
     		</ul>
 
     		<ul class="col1 pull_left">
-      		<li>Acct Name</li>
+      		<li>Acct. Name</li>
       		<% if not @api_accounts.blank? %>
           	<% @api_accounts.each do |api_account| %>
           <li id="twitterAccountUserName_<%= api_account.id.to_s %>"><%= api_account.user_name %></li>
