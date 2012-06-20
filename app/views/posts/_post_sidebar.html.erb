@@ -11,7 +11,7 @@
       <%= link_to "Contact Using Slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
     </div>
 
-    <% if not @twitter_post.blank? %>
+    <% if not @twitter_post.blank? and @twitter_post.status != "FAL"%>
       <div class="row">
         <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter" do %>
            <span class="twitIconSmall"></span>

@@ -28,24 +28,27 @@
 
   </div>
 
-  <% if not @twitter_post.blank? or not @facebook_post.blank? %>
-    <div class="row">
-      <div class="col5 innerHeader">
-        <p>Posted on:</p>
-      </div>  
-    </div> 
-
-    <% if not @twitter_post.blank? and @twitter_post.status != "FAL" and @post.open? %>
+  
+  <% if (not @twitter_post.blank? and @twitter_post.status != "FAL") or (not @facebook_post.blank? and @facebook_post.status != "FAL")%>
+    <div id="networkActions" class="row">
       <div class="row">
-        <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b" do %>
-          Twitter &rarr;
-        <% end %>
-      </div>
-    <% end %>
+        <div class="col5 innerHeader">
+          <p>Posted on:</p>
+        </div>  
+      </div> 
 
-     <% if not @facebook_post.blank? and @facebook_post.status != "FAL" and @post.open? %>
-      Facebook
-     <% end %>
-    
+      <% if not @twitter_post.blank? and @twitter_post.status != "FAL" and @post.open? %>
+        <div class="row">
+          <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b", target: "_blank" do %>
+            Twitter &rarr;
+          <% end %>
+        </div>
+      <% end %>
+
+       <% if not @facebook_post.blank? and @facebook_post.status != "FAL" and @post.open? %>
+        Facebook
+       <% end %>
+    </div> 
   <% end %> 
+  
 </div>

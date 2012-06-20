@@ -286,6 +286,11 @@
 				#postReply{
 					padding: 20px 20px 5px 20px;
 				}
+				.innerHeader {
+					p{
+						text-align: left;
+					}
+				}
 			}// end #postReplyWrapper
 			#closedPostWrapper, #postControls{
 				padding: 0px 0px 0px 0px;

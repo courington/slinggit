@@ -142,6 +142,14 @@ class ApplicationController < ActionController::Base
             status = STATUS_ACTIVE
           end
 
+          location = ''
+          if not options[:api_object]['location'].blank?
+            if not options[:api_object]['location']['name'].blank?
+              location = options[:api_object]['location']['name']
+            end
+          end
+
+
           api_account = ApiAccount.create(
               :user_id => options[:user_object].id,
               :api_id => options[:api_object]['id'],
@@ -154,7 +162,7 @@ class ApplicationController < ActionController::Base
               :image_url => "http://graph.facebook.com/#{options[:api_object]['id']}/picture",
               :description => nil,
               :language => options[:api_object]['languages'].blank? ? nil : options[:api_object]['languages'].first['name'],
-              :location => options[:api_object]['location']['name'].blank? ? nil : options[:api_object]['location']['name'],
+              :location => location,
               :reauth_required => 'no',
               :status => status
           )
