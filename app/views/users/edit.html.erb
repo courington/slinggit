@@ -11,12 +11,14 @@
 		<div class="col3 pull_left">
 	        <div id="photoSelectorWrapper" class="white_well">
 		
-				<div class="row">
-					<div class="col6">
-						<p>Select your profile photo</p>
+				<div id="selectorWrapper" class="row">
+
+					<div class="row">
+						<div class="col6">
+							<p>Select your profile photo</p>
+						</div>
 					</div>
-				</div>
-				<div class="row">
+				
 					<div class="col2 pull_left">
 						<div class="row">
 							<%= image_tag "80x80_placeholder.png", id: "SPS" %>
@@ -45,7 +47,9 @@
 							<p>Gravatar | <a href="https://gravatar.com/emails" target="_blank">change</a></p>
 						</div>
 					</div>
+					
 				</div>
+
 			</div>
 	    </div>
 	</div>
@@ -103,6 +107,6 @@
 </section>
 <script type="text/javascript">
 	$(document).ready(function(){
-		window.initPhotoSelector("<%= @user.id %>", false)
+		window.initPhotoEditor("<%= @user.id %>", false)
 	})
 </script>
