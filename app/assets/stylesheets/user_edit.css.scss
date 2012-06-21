@@ -27,9 +27,9 @@
 				}
 				img{
 					padding: .3em;
-						border: 1px solid #D7D7D7;
-						border-radius: .3em;
-						background-color: #E3E3E3;
+					border: 1px solid #D7D7D7;
+					border-radius: .3em;
+					background-color: #E3E3E3;
 					width: 54px;
 
 					&:hover{
@@ -41,8 +41,24 @@
 					&.selected{
 						background-color: $main-green;
 					}
+					&.selectedPhoto{
+						width: 80px;
+						border: 0;
+
+						&:hover{
+							cursor: default;
+							border-color: #D7D7D7;
+							background-color: #E3E3E3;
+						}
+					}
 				}
 
+			}
+			a.change{
+				font-size: $font-size * .9;
+				margin-top: 30px;
+				border: 0;
+				color: darken($main-blue, 25%);
 			}
 		}
 	}
