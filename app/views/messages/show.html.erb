@@ -20,9 +20,9 @@
 
       <aside class="col2 pull_right white_well">
         <% if @message.creator_user_id.blank? %>
-            <%= link_to "Reply", "www.#{current_user.email.scan(/@(.*)/)}", :class => "btn btn_green row", :target => '_blank' %>
+            <%= link_to "Reply", "www.#{current_user.email.scan(/@(.*)/)}", :class => "btn btn_green row", :target => '_blank', :id => 'messageReplyButton' %>
         <% else %>
-            <%= link_to "Reply", {:action => :reply, :id => @message.id_hash}, :class => "btn btn_green row" %>
+            <%= link_to "Reply", {:action => :reply, :id => @message.id_hash}, :class => "btn btn_green row", :id => 'messageReplyButton' %>
         <% end %>
 
         <%= link_to "Delete", {:action => :delete, :id => @message.id_hash, :method => :delete}, :confirm => 'Are you sure you want to delete this message?', :class => "btn btn_red row" %>
