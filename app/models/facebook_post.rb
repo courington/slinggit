@@ -154,7 +154,7 @@ class FacebookPost < ActiveRecord::Base
     ProblemReport.create(
         :exception_message => str,
         :signed_in_user_id => self.user_id != nil ? self.user_id : nil,
-        :send_email => send_email
+        :send_email => true
     )
   end
 
