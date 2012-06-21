@@ -1113,7 +1113,7 @@ class MobileController < ApplicationController
     if not params[:parent_message_id].blank?
       if not params[:body].blank?
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ? AND status != ?', params[:parent_message_id], mobile_session.id, STATUS_DELETED])
+          if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ?', params[:parent_message_id], mobile_session.user_id])
             message = Message.new(
                 :creator_user_id => mobile_session.user_id,
                 :recipient_user_id => parent_message.creator_user_id,
