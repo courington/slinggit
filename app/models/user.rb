@@ -98,9 +98,10 @@ class User < ActiveRecord::Base
 
   def profile_photo_url
     # This insures that at least on photo url is returned
-    url = "80x80_placeholder.png"
+    url = "icon_blue_80x80.png"
     if self.photo_source == SLINGGIT_PHOTO_SOURCE
-      url = "80x80_placeholder.png"
+      slinggit_images = ['icon_blue_80x80.png', 'icon_red_80x80.png', 'icon_green_80x80.png', 'icon_yellow_80x80.png']
+      url = slinggit_images[rand(slinggit_images.length)]
     elsif self.photo_source == TWITTER_PHOTO_SOURCE
       url = self.primary_twitter_account.image_url
     elsif self.photo_source == GRAVATAR_PHOTO_SOURCE

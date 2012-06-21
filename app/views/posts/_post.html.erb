@@ -4,7 +4,7 @@
     
           <div class="photo">
             <% if post.photo_file_name.blank? %>
-              <%= image_tag "80x80_placeholder.png", :height => "auto", :width => "100%" %>
+              <%= image_tag "noPhoto_80x80.png", :height => "auto", :width => "90%" %>
             <% else %>
               <%= image_tag post.photo.url(:search), class: "img_border" %>
             <% end %>
