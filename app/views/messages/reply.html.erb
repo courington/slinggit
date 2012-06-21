@@ -2,7 +2,7 @@
 
 <div class="wrapper message">
   <% if @parent_message %>
-      <article class="col4 pull_left white_well">
+      <article class="col5 pull_left white_well">
 
         <div class="row">
           <small class="col6 timestamp">Received <%= time_ago_in_words(@parent_message.created_at) %> ago.</small>
@@ -10,7 +10,7 @@
 
         <dl class="row">
           <dt class="col1 pull_left">From:</dt>
-          <dd class="col5 pull_left"><%= @parent_message.contact_info[:email] %></dd>
+          <dd class="col1 pull_left"><%= @parent_message.contact_info[:email] %></dd>
         </dl>
 
         <div class="row">
@@ -22,7 +22,7 @@
 </div><br/>
 
 <div class="wrapper message">
-  <article class="col4 pull_left white_well">
+  <article class="col5 pull_left white_well">
 
     <dl class="row">
       <dt class="col1 pull_left">Response:</dt>
@@ -32,7 +32,7 @@
         <%= render 'shared/error_messages', object: f.object %>
         <div class="row">
           <div class="col6 pull_left">
-            <%= f.text_area :body, "maxLength" => 1000, :value => @message.body, :counterMax => 1000 %>
+            <%= f.text_area :body, "maxLength" => 1000, :value => @message.body, :counterMax => 1000, :cols => 105 %>
           </div>
         </div>
         <br/>
