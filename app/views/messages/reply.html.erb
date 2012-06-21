@@ -32,7 +32,7 @@
         <%= render 'shared/error_messages', object: f.object %>
         <div class="row">
           <div class="col6 pull_left">
-            <%= f.text_area :body, "maxLength" => 1000, :value => @message.body %>
+            <%= f.text_area :body, "maxLength" => 1000, :value => @message.body, :counterMax => 1000 %>
           </div>
         </div>
         <br/>

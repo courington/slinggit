@@ -48,6 +48,10 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}, :if => lambda { new_record? || !password.nil? }
   validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.nil? }
 
+  def active_post_count
+    Post.count(:conditions => ['status = ? and user_id = ?', STATUS_ACTIVE, self.id])
+  end
+
   def twitter_authorized?
     !twitter_atoken.blank? && !twitter_asecret.blank?
   end
