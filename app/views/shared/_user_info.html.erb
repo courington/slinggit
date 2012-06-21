@@ -2,7 +2,7 @@
 	<div class="white_well row">
 		<header class="col4 pull_left">
 			<h1><%= current_user.name %></h1>
-  			<h6><%= pluralize(current_user.posts.count, "post") %></h6>
+  			<h6><%= pluralize(current_user.active_post_count, "post") %></h6>
 		</header>
 		<a href="<%= user_path(current_user) %>" class="col2 pull_right">
 			<%= image_tag current_user.profile_photo_url, :height => "auto", :width => "100%" %>
