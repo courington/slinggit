@@ -12,7 +12,7 @@
       <div class="col4 pull_right">
         <header>
           <h1><%= @user.name %></h1>
-          <h6><%= pluralize(@user.posts.count, "post") %></h6>
+          <h6><%= pluralize(@user.active_post_count, "post") %></h6>
         </header>
       </div>
 
