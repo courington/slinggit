@@ -37,7 +37,7 @@
         </div>
         <br/>
         <%= submit_tag 'Send Message', class: "btn btn_green" do %>
-            <%= f.submit 'Send Message', class: "btn btn_green" %>
+            <%= f.submit 'Send Message', type: "submit", class: "btn btn_green" %>
             <%= f.hidden_field :reply, true %>
         <% end %>
     <% end %>
