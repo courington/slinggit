@@ -79,10 +79,10 @@
 				}
 
 				#postReplyActions, #postContolsActions{
-					padding: 20px 0px 0px 0px;
+					padding: 12px 0px 0px 0px;
 
 					.row {
-						margin-bottom: 20px;
+						margin-bottom: 4px;
 
 						.col2{
 							min-width: 70px;
@@ -90,6 +90,7 @@
 					}
 
 					.grey_well{
+						margin-top: 14px;
 						text-align: center;
 
 						p{
@@ -105,7 +106,7 @@
 
 			}// end #postReply, #postControls
 			#networkActions{
-
+				margin-top: 12px;
 				a{
 					font-size: $font-size * 1;
 					color: darken($main-blue, 20%);

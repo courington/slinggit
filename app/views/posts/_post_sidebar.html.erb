@@ -11,14 +11,22 @@
       <%= link_to "Contact Using Slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
     </div>
 
-    <% if not @twitter_post.blank? and @twitter_post.status != "FAL"%>
+    <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and @post.open? %>
       <div class="row">
-        <%= link_to "https://twitter.com/#!/#{@api_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter" do %>
+        <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 btn_twitter", target: "_blank" do %>
            <span class="twitIconSmall"></span>
            Contact Using Twitter
         <% end %>
       </div>
     <% end %> 
+
+    <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? %>
+      <div class="row">
+         <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 btn_facebook b", target: "_blank" do %>
+            Contact Using Facebook
+          <% end %>
+      </div>
+    <% end %>
 
     <div class="row grey_well">
       <p>See more <%= link_to "posts by #{@user.name}", user_path(@user.name) %></p>

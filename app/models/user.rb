@@ -53,8 +53,12 @@ class User < ActiveRecord::Base
   end
 
   def primary_twitter_account
-    ApiAccount.first(:conditions => ['user_id = ? AND status = ?', self.id, STATUS_PRIMARY])
-  end
+    ApiAccount.first(:conditions => ['user_id = ? AND status = ? AND api_source = ?', self.id, STATUS_PRIMARY, 'twitter'], :select => 'id,user_name,image_url')
+  end 
+
+  def primary_facebook_account
+    ApiAccount.first(:conditions => ['user_id = ? AND status = ? AND api_source = ?', self.id, STATUS_PRIMARY, 'facebook'], :select => 'id,user_name,image_url')
+  end  
 
   def email_is_verified?
     self.email_activation_code.blank? and self.status != STATUS_UNVERIFIED

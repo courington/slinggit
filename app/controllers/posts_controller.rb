@@ -26,11 +26,33 @@ class PostsController < ApplicationController
         # in order to display edit option.  Dan, if there's a
         # better way, fell free to change this.
         @user = User.find(@post.user_id)
-        @api_account = @user.primary_twitter_account
-        if not @api_account.blank?
-          @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
-          @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @api_account.id])
+        @twitter_account = @user.primary_twitter_account
+        @facebook_account = @user.primary_facebook_account
+
+        if not @primary_twitter_account.blank?
+          @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @twitter_account.id])
+        else
+          @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND user_id = ?', @post.id, @user.id])
+          @twitter_account = ApiAccount.first(:conditions => ['id = ?', @twitter_post.api_account_id], :select => 'user_name') unless @twitter_post == nil
         end
+
+        if not @facebook_account.blank?
+          @facebook_truncated_id = nil
+          @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @facebook_account.id])
+          if @facebook_post != nil and @facebook_post.facebook_post_id != nil
+            delims = @facebook_post.facebook_post_id.to_s.split("_")
+            @facebook_truncated_id = delims[1]
+          end
+        else
+          @facebook_truncated_id = nil
+          @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND user_id = ? ', @post.id, @user.id])
+          @facebook_account = ApiAccount.first(:conditions => ['id = ?', @facebook_post.api_account_id], :select => 'user_name') unless @facebook_post == nil
+          if @facebook_post != nil and @facebook_post.facebook_post_id != nil
+            delims = @facebook_post.facebook_post_id.to_s.split("_")
+            @facebook_truncated_id = delims[1]
+          end
+        end
+
         # Since we give an non-singed in user the option to sign in, we
         # want to return them to the post after signin.
         unless signed_in?
