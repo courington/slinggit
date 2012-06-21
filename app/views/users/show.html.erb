@@ -41,7 +41,7 @@
       <div class="col6 pull_left">
         <div class="row">
           <header>
-            <% if signed_in? and params[:id] == current_user.name %>
+            <% if (signed_in? and params[:id] == current_user.name) or params[:id].blank? %>
                 <h1><%= @label %> Posts (<%= @posts.count %>)</h1>
                 <p><%= @label %> Posts (<%= @posts.count %>)</p>
             <% else %>
