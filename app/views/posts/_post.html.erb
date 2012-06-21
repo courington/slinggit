@@ -4,7 +4,7 @@
     
           <div class="photo">
             <% if post.photo_file_name.blank? %>
-              <%= image_tag "noPhoto_80x80.png", :height => "auto", :width => "90%" %>
+              <%= image_tag "noPhoto_80x80.png", :height => "auto", :width => "100%" %>
             <% else %>
               <%= image_tag post.photo.url(:search), class: "img_border" %>
             <% end %>
@@ -25,9 +25,9 @@
       </div>  
       <div class="col1 pull_right">
           <% if post.open? %>
-            <span class="label label_green">Open</span>
+            <span class="text_green">Open</span>
           <% else %>  
-            <span class="label">Closed</span>
+            <span class="text_red">Closed</span>
           <% end %>  
       </div>
     </div>
