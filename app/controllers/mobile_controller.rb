@@ -331,7 +331,7 @@ class MobileController < ApplicationController
                     :photo => @file
                 )
 
-                if not post.has_photo?
+                if post.has_photo?
                   File.delete(tmp_file_path)
                 end
 
