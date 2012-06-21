@@ -458,7 +458,7 @@ class MobileController < ApplicationController
         #starting_post_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
         #always need to inc by 1
         starting_post_id = params[:starting_post_id]
-        starting_post_id = Post.count + 1 if (starting_post_id.blank? or starting_post_id.to_i <= 0)
+        starting_post_id = Post.first.id + 1 if (starting_post_id.blank? or starting_post_id.to_i <= 0)
         starting_post_id = starting_post_id.to_i
 
         posts = []
@@ -778,7 +778,7 @@ class MobileController < ApplicationController
       if not params[:comment_id].blank?
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
           if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
-            if comment = Comment.first(:conditions => ['post_id = ? and id = ?', mobile_session.user_id, params[:comment_id]])
+            if comment = Comment.first(:conditions => ['post_id = ? and id = ?', params[:post_id], params[:comment_id]])
               comment.update_attribute(:status, STATUS_DELETED)
               render_success_response(
                   :comment_id => comment.id,
@@ -1113,7 +1113,7 @@ class MobileController < ApplicationController
     if not params[:parent_message_id].blank?
       if not params[:body].blank?
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ? AND status != ?', params[:parent_message_id], current_user.id, STATUS_DELETED])
+          if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ? AND status != ?', params[:parent_message_id], mobile_session.id, STATUS_DELETED])
             message = Message.new(
                 :creator_user_id => mobile_session.user_id,
                 :recipient_user_id => parent_message.creator_user_id,
