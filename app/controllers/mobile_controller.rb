@@ -221,7 +221,6 @@ class MobileController < ApplicationController
     setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
   end
 
-  #TODO IMPLEMENT
   def add_facebook_account
     setup_facebook_call(url_for(:controller => :mobile, :action => :add_facebook_account_callback, :user_name => params[:user_name]), 'publish_stream')
   end
@@ -852,7 +851,7 @@ class MobileController < ApplicationController
                 :rows_found => messages.length,
                 :filters_used => {:offset => offset, :limit => limit, :starting_message_id => starting_message_id},
                 :messages => messages.map { |m|
-                  m.contact_info_json = ActiveSupport::JSON.decode(m.contact_info_json)
+                  m.contact_info_json = (ActiveSupport::JSON.decode(m.contact_info_json)).merge(:user_name => m.creator_user_name)
                   source_object = m.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')
                   source_object_attributes = nil
                   source_object_attributes = source_object.attributes if not source_object.blank?
@@ -1511,6 +1510,104 @@ class MobileController < ApplicationController
       )
     end
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #def send_push_notifications
+  #  apns_url = Rails.env == 'development' ? PushNotification::APNS_SANDBOX_HOST : PushNotification::APNS_PRODUCTION_HOST
+  #  notifications = PushNotification.all(:conditions => {:status => 'new'})
+  #  if notifications.length > 0
+  #    notifications.each do |notification|
+  #      devices = PushNotificationDevice.all(:conditions => ['customer_id = ? AND status = ?', notification.customer_id, PushNotificationDevice::STATUS_ACTIVE])
+  #      devices.each do |device|
+  #        case device.device_type
+  #          when PushNotificationDevice::DEVICE_APPLE
+  #            socket, ssl = create_apns_socket(apns_url, PushNotification::APNS_PORT) if socket.nil?
+  #            raw_apns_data = device.get_apns_payload(notification.message)
+  #            begin
+  #              ssl.write(raw_apns_data)
+  #              ssl.flush
+  #            rescue
+  #              ssl.close
+  #              socket.close
+  #              socket, ssl = create_apns_socket(apns_url, PushNotification::APNS_PORT)
+  #
+  #              ssl.write(raw_apns_data)
+  #              ssl.flush
+  #            end
+  #          when PushNotificationDevice::DEVICE_ANDROID
+  #            # TODO: android push notifications
+  #        end
+  #      end
+  #      notification.update_attribute(:status, 'done')
+  #    end
+  #  end
+  #  render :nothing => true
+  #end
+  #
+  #def check_apns_feedback_service
+  #  apns_feedback_url = PRODUCTION_ENV ? PushNotification::APNS_PRODUCTION_FEEDBACK_HOST : PushNotification::APNS_SANDBOX_FEEDBACK_HOST
+  #  socket, ssl = create_apns_socket(apns_feedback_url, PushNotification::APNS_FEEDBACK_PORT)
+  #
+  #  apns_feedback = []
+  #  while line = ssl.read(38)
+  #    apns_feedback << line.unpack('N1n1H64')[2]
+  #  end
+  #
+  #  if not apns_feedback.empty?
+  #    PushNotificationDevice.update_all("status = \"#{PushNotificationDevice::STATUS_UNINSTALLED}\"", ['device_id = ?', apns_feedback])
+  #  end
+  #
+  #  render :nothing => true
+  #end
+  #
+  #def create_apns_socket(url, port)
+  #  apns_cert = File.read(APNS_CERT[:filepath]) if File.exists?(APNS_CERT[:filepath])
+  #  ctx = OpenSSL::SSL::SSLContext.new
+  #  ctx.key = OpenSSL::PKey::RSA.new(apns_cert, APNS_CERT[:password])
+  #  ctx.cert = OpenSSL::X509::Certificate.new(apns_cert)
+  #
+  #  socket = TCPSocket.new(url, port)
+  #  socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
+  #  ssl = OpenSSL::SSL::SSLSocket.new(socket, ctx)
+  #  ssl.sync = true
+  #  ssl.connect
+  #  return socket, ssl
+  #end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   private
 
