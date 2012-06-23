@@ -517,6 +517,35 @@
 		}
 	//end
 	
+	// ABOUT US PAGE
+	.aboutUs {
+		article {
+			p {
+				margin-bottom: .5em;
+			}
+		}
+	 	aside {
+			header h1 {
+				font-size: $font-size * .875;
+			}
+			div.row {
+				margin: .875em auto;
+			}
+			figure {
+				img {
+					@include rounded-corners(.5em);
+					border: 5px solid $wht;
+					box-shadow: 0 0 1px rgba($dk-grey, 1);
+					margin-left: 1px;
+				}
+			}
+			figcaption {
+				font-size: $font-size;
+			}
+		}
+	}
+	//END
+	
 	//FOOTER
 	
 	//END
