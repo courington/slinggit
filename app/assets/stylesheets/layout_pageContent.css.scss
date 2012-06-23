@@ -126,14 +126,17 @@ h1 {
   text-transform: uppercase;
   font-weight: bold;
   text-rendering: optimizeLegibility;
+line-height: $leading;
 }
 
 h2, h3 {
   font-size: $font-size * 1.4;
+line-height: $leading;
 }
 
 h4, h5 {
   font-size: $font-size * 1.2;
+line-height: $leading;
 }
 
 h6, p {
