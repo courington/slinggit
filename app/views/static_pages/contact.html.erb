@@ -1,27 +1,35 @@
 <% provide(:title, 'Contact') %>
-<section class="wrapper">
-	<header>
-		<h1>Contact</h1>
+<section class="wrapper contactUs">
+	
+	<header class="row">
+		<h1 class="bottom_border">Contact</h1>
 	</header>
 	
-	<article>
+	<article class="row">
 		<p>Thank you for your interest in Slinggit. Please submit the information below and we will contact you as soon as possible.</p>
-	</article>
 	
-	<article>
-		<form>
-	         <fieldset>
-	             <input type="email" size="100" placeholder="Name" name="emailAddress" />
-	         </fieldset>
-	         <fieldset>
-	             <input type="email" size="100" placeholder="Email Address" name="emailAddress" />
-	         </fieldset>
-	         <fieldset>
-	             <textarea type="text" size="100" placeholder="Message" name="description" /></textarea>
-	         </fieldset>
-	         <fieldset>
-	             <input type="button" for="inputSmall" value="Send" class="submitBTN">
-	         </fieldset>
-	     </form>
+		<form class="col4 offset1 white_well"> <!-- need to hook up real form but leave the classes applied -->
+			
+			<fieldset class="row">
+				<label class="col3 pull_left">Name:</label>
+				<input type="email" size="100" placeholder="Name" name="emailAddress" class="col6 pull_left" />
+			</fieldset>
+			
+			<fieldset class="row">
+				<label class="col3 pull_left">Email Address:</label>
+				<input type="email" size="100" placeholder="Email Address" name="emailAddress" class="col6 pull_left" /> <!-- if user is logged in can we autopopulate their email address? -->
+			</fieldset>
+			
+			<fieldset class="row">
+				<label class="col3 pull_left">Message:</label>
+				<textarea type="text" size="100" placeholder="Message" name="description" class="col6 pull_left" /></textarea>
+			</fieldset>
+			
+			<fieldset class="row">
+				<button type="submit" class="col2 btn_green">Send</button>
+			</fieldset>
+			
+		</form> <!-- end form -->
+		
 	</article>
 </section>

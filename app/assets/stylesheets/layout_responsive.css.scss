@@ -412,8 +412,8 @@
 			margin-top: ($font-size * .5);
 		}
 	}
-	//end
-	//social networks page
+	// END
+	// SOCIAL NETWORKS
 	.accounts {
 		.col4, .col2 {
 			width: 100%;
@@ -450,9 +450,8 @@
 			display: none;
 		}
 	}
-	//end
-
-	//REQUEST INVITE
+	// END
+	// REQUEST INVITE
 	.invite_wrapper {
 		.col1, .col2, .col3, .col4, .col5 {
 			width: 100%;
@@ -486,13 +485,6 @@
 		
  		article > .col3.grey_well {
 			display: none;
-			//ul {
-			//	li {
-				//	float: left;
-				//	padding: 0 20%;
-				//	width: 50%;
-			//	}
-		//	}
 		}
 		
 		.row.grey_well {
@@ -505,8 +497,7 @@
 		}
 	}
 	//END
-
-	// email reverification page
+	// EMAIL REFERENCE PAGE
 		#emailVerificationWrapper{
 			.col3{
 				width: 100%;
@@ -515,8 +506,7 @@
 				}
 			}
 		}
-	//end
-	
+	// END
 	// ABOUT US PAGE
 	.aboutUs {
 		.col3 {
@@ -524,7 +514,16 @@
 		}
 	}
 	//END
-	
+	// CONTACT US PAGE
+	.contactUs {
+		.col4 {
+			width: 100%;
+		}
+		.offset1 {
+			margin-left: 0;
+		}
+	}
+	//END
 	//FOOTER
 	
 	//END
