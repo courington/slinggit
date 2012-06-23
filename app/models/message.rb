@@ -95,4 +95,14 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def creator_user_name
+    if not self.creator_user_id.blank?
+      user = User.first(:conditions => ['id = ?', self.creator_user_id], :select => 'name')
+      if not user.blank?
+        return user.name
+      end
+    end
+    return nil
+  end
+
 end
