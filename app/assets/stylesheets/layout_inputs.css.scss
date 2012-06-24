@@ -137,40 +137,6 @@ input[type="submit"] {
 	}
 }
 
-.twitIconSmall {
-	background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -96px -32px;
-	display: inline-block;
-	height: 16px;
-	width: 16px;
-	margin: 2px 2px -2px 0;
-}
-
-.twitIconSmall_dark {
-	@extend .twitIconSmall;
-	background-position: -126px -32px;
-}
-
-.twitIcon {
-	background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -127px 0;
-	display: inline-block;
-	height: 32px;
-	width: 32px;
-	text-indent: -9999px;
-}
-
-.facebookIcon {
-	background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -159px 0;
-	display: inline-block;
-	height: 32px;
-	width: 32px;
-	text-indent: -9999px;
-}
-
-.twitIcon_dark {
-	@extend .twitIcon;
-	background-position: 0 0;
-}
-
 fieldset > label {
 	font-size: $font-size - .2em;
 	display: block;
