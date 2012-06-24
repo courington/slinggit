@@ -26,30 +26,6 @@ textarea {
 		border: 1px solid $main-blue;
 		}
 }
-input[type="button"],
-input[type="submit"] {
-	background: $main-green;
-	padding: .4em;
-	font-size: $font-size;
-	color: $wht;
-	border-top-right-radius: $radius;
-	border-bottom-right-radius: $radius;
-	border: 1px solid $main-grey;
-	cursor: pointer;
-	box-shadow: $btn-shading;
-	text-shadow: $btn-txt-shading;
-	@include transition;
-	&:hover,
-	&:focus {
-		box-shadow: $btn-focus;
-		text-shadow: $btn-focus-txt;
-		outline:none;
-	}
-	&:active {
-		box-shadow: $btn-active;
-		text-shadow: $btn-active-txt;
-	}
-}
 
 .btn {
 	cursor: pointer;
