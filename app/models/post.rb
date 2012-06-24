@@ -99,4 +99,15 @@ class Post < ActiveRecord::Base
     "transparent_background" if not self.open?
   end
 
+  def additional_photos
+    photo_urls = []
+    additional_photos = AdditionalPhoto.all(:conditions => ['source = ? AND source_id = ?', 'posts', self.id], :select => 'photo_file_name,photo_updated_at,id')
+    if not additional_photos.blank?
+      additional_photos.each do |additional_photo|
+        photo_urls << additional_photo.photo.url(:medium)
+      end
+    end
+    return photo_urls
+  end
+
 end

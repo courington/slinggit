@@ -3,10 +3,12 @@
   <div class="row">
     <div class="col3 pull_right">
       <div id="addPhotoControlGroup">
-        <%= form_tag(url_for(:controller => :posts, :action => :add_image), :id => 'addImageForm', :multipart => true) do %>
-            <%= file_field_tag :add_post_photo, style: "position:absolute; top:-999px; left:-999px" %>
-            <%= link_to image_tag('plus_button.png'), '#', :class => 'pull_right', :id => "photoSelect" %>
-            <%= hidden_field_tag :post_id, params[:id] %>
+        <% if not @post.has_photo? and signed_in? and @post.user_id == current_user.id %>
+            <%= form_for(@additional_photo, :url => url_for(:controller => :additional_photos, :action => :add), :id => 'addImageForm') do |f| %>
+                <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
+                <%= link_to image_tag('plus_button.png'), '#', :class => 'pull_right', :id => "photoSelect" %>
+                <%= hidden_field_tag :post_id, params[:id] %>
+            <% end %>
         <% end %>
       </div>
       <% if @post.photo_file_name.blank? %>

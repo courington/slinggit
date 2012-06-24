@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120620024552) do
+ActiveRecord::Schema.define(:version => 20120623201342) do
+
+  create_table "additional_photos", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "source"
+    t.integer  "source_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.string   "status"
+  end
 
   create_table "api_accounts", :force => true do |t|
     t.integer  "user_id"
@@ -245,8 +256,8 @@ ActiveRecord::Schema.define(:version => 20120620024552) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
