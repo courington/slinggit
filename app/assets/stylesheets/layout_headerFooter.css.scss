@@ -105,9 +105,9 @@ body > header:first-child {
 			#quickSearchWrapper {
 				&> .btn_navSearch {
 					@extend .btnNavSprite;
-					background-position: -62px -32px;
+					background-position: -65px -32px;
 					position: relative;
-					top: 21px;
+					top: 24px;
 					left: 6px;
 				}
 				input[name="quickSearch"] {
@@ -118,8 +118,9 @@ body > header:first-child {
 				}
 				#quickSearch {
 					margin: 0 auto;
-					height: 1.6em;
-					padding: 0 0 0 1.6em;
+					height: auto;
+					padding: .2em 1.6em;
+					line-height: 1.6em;
 				}
 			}
 	}
@@ -159,9 +160,9 @@ footer.pageFoot {
 	}
 	.coloradoIcon {
 		@extend .btnNavSprite;
-		background-position: -191px 0;
+		background-position: -193px 0;
 		height: 29px;
-		width: 29px;
+		width: 27px;
 		margin-top: 1.8em;
 		margin-bottom: 1em;
 		+ span {

@@ -78,16 +78,16 @@
 			color: $wht;
 		}
 		#quickSearchWrapper {
-			&> .btn_navSearch {
+			/*&> .btn_navSearch {
 				@extend .btnNavSprite;
-				background-position: -62px -32px;
+				background-position: -65px -32px;
 				position: relative;
 				top: 24px;
 				left: 6px;
 				margin-right: 10px;
-			}
+			}*/
 			#quickSearch {
-				padding: .25em 0 .25em 10%;
+				//padding: .25em 0 .25em 10%;
 				height: 2em;
 			}
 		}
