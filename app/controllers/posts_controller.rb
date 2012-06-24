@@ -143,6 +143,10 @@ class PostsController < ApplicationController
     end
   end
 
+  def add_image
+    puts 'steve'
+  end
+
   def delete_post
     post = Post.first(:conditions => ['id = ?', params[:id]])
     if not post.blank? and post.user_id == current_user.id

@@ -58,11 +58,11 @@ class User < ActiveRecord::Base
 
   def primary_twitter_account
     ApiAccount.first(:conditions => ['user_id = ? AND status = ? AND api_source = ?', self.id, STATUS_PRIMARY, 'twitter'], :select => 'id,user_name,image_url')
-  end 
+  end
 
   def primary_facebook_account
     ApiAccount.first(:conditions => ['user_id = ? AND status = ? AND api_source = ?', self.id, STATUS_PRIMARY, 'facebook'], :select => 'id,user_name,image_url')
-  end  
+  end
 
   def email_is_verified?
     self.email_activation_code.blank? and self.status != STATUS_UNVERIFIED
@@ -74,36 +74,38 @@ class User < ActiveRecord::Base
 
   def is_active?
     self.status == STATUS_ACTIVE
-  end  
+  end
 
   def is_considered_deleted?
     self.status == STATUS_BANNED || self.status == STATUS_DELETED
-  end   
+  end
 
   def is_self_destroyed?
     self.status == STATUS_DELETED && !self.account_reactivation_code.blank?
-  end  
+  end
 
   def is_banned?
     self.status == STATUS_BANNED && self.account_reactivation_code.blank?
-  end  
+  end
 
   def is_suspended?
     self.status == STATUS_SUSPENDED
-  end  
+  end
 
   def has_photo_source?
     not self.photo_source.blank?
   end
 
   def profile_photo_url
-    # This insures that at least on photo url is returned
+    # This insures that at least one photo url is returned
     url = "icon_blue_80x80.png"
     if self.photo_source == SLINGGIT_PHOTO_SOURCE
       slinggit_images = ['icon_blue_80x80.png', 'icon_red_80x80.png', 'icon_green_80x80.png', 'icon_yellow_80x80.png']
       url = slinggit_images[rand(slinggit_images.length)]
     elsif self.photo_source == TWITTER_PHOTO_SOURCE
-      url = self.primary_twitter_account.image_url
+      if self.primary_twitter_account
+        url = self.primary_twitter_account.image_url
+      end
     elsif self.photo_source == GRAVATAR_PHOTO_SOURCE
       url = gravatar_img_url(self)
     end
@@ -125,7 +127,7 @@ class User < ActiveRecord::Base
   def validates_watchedpost(watchedpost)
     watched = self.watchedposts.first(:conditions => ['user_id = ? AND post_id = ?', watchedpost.user_id, watchedpost.post_id])
     if not watched.blank?
-      raise ActiveRecord::Rollback 
+      raise ActiveRecord::Rollback
       # TODO redirect to what are you trying to do page
     end
   end

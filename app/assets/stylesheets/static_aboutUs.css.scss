@@ -1,0 +1,39 @@
+.aboutUs {
+	article {
+		p {
+			margin-bottom: .5em;
+		}
+	}
+ 	aside {
+		header h1 {
+			font-size: $font-size * .875;
+		}
+		div.row {
+			margin: .875em auto;
+			a {
+				color: $main-blue;
+				font-size: $font-size * .75;
+				text-indent: $font-size;
+				margin:($font-size * .5) 0 0 ($font-size * .5);
+				padding: .2em 0 0 .2em;
+			}
+		}
+		figure {
+			img {
+				@include rounded-corners(.5em);
+				border: 5px solid $wht;
+				box-shadow: 0 0 1px rgba($dk-grey, 1);
+				margin: 1px 0 0 1px;
+			}
+		}
+		figcaption {
+			font-size: $font-size;
+			padding-left: $font-size * .5;
+			span {
+				display: block;
+				font-size: $font-size * .5;
+				padding-top: $font-size * .25;
+			}
+		}
+	}
+}

@@ -1,11 +1,55 @@
 <% provide(:title, 'About Us') %>
-<section class="wrapper">
-	<header>
-		<h1>About Us</h1>
-		<p>About Us</p>
+<section class="wrapper aboutUs">
+	
+	<header class="row bottom_border">
+		<h1>About Slinggit</h1>
 	</header>
 	
-	<article>
-		<p>Find me in app/views/static_pages/about.html.erb</p>
+<div class="row">
+	<article class="col3 pull_left">
+		<p>Slinggit is built in sunny Denver, CO using the latest in space age materials. Our mission is to help people quickly find the things they want to buy and sell the things they don't.</p>
+		<p>Our design and development philosophy is rooted in the belief that good user experience begins with speed. We work hard to maintain lightweight code and reduce the things, like images, that you need to load. This is even more true today than ever with the number of mobile devices and the immediacy you have to sell and buy things and get on with your life.</p>
 	</article>
+	
+<!-- PROFILES -->
+	<aside class="col3 pull_right white_well">
+		
+		<header class="row bottom_border">
+			<h1>The guys behind Slinggit are&hellip;</h1>
+		</header>
+		
+		<div class="row">
+			<figure class="col2 pull_left">
+				<%= image_tag('aboutUs/profile_chris_180x180.jpg', width: '100%', height: 'auto', title: 'Chris Klein', alt: 'Picture of Chris Klein') %>
+			</figure>
+			<figcaption class="col4 pull_right">Chris Klein <span class="top_border">Javascript. CEO. Ohio Buckeye. Lives in Denver, CO with wife, dog and cat.</span></figcaption>
+			<a href="https://twitter.com/_chrisklein" title="@_chrisklein" class="twitIconSmall_dark" >@_chrisklein</a>
+		</div>
+		
+		<div class="row">
+			<figure class="col2 pull_left">
+				<%= image_tag('aboutUs/profile_phil_180x180.jpg', width: '100%', height: 'auto', title: 'Phil Beadle', alt: 'Picture of Phil Beadle') %>
+			</figure>
+			<figcaption class="col4 pull_right">Phil Beadle <span class="top_border">iOS and Android. VP of Mobile. Montana country boy with a very difficult schedule. Wakes up, put in dip, cracks a cold one (not really).</span></figcaption>
+		</div>
+		
+		<div class="row">
+			<figure class="col2 pull_left">
+				<%= image_tag('aboutUs/profile_dan_180x180.jpg', width: '100%', height: 'auto', title: 'Dan Logan', alt: 'Picture of Dan Logan') %>
+			</figure>
+			<figcaption class="col4 pull_right">Dan Logan <span class="top_border">Rails guru. CTO. Montana mountain man. World's #1 ATB fan. Broncos for life. Lives in Centennial, CO with his stuffed Mario doll.</span></figcaption>
+		</div>		
+		
+		<div class="row">
+			<figure class="col2 pull_left">
+				<%= image_tag('aboutUs/profile_chase_180x180.jpg', width: '100%', height: 'auto', title: 'Chase Courington', alt: 'Picture of Chase Courington') %>
+			</figure>
+			<figcaption class="col4 pull_right">Chase Courington <span class="top_border">HTML/CSS. VP of UX. Craft beer and web standards. Lives in Denver, CO with his wife.</span></figcaption>
+			<a href="https://twitter.com/ChaseCourington" title="@chasecourington" class="twitIconSmall_dark" >@chasecourington</a>
+		</div>
+		
+	</aside>
+<!-- END -->
+
+</div>
 </section>	

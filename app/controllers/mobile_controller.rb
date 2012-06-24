@@ -221,7 +221,6 @@ class MobileController < ApplicationController
     setup_twitter_call(url_for :controller => :mobile, :action => :add_twitter_account_callback, :user_name => params[:user_name])
   end
 
-  #TODO IMPLEMENT
   def add_facebook_account
     setup_facebook_call(url_for(:controller => :mobile, :action => :add_facebook_account_callback, :user_name => params[:user_name]), 'publish_stream')
   end
@@ -458,7 +457,7 @@ class MobileController < ApplicationController
         #starting_post_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
         #always need to inc by 1
         starting_post_id = params[:starting_post_id]
-        starting_post_id = Post.count + 1 if (starting_post_id.blank? or starting_post_id.to_i <= 0)
+        starting_post_id = Post.first.id + 1 if (starting_post_id.blank? or starting_post_id.to_i <= 0)
         starting_post_id = starting_post_id.to_i
 
         posts = []
@@ -778,7 +777,7 @@ class MobileController < ApplicationController
       if not params[:comment_id].blank?
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
           if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
-            if comment = Comment.first(:conditions => ['post_id = ? and id = ?', mobile_session.user_id, params[:comment_id]])
+            if comment = Comment.first(:conditions => ['post_id = ? and id = ?', params[:post_id], params[:comment_id]])
               comment.update_attribute(:status, STATUS_DELETED)
               render_success_response(
                   :comment_id => comment.id,
@@ -852,7 +851,7 @@ class MobileController < ApplicationController
                 :rows_found => messages.length,
                 :filters_used => {:offset => offset, :limit => limit, :starting_message_id => starting_message_id},
                 :messages => messages.map { |m|
-                  m.contact_info_json = ActiveSupport::JSON.decode(m.contact_info_json)
+                  m.contact_info_json = (ActiveSupport::JSON.decode(m.contact_info_json)).merge(:user_name => m.creator_user_name)
                   source_object = m.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')
                   source_object_attributes = nil
                   source_object_attributes = source_object.attributes if not source_object.blank?
@@ -1113,7 +1112,7 @@ class MobileController < ApplicationController
     if not params[:parent_message_id].blank?
       if not params[:body].blank?
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ? AND status != ?', params[:parent_message_id], current_user.id, STATUS_DELETED])
+          if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ?', params[:parent_message_id], mobile_session.user_id])
             message = Message.new(
                 :creator_user_id => mobile_session.user_id,
                 :recipient_user_id => parent_message.creator_user_id,
@@ -1511,6 +1510,104 @@ class MobileController < ApplicationController
       )
     end
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #def send_push_notifications
+  #  apns_url = Rails.env == 'development' ? PushNotification::APNS_SANDBOX_HOST : PushNotification::APNS_PRODUCTION_HOST
+  #  notifications = PushNotification.all(:conditions => {:status => 'new'})
+  #  if notifications.length > 0
+  #    notifications.each do |notification|
+  #      devices = PushNotificationDevice.all(:conditions => ['customer_id = ? AND status = ?', notification.customer_id, PushNotificationDevice::STATUS_ACTIVE])
+  #      devices.each do |device|
+  #        case device.device_type
+  #          when PushNotificationDevice::DEVICE_APPLE
+  #            socket, ssl = create_apns_socket(apns_url, PushNotification::APNS_PORT) if socket.nil?
+  #            raw_apns_data = device.get_apns_payload(notification.message)
+  #            begin
+  #              ssl.write(raw_apns_data)
+  #              ssl.flush
+  #            rescue
+  #              ssl.close
+  #              socket.close
+  #              socket, ssl = create_apns_socket(apns_url, PushNotification::APNS_PORT)
+  #
+  #              ssl.write(raw_apns_data)
+  #              ssl.flush
+  #            end
+  #          when PushNotificationDevice::DEVICE_ANDROID
+  #            # TODO: android push notifications
+  #        end
+  #      end
+  #      notification.update_attribute(:status, 'done')
+  #    end
+  #  end
+  #  render :nothing => true
+  #end
+  #
+  #def check_apns_feedback_service
+  #  apns_feedback_url = PRODUCTION_ENV ? PushNotification::APNS_PRODUCTION_FEEDBACK_HOST : PushNotification::APNS_SANDBOX_FEEDBACK_HOST
+  #  socket, ssl = create_apns_socket(apns_feedback_url, PushNotification::APNS_FEEDBACK_PORT)
+  #
+  #  apns_feedback = []
+  #  while line = ssl.read(38)
+  #    apns_feedback << line.unpack('N1n1H64')[2]
+  #  end
+  #
+  #  if not apns_feedback.empty?
+  #    PushNotificationDevice.update_all("status = \"#{PushNotificationDevice::STATUS_UNINSTALLED}\"", ['device_id = ?', apns_feedback])
+  #  end
+  #
+  #  render :nothing => true
+  #end
+  #
+  #def create_apns_socket(url, port)
+  #  apns_cert = File.read(APNS_CERT[:filepath]) if File.exists?(APNS_CERT[:filepath])
+  #  ctx = OpenSSL::SSL::SSLContext.new
+  #  ctx.key = OpenSSL::PKey::RSA.new(apns_cert, APNS_CERT[:password])
+  #  ctx.cert = OpenSSL::X509::Certificate.new(apns_cert)
+  #
+  #  socket = TCPSocket.new(url, port)
+  #  socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
+  #  ssl = OpenSSL::SSL::SSLSocket.new(socket, ctx)
+  #  ssl.sync = true
+  #  ssl.connect
+  #  return socket, ssl
+  #end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   private
 
