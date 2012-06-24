@@ -39,6 +39,11 @@ body > header:first-child {
 			background-position: 0 -32px;
 			vertical-align: middle;
 		}
+		.btn_navMessages {
+			@extend .btnNavSprite;
+			background-position: -220px -21px;
+			vertical-align: middle;
+		}
 		&.col4.pull_right > .row:last-child,
 		&.col4.pull_right > .row:last-child > #quickSearchWrapper > .row {
 		margin-top: .4em;
