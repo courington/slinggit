@@ -29,12 +29,6 @@ body > header:first-child {
 		color: $wht;
 		text-shadow: $txt-shdw;
 		margin: -($font-size * .5) 0 0 0;
-		.btnNavSprite {
-			background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat 0 0;
-			display: inline-block;
-			height: 16px;
-			width: 16px;
-		}
 		.btn_navPosts {
 			@extend .btnNavSprite;
 			background-position: -32px -32px;
@@ -164,7 +158,8 @@ footer.pageFoot {
 		}
 	}
 	.coloradoIcon {
-		background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -191px 0;
+		@extend .btnNavSprite;
+		background-position: -191px 0;
 		height: 29px;
 		width: 29px;
 		margin-top: 1.8em;
