@@ -4,14 +4,14 @@ class Photo extends Backbone.View
   el: "#addPhotoControlGroup"
 
   initialize: ->
-    $("#add_post_photo").bind("change", @showFile)
+    $("#additional_photo_photo").bind("change", @showFile)
 
   events:
     "click #photoSelect": "trigger"
 
   trigger: (e)->
-    if $('#add_post_photo').length
-      $('#add_post_photo').trigger "click"
+    if $('#additional_photo_photo').length
+      $('#additional_photo_photo').trigger "click"
     e.preventDefault();
 
   showFile: (el)->
@@ -19,7 +19,7 @@ class Photo extends Backbone.View
     imageType = /image.*/
 
     if file.type.match imageType
-      $('#addImageForm').submit();
+      $('#new_additional_photo').submit();
 
 $(document).ready ->
   @photo = new Photo

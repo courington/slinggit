@@ -26,30 +26,6 @@ textarea {
 		border: 1px solid $main-blue;
 		}
 }
-input[type="button"],
-input[type="submit"] {
-	background: $main-green;
-	padding: .4em;
-	font-size: $font-size;
-	color: $wht;
-	border-top-right-radius: $radius;
-	border-bottom-right-radius: $radius;
-	border: 1px solid $main-grey;
-	cursor: pointer;
-	box-shadow: $btn-shading;
-	text-shadow: $btn-txt-shading;
-	@include transition;
-	&:hover,
-	&:focus {
-		box-shadow: $btn-focus;
-		text-shadow: $btn-focus-txt;
-		outline:none;
-	}
-	&:active {
-		box-shadow: $btn-active;
-		text-shadow: $btn-active-txt;
-	}
-}
 
 .btn {
 	cursor: pointer;
@@ -135,40 +111,6 @@ input[type="submit"] {
 		box-shadow: $btn-active;
 		color: darken($main-grey, 6%);
 	}
-}
-
-.twitIconSmall {
-	background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -96px -32px;
-	display: inline-block;
-	height: 16px;
-	width: 16px;
-	margin: 2px 2px -2px 0;
-}
-
-.twitIconSmall_dark {
-	@extend .twitIconSmall;
-	background-position: -126px -32px;
-}
-
-.twitIcon {
-	background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -127px 0;
-	display: inline-block;
-	height: 32px;
-	width: 32px;
-	text-indent: -9999px;
-}
-
-.facebookIcon {
-	background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -159px 0;
-	display: inline-block;
-	height: 32px;
-	width: 32px;
-	text-indent: -9999px;
-}
-
-.twitIcon_dark {
-	@extend .twitIcon;
-	background-position: 0 0;
 }
 
 fieldset > label {

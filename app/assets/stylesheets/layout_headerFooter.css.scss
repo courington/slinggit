@@ -29,12 +29,6 @@ body > header:first-child {
 		color: $wht;
 		text-shadow: $txt-shdw;
 		margin: -($font-size * .5) 0 0 0;
-		.btnNavSprite {
-			background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat 0 0;
-			display: inline-block;
-			height: 16px;
-			width: 16px;
-		}
 		.btn_navPosts {
 			@extend .btnNavSprite;
 			background-position: -32px -32px;
@@ -43,6 +37,11 @@ body > header:first-child {
 		.btn_navSettings {
 			@extend .btnNavSprite;
 			background-position: 0 -32px;
+			vertical-align: middle;
+		}
+		.btn_navMessages {
+			@extend .btnNavSprite;
+			background-position: -220px -21px;
 			vertical-align: middle;
 		}
 		&.col4.pull_right > .row:last-child,
@@ -111,9 +110,9 @@ body > header:first-child {
 			#quickSearchWrapper {
 				&> .btn_navSearch {
 					@extend .btnNavSprite;
-					background-position: -62px -32px;
+					background-position: -65px -32px;
 					position: relative;
-					top: 21px;
+					top: 24px;
 					left: 6px;
 				}
 				input[name="quickSearch"] {
@@ -124,8 +123,9 @@ body > header:first-child {
 				}
 				#quickSearch {
 					margin: 0 auto;
-					height: 1.6em;
-					padding: 0 0 0 1.6em;
+					height: auto;
+					padding: .2em 1.6em;
+					line-height: 1.6em;
 				}
 			}
 	}
@@ -164,9 +164,10 @@ footer.pageFoot {
 		}
 	}
 	.coloradoIcon {
-		background: url("icons/navigation/primaryNav_sprite_222x48.png") no-repeat -191px 0;
+		@extend .btnNavSprite;
+		background-position: -193px 0;
 		height: 29px;
-		width: 29px;
+		width: 27px;
 		margin-top: 1.8em;
 		margin-bottom: 1em;
 		+ span {

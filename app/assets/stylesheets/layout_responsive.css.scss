@@ -7,14 +7,14 @@
 }
 
 
-//small handheld
+// 320-640
 @media all and (min-width: 320px) and (max-width: 640px) {
 	.wrapper {
 		width: 96%;
 		max-width: 640px;
 		padding: 0;
 	}
-	//header
+// HEADER
 	body > header:first-child hgroup.col2 {
 	margin: -2em 0 0 0;
 	width: 25%;
@@ -78,16 +78,16 @@
 			color: $wht;
 		}
 		#quickSearchWrapper {
-			&> .btn_navSearch {
+			/*&> .btn_navSearch {
 				@extend .btnNavSprite;
-				background-position: -62px -32px;
+				background-position: -65px -32px;
 				position: relative;
 				top: 24px;
 				left: 6px;
 				margin-right: 10px;
-			}
+			}*/
 			#quickSearch {
-				padding: .25em 0 .25em 10%;
+				//padding: .25em 0 .25em 10%;
 				height: 2em;
 			}
 		}
@@ -103,8 +103,8 @@
 			}
 		}
 	}
-	//end header
-	//general page styles
+// END
+// GENERAL CONTENT PAGE LAYOUT
 	.page_contentContainer {
 		padding-top: 7.8em;
 	}
@@ -141,19 +141,19 @@
 		font-weight: 400;
 		text-shadow: none;
 	}
-	//end
-	//alerts
+// END
+// ALERTS
 	#explanation_bubble {
 		width: 100%;
 	}
-	//home page
+// HOMEPAGE
 	.homepage {
 		.offset2 {
 		margin-left: 0;
 		}
 	}
-	//end
-	//new session page
+// END
+// SIGN IN
 	.wrapper_newSession {
 		.col3 {
 			width: 100%;
@@ -162,17 +162,16 @@
 			margin-left: 0;
 		}
 	}
-	//end
-	//new user page
+// END
+// SIGN UP
 	.wrapper_newUser {
 		.col3, .col4, .col2 {
 			width: 100%;
 			display: block;
 		}
 	}
-	//end
-
-	// styles for user edit
+// END
+// USER EDIT
 	#editUsers{
 		.col3{
 			width: 100%;
@@ -352,7 +351,7 @@
 		}// end #comments
 	}// end #posts
 	
-	//responsive styles for posts_create
+// CREATE POST
 	.createPost {
 		.row > article.col4 {
 			width: 100%;
@@ -383,20 +382,16 @@
 			display: block;
 		}
 	}
-	  //styles for notices
+// END
+// FLASH NOTICES
 	#success_explanation,
 	#error_explanation,
 	#notice_explanation {
 		width: 98%;
 		text-align: left;
 	} 
-	  //end
-	// hide the image slideshow on the homepage 
-	.pics {
-	display: none;
-	}
-	//end
-	//show messages style
+// END
+// SHOW MESSAGE
 	#msgArticles {
 		&.col4, &.pull_left {
 			width: 100%;
@@ -412,8 +407,8 @@
 			margin-top: ($font-size * .5);
 		}
 	}
-	// END
-	// SOCIAL NETWORKS
+// END
+// SOCIAL NETWORKS
 	.accounts {
 		.col4, .col2 {
 			width: 100%;
@@ -450,8 +445,8 @@
 			display: none;
 		}
 	}
-	// END
-	// REQUEST INVITE
+// END
+// REQUEST INVITE
 	.invite_wrapper {
 		.col1, .col2, .col3, .col4, .col5 {
 			width: 100%;
@@ -496,8 +491,8 @@
 			height: 2.6em;
 		}
 	}
-	//END
-	// EMAIL REFERENCE PAGE
+//END
+// EMAIL REFERENCE PAGE
 		#emailVerificationWrapper{
 			.col3{
 				width: 100%;
@@ -506,15 +501,15 @@
 				}
 			}
 		}
-	// END
-	// ABOUT US PAGE
+// END
+// ABOUT US PAGE
 	.aboutUs {
 		.col3 {
 			width: 100%;
 		}
 	}
-	//END
-	// CONTACT US PAGE
+//END
+// CONTACT US PAGE
 	.contactUs {
 		.col4 {
 			width: 100%;
@@ -523,17 +518,14 @@
 			margin-left: 0;
 		}
 	}
-	//END
-	//FOOTER
-	
-	//END
+//END
 
 }
-//this bracket closes the 320-640 media query
-//end
+// END 320-640
 
+// 500-640
 @media all and (min-width: 500px) and (max-width: 640px) {
-	//HEADER
+// HEADER
 	body > header:first-child {
 		nav {
 			overflow: visible;
@@ -550,8 +542,8 @@
 			}
 		}
 	}
-	//END HEADER
-	//REQUEST INVITE
+// END HEADER
+// REQUEST INVITE
 	.invite_wrapper {
 		article{
 		
@@ -568,21 +560,21 @@
 		
 		}
 	}
-	//END REQUEST INVITE
-}
-//this bracke closes the 500-640 media query
-//end
+// END REQUEST INVITE
 
-//641px to 800px
+}
+// END 500-640
+
+// 641-800
 @media all and (min-width: 641px) and (max-width: 800px) {
-	//HEADER 
+// HEADER 
 	body > header:first-child {
 		nav > .row:nth-of-type(2) > .col3.offset3 {
 			font-size: 12px;
 		}
 	}
-	//END HEADER
-	//REQUEST INVITE
+// END HEADER
+// REQUEST INVITE
 	.invite_wrapper {
 		.col1, .col2, .col3, .col4, .col5 {
 			width: 100%;
@@ -607,8 +599,7 @@
 			h3.row {
 				line-height: $leading * 1.2;
 			}
-		}
-		
+		}	
  		article > .col3.grey_well {
 			float: left;
 			font-size: ($font-size * .5);
@@ -622,8 +613,7 @@
 					padding-right: 0 20%;
 				}
 			}
-		}
-		
+		}	
 		article > .col4.offset1 {
 			width: 75%;
 			float: right;
@@ -644,20 +634,21 @@
 			}
 		}
 	}
-	//END REQUEST INVITE
-}
-//this bracke closes the 641+ media query
-//end
+// END REQUEST INVITE
 
+}
+// END 641-800
+
+// 801-960
 @media all and (min-width: 801px) and (max-width: 960px) {
-	//HEADER 
+// HEADER 
 	header:first-child {
 		nav > .row:nth-of-type(2) > .col3.offset3 {
 			font-size: 14px;
 		}
 	}
-	//END HEADER
-	//REQUEST INVITE
+// END HEADER
+// REQUEST INVITE
 	.invite_wrapper {
 		article{
 			> #home_slinggitIcons {
@@ -703,10 +694,10 @@
 			}
 		}
 	}
-	//END REQUEST INVITE
+// END REQUEST INVITE
 }
-//this bracke closes the 801-960 media query
-//end
+
+// END 801-960
 
 
 //just a little white space for buffer

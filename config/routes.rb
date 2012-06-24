@@ -24,7 +24,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'posts/results/(:id)', :to => 'posts#results#id', via: :get
   match 'posts/delete_post', :to => 'posts#delete_post'
   match 'posts/report_abuse(/:id)', :to => 'posts#report_abuse#id'
-  match 'posts/add_image', :to => 'posts#add_image', :via => :post
+  match 'additional_photos/add', :to => 'additional_photos#add', :via => :post
 
   match 'watchedposts/interested', :to => 'watchedposts#interested'
   match 'watchedposts/uninterested', :to => 'watchedposts#uninterested'
@@ -64,6 +64,7 @@ SlinggitWebapp::Application.routes.draw do
   match '/deleted_account', to: 'static_pages#deleted_account'
   match '/reactivate_account', to: 'static_pages#reactivate_account'
 
+  resources :additional_photos
   # Nested route for comments.  I'm a bit worried that I'm defining resource :posts twice,
   # the other above, but couldn't find documentation on how to combine the two so that posts
   # can keep the only contraint.  Not entirely sure I'll need this yet.

@@ -12,6 +12,7 @@ class PostsController < ApplicationController
 
   def show
     if not params[:id].blank?
+      @additional_photo = AdditionalPhoto.new
 
       #this conditional is only until we know we have handled all links that still pass in the standard id
       if params[:id].length == 40
