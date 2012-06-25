@@ -52,7 +52,7 @@
 					text-align: center;
 					width: 100%;
 					> .row {
-						margin-top: 1.4em;
+						margin-top: .9em;
 						> .col2 > a, #accountDropDown .BTN_nav_dropDown {
 							display: block;
 							padding: 1em 20%;
@@ -73,6 +73,7 @@
 					background-position: -128px -32px;
 				}
 				label.row {
+					display: block;
 					font-size: .675em;
 					position: relative;
 					top: 6.3em;
