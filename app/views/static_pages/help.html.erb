@@ -1,33 +1,78 @@
 <% provide(:title, 'Help') %>
 <section class="wrapper getHelp">
 	<header class="row">
-		<h1 class="bottom_border">Help Center</h1>
+		<h1 class="bottom_border">Help</h1>
 	</header>
 	
-	<article class="col4 pull_left">
+	<div class="col3 pull_left grey_well">
 		
-		<div class="row grey_well">
-			<h2>Check our blog</h2>
-			<p>Our blog is a great resource for you to see what new with slinggit and how we're using it in new and exciting ways.</p>
-		</div>
-		
-		<div class="row grey_well">
-			<h2>FAQ</h2>
-			<div class="col3 pull_left white_well">			
-				<p>Consider the answer is YES! to all of your following questions</p>
-				<p>Is slinggit easy to use, quick, and fairly self explanitory?</p>	
-				<p>So, I just use a picture from my iPhone or desktop enter a short description of what it is I want to sell. Post it. And now it's out on Twitter for the world to see?</p>
-				<p>I have multiple twitter accouts.  Am I able to sling to more than one of them?</p>
-				<p>Am I able to control which twitter accounts each post tweets to?</p>
-				<p>I'm a small business owner.  Is slinggit something I can use to, say, post weekly or daily specials to my business' Twitter feed?</p>
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">How it Works</h2>
+				<p>Slinggit is a free web interface that can be accessed from your desktop, laptop and mobile device (free iOS app) to buy &amp; sell items to your friends, followers and local networks. Slinggit uses functionality in the social networks to help you find items you want and sell items you don't. From Slinggit you can make a single posting to all the places that matter and communicate securely with interested parties. You can ask questions about items and see what others have asked, you can see how many people are interested in an item to know if you need to act fast or if you should drive a bidding war. Slinggit is a fun and fast way to git the items you want and sling the items you don't.</p>
 			</div>
-			<div class="col3 pull_right white_well">
-				<h3>We hate saying no, but...</h3>
-				<p>Does slinggit solve world hunger?</p>
-				<p>Do I need a twitter account in order to use slinggit?</p>
-				<p>Can I use slinggit with Facebook? (well, not yet at least)</p>
-			</div>
-		</div>
+		</article>
 		
-	</article>
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">Buying</h2>
+				<p>There are many fast ways to git an item through Slinggit. Slinggit items can be found in Twitter and Facebook searches based on location and item, in your Facebook and Twitter friends' feeds and the Twitter, Facebook and application feeds for Slinggit. Either communicate directly with the seller through the source or follow the post back to Slinggit to see the full details and options. Check out photos the seller posts, leave a public question or share the post with a friend, mark that post as "interested" to keep an eye on it without committing or respond privately to make an offer. Ultimately the sales transaction is up to you and the seller to complete. Cash, paypal, barter, etc. however you can work it out is up to you.</p>
+			</div>
+		</article>	
+		
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">Selling</h2>
+				<p>Selling with Slinggit is fast and easy. Slinggit lets you control where you're item is broadcast for sale. If you want something to go out to a large crowd send it to your networks and ours. If you only want to offer an item to certain people you can choose which network to broadcast to. We leave it up to you and the buyer to complete the transaction, we don't take a cut, it's your item and your money. Here are some rules about what can and cannot be sold through Slinggit, nothing too surprising but basically if you think it's illegal you can't sell it here. <%= link_to 'Terms and Conditions'%></p>
+			</div>
+		</article>
+		
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">The Search</h2>
+				<p>You'll notice that Slinggit posts have #hashtags. The hastag allows that post to be searchable through Twitter and Facebook, to help your item be and get found. We believe that the more simple and common an item name and location the better it is for being found. Take the following example:</p>
+				<p class="col4 offset1 white_well">#156cmsnowboardforsale</p>
+				<p>That description is pretty descriptive but someone has to be very specific with their search term to find it. A better plan is to simplify.</p>
+				<p class="col4 offset1 white_well">#snowboardforsale</p>
+				<p>Now the item is much more findable and the details can be brought out through the item description. Keep this in mind both when you're posting an item and searching for an item.</p>
+				<p>>Items also get # for location. So you can narrow a search by locality by looking up:</p>
+				<p class="col4 offset1 white_well">#snowboardforsale #denver</p>
+				<p>Did you know you can save searches in Twitter? So if you're looking for, say a snowboard, you can save that search and easily see the items being posted.</p>
+			</div>
+		</article>
+		
+	</div>
+	
+	<div class="col3 pull_right grey_well">
+		
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">Mobile</h2>
+				<p>We designed and built Slinggit specifically to be used with mobile devices. We have a free, native iOS app for iPhone users to snap pictures to quickly post, correspond with interested parties and manage their items as well as search and contact sellers. Our mobile web site is extremely lightweight and fully functional for Android and Windows Phone users to do everything you could want with Slinggit while loading quickly and keeping data transfers, and your cell phone bill, low. Out of respect for you, the user, we don't load megabytes on top of megabytes just to look pretty.</p>
+			</div>
+		</article>
+		
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">Accounts</h2>
+				<p>When you sign up with Slinggit you can connect your Twitter account right away, don't worry if you forgot you can always add it later. You don't need Twitter and/or Facebook to use Slinggit, but we think it really helps to look for and offer items within your friends and followers. You can always add accounts later, we even let you add multiple Twitter accounts if you have more than one that you use for business, school, family, etc.</p>
+			</div>
+		</article>
+		
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">Security</h2>
+				<p>HTTPS everywhere (except the blog, it's hosted by Tumblr). We use the secure APIs supplied by Facebook and Twitter to connect and we don't pry into your personal data. We will never ever ever ever spam or sell you email address. We regard security very highly and make sure to take all precautions. We recommend you do the same when dealing with buyers/sellers you do not know.</p>
+			</div>
+		</article>	
+		
+		<article class="row">
+			<div class="col6 white_well">
+				<h2 class="bottom_border">Contact</h2>
+				<p>We appreciate questions, comments and feedback to help provide you with a better experience. We're working on gathering feedback to create an FAQ and roll into the next build. <%= link_to "Get in touch!", contact_path %></p>
+			</div>
+		</article>
+		
+	</div>
+	
 </section>	
