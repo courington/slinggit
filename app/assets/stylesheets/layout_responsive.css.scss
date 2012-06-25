@@ -15,36 +15,39 @@
 		padding: 0;
 	}
 // HEADER
-	body > header:first-child hgroup.col2 {
-	margin: -($font-size) 0 0 0;
-	width: 20%;
-		> a {
-			width: 100%;
-		}
-	}	
 	body > header:first-child {
 		position: fixed;
-		height:4em;
+		height: 8.4em;
+		margin-top: -4.4em;
+		hgroup.col2 {
+			margin: 2.6em 0 0 0;
+			width: 20%;
+			> a {
+				width: 100%;
+			}
+		}
 		h6.col2 {
 			margin: -.8em 0 0 .6em;
 		}
 		nav {
 			width: 80%;
+			margin: -1.6em 0 0 0;
 			&.col4.pull_right > .row:first-child {
-			width: 25%;
-			float: right;
-			display: inline-block;
+			display: block;
+			overflow: visible;
 			}
 			&.col4.pull_right > .row:last-child {
 				width: 75%;
 				display: inline-block;
+				margin-top: 0;
+				padding-bottom: 0;
 				> .col3.offset3 {
 					margin-left: 0;
 					font-size: .675em;
 					text-align: center;
 					width: 100%;
 					> .row {
-						margin-top: $font-size;
+						margin-top: 1.4em;
 						> .col2 > a, #accountDropDown .BTN_nav_dropDown {
 							display: block;
 							padding: 0;
@@ -54,7 +57,23 @@
 			}
 			#quickSearchWrapper {
 			width: 100%;
-			margin-left: 0;
+			margin: .4em 0 0 0;
+				#quickSearch {
+					height: 2em;
+				}
+				.btn_navSearch {
+					top: 4.4em;
+					left: 85%;
+					background-position: -128px -32px;
+				}
+				label.row {
+					font-size: .675em;
+					position: relative;
+					top: 6.3em;
+					left: 75%;
+					width: 25%;
+					text-align: center;
+				}
 			}
 			&.col4.pull_right > .row:last-child,
 			&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
@@ -67,51 +86,40 @@
 				width: 8.85em;
 				text-align: right;
 				margin-top: .5em;
-					li:first-child {
-						margin-top: -.05em;
-					}
-					li:last-child {
-						border-top: 1px solid lighten($main-grey, 20%);
-						width: 115%;
-						margin: 0.6em 0 0.3em -7.5%;
-						padding: .7em 30% 0 0;
-						box-shadow: inset 0 1px 0 rgba(($wht), .75);
-					}
+				li:first-child {
+					margin-top: -.05em;
 				}
-		div a:link,
-		div a:visited {
-			color: $wht;
-		}
-		#quickSearchWrapper {
-			/*&> .btn_navSearch {
+				li:last-child {
+					border-top: 1px solid lighten($main-grey, 20%);
+					width: 115%;
+					margin: 0.6em 0 0.3em -7.5%;
+					padding: .7em 30% 0 0;
+					box-shadow: inset 0 1px 0 rgba(($wht), .75);
+				}
+			}
+			div a:link,
+			div a:visited {
+				color: $wht;
+			}
+			.btn_navPosts {
 				@extend .btnNavSprite;
-				background-position: -65px -32px;
-				position: relative;
-				top: 24px;
-				left: 6px;
-				margin-right: 10px;
-			}*/
-			#quickSearch {
-				//padding: .25em 0 .25em 10%;
-				height: 2em;
+				background-position: -32px -30px;
 			}
-		}
-		.btn_navPosts {
-			@extend .btnNavSprite;
-			background-position: -32px -30px;
-			//display: none;
+			.btn_navSettings {
+				@extend .btnNavSprite;
+				background-position: 0 -31px;
 			}
-		.btn_navSettings {
-			@extend .btnNavSprite;
-			background-position: 0 -31px;
-			//display: none;
+			#header_signIn {
+			margin-top: .6em;
 			}
 		}
 	}
 // END
 // GENERAL CONTENT PAGE LAYOUT
 	.page_contentContainer {
-		padding-top: 7.8em;
+		//padding-top: 7.8em;
+		margin-top: 0;
+		padding-top: 4.8em;
 	}
 	.page_contentContainer header:first-child {
 	margin: 0 0 $font-size 0;

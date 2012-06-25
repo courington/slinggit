@@ -16,7 +16,8 @@
 <!-- QUICK SEARCH -->
       <div class="row">
         <div class="col3 offset3" id="quickSearchWrapper">
-          <span class="btnNavSprite btn_navSearch"></span>
+          <span class="btn_navSearch"></span>
+					<label class="row" for="quickSearch">Search</label>
           <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
         </div>
       </div>
@@ -77,12 +78,10 @@
 
 <!-- ELSE IF signed_in? -->
       <% else %>
-        <div class="row">
-          <div class="col3 offset3">
-            <div class="col3 pull_right">
+        <div class="row" id="header_signIn">
+            <div class="offset2 col2">
               <%= link_to "Sign In", signin_path %>
             </div>
-          </div>
         </div>
       <% end %>
 <!-- END ELSE IF -->
@@ -99,4 +98,7 @@
         $('#BTN_nav_dropDown').dropdown()
         window.quickSearchView()
     });
+
+
 </script>
+

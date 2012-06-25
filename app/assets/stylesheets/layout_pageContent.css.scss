@@ -169,7 +169,7 @@ p {
   }
 
 .btnNavSprite {
-	background: url("icons/navigation/primaryNav_sprite_274x48.png") no-repeat 0 0;
+	background: url("icons/navigation/primaryNav_sprite_312x48.png") no-repeat 0 0;
 	display: inline-block;
 	height: 16px;
 	width: 16px;
@@ -177,18 +177,18 @@ p {
 
 .twitIconSmall {
 	@extend .btnNavSprite;
-	background-position: -98px -32px;
+	background-position: -162px -32px;
 	margin: 2px 2px -2px 0;
 }
 
 .twitIconSmall_dark {
 	@extend .twitIconSmall;
-	background-position: -130px -32px;
+	background-position: -194px -32px;
 }
 
 .twitIcon {
 	@extend .btnNavSprite;
-	background-position: -130px 0;
+	background-position: -163px 0;
 	display: inline-block;
 	height: 32px;
 	width: 32px;
@@ -197,12 +197,12 @@ p {
 
 .twitIcon_dark {
 	@extend .twitIcon;
-	background-position: 0 0;
+	background-position: -194px 0;
 }
 
 .facebookIcon {
 	@extend .btnNavSprite;
-	background-position: -162px 0;
+	background-position: -226px 0;
 	display: inline-block;
 	height: 32px;
 	width: 32px;
@@ -211,7 +211,7 @@ p {
 
 .slinggitIcon {
 	@extend .btnNavSprite;
-	background-position: -250px 0;
+	background-position: -288px 0;
 	display: inline-block;
 	height: 32px;
 	width: 25px;
