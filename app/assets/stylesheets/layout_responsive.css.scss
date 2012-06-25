@@ -15,10 +15,13 @@
 		padding: 0;
 	}
 // HEADER
-	body > header:first-child {
+	body > header {
 		position: fixed;
 		height: 8.4em;
 		margin-top: -4.4em;
+		&.headDown {
+			margin-top: 0;
+		}
 		hgroup.col2 {
 			margin: 2.6em 0 0 0;
 			width: 20%;
@@ -29,14 +32,14 @@
 		h6.col2 {
 			margin: -.8em 0 0 .6em;
 		}
-		nav {
+		nav.col4.pull_right {
 			width: 80%;
 			margin: -1.6em 0 0 0;
-			&.col4.pull_right > .row:first-child {
+			> .row:first-child {
 			display: block;
 			overflow: visible;
 			}
-			&.col4.pull_right > .row:last-child {
+			> .row:last-child {
 				width: 75%;
 				display: inline-block;
 				margin-top: 0;
