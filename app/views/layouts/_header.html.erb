@@ -95,9 +95,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#BTN_nav_dropDown').dropdown()
+        $('.BTN_nav_dropDown').dropdown()
         window.quickSearchView()
 
+//header search show/hide on mobile 320-640
 				$('.btn_navSearch').click(function(){
 					$('header').addClass('headDown');
 					$('input#quickSearch').focus();

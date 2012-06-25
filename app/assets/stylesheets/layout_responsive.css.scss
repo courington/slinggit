@@ -18,7 +18,9 @@
 	body > header {
 		position: fixed;
 		height: 8.4em;
-		margin-top: -4.4em;
+		&.headerUp {
+			margin-top: -4.4em;
+		}
 		&.headDown {
 			margin-top: 0;
 		}
@@ -53,7 +55,8 @@
 						margin-top: 1.4em;
 						> .col2 > a, #accountDropDown .BTN_nav_dropDown {
 							display: block;
-							padding: 0;
+							padding: 1em 20%;
+							margin: -.6em auto;
 						}
 					}
 				}
@@ -85,10 +88,11 @@
 			}
 			#accountDropDown .nav_dropDown {
 				@include hardEdge-top;
-				left: -2.5em;
-				width: 8.85em;
+				left: -4.5em;
+				width: 9em;
 				text-align: right;
-				margin-top: .5em;
+				margin-top: -.65em;
+				font-size: 1.2em;
 				li:first-child {
 					margin-top: -.05em;
 				}
