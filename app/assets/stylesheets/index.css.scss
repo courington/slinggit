@@ -10,6 +10,10 @@
 @import "layout_alerts.css.scss";
 @import "layout_labelsTagsAndBadges.css.scss";
 
+@import "static_homePage.css.scss";
+@import "static_request_invite.css.scss";
+@import "static_aboutUs.css.scss";
+
 @import "user_signUp.css.scss";
 @import "user_signin.css.scss";
 @import "user_edit.css.scss";
@@ -27,9 +31,6 @@
 @import "admin.css.scss";
 
 @import "messages.css.scss";
-
-@import "static_request_invite.css.scss";
-@import "static_aboutUs.css.scss";
 
 //make this guy last
 @import "layout_responsive.css.scss";

@@ -36,16 +36,13 @@
 	<% elsif not current_user.blank? %>
 	<div class="row">
 		
-		<div class="col4 pull_left">
-			<h2 class="row nixie">Welcome back <strong><%= current_user.name %></strong!</h2>
-			<p class="row nixie"> Have something to Sling?</p>
-		</div>
+		<!-- USER INFO PARTIAL RENDERS AS .col2 -->
+				<%= render 'shared/user_info' %>
+		<!-- END PARTIAL -->
 		
-<!-- USER INFO PARTIAL RENDERS AS .col2 -->
-		<%= render 'shared/user_info' %>
-<!-- END PARTIAL -->
-
-		<div class="col3 offset1">
+		<div class="col4 pull_left">
+			<h2 class="row nixie">Welcome back <%= current_user.name %>!</h2>
+			<p class="row nixie"> Have something to Sling?</p>
 			<div class="row">
 				<%= link_to "Slinggit", new_post_path, class: "col3 pull_left btn_green" %>
 			</div>

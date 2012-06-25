@@ -82,11 +82,6 @@
 					text-align: center;
 				}
 			}
-			&.col4.pull_right > .row:last-child,
-			&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
-				//margin-top: .4em;
-				//padding-bottom: .25em;
-			}
 			#accountDropDown .nav_dropDown {
 				@include hardEdge-top;
 				left: -4.5em;
@@ -169,8 +164,34 @@
 	}
 // HOMEPAGE
 	.homepage {
-		.offset2 {
-		margin-left: 0;
+		> .row {
+			> span.col1.pull_left {
+				display: none;
+			}	
+			.nixie {
+				font-size: 2.4em;
+			}
+			.col5 {
+				width: 100%;
+				> .row {
+					.col2.wrapper_userInfo,
+					.col4.pull_left {
+						width: 100%;
+					}
+					.col2.wrapper_userInfo {
+						header.col4.pull_left {
+							text-align: left;
+							width: $sixCols * 4;
+						}
+					}
+				}
+			}
+		}
+		.home_featurePost {
+			.white_well.col4.offset1.pull_left {
+				width: 100%;
+				margin-left: 0;
+			}
 		}
 	}
 // END
