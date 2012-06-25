@@ -16,45 +16,50 @@
 	}
 // HEADER
 	body > header:first-child hgroup.col2 {
-	margin: -2em 0 0 0;
-	width: 25%;
+	margin: -($font-size) 0 0 0;
+	width: 20%;
+		> a {
+			width: 100%;
+		}
 	}	
 	body > header:first-child {
 		position: fixed;
-		height:6.8em;
-		.col4.pull_left {
-		width: 85%;
-		}
-		img.col2 {
-			width: 88%;
-		}
+		height:4em;
 		h6.col2 {
-			margin: -1em 0 0 .8em;
+			margin: -.8em 0 0 .6em;
 		}
 		nav {
-			overflow: visible;
-			width: 100%;
+			width: 80%;
 			&.col4.pull_right > .row:first-child {
-			width: 50%;
+			width: 25%;
 			float: right;
-			margin: -2em 0 .3em 0;
+			display: inline-block;
 			}
-			&> .row > .col3.offset3 {
+			&.col4.pull_right > .row:last-child {
+				width: 75%;
+				display: inline-block;
+				> .col3.offset3 {
+					margin-left: 0;
+					font-size: .675em;
+					text-align: center;
+					width: 100%;
+					> .row {
+						margin-top: $font-size;
+						> .col2 > a, #accountDropDown .BTN_nav_dropDown {
+							display: block;
+							padding: 0;
+						}
+					}
+				}
+			}
+			#quickSearchWrapper {
 			width: 100%;
 			margin-left: 0;
-			margin-bottom: .4em;
-			}
-			.row:nth-of-type(2) > .col3.offset3 {
-				font-size: 12px;
-				text-align: center;
-				.col2 {
-					
-				}
 			}
 			&.col4.pull_right > .row:last-child,
 			&.col4.pull_right > .row:last-child > .col3.offset3 > .row {
 				//margin-top: .4em;
-				padding-bottom: .25em;
+				//padding-bottom: .25em;
 			}
 			#accountDropDown .nav_dropDown {
 				@include hardEdge-top;
