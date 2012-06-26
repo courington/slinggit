@@ -18,11 +18,8 @@
 	body > header {
 		position: fixed;
 		height: 8.4em;
-		&.headerUp {
+		.headerUp {
 			margin-top: -4.4em;
-		}
-		&.headDown {
-			margin-top: 0;
 		}
 		hgroup.col2 {
 			margin: 2.6em 0 0 0;
