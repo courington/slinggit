@@ -25,7 +25,8 @@ class StaticPagesController < ApplicationController
             content = "<p>#{@name}<p/></br></br><p>#{@email}</p></br></br><p>#{@message}</p>"
             reply_to = @email
             UserMailer.generic_internal_email(to, from, subject, content, reply_to).deliver
-            flash[:success] = "Thank you much for your inquiry.  An email has been passed along to the Slinggit team."
+            flash.now[:success] = "Thank you much for your inquiry.  An email has been passed along to the Slinggit team."
+            @name = @email = @message = ''
           else
             flash.now[:error] = "We would be tickled pink if you could throw together a quick message for us."
           end
