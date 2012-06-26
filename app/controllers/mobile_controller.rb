@@ -340,7 +340,7 @@ class MobileController < ApplicationController
                     params[:api_account_ids].split(',').each do |api_account_id|
                       if proposed_api_account = ApiAccount.first(:conditions => ['id = ?', api_account_id], :select => 'user_id,api_source')
                         if mobile_session.user_id == proposed_api_account.user_id || proposed_api_account.user_id == 0
-                          recipient_api_account_ids << id
+                          recipient_api_account_ids << proposed_api_account.id
                           if proposed_api_account.api_source == 'twitter'
                             TwitterPost.create(
                                 :user_id => post.user_id,
