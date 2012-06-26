@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col3 offset3" id="quickSearchWrapper">
           <span class="btn_navSearch"></span>
-					<label class="row" for="quickSearch">Search</label>
+					<label class="row quickSearchLabel" for="quickSearch">Search</label>
           <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
         </div>
       </div>
@@ -94,16 +94,47 @@
 <!-- END HEADER -->
 
 <script type="text/javascript">
+//header search show/hide on mobile 320-640
+//level one, anon function
+	(function(){
+		//level two
+		var headerSearch = (function(){
+			//level three
+			var initialize = function(){
+				_setListeners();
+				_hideSearch();
+			}
+			var _hideSearch = function(){
+				//level four
+				// set class to hide the header search on DOM load
+				$('header').addClass('headerUp');
+			}
+			var _setListeners = function(){
+				//level four
+				$('.quickSearchLabel').click(function{
+					_upDown();
+				});
+			}	
+			var _upDown = function(){
+				//level four
+				var up = $('header').hasClass('headerUp')
+				var down = $('header').removeClass('headerUp')
+				
+				if(up){
+					alert('Hello')
+				}else{
+					alert('goodbye')
+				}
+			}
+			return {init: initialize}
+		}());
+//end
+
+
     $(document).ready(function () {
         $('.BTN_nav_dropDown').dropdown()
         window.quickSearchView()
-
-//header search show/hide on mobile 320-640
-				$('.btn_navSearch').click(function(){
-					$('header').addClass('headDown');
-					$('input#quickSearch').focus();
-				});
-
+				headerSearch.init()
     });
 </script>
 
