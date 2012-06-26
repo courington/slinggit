@@ -67,7 +67,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def generic_internal_email(to, from, subject, content, reply_to = nil)
-    @content = content
+    @content = content.html_safe
     mail(:to => to, :from => from, :reply_to => reply_to, :subject => subject)
   end
 end
