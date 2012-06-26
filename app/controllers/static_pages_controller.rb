@@ -12,9 +12,33 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+    @name = params[:name]
+    @email = params[:email]
+    @message = params[:message]
+    if request.post?
+      if not @name.blank?
+        if not @email.blank?
+          if not @message.blank?
+            to = 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com'
+            from = 'Contact Us <noreply@slinggit.com>'
+            subject = "Inquiry from #{@name}"
+            content = "<p>#{@name}<p/></br></br><p>#{@email}</p></br></br><p>#{@message}</p>"
+            reply_to = @email
+            UserMailer.generic_internal_email(to, from, subject, content, reply_to).deliver
+            flash[:success] = "Thank you much for your inquiry.  An email has been passed along to the Slinggit team."
+          else
+            flash.now[:error] = "We would be tickled pink if you could throw together a quick message for us."
+          end
+        else
+          flash.now[:error] = "Without an email address it may prove rather difficult to get in touch with you."
+        end
+      else
+        flash.now[:error] = "We were hoping you could give us a name so we know who to address."
+      end
+    end
   end
 
   def help
-  end	
+  end
 
 end

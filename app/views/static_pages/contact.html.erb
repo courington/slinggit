@@ -1,35 +1,36 @@
 <% provide(:title, 'Contact') %>
 <section class="wrapper contactUs">
-	
-	<header class="row">
-		<h1 class="bottom_border">Contact</h1>
-	</header>
-	
-	<article class="row">
-		<p>Thank you for your interest in Slinggit. Please submit the information below and we will contact you as soon as possible.</p>
-	
-		<form class="col4 offset1 white_well"> <!-- need to hook up real form but leave the classes applied -->
-			
-			<fieldset class="row">
-				<label class="col3 pull_left">Name:</label>
-				<input type="email" size="100" placeholder="Name" name="emailAddress" class="col6 pull_left" />
-			</fieldset>
-			
-			<fieldset class="row">
-				<label class="col3 pull_left">Email Address:</label>
-				<input type="email" size="100" placeholder="Email Address" name="emailAddress" class="col6 pull_left" /> <!-- if user is logged in can we autopopulate their email address? -->
-			</fieldset>
-			
-			<fieldset class="row">
-				<label class="col3 pull_left">Message:</label>
-				<textarea type="text" size="100" placeholder="Message" name="description" class="col6 pull_left" /></textarea>
-			</fieldset>
-			
-			<fieldset class="row">
-				<button type="submit" class="col2 btn_green">Send</button>
-			</fieldset>
-			
-		</form> <!-- end form -->
-		
-	</article>
+
+  <header class="row">
+    <h1 class="bottom_border">Contact</h1>
+  </header>
+
+  <article class="row">
+    <p>Thank you for your interest in Slinggit. Please submit the information below and we will contact you as soon as
+      possible.</p>
+
+    <%= form_tag(url_for(:controller => :static_pages, :action => :contact), :class => "col4 offset1 white_well") do %>
+
+        <fieldset class="row">
+          <label class="col3 pull_left">Name:</label>
+          <%= text_field_tag :name, @name, :class => "col6 pull_left", :placeholder => 'Name' %>
+        </fieldset>
+
+        <fieldset class="row">
+          <label class="col3 pull_left">Email Address:</label>
+          <%= email_field_tag :email, @email, :class => "col6 pull_left", :placeholder => 'Email' %>
+        </fieldset>
+
+        <fieldset class="row">
+          <label class="col3 pull_left">Message:</label>
+          <%= text_area_tag :message, @message, :class => "col6 pull_left", :placeholder => 'Message' %>
+        </fieldset>
+
+        <fieldset class="row">
+          <button type="submit" class="col2 btn_green">Send</button>
+        </fieldset>
+
+    <% end %>
+
+  </article>
 </section>

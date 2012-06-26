@@ -66,4 +66,8 @@ class UserMailer < ActionMailer::Base
     mail(:to => EXECUTIVES, :subject => "Content has been flagged")
   end
 
+  def generic_internal_email(to, from, subject, content, reply_to = nil)
+    @conent = content
+    mail(:to => to, :from => from, :reply_to => reply_to, :subject => subject)
+  end
 end
