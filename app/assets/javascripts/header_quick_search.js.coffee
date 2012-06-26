@@ -1,19 +1,19 @@
 ## Module
-HeaderSearch = Backbone.View.extend
+class HeaderSearch extends Backbone.View
+  el: "#mainHeader"
+
   initialize: (options) ->
     _.bindAll @
     @hideSearch()
-    @$header = $("header")
 
   events:
     "click .quickSearchLabel": "upDown"
 
   hideSearch: ->
-    $("header").addClass "headerUp"
-    console.log "in hide"
+    @$el.addClass "headerUp"
 
   upDown: (e) ->
-    console.log @
+    console.log "anything"
 
 ## Export
 window.initiHeaderSearch = ->
