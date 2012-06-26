@@ -22,7 +22,7 @@ class StaticPagesController < ApplicationController
             to = 'danlogan@slinggit.com,chrisklein@slinggit.com,philbeadle@slinggit.com,chasecourington@slinggit.com'
             from = 'Contact Us <noreply@slinggit.com>'
             subject = "Inquiry from #{@name}"
-            content = "<p>#{@name}<p/></br></br><p>#{@email}</p></br></br><p>#{@message}</p>"
+            content = "<p>Name: #{@name}<p/></br></br><p>Email: #{@email}</p></br></br><p>Message: #{@message}</p>"
             reply_to = @email
             UserMailer.generic_internal_email(to, from, subject, content, reply_to).deliver
             flash.now[:success] = "Thank you much for your inquiry.  An email has been passed along to the Slinggit team."
