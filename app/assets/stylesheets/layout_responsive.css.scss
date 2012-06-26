@@ -15,12 +15,12 @@
 		padding: 0;
 	}
 // HEADER
+	body > header.headerUp {
+		margin-top: -4.4em;
+	}
 	body > header {
 		position: fixed;
 		height: 8.4em;
-		.headerUp {
-			margin-top: -4.4em;
-		}
 		hgroup.col2 {
 			margin: 2.6em 0 0 0;
 			width: 20%;
