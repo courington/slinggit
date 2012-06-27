@@ -1,5 +1,4 @@
 <div id="postDetails" class="col4 pull_left <%= @post.open_class %>" xmlns="http://www.w3.org/1999/html">
-
   <div class="row">
     <div class="col3 pull_right">
       <div id="addPhotoControlGroup">
@@ -15,7 +14,7 @@
       <% if @post.photo_file_name.blank? %>
           <%= image_tag "noPhoto_300x300.png", :height => "auto", :width => "100%" %>
       <% else %>
-          <%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%" %>
+          <%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%", :id => 'post_mainImage' %>
       <% end %>
       <div class="pull_right"><%= link_to "Flag Inappropriate", {:controller => :posts, :action => :report_abuse, :id => @post.id_hash} %></div>
     </div>
@@ -43,5 +42,28 @@
       <% end %>
     </div>
   </div>
-
+  <div id='post_imagePort'>
+    <%= image_tag @post.photo.url(:original) %>
+  </div>
 </div>
+
+<script type='text/javascript'>
+    $('#post_imagePort').hide();
+    $('#post_mainImage').click(function () {
+        $('#post_imagePort').fadeIn('slow');
+        $('#post_imagePort').click(function () {
+            $('#post_imagePort').fadeOut('slow');
+        });
+    });
+</script>
+
+<style type='text/css'>
+    #post_imagePort {
+        margin-top: 5%;
+        max-width: 50%;
+        position: absolute;
+        top: 0;
+        left: 25%;
+        z-index: 9999;
+    }
+</style>
