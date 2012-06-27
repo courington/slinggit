@@ -13,11 +13,7 @@
         </div>
 
         <div class="form-actions row">
-          <% if !current_user?(@user) %>
-            <%= f.button "Ask Question", type: "submit", class: "col2 btn_ltGrey" %>
-          <% else %>
-            <%= f.button "Answer Question", type: "submit", class: "col2 btn_ltGrey" %>
-          <% end %>
+            <%= f.button "Comment", type: "submit", class: "col2 btn_ltGrey" %>
         </div>
 
       </fieldset>
