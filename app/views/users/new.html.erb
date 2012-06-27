@@ -1,7 +1,7 @@
 <%= provide(:title, 'Sign up') %>
 <section class="wrapper wrapper_newUser">
 	<header class="row">
-		<h1>Sign up</h1>
+		<h1 class="bottom_border">Sign up</h1>
 	</header>
 
 <div class="col3 white_well">
@@ -10,26 +10,28 @@
 		
 <!-- user name -->
     <div class="row">
-		<fieldset class="col6 form_initialFields">
+		<fieldset class="col6">
 			<%= f.label :name, "Username", for: "user_name", class: "row" %>
 			<%= f.text_field :name, placeholder: "Username", class: "row" %>
 		</fieldset>
 		<div class="col6" id="usernameAvailabilityNotification"></div>
 	</div>
 <!-- end -->
+
 <!-- email -->
 	<div class="row">
-		<fieldset class="col6 form_initialFields">
+		<fieldset class="col6">
 			<%= f.label :email, for: "user_email", class: "row" %>
 			<%= f.email_field :email, placeholder: "Email", class: "row" %>
 		</fieldset>
 		<div class="col6" id="emailAvailabilityNotification"></div>
 	</div>
 <!-- end -->
+
 <!-- authenticate buttons -->
 	<div class="row">
 		<fieldset class="col6 form-actions" id="form_signUpActions">
-			<%= link_to("#", :class => "col4 pull_left btn_twitter", :onclick => "javascript:void(0)", :id => "twitterBTN") do %>
+			<%= link_to("#", :class => "col3 pull_left btn_twitter", :onclick => "javascript:void(0)", :id => "twitterBTN") do %>
 				<span class="twitIconSmall"></span>
 				Sign Up with Twitter
 			<% end %>
@@ -39,6 +41,7 @@
 		</fieldset>
 	</div>
 <!-- end -->
+
 <!-- password field -->
 <div class="row">
 	<fieldset class="col6 form_hiddenFields">
@@ -47,32 +50,27 @@
 	</fieldset>
 </div>
 <!-- end -->
+
 <!-- password confirm -->
 <div class="row">
 	<fieldset class="col6 form_hiddenFields">
-		<%= f.label :password_confirmation, "Confirmation", for: "user_password_confirmation", class: "row" %>
+		<%= f.label :password_confirmation, "Confirm Password", for: "user_password_confirmation", class: "row" %>
 		<%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "row" %>
 	</fieldset>
 </div>
 <!-- end -->
+
 <!-- submit -->
 <div class="row">
 	<fieldset class="col6 form_hiddenFields">
-		<%= f.button "Create my account", class: "row btn_green" %>
-		<%= link_to 'start over', nil, :onclick => "javascript:void(0)", class: "row", :id => 'signUpStartOverLink' %>
+		<%= f.button "Create my account", class: "col3 pull_left btn_green" %>
+		<%= link_to 'start over', nil, :onclick => "javascript:void(0)", class: "col2 pull_right", :id => 'signUpStartOverLink' %>
 	</fieldset>
 </div>
 <!-- end -->
 	<% end %>
 </div>
 </section>
-
-<style type="text/css">
-    #emailSuggestion {
-        float: left;
-        position: inherit;
-    }
-</style>
 
 <script>
     $(document).ready(function () {

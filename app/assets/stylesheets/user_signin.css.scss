@@ -1,20 +1,21 @@
-#newSessionWrapper{
-
-	#forgot_password{
-		margin-top: 20px;
-		font-size: $font-size * .7;
+#newSessionWrapper {
+	#forgot_password {
+		margin-top: $leading;
+		font-size: $font-size * .75;
+		line-height: $leading;
+		text-align: right;
 	}
-
-	#orSignupActions{
-		margin-top: 20px;
-		p{
-			margin-left: 20px;
-			font-size: $font-size * 1.1;
-
-			a{
+	#orSignupActions {
+		margin-top: $leading;
+		p {
+			font-size: $font-size;
+			line-height: $leading;
+			a {
 				color: $main-blue;
+				border-left: 1px solid $main-grey;
+				padding: .375em;
+				margin-left: .275em;
 			}
 		}
 	}
-
 }
