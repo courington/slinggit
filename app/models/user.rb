@@ -184,6 +184,17 @@ class User < ActiveRecord::Base
         :frequency_type => decoded_default_posts_user_limit['frequency_type'],
         :active => true
     )
+
+    default_images_per_post_user_limit = system_preferences[:default_images_per_post_limit] || '{"user_limit":"1","frequency":"0","frequency_type":""}'
+    decoded_default_images_per_post_user_limit = ActiveSupport::JSON.decode(default_images_per_post_user_limit)
+    UserLimitation.create(
+        :user_id => self.id,
+        :limitation_type => 'images',
+        :user_limit => decoded_default_posts_user_limit['user_limit'],
+        :frequency => decoded_default_posts_user_limit['frequency'],
+        :frequency_type => decoded_default_posts_user_limit['frequency_type'],
+        :active => true
+    )
   end
 
   def system_preferences
