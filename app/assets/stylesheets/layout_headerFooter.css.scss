@@ -126,7 +126,7 @@ body > header {
 			}
 	}
 }
-footer.pageFoot {
+body > footer {
 	clear:both;
 	font-size: 62.5%;
 	box-shadow: $foot-shadow, inset 0 5px 15px rgba(255,255,255,.3);
@@ -138,41 +138,44 @@ footer.pageFoot {
 			color: $main-grey;
 			text-shadow: $txt-shdw;
 			margin-top: $font-size * .5;
-			ul {
-				li {
-					margin: ($font-size * .5) 0;
-					a {
-						color: $main-grey;
-						@include transition;
-						&:hover {
-							color: $dk-grey;
-						}
+			.col4.pull_left > li.pull_left {
+				width: ($sixCols * 6)/4 ;
+				margin: ($font-size * .5) 0;
+				a {
+					color: $main-grey;
+					@include transition;
+					&:hover,
+					&:focus {
+						color: $dk-grey;
 					}	
 				}
 			}
+			.col2.pull_right > li {
+				margin-left: $sixCols/2;
+			}
 		}
+	.footerSignIn {
+		font-size: $font-size;
+		line-height: $leading;
+		a {
+			color: $main-blue;
+		}
+	}
 	small {
 		font-size: 1.1em;
 		color: $main-grey;
 		line-height: 1.2em;
-		a {
-			color: $main-grey;
-		}
+		margin-top: .7em;
 	}
 	.coloradoIcon {
 		@extend .btnNavSprite;
 		background-position: -257px 0;
-		height: 29px;
+		height: 27px;
 		width: 27px;
-		margin-top: 1.8em;
-		margin-bottom: 1em;
 		+ span {
 			font-size: $font-size * .75;
 			color: $main-grey;
-			margin-top: 2.6em;
+			margin-top: .6em;
 		}
-	}
-	ul.col3.pull_right li > a {
-	margin: 0 0 0 ($font-size * .5);
 	}
 }

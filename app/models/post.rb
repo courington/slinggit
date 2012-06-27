@@ -95,6 +95,10 @@ class Post < ActiveRecord::Base
     end
   end
 
+  def interested
+    Watchedpost.count(:conditions => ['post_id = ?', self.id], :select => 'id')
+  end
+
   def open_class
     "transparent_background" if not self.open?
   end

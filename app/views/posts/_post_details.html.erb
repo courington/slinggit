@@ -27,7 +27,7 @@
         <dt class="col2">Price</dt>
         <dd class="col3">$<%= @post.price %></dd>
         <dt class="col2">Interested</dt>
-        <dd class="col3"><%= @post.comments.count('user_id', :distinct => true) %></dd>
+        <dd class="col3"><%= @post.interested %></dd>
       </dl>
     </div>
     <div id="postDescription" class="col3">
