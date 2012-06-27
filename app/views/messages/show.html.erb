@@ -20,7 +20,7 @@
 
       <aside class="col2 pull_right white_well">
         <% if @message.creator_user_id.blank? %>
-            <%= link_to "Reply", "www.#{current_user.email.scan(/@(.*)/)}", :class => "btn btn_green row", :target => '_blank', :id => 'messageReplyButton' %>
+            <%= link_to "Reply", "http://www.#{current_user.email.scan(/@(.*)/).to_s.gsub(']','').gsub('[','').gsub('"','')}", :class => "btn btn_green row", :target => '_blank', :id => 'messageReplyButton' %>
         <% else %>
             <%= link_to "Reply", {:action => :reply, :id => @message.id_hash}, :class => "btn btn_green row", :id => 'messageReplyButton' %>
         <% end %>
