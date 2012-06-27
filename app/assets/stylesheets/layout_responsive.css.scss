@@ -24,7 +24,7 @@
 		hgroup.col2 {
 			margin: 2.6em 0 0 0;
 			width: 20%;
-			> a {
+			.col2 {
 				width: 100%;
 			}
 		}
@@ -114,6 +114,11 @@
 			#header_signIn {
 			margin-top: .7em;
 			font-size: 1.2em;
+			text-align: center;
+			.col1.offset5 {
+				margin: 0;
+				width: auto;
+				}
 			}
 		}
 	}
@@ -225,7 +230,7 @@
 	}
 // END
 // SIGN IN
-	.wrapper_newSession {
+	#newSessionWrapper {
 		.col3 {
 			width: 100%;
 		}
@@ -241,6 +246,16 @@
 			display: block;
 		}
 	}
+// END
+// EMAIL REFERENCE PAGE
+		#emailVerificationWrapper{
+			.col3{
+				width: 100%;
+				p{
+					font-size: $font-size * .8;
+				}
+			}
+		}
 // END
 // USER EDIT
 	#editUsers{
@@ -563,16 +578,6 @@
 		}
 	}
 //END
-// EMAIL REFERENCE PAGE
-		#emailVerificationWrapper{
-			.col3{
-				width: 100%;
-				p{
-					font-size: $font-size * .8;
-				}
-			}
-		}
-// END
 // ABOUT US PAGE
 	.aboutUs {
 		.col3 {

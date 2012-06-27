@@ -1,28 +1,28 @@
 <% provide(:title, "Sign in") %>
 
-<section id="newSessionWrapper" class="wrapper wrapper_newSession">
+<section id="newSessionWrapper" class="wrapper">
 
   <header class="row">
-    <h1>Sign in</h1>
+    <h1 class="bottom_border">Sign in</h1>
   </header>
 
   <div class ="row">
   	<div class="col3 white_well">
     <%= form_for(:session, url: sessions_path) do |f| %>
 
-        <fieldset class="row form_initialFields">
+        <fieldset class="row">
           <%= f.label :email, for: "session_email", class: "col6" %>
           <%= f.email_field :email, class: "col6", :value => @email || params[:email], placeholder: "Email" %>
         </fieldset>
 
-        <fieldset class="row form_initialFields">
+        <fieldset class="row">
           <%= f.label :password, for: "session_password", class: "col6" %>
           <%= f.password_field :password, class: "col6", placeholder: "Password" %>
         </fieldset>
 
-        <fieldset class="row form_initialFields">
-          <%= f.button "Sign in", class: "col2 btn_green pull_right" %>
-          <%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, class: "col4 pull_left", :id => 'forgot_password' %>
+        <fieldset class="row">
+          <%= f.button "Sign in", class: "col3 btn_green pull_left" %>
+          <%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, class: "col3 pull_right", :id => 'forgot_password' %>
         </fieldset>
 
     	<% end %>
@@ -30,8 +30,7 @@
   </div>
 
   <div id="orSignupActions" class="row">
-    
-    <p>New Users |  <%= link_to "Sign Up!", signup_path %></p>
+    <p>New Users <%= link_to "Sign Up", signup_path %></p>
   </div>
 
 </section>
