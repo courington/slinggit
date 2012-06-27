@@ -158,6 +158,33 @@
 		text-shadow: none;
 	}
 // END
+// FOOTER
+	.pageFoot {
+		.col4.pull_left {
+			width: 100%;
+			float: none;
+			> li {
+				text-align: center;
+			}
+		}
+		.col2.pull_right {
+			float: none;
+			width: $sixCols * 4;
+			margin: ($font-size * .5) 0 ($font-size * .5) $sixCols;
+			> li {
+				float: left;
+			}
+			> li:first-child,
+			> li:last-child {
+				margin: 0;
+				
+			}
+			> li:nth-of-type(2) {
+				margin: 0 ($sixCols * 1.675);
+			}
+		}
+	}
+// END
 // ALERTS
 	#explanation_bubble {
 		width: 100%;

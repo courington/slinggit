@@ -3,34 +3,37 @@
 		
 		<nav class="row">
 
-				<ul class="col3 pull_left">
-					<li><%= link_to "About", about_path %></li>
-					<li><%= link_to "Help", help_path %></li>
-
-					<li><%= link_to "Contact", contact_path %></li>
-					<li class="<%= 'active' if current_page?(sessions_path) %>"><%= link_to "Mobile Sessions", sessions_path %></li>
-				</ul>
-				
-			<ul class="col3 pull_right">
-				<li><a href="https://www.facebook.com/Slinggit" title="Facebook" class="pull_right facebookIcon">Facebook</a></li>
-				<li><a href="http://twitter.com/slinggit" title="Twitter" class="pull_right twitIcon_dark" >Twitter</a></li>
-				<li><a href="http://blog.slinggit.com/" title="Blog" class="pull_right slinggitIcon">Blog</a></li>
+			<ul class="col4 pull_left">
+				<li class="pull_left"><%= link_to "About", about_path %></li>
+				<li class="pull_left"><%= link_to "Help", help_path %></li>
+				<li class="pull_left"><%= link_to "Contact", contact_path %></li>
+				<li class="pull_left <%= 'active' if current_page?(sessions_path) %>"><%= link_to "Sessions", sessions_path %></li>
 			</ul>
+				
+			<ul class="col2 pull_right">
+				<li class="pull_right"><a href="https://www.facebook.com/Slinggit" title="Facebook" class="facebookIcon">Facebook</a></li>
+				<li class="pull_right"><a href="http://twitter.com/slinggit" title="Twitter" class="twitIcon_dark" >Twitter</a></li>
+				<li class="pull_right"><a href="http://blog.slinggit.com/" title="Blog" class="slinggitIcon">Blog</a></li>
+			</ul>
+			
 		</nav>
 
-    	<div class="row">
+    	<div class="row footerSignIn">
       		<% if signed_in? %>
-			<span id="footerLoggedInUser"><%= "#{current_user.email}" %> (<%= link_to "Sign out", signout_path, method: "delete" %>) </span>
+				<%= "#{current_user.email}" %> (<%= link_to "Sign out", signout_path, method: "delete" %>)
       		<% else %>
-      		<% end %>	
-		</div>
-	
-		<div class="row">
-		<%= link_to(about_path, :class => "row") do %><span class="coloradoIcon pull_left"></span><span class="pull_left">Built in Denver Colorado</span><% end %>
-    	<small>&copy;2012 <a href="https://slinggit.com/">slinggit</a></small>
+				<%= link_to "Sign In", signin_path %>
+      		<% end %>
 		</div>
 
-  <!-- <%= debug(params) if Rails.env.development? %> -->
-	
+		<div class="row">
+			<%= link_to(about_path, :class => "pull_right") do %>
+				<span class="coloradoIcon pull_left"></span>
+				<span class="pull_left">Built in Denver Colorado</span>
+			<% end %>
+			
+	    	<small class="pull_left">&copy;2012 slinggit llc</small>
+		</div>
+<!-- <%= debug(params) if Rails.env.development? %> -->
 	</div>
 </footer>
