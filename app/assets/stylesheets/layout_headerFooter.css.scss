@@ -57,10 +57,6 @@ body > header {
 		}
 			span {
 				cursor:pointer;	
-				&:last-child {
-					width: 50%;
-					float: right;	
-				}
 				&:hover {
 					color: $lt-grey;
 				}
@@ -102,15 +98,19 @@ body > header {
 				}
 			}
 			#quickSearchWrapper {
-				&> .btn_navSearch {
+				.btn_navSearch {
 					@extend .btnNavSprite;
-					background-position: -97px -32px;
+					background-position: -96px -32px;
 					position: relative;
 					top: 24px;
 					left: 6px;
+					z-index: 9999;
 				}
 				.quickSearchLabel {
-					display: none;
+					overflow: visible;
+					> span:last-child {
+						display: none;
+					}
 				}
 				input[name="quickSearch"] {
 					font-size: ($font-size * .5);

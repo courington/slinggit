@@ -199,7 +199,17 @@
 		> .row {
 			> span.col1.pull_left {
 				display: none;
-			}	
+			}
+			> .col6 {
+				> .row > .col4.offset1{
+					width: 100%;
+					margin-left: 0;
+				}
+				> aside > .col2.offset2.btn_blue {
+					width: 100%;
+					margin-left: 0;
+				}
+			}
 			.nixie {
 				font-size: 2.4em;
 			}
