@@ -34,21 +34,25 @@
 
 <!-- if user is signed in -->
 	<% elsif not current_user.blank? %>
-	<div class="row">
-		
-		<!-- USER INFO PARTIAL RENDERS AS .col2 -->
-				<%= render 'shared/user_info' %>
-		<!-- END PARTIAL -->
-		
-		<div class="col4 pull_left">
-			<h2 class="row nixie">Welcome back <%= current_user.name %>!</h2>
-			<p class="row nixie"> Have something to Sling?</p>
+	<div class="row homeSignedIn">
+<!-- USER INFO PARTIAL RENDERS AS .col2 -->
+		<%= render 'shared/user_info' %>
+		<div class="col4 pull_left white_well">
 			<div class="row">
-				<%= link_to "Slinggit", new_post_path, class: "col3 pull_left btn_green" %>
+				<h2 class="nixie">Welcome back <%= current_user.name %>!</h2>
+				<!-- <p class="pull_left nixie"> Have something to Sling?</p> -->
+			</div>
+			<div class="row">
+				<%= link_to "Create New Post", new_post_path, class: "col3 btn_green" %>
+				<%= link_to "View Posts", current_user, class: "col2 pull_right btn_ltGrey" %>
+			</div>
+			<div class="row">
+				<%= link_to signout_path, method: "delete", class: "pull_right" do %>
+					<span>Not <%= current_user.name %>?</span> Sign Out.
+				<% end %>
 			</div>
 		</div>
-		
-		</div>
+	</div>
 <!-- end the user is signed in if/else -->
 	<% end %>
 	
@@ -60,7 +64,7 @@
 	<!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
 	        <div class="row home_featurePost">
-	            <div class="white_well col4 offset1 pull_left">
+	            <div class="white_well col4 pull_left">
 					<h1 class="row">Recent Items:</h1>
 					<%= render @posts %>
 				</div>

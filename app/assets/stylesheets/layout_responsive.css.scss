@@ -16,10 +16,9 @@
 	}
 // HEADER
 	body > header.headerUp {
-		margin-top: -4.4em;
+		top: -3.8em;
 	}
 	body > header {
-		position: fixed;
 		height: 8.4em;
 		hgroup.col2 {
 			margin: 2.6em 0 0 0;
@@ -27,9 +26,12 @@
 			.col2 {
 				width: 100%;
 			}
+			h6.col2 {
+				margin: -.8em 0 0 .6em;
+			}
 		}
-		h6.col2 {
-			margin: -.8em 0 0 .6em;
+		.row.wrapper {
+			padding-bottom: .2em;
 		}
 		nav.col4.pull_right {
 			width: 80%;
@@ -38,24 +40,32 @@
 				display: block;
 				overflow: visible;
 			}
-			> .row > .col3.offset3 > .row > .col2.pull_left:first-child {
+			> .row > .col4.pull_right > .row > .col2.pull_left:first-child {
 				margin: -1em auto;
+				margin-right: -.25em;
+				width: 30%;
 			}
-			> .row > .col3.offset3 > .row > .col2.pull_left:nth-of-type(2) {
-				position: relative;
-				left: -.6em;
+			> .row > .col4.pull_right > .row > .col2.pull_left:nth-of-type(2) {
+				width: 39%;
+				a {
+					padding: 1em 5%;
+					.btn_navMessages {
+						display: block;
+						position: relative;
+						left: 1.875em;
+						top: -.2em;
+					}
+				}
 			}
-			.btn_navMessages {
-				position: relative;
-				left: .5em;
-				top: -.2em;
+			#accountDropDown {
+				margin-left: -0.25em;
 			}
 			> .row:last-child {
 				width: 75%;
 				display: inline-block;
 				margin-top: 0;
 				padding-bottom: 0;
-				> .col3.offset3 {
+				> .col4.pull_right {
 					margin-left: 0;
 					font-size: .675em;
 					text-align: center;
@@ -78,6 +88,7 @@
 				}
 				.btn_navSearch {
 					background-position: -128px -32px;
+					top: 22px;
 				}
 				.quickSearchLabel {
 					display: block;
@@ -99,10 +110,9 @@
 			}
 			#accountDropDown .nav_dropDown {
 				@include hardEdge-top;
-				left: -5em;
+				left: -5.6em;
 				width: 9em;
-				text-align: right;
-				margin-top: -($font-size);
+				margin-top: -($font-size * .675);
 				font-size: $font-size * .875;
 				li:first-child {
 					margin-top: -.05em;
@@ -221,11 +231,8 @@
 // HOMEPAGE
 	.homepage {
 		> .row {
-			> span.col1.pull_left {
-				display: none;
-			}
 			> .col6 {
-				> .row > .col4.offset1{
+				> .row > .col3.offset1{
 					width: 100%;
 					margin-left: 0;
 				}
@@ -237,26 +244,18 @@
 			.nixie {
 				font-size: 2.4em;
 			}
-			.col5 {
+		}
+		.homeSignedIn {
+			> .col4,
+			> .col2 {
 				width: 100%;
-				> .row {
-					.col2.userInfo,
-					.col4.pull_left,
-					a.col2.offset2 {
-						width: 100%;
-						margin-left: 0;
-					}
-					.col2.userInfo {
-						header.col4.pull_left {
-							text-align: left;
-							width: $sixCols * 4;
-						}
-					}
-				}
+			}
+			.userInfo {
+				padding-left: 0;
 			}
 		}
 		.home_featurePost {
-			.white_well.col4.offset1.pull_left {
+			> .col4 {
 				width: 100%;
 				margin-left: 0;
 			}
@@ -652,10 +651,10 @@
 				display: block;
 				margin: 0 0 0 2.2em;
 			}
-			.col4.pull_right > .row > .col3.offset3 > .row > .col2.pull_left {
+			.col4.pull_right > .row > .col4.pull_right > .row > .col2.pull_left {
 				margin-left: -.5em;
 			}
-			&.col4.pull_right > .row > .col3.offset3 > .row > .col2 {
+			&.col4.pull_right > .row > .col4.pull_right > .row > .col2 {
 				width: 27%;
 				float: left;
 			}
@@ -692,8 +691,9 @@
 @media all and (min-width: 641px) and (max-width: 800px) {
 // HEADER 
 	body > header:first-child {
-		nav > .row:nth-of-type(2) > .col3.offset3 {
+		nav > .row:nth-of-type(2) > .col4.pull_right {
 			font-size: .75em;
+			margin-top: .25em;
 		}
 		.col3 {
 			width: 65%;
@@ -772,7 +772,7 @@
 @media all and (min-width: 801px) and (max-width: 960px) {
 // HEADER 
 	header:first-child {
-		nav > .row:nth-of-type(2) > .col3.offset3 {
+		nav > .row:nth-of-type(2) > .col4.pull_right {
 			font-size: 14px;
 		}
 	}

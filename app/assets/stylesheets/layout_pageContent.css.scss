@@ -158,7 +158,7 @@ p {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 1.4em 0;
+  padding: 6.3em 0 3.4em 0;
   background: $wht;
     &:first-child {
       margin: 0 5% 0 0;
@@ -219,9 +219,11 @@ p {
 	float: left;
 	margin-right: ($font-size /2) !important;
 }
+
 .posts p {
 	text-rendering: optimizelegibility;
 }
+
 .label.label-success,
 .posts .col4 .pull_right a {
 	font-size: 1.2em;
@@ -229,9 +231,9 @@ p {
 	text-rendering: optimizelegibility;
 	letter-spacing: .1em;
 	word-spacing: .1em;
-width: 20%;
-float: left;
-clear: none;
+	width: 20%;
+	float: left;
+	clear: none;
 }
 
 .img_border {
@@ -244,13 +246,4 @@ clear: none;
 .transparent_background {
   background-color: transparent !important;
   border-color: transparent !important;
-}
-
-.home_featurePost {
-	margin: ($font-size * .5) auto;
-	h1 {
-		border-bottom: 1px solid $lt-grey;
-		margin-bottom: ($font-size * .25);
-		padding-bottom: ($font-size * .125);
-	}
 }

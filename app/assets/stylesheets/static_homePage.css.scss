@@ -1,3 +1,24 @@
 .homepage {
-
+	.home_featurePost {
+		margin: ($font-size * .5) auto;
+		h1 {
+			border-bottom: 1px solid $lt-grey;
+			margin-bottom: ($font-size * .25);
+			padding-bottom: ($font-size * .125);
+		}
+	}
+	.row > .col6 > .row > .col4.pull_left.white_well {
+		margin-top: 1em;
+	}
+	.homeSignedIn > .col4 > .row:last-child {
+		font-size: $font-size * .75;
+		line-height: $leading;
+		margin-top: $font-size;
+		a {
+			color: $main-blue;
+			span {
+				color: $main-grey;
+			}
+		}
+	}
 }
