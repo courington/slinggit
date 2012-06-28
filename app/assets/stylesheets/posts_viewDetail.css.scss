@@ -29,6 +29,18 @@
 			border: 1px solid #e8e8e8;
 			@include rounded-corners(3px);
 
+			#postImageWrapper{
+				img{
+					cursor: pointer;
+				}
+			}
+
+			#post_imagePort{
+				img{
+					cursor: pointer;
+				}
+			}
+
 			#postInfo{
 				vertical-align: top;
 

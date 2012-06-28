@@ -1,7 +1,7 @@
 <div id="postDetails" class="col4 pull_left <%= @post.open_class %>">
 
   <div id="postDetailInner" class="row">
-    <div class="col3 pull_right">
+    <div id="postImageWrapper" class="col3 pull_right">
       <div id="addPhotoControlGroup">
         <!-- if false to prevent this until we want to implement it-->
         <% if false and not @post.has_photo? and signed_in? and @post.user_id == current_user.id %>
