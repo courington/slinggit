@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
 
   def show
     if not params[:id].blank?
-      if @message = Message.first(:conditions => ['id_hash = ? AND recipient_user_id = ?', params[:id], current_user.id], :select => 'id,status,body,created_at,id_hash,contact_info_json,creator_user_id')
+      if @message = Message.first(:conditions => ['id_hash = ? AND recipient_user_id = ?', params[:id], current_user.id], :select => 'id,status,body,created_at,id_hash,contact_info_json,creator_user_id,source_id,source')
         @message.update_attribute(:status, STATUS_READ)
       else
         flash[:error] = "Message not found"

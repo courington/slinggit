@@ -105,4 +105,20 @@ class Message < ActiveRecord::Base
     return nil
   end
 
+  def from
+    from_string = ''
+    if not self.creator_user_id.blank?
+      user = User.first(:conditions => ['id = ?', self.creator_user_id], :select => 'name')
+      if not user.blank?
+        from_string = user.name
+      end
+    end
+
+    if from_string.blank?
+      from_string = self.contact_info[:email]
+    end
+
+    return from_string
+  end
+
 end
