@@ -16,7 +16,7 @@ class MobileController < ApplicationController
   NATIVE_APP = 'native_app'
   NATIVE_APP_WEB_VIEW = 'native_app_web_view'
   MOBILE_VIEW_ACTIONS = [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  PLACEHOLDER_IMAGE_STYLES = ['80x80_placeholder', '300x300_placeholder']
+  PLACEHOLDER_IMAGE_STYLES = ['80x80_placeholder', '300x300_placeholder', 'noPhoto_80x80', 'noPhoto_300x300']
 
   def user_signup
     if not params[:user_name].blank?
