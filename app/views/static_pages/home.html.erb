@@ -9,26 +9,42 @@
 		</div> -->
   		
 		<div class="col6">
-      <!-- if user is not signed in -->
+			
+<!-- if user is not signed in -->
       <% if current_user.blank? %>
-
-			<article class="row">
-				<div class="col4 offset1">
-					<h2 class="row nixie nixie_bold">Welcome to Slinggit.</h2>
-					<h3 class="row nixie">An easy way to connect with your social networks to git the things you want and sling the ones you don&rsquo;t.</h3>
+			<section class="homeNotSignedIn">
+				<div class="col4 pull_left white_well">
+					<header class="row">
+						<h1 class="nixie nixie_bold bottom_border">Welcome to Slinggit.</h2>
+						<h2 class="nixie">The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h3>
+					</header>
+					<div class="row">
+						<div class="col4 offset1">
+						<% if invite_only? %>
+							<!-- if invites are active -->
+							<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col4 offset1 btn_darkGrey" %>
+						<% else %>
+							<!-- if invites are NOT active -->
+							<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
+						<% end %>
+						</div>
+					</div>
 				</div>
-			</article>
-			
-			<aside class="row">
-				<% if invite_only? %>
-					<!-- if invites are active -->
-					<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col2 offset2 btn_darkGrey" %>
-				<% else %>
-					<!-- if invites are NOT active -->
-					<%= link_to "Sign up now!", signup_path, class: "col2 offset2 btn_blue" %>
-				<% end %>
-			</aside>
-			
+				<section class="col2 pull_right homeBuckets sidebar">
+					<article class="row grey_well">
+						<h1 class="nixie_bold bottom_border">How it works</h1>
+						<p>Post an item for sale on Facebook or search for an item to buy on Twitter from your mobile device or desktop.</p>
+					</article>
+					<article class="row grey_well">
+						<h1 class="nixie_bold bottom_border">Selling</h1>
+						<p>Quickly sling items to your friends and followers or use the Slinggit networks for greater reach. Free, we don&rsquo;t take a cut of your sale, the transaction is up to you.</p>
+					</article>
+					<article class="row grey_well">
+						<h1 class="nixie_bold bottom_border">Buying</h1>
+						<p>Git what you want in your networks or city with Twitter and Facebook feeds. Ask questions and make offers from Slinggit; without giving out your personal email.</p>
+					</article>
+				</section>
+			</section>
 <!-- end user not signed in if/else -->
 	
 
@@ -56,19 +72,18 @@
 <!-- end the user is signed in if/else -->
 	<% end %>
 	
-	
-<!-- end the homepage sign-in/sign-up if/else -->
-		</div> <!-- close col6 -->
-	</div> <!-- close row -->	
-	
-	<!-- show latest slinggit post -->
+<!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
-	        <div class="row home_featurePost">
+	        <article class="row home_featurePost">
 	            <div class="white_well col4 pull_left">
 					<h1 class="row">Recent Items:</h1>
 					<%= render @posts %>
 				</div>
-	        </div>
+	        </article>
 	    <% end %>
-  <!-- end -->
+<!-- end -->
+
+<!-- end the homepage sign-in/sign-up if/else -->
+		</div> <!-- close col6 -->
+	</div> <!-- close row -->
 </section>

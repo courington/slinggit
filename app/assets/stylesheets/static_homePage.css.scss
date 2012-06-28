@@ -21,4 +21,35 @@
 			}
 		}
 	}
+	.homeNotSignedIn {
+		h1.nixie {
+			font-weight: 400;
+			color: $main-blue;
+			#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.25);
+			text-shadow: 0 1px 4px rgba($black, .25);
+			text-rendering: optimizelegibility;
+		}
+		.homeBuckets {
+			@include sidebarWrapper;
+			h1.nixie {
+				color: $main-blue;
+				font-weight: 600;
+				font-size: $font-size;
+				#{$ff}text-shadow: none;
+				#{$o}text-shadow: none;
+				#{$ms}text-shadow: none;
+				#{$wk}text-shadow: none;
+				text-shadow: none;
+			}
+			article {
+				margin: $leading/2 auto;
+				&:first-child {
+					margin-top: 0;
+				}
+			}
+		}
+	}
 }
