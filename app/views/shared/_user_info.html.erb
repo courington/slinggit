@@ -4,7 +4,7 @@
 			<%= image_tag current_user.profile_photo_url, :height => "auto", :width => "100%" %>
 		</a>
 		<header class="col4 pull_right">
-			<h1><%= current_user.name %></h1>
+			<h1 class="bottom_border"><%= current_user.name %></h1>
   			<h6><%= pluralize(current_user.active_post_count, "post") %></h6>
 		</header>
 	</div>
