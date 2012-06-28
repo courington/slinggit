@@ -1,4 +1,4 @@
-<header class="headerUp">
+<header>
   <div class="row wrapper">
 
 <!-- HEADER LOGO -->
@@ -16,8 +16,10 @@
 <!-- QUICK SEARCH -->
       <div class="row">
         <div class="col3 offset3" id="quickSearchWrapper">
-          <span class="btn_navSearch"></span>
-					<label class="row quickSearchLabel" for="quickSearch">Search</label>
+			<label class="row quickSearchLabel" for="quickSearch">
+				<span class="btn_navSearch"></span>
+				<span>Search</span>
+			</label>
           <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
         </div>
       </div>
@@ -30,23 +32,31 @@
               <div class="row">
 	
 <!-- POSTS -->	
-                	<div class="col2 pull_left <%= 'active' if current_page?(current_user) %>">
-                  	<span class="btn_navPosts"></span>
-                  	<%= link_to "Posts", current_user %>
+                	<div class="col2 pull_left <%= 'active' if current_page?(current_user) %>">                		
+						<%= link_to current_user do %>
+							<span class="btn_navPosts"></span>
+							Posts
+						<% end %>
                 	</div>
 <!-- END POSTS -->
 
 <!-- MESSAGES -->
-									<div class="col2 pull_left">
-                  	<span class="btn_navMessages <%= 'active' if current_page?(current_user) %>"></span>
-                  	<%= link_to "Messages #{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? '(' + count.to_s + ')' : ''}", messages_path %>
+					<div class="col2 pull_left">
+                  	
+                  	<%= link_to messages_path do %>
+						<span class="btn_navMessages <%= 'active' if current_page?(current_user) %>"></span>
+						<%= "Messages #{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? '(' + count.to_s + ')' : ''}" %>
+					<% end %>
                 	</div>
 <!-- END MESSAGES -->
 
 <!-- DROP DOWN -->
                 	<div id="accountDropDown" class="col2 pull_right dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
-                  	<span class="btn_navSettings"></span>
-                  	<span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">Settings</span>
+                  	
+                  	<span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">
+						<span class="btn_navSettings"></span>
+						Settings
+					</span>
                   	
 										<ul class="nav_dropDown dropdown-menu">	
 											<li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">

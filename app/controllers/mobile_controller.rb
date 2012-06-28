@@ -16,7 +16,7 @@ class MobileController < ApplicationController
   NATIVE_APP = 'native_app'
   NATIVE_APP_WEB_VIEW = 'native_app_web_view'
   MOBILE_VIEW_ACTIONS = [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account]
-  PLACEHOLDER_IMAGE_STYLES = ['80x80_placeholder', '300x300_placeholder']
+  PLACEHOLDER_IMAGE_STYLES = ['80x80_placeholder', '300x300_placeholder', 'noPhoto_80x80', 'noPhoto_300x300']
 
   def user_signup
     if not params[:user_name].blank?
@@ -457,7 +457,15 @@ class MobileController < ApplicationController
         #starting_post_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
         #always need to inc by 1
         starting_post_id = params[:starting_post_id]
-        starting_post_id = Post.first.id + 1 if (starting_post_id.blank? or starting_post_id.to_i <= 0)
+
+        if (starting_post_id.blank? or starting_post_id.to_i <= 0)
+          starting_post_id = Post.find_by_sql('select id from posts order by id desc limit 1')
+          if not starting_post_id.blank?
+            starting_post_id = starting_post_id.first.id + 1
+          end
+        end
+
+        starting_post_id = 0 if starting_post_id.blank?
         starting_post_id = starting_post_id.to_i
 
         posts = []
@@ -841,7 +849,15 @@ class MobileController < ApplicationController
             #starting_message_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
             #we always need to inc by 1
             starting_message_id = params[:starting_message_id]
-            starting_message_id = Message.count + 1 if (starting_message_id.blank? or starting_message_id.to_i <= 0)
+
+            if (starting_message_id.blank? or starting_message_id.to_i <= 0)
+              starting_message_id = Message.find_by_sql('select id from messages order by id desc limit 1')
+              if not starting_message_id.blank?
+                starting_message_id = starting_message_id.first.id + 1
+              end
+            end
+
+            starting_message_id = 0 if starting_message_id.blank?
             starting_message_id = starting_message_id.to_i
 
             messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id < ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
@@ -1512,21 +1528,6 @@ class MobileController < ApplicationController
   end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   #def send_push_notifications
   #  apns_url = Rails.env == 'development' ? PushNotification::APNS_SANDBOX_HOST : PushNotification::APNS_PRODUCTION_HOST
   #  notifications = PushNotification.all(:conditions => {:status => 'new'})
@@ -1588,25 +1589,6 @@ class MobileController < ApplicationController
   #  ssl.connect
   #  return socket, ssl
   #end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   private
