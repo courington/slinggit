@@ -71,15 +71,12 @@ body {
 }
 
 .grey_well {
-  background-color: $wht;
-  border: 1px solid #e8e8e8;
-  padding: 15px;
-  @include rounded-corners;
+	@include white-well;
+  	background-color: $wht;
 }
 
 .white_well {
 	@include white-well;
-	@include rounded-corners;
 }
 
 .margin-top {

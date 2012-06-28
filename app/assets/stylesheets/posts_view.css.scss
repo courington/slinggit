@@ -1,54 +1,27 @@
-#userPostsWrapper, #searchPostWrapper, #viewPostsWrapper, #userMessages{
+#userPostsWrapper, #searchPostWrapper, #viewPostsWrapper, #userMessages {
 
-	#user{
-		margin-top: 10px;
-		padding-left: 10px;
-		vertical-align: top;
-
-		#userInner{
-			background-color: white;
-			border: 1px solid #e8e8e8;
-			@include rounded-corners(3px);
-			padding: 20px;
-
-			.col4{
-				padding-left: 10px;
-				h1{
-					font-size: $font-size * 1;
-				}
-				h6{
-					padding-top: 5px;
-					font-size: $font-size *.8;
-				}
-			}
-		}
-	}
-
-	#userPosts, #postSearchResults, #msgArticles{
-		margin-top: 10px;
-		background-color: white;
+	#userPosts, #postSearchResults, #msgArticles {
+		margin: 1em 0;
+		background-color: $white;
 		padding: 20px;
-		border: 1px solid #e8e8e8;
-		@include rounded-corners(3px);
-
-		.title_row{
+		border: 1px solid $lt-grey;
+		@include rounded-corners;
+		.title_row {
 			margin: 0;
 			margin-bottom: 10px;
 			border-bottom: 1px solid $lt-grey;
 			header{
 				padding-bottom: 10px;
 			}
-			.btn_green{
-				min-width: 190px;
-				margin-bottom: 20px;
-			}
-
-			#createPostAction{
+			#createPostAction {
 				p{
 					padding-bottom: 15px;
 					strong{
 						font-weight: 600;
 					}
+				}
+				.btn_green {
+					margin-bottom: $leading;
 				}
 			}
 			#postsFilters{
@@ -60,7 +33,6 @@
 					font-size: $font-size * .9;
 					color: $dk-grey;
 					border: 1px solid transparent;
-
 					&:hover{
 						background-color: lighten($lt-grey, 12%);
 						border: 1px solid lighten($lt-grey, 8%);

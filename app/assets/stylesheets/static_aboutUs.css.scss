@@ -18,14 +18,6 @@
 				padding: .2em 0 0 .2em;
 			}
 		}
-		figure {
-			img {
-				@include rounded-corners(.5em);
-				border: 5px solid $wht;
-				box-shadow: 0 0 1px rgba($dk-grey, 1);
-				margin: 1px 0 0 1px;
-			}
-		}
 		figcaption {
 			font-size: $font-size;
 			padding-left: $font-size * .5;
