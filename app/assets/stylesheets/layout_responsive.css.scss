@@ -33,10 +33,22 @@
 		}
 		nav.col4.pull_right {
 			width: 80%;
-			margin: -1.6em 0 0 0;
+			margin: -2em 0 0 0;
 			> .row:first-child {
-			display: block;
-			overflow: visible;
+				display: block;
+				overflow: visible;
+			}
+			> .row > .col3.offset3 > .row > .col2.pull_left:first-child {
+				margin: -1em auto;
+			}
+			> .row > .col3.offset3 > .row > .col2.pull_left:nth-of-type(2) {
+				position: relative;
+				left: -.6em;
+			}
+			.btn_navMessages {
+				position: relative;
+				left: .5em;
+				top: -.2em;
 			}
 			> .row:last-child {
 				width: 75%;
@@ -59,35 +71,39 @@
 				}
 			}
 			#quickSearchWrapper {
-			width: 100%;
-			margin: .4em 0 0 0;
+				width: 100%;
+				margin: .4em 0 0 0;
 				#quickSearch {
 					height: 2em;
 				}
 				.btn_navSearch {
-					top: 4.4em;
-					left: 85%;
 					background-position: -128px -32px;
 				}
 				.quickSearchLabel {
 					display: block;
-					font-size: .675em;
-					position: relative;
-					top: 6.3em;
-					left: 75%;
-					width: 25%;
-					text-align: center;
-					line-height: 1.2em;
-					padding: .2em .5em;
+				    font-size: .675em;
+				    position: relative;
+				    top: 4.6em;
+				    left: 72%;
+				    width: 25%;
+				    text-align: center;
+				    line-height: 1.2em;
+				    padding: .2em .5em;
+						> span:last-child {
+							display: block;
+							top: 2.1em;
+							position: relative;
+							left: .8em;
+						}
 				}
 			}
 			#accountDropDown .nav_dropDown {
 				@include hardEdge-top;
-				left: -4.5em;
+				left: -5em;
 				width: 9em;
 				text-align: right;
-				margin-top: -.65em;
-				font-size: 1.2em;
+				margin-top: -($font-size);
+				font-size: $font-size * .875;
 				li:first-child {
 					margin-top: -.05em;
 				}
@@ -106,18 +122,26 @@
 			.btn_navPosts {
 				@extend .btnNavSprite;
 				background-position: -32px -30px;
+				display: block;
+				margin: .5em auto;
 			}
 			.btn_navSettings {
 				@extend .btnNavSprite;
 				background-position: 0 -31px;
+				margin: .6em auto;
+				display: block;
+			}
+			.BTN_nav_dropDown {
+				position: relative;
+				top: -1.2em;
 			}
 			#header_signIn {
-			margin-top: .7em;
-			font-size: 1.2em;
-			text-align: center;
-			.col1.offset5 {
-				margin: 0;
-				width: auto;
+				margin-top: .7em;
+				font-size: 1.2em;
+				text-align: center;
+				.col1.offset5 {
+					margin: 0;
+					width: auto;
 				}
 			}
 		}
@@ -608,20 +632,38 @@
 @media all and (min-width: 500px) and (max-width: 640px) {
 // HEADER
 	body > header:first-child {
+		hgroup.col2 {
+			margin: 1.6em 0 0 0;
+		}
 		nav {
 			overflow: visible;
 			width: 100%;
 			&.col4.pull_right > .row:first-child {
-			width: 50%;
-			float: right;
-			margin: -3.6em 0 .3em 0;
+				width: 50%;
+				float: right;
+				margin: -3.6em 0 0 0;
 			}
 			&.col4.pull_right > .row:last-child {
-			width: 75%;
-			margin:0 0 .4em 0;
-			float: right;
+				width: 100%;
+				margin:0 0 .4em 0;
+				float: right;
+			}
+			&.col4.pull_right .btn_navMessages {
+				display: block;
+				margin: 0 0 0 2.2em;
+			}
+			.col4.pull_right > .row > .col3.offset3 > .row > .col2.pull_left {
+				margin-left: -.5em;
+			}
+			&.col4.pull_right > .row > .col3.offset3 > .row > .col2 {
+				width: 27%;
+				float: left;
 			}
 		}
+	}
+	body > header nav.col4.pull_right {
+	width: 80%;
+	margin: ($font-size) 0 0 0;
 	}
 // END HEADER
 // REQUEST INVITE
@@ -651,7 +693,13 @@
 // HEADER 
 	body > header:first-child {
 		nav > .row:nth-of-type(2) > .col3.offset3 {
-			font-size: 12px;
+			font-size: .75em;
+		}
+		.col3 {
+			width: 65%;
+		}
+		.offset3 {
+			margin-left: 35%;
 		}
 	}
 // END HEADER
