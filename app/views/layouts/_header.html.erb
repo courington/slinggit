@@ -1,4 +1,4 @@
-<header>
+<header class="headerUp">
   <div class="row wrapper">
 
 <!-- HEADER LOGO -->
@@ -28,7 +28,7 @@
 <!-- NAV BUTTONS WRAPPER -->
       <% if signed_in? %>
           <div class="row">
-            <div class="col3 offset3">
+            <div class="col4 pull_right">
               <div class="row">
 	
 <!-- POSTS -->	
@@ -45,7 +45,7 @@
                   	
                   	<%= link_to messages_path do %>
 						<span class="btn_navMessages <%= 'active' if current_page?(current_user) %>"></span>
-						<%= "Messages #{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? '(' + count.to_s + ')' : ''}" %>
+						<%= "Messages#{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? ': ' + count.to_s + '' : ''}" %>
 					<% end %>
                 	</div>
 <!-- END MESSAGES -->
