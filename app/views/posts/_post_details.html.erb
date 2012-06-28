@@ -17,7 +17,6 @@
       <% else %>
           <%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%", :id => 'post_mainImage' %>
       <% end %>
-      <div class="pull_right"><%= link_to "Flag Inappropriate", {:controller => :posts, :action => :report_abuse, :id => @post.id_hash} %></div>
     </div>
 
     <div id="postInfo" class="col3 pull_left">
