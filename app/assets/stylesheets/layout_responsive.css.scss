@@ -206,13 +206,13 @@
 			.col5 {
 				width: 100%;
 				> .row {
-					.col2.wrapper_userInfo,
+					.col2.userInfo,
 					.col4.pull_left,
 					a.col2.offset2 {
 						width: 100%;
 						margin-left: 0;
 					}
-					.col2.wrapper_userInfo {
+					.col2.userInfo {
 						header.col4.pull_left {
 							text-align: left;
 							width: $sixCols * 4;
@@ -271,7 +271,7 @@
 	}
 	#userPostsWrapper, #searchPostWrapper{
 
-		#user{
+		.userInfo{
 			padding-left: 0;
 
 			#userInner{
