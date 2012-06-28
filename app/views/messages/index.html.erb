@@ -7,17 +7,67 @@
       <header>
         <h1>Messages (<%= @unread %>)</h1>
       </header>
+      <%= link_to 'Delete Selected', '#', :class => 'btn_red col2', :id => 'deleteSelected', :onclick => 'deleteSelectedMessages()' %>
+      <%= form_tag(url_for :controller => :messages, :action => :delete_all) do %>
+          <%= hidden_field_tag :message_ids %>
+      <% end %>
     </div>
 
     <div id="msgArticleWrapper">
-        <% if @messages.any? %>
+      <% if @messages.any? %>
           <%= render @messages %>
           <%= will_paginate @messages %>
-        <% else %>
+      <% else %>
           No messages
-        <% end %>
+      <% end %>
     </div>
 
   </section>
 
 </section>
+
+<!-- I will add this to coffee script when I get home -->
+<script style="text/javascript">
+    selected_boxes = [];
+    $(document).ready(function () {
+        showHideDelete();
+        $('#deleteSelected').hide();
+        $('.action_checkBox').change(function (e) {
+            index = selected_boxes.indexOf(e.target.value)
+            if (e.target.checked) {
+                if (index == -1) {
+                    selected_boxes.push(e.target.value);
+                }
+            } else {
+                if (index != -1) {
+                    selected_boxes.splice(index, 1);
+                }
+            }
+            showHideDelete();
+        })
+    })
+
+    function showHideDelete() {
+        show = false;
+        $('.action_checkBox').each(function (e) {
+            checkBox = $('#' + this.id)
+            if (checkBox.is(':checked')) {
+                show = true;
+            }
+        })
+        if (show) {
+            $('#deleteSelected').show();
+        } else {
+            $('#deleteSelected').hide();
+        }
+    }
+
+    function deleteSelectedMessages() {
+        if (confirm("Are you sure you want to delete selected messages?")) {
+            $('#message_ids').val(selected_boxes.join());
+            $('form').submit();
+        } else {
+            return false;
+        }
+    }
+</script>

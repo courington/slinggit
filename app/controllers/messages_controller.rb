@@ -136,7 +136,7 @@ class MessagesController < ApplicationController
               if signed_in?
                 redirect_to :controller => :messages, :action => :index
               else
-                 if not request.referer.blank?
+                if not request.referer.blank?
                   redirect_to request.referer
                 else
                   redirect_to :controller => :posts, :action => :index
@@ -160,7 +160,7 @@ class MessagesController < ApplicationController
     end
   end
 
-  #TODO ajaxify this method
+  #TODO ajaxify these methods
   def delete
     if not params[:id].blank?
       if message = Message.first(:conditions => ['id_hash = ? AND recipient_user_id = ?', params[:id], current_user.id], :select => 'id,status')
@@ -171,5 +171,17 @@ class MessagesController < ApplicationController
       end
       redirect_to :action => :index
     end
+  end
+
+  def delete_all
+    if not params[:message_ids].blank?
+      params[:message_ids].split(',').each do |message_id_hash|
+        if message = Message.first(:conditions => ['id_hash = ? AND recipient_user_id = ?', message_id_hash, current_user.id], :select => 'id,status')
+          message.update_attribute(:status, STATUS_DELETED)
+        end
+      end
+    end
+    flash[:success] = "Messages deleted"
+    redirect_to :action => :index
   end
 end
