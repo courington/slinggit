@@ -22,27 +22,30 @@
 		}
 	}
 	.homeNotSignedIn {
-		h1.nixie {
-			font-weight: 400;
-			color: $main-blue;
-			#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.25);
-			#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.25);
-			#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.25);
-			#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.25);
-			text-shadow: 0 1px 4px rgba($black, .25);
-			text-rendering: optimizelegibility;
+		.col4.pull_left.white_well {
+			margin-top: 1em;
+		}
+		h1.headline {
+			font-size: $font-size * 2.375;
+			#{$ff}text-shadow: 0 1px 0 rgba($black, .15);
+			#{$wk}text-shadow: 0 1px 0 rgba($black, .15);
+			text-shadow: 0 1px 0 rgba($black, .15);
+			text-align: center;
+			& + h2 {
+				font-size: $font-size;
+			}
 		}
 		.homeBuckets {
 			@include sidebarWrapper;
-			h1.nixie {
-				color: $main-blue;
-				font-weight: 600;
+			h1.headline {
 				font-size: $font-size;
-				#{$ff}text-shadow: none;
-				#{$o}text-shadow: none;
-				#{$ms}text-shadow: none;
-				#{$wk}text-shadow: none;
-				text-shadow: none;
+				background: lighten($lt-grey, 5%);
+				#{$wk}box-shadow: $input-txt-shading;
+				#{$ff}box-shadow: $input-txt-shading;
+				box-shadow: $input-txt-shading;
+				color: $main-blue;
+				padding-top: $font-size * .25;
+				@include rounded-corners;
 			}
 			article {
 				margin: $leading/2 auto;

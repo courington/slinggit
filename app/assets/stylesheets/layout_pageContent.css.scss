@@ -10,15 +10,18 @@ body {
   color: $dk-grey;
 }
 //WEB FONTS FOR HEADLINES
-.nixie {
-	font-family: 'Nixie One', 'helvetica neue', helvetica, arial, sans-serif;
+.headline {
+	font-family: /*'Nixie One',*/ 'Alfa Slab One', 'helvetica neue', helvetica, arial, sans-serif;
+	color: $main-blue;
+	text-rendering: optimizelegibility;
+	letter-spacing: .05em;
 }
-.nixie_bold {
-	@extend .nixie;
-	font-size: 7.2em;
-	letter-spacing: .03em;
-	line-height: ($leading * .875);
-}
+//.headline_bold {
+//	@extend .headline;
+//	font-size: 7.2em;
+//	letter-spacing: .03em;
+//	line-height: ($leading * .875);
+//}
 //END
 //COLUMNS and OFFSETS
 .col1 {

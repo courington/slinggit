@@ -15,8 +15,8 @@
 			<section class="homeNotSignedIn">
 				<div class="col4 pull_left white_well">
 					<header class="row">
-						<h1 class="nixie nixie_bold bottom_border">Welcome to Slinggit.</h2>
-						<h2 class="nixie">The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h3>
+						<h1 class="headline bottom_border">Welcome to Slinggit.</h2>
+						<h2>The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h3>
 					</header>
 					<div class="row">
 						<div class="col4 offset1">
@@ -32,16 +32,16 @@
 				</div>
 				<section class="col2 pull_right homeBuckets sidebar">
 					<article class="row grey_well">
-						<h1 class="nixie_bold bottom_border">How it works</h1>
+						<h1 class="headline">How it works</h1>
 						<p>Post an item for sale on Facebook or search for an item to buy on Twitter from your mobile device or desktop.</p>
 					</article>
 					<article class="row grey_well">
-						<h1 class="nixie_bold bottom_border">Selling</h1>
-						<p>Quickly sling items to your friends and followers or use the Slinggit networks for greater reach. Free, we don&rsquo;t take a cut of your sale, the transaction is up to you.</p>
+						<h1 class="headline">Selling</h1>
+						<p>Quickly sling items to your friends and followers or use the Slinggit networks for greater reach. We don&rsquo;t take a cut of your sale.</p>
 					</article>
 					<article class="row grey_well">
-						<h1 class="nixie_bold bottom_border">Buying</h1>
-						<p>Git what you want in your networks or city with Twitter and Facebook feeds. Ask questions and make offers from Slinggit; without giving out your personal email.</p>
+						<h1 class="headline">Buying</h1>
+						<p>Find what you want to git in your network or city feed. Ask questions and make offers without giving out your personal email.</p>
 					</article>
 				</section>
 			</section>
@@ -55,8 +55,8 @@
 		<%= render 'shared/user_info' %>
 		<div class="col4 pull_left white_well">
 			<div class="row">
-				<h2 class="nixie">Welcome back <%= current_user.name %>!</h2>
-				<!-- <p class="pull_left nixie"> Have something to Sling?</p> -->
+				<h2 class="headline">Welcome back <%= current_user.name %>!</h2>
+				<!-- <p class="pull_left headline"> Have something to Sling?</p> -->
 			</div>
 			<div class="row">
 				<%= link_to "Create New Post", new_post_path, class: "col3 btn_green" %>
@@ -74,8 +74,8 @@
 	
 <!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
-	        <article class="row home_featurePost">
-	            <div class="white_well col4 pull_left">
+	        <article class="col4 pull_left home_featurePost">
+	            <div class="white_well row">
 					<h1 class="row">Recent Items:</h1>
 					<%= render @posts %>
 				</div>
