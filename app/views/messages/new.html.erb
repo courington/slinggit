@@ -2,38 +2,33 @@
 <div class="wrapper messages">
   <article>
 
-    <div id="userPosts" class="col4 pull_left postArticle top_border bottom_border"><br/>
+    <div id="userPosts" class="col4 pull_left postArticle white_well">
       <div id="postArticlesWrapper">
         <% if not @post.blank? %>
             <%= render @post %>
         <% end %>
       </div>
-      <br/>
     </div>
-
 
     <%= form_for(@message) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
         <% if not signed_in? %>
             <div class="row">
-              <div class="col6 pull_left">
-                <br/>
-                <p><%= f.label :contact_info_json, "Email", for: "message_contact_info_json", class: "col6" %></p>
+              <div class="col4 pull_left">
+                <%= f.label :contact_info_json, "Email", for: "message_contact_info_json", class: "row bottom_border" %>
                 <%= f.text_field :contact_info_json, :value => @email_entered, :type => :email, :placeholder => "Email Address" %>
               </div>
             </div>
-            <br/>
         <% end %>
         <div class="row">
-          <div class="col6 pull_left">
-            <p><%= f.label :body, "Message", for: "messag_body", class: "col6" %></p>
-            <%= f.text_area :body, "maxLength" => 1000, :value => @message_entered, :counterMax => 1000, :cols => 116 %>
+			<%= f.label :body, "Message", for: "message_body", class: "col4 pull_left bottom_border" %>
+          <div class="col4 pull_left">
+				<%= f.text_area :body, "maxLength" => 1000, :value => @message_entered, :counterMax => 1000, :class => "row" %>
           </div>
         </div>
-        <br/>
-        <%= submit_tag 'Send Message', class: "btn btn_green" do %>
-            <%= f.button 'Send Message', class: "btn btn_green", :type => 'submit' %>
-        <% end %>
+
+            <%= f.button 'Send Message', class: "btn_green col2 pull_left", :type => 'submit' %>
+
     <% end %>
   </article>
 </div>

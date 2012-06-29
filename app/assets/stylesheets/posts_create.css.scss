@@ -10,7 +10,7 @@
 		color: $main-grey;
 		border: 1px solid darken($wht, 10%);
 		height: 2em;
-		margin: ($font-size * .5) auto;
+		margin: ($font-size * .275) auto;
 		padding-right: .4em;
 	}
 	#photoControlGroup {
@@ -20,6 +20,14 @@
 			left: -9999px;
 		}
 	}
+	#counter_post_hashtag_prefix,
+	#counter_post_content {
+		color: $main-red;
+		position: relative;
+		top: ($font-size * .5) + $leading;
+		float: right;
+	}
+	
 }
 
 .twitterPostAccount {

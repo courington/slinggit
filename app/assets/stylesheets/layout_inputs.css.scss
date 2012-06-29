@@ -4,7 +4,7 @@ input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
-	margin: ($font-size * .5) auto;
+	margin: ($font-size * .275) auto;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;

@@ -21,6 +21,20 @@
   }
 }
 
+.messages {
+	article {
+		margin-top: 1em;
+	}
+	#counter_message_body {
+		color: $main-red;
+		float: right;
+	}
+	label {
+		font-size: $font-size;
+		line-height: $leading;
+	}
+}
+
 #msgArticles {
   #msgArticleWrapper {
     a .row {

@@ -162,7 +162,12 @@
 	}// end #postContent
 
 	#comments{
-
+		
+		#counter_comment_body {
+			color: $main-red;
+			float: right;
+		}
+		
 		&> div {
 			@include white-well;
 			padding: 20px;

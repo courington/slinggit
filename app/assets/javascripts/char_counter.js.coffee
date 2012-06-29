@@ -3,7 +3,7 @@ window.displayCounter = (field_name, max) ->
   field_object = $("#" + field_name)
   counter_object = $("#counter_" + field_name)
   if counter_object.length is 0
-    field_object.parent().prepend "<div id=\"counter_" + field_name + "\" class=\"counter col1 pull_right\">" + field_object.val().length + "/" + max.toString() + "</div>"
+    field_object.parent().prepend "<div id=\"counter_" + field_name + "\" class=\"counter\">" + field_object.val().length + "/" + max.toString() + "</div>"
     counter_object = $("#counter_" + field_name)
   else
     counter_object.show()
