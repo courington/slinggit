@@ -99,11 +99,11 @@ textarea {
 	background: $lt-grey;
 	border: 1px solid lighten($main-grey, 20%);
 	color: darken($main-grey, 6%);
-	box-shadow: $btn-focus;
+	box-shadow: $btn-shading;
 	&:hover,
 	&:focus {
 		background: lighten($lt-grey, 1%);
-		box-shadow: $btn-shading;
+		box-shadow: $btn-focus;
 		color: darken($main-grey, 6%);
 		outline:none;
 	}
@@ -112,27 +112,10 @@ textarea {
 		color: darken($main-grey, 6%);
 	}
 }
-
 fieldset > label {
 	font-size: $font-size * .875;
 	line-height: $leading;
 	display: block;
 	margin: .8em 0 -.4em 0;
-}
-label[for="post_photo"] {
-	float: left;
-	display: inline-block;
-}
-.controls.thumbnail {
-	font-size: $font-size;
-	margin: $font-size auto;
-	font-weight: 600;
-	text-decoration: underline;
-}
-fieldset > input[type="checkbox"] {
-	width: auto;
-	margin: 0;
-	display: block;
-	clear: left;
 }
 // end

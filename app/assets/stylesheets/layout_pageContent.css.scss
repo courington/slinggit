@@ -178,7 +178,7 @@ p {
 .twitIconSmall {
 	@extend .btnNavSprite;
 	background-position: -162px -32px;
-	margin: 2px 2px -2px 0;
+	//margin: 2px 2px -2px 0;
 }
 
 .twitIconSmall_dark {
@@ -207,6 +207,13 @@ p {
 	height: 32px;
 	width: 32px;
 	text-indent: -9999px;
+}
+
+.facebookIconSmall {
+	@extend .facebookIcon;
+	background-position: -226px -33px;
+	height: 16px;
+	width: 16px;
 }
 
 .slinggitIcon {
