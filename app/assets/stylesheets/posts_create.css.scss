@@ -1,13 +1,6 @@
 .createPost {
 	> .row > article {
-		margin-top: 10px;
-	}
-	> .contentHeader{
-		border-bottom: 1px solid $lt-grey;
-	}
-	img.obj {
-		width: 300px;
-		margin-top: ($font-size * .5);
+		margin-top: 1em;
 	}
 	.add_on {
 		@include hardEdge-left;
@@ -18,18 +11,14 @@
 		border: 1px solid darken($wht, 10%);
 		height: 2em;
 		margin: ($font-size * .5) auto;
-		width: auto;
-		float: left;
 		padding-right: .4em;
 	}
 	#photoControlGroup {
-		float: left;
-		margin: 0 0 0 5%;
-		width: 38%;
-	}
-	#photoControlGroup {
-		margin: 0;
-		width: 50%;
+		> .controls.thumbnail > input[type="file"] {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
 	}
 }
 
