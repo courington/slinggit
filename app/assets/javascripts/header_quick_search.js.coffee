@@ -4,6 +4,7 @@ class HeaderSearch extends Backbone.View
 
   initialize: (options) ->
     _.bindAll @
+    @$searchBox = $("#quickSearch")
     @hideSearch()
     @isUp = true
 
@@ -16,9 +17,12 @@ class HeaderSearch extends Backbone.View
   upDown: (e) ->
     if @isUp and @$el.hasClass("headerUp")
       @$el.removeClass("headerUp")
+      console.log @$searchBox
+      @$searchBox.focus()
       @isUp = false
     else if not @isUp and not @$el.hasClass("headerUp")
       @$el.addClass "headerUp"
+      @$searchBox.blur()
       @isUp = true
 
 ## Export
