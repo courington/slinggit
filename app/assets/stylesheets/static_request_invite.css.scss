@@ -1,13 +1,58 @@
 .invite_wrapper {
-	article > .col3 {
-		h2.nixie {
+	.col4.pull_left.white_well {
+		margin-top: 1em;
+	}
+	h1.headline {
+		font-size: $font-size * 2.375;
+		#{$ff}text-shadow: 0 1px 0 rgba($black, .15);
+		#{$wk}text-shadow: 0 1px 0 rgba($black, .15);
+		text-shadow: 0 1px 0 rgba($black, .15);
+		text-align: center;
+		& + h2 {
+			font-size: $font-size;
+		}
+	}
+	.row.grey_well {
+		margin: $font-size auto;
+		p {
+			line-height: $leading;
+			padding-left: $leading;
+		}
+		label {
+			font-size: $font-size;
+			margin: 1.2em 0 0 0;
+			color: $main-blue;
+			padding-left: $leading;
+		}
+	}
+	.homeBuckets {
+		@include sidebarWrapper;
+		h1.headline {
+			font-size: $font-size;
+			background: lighten($lt-grey, 5%);
+			#{$wk}box-shadow: $input-txt-shading;
+			#{$ff}box-shadow: $input-txt-shading;
+			box-shadow: $input-txt-shading;
+			border: 1px solid $lt-grey;
+			color: lighten($main-blue, 0%);
+			padding-top: $font-size * .25;
+			@include rounded-corners;
+		}
+		article {
+			margin: $leading/2 auto;
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+	/*article > .col3 {
+		h2.headline {
 			color: $main-blue;
 			#{$ff}text-shadow: 0 1px 4px rgba(0,0,0,.25);
 			#{$o}text-shadow: 0 1px 4px rgba(0,0,0,.25);
 			#{$ms}text-shadow: 0 1px 4px rgba(0,0,0,.25);
 			#{$wk}text-shadow: 0 1px 4px rgba(0,0,0,.25);
 			text-shadow: 0 1px 4px rgba(0,0,0,.25);
-			//padding: 0 10px 14px 12px;
 			text-rendering: optimizelegibility;
 		}
 		h3.row,
@@ -30,21 +75,16 @@
 		}
 	}
 	.row.grey_well {
-			margin: 1.8em auto;
-			p {
-				line-height: 1.8em;
-				padding-left: 2.8em;
-			}
-			label {
-				font-size: 1.6em;
-				margin: 1.2em 0 0 0;
-				color: $main-blue;
-				padding-left: 2.8em;
-			}
+		margin: 1.8em auto;
+		p {
+			line-height: 1.8em;
+			padding-left: 2.8em;
 		}
-		
-		.invite_footer a {
-			text-indent: -9999px;
-			margin: 0 0 0 $font-size;
+		label {
+			font-size: 1.6em;
+			margin: 1.2em 0 0 0;
+			color: $main-blue;
+			padding-left: 2.8em;
 		}
-	}
+	} */
+}

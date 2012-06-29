@@ -43,6 +43,7 @@
 				#{$wk}box-shadow: $input-txt-shading;
 				#{$ff}box-shadow: $input-txt-shading;
 				box-shadow: $input-txt-shading;
+				border: 1px solid $lt-grey;
 				color: $main-blue;
 				padding-top: $font-size * .25;
 				@include rounded-corners;

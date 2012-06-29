@@ -713,63 +713,22 @@
 // END HEADER
 // REQUEST INVITE
 	.invite_wrapper {
-		.col1, .col2, .col3, .col4, .col5 {
+		> .col4,
+		> .col2 {
 			width: 100%;
 		}
-		.offset1, .offset2, .offset3, .offset4, .offset5 {
-			margin-left: 0;
+		.homeBuckets {
+			padding-left: 0;
 		}
-		.pull_left, .pull_right {
-			clear: both;
-			float: none;
-		}
-		
-		#home_slinggitIcons {
-			width: 20%;
-		}
-		article > .col3.pull_left {
-			float: right;
-			width: 75%;
-			h2.headline { //.headline_bold {
-				
+ 		article .row.grey_well {
+		    width: 100%;
+			p {
+				padding-left: 0;
 			}
-			h3.row {
-				line-height: $leading * 1.2;
+			label {
+				padding-left: 0;
 			}
 		}	
- 		article > .col4.offset1.grey_well {
-			float: left;
-			font-size: ($font-size * .5);
-		    width: 20%;
-			ul {
-				li:first-child {
-					float: left;
-				}
-				li:last-child {
-					float: right;
-					padding-right: 0 20%;
-				}
-			}
-		}	
-		article > .col4.offset1 {
-			width: 75%;
-			float: right;
-			.row.grey_well {
-				margin: .6em 0 0 0;
-				label, p {
-					padding-left: 10%;
-				}
-				button.col2 {
-					width:50%;
-					margin:0 0 0 25%;
-				}
-			}
-			input[type="password"], input[type="email"], input[type="text"] {
-				height: 2.6em;
-				width: 80%;
-				margin: .6em 0 1.2em 10%;
-			}
-		}
 	}
 // END REQUEST INVITE
 
@@ -797,7 +756,7 @@
 				width: ($sixCols * 4);
 			}
 			.headline { //.headline_bold {
-				font-size: 7.2em;
+				font-size: $font-size * 2.25;
 			}
 			h3.row.headline {
 				font-size: 3.6em;
