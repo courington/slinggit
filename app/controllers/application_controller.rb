@@ -46,6 +46,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def slinggit_twitter_posting_on?
+    #add logic to determine if posting to the slinggit twitter feed is allowed.
+    return true
+  end
+
   #returns a key value pair of system preferences
   def system_preferences
     #TODO remove true from the following line after presentation.  Dont want the invitation only session to get bogged up during pres

@@ -654,27 +654,25 @@ class MobileController < ApplicationController
   end
 
   def get_user_api_accounts
-    if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'user_id')
+    if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'id,api_source,real_name,image_url,reauth_required')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
         api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED])
+
+        if slinggit_twitter_posting_on?
+          slinggit_twitter_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id,api_source,real_name,image_url,reauth_required')
+          if not slinggit_twitter_api_account.blank?
+            api_accounts = slinggit_twitter_api_account | api_accounts
+          end
+        end
 
         api_accounts_array = []
         api_accounts.each do |api_account|
           api_accounts_array << {
               :id => api_account.id.to_s,
-              :api_id => api_account.api_id.to_s,
-              :api_id_hash => api_account.api_id_hash,
               :api_source => api_account.api_source,
               :real_name => api_account.real_name,
-              :user_name => api_account.user_name,
               :image_url => api_account.image_url,
-              :description => api_account.description,
-              :language => api_account.language,
-              :location => api_account.location,
-              :status => api_account.status,
-              :reauth_required => api_account.reauth_required,
-              :created_at_date => api_account.created_at.strftime("%m-%d-%Y"),
-              :created_at_time => api_account.created_at.strftime("%H:%M")
+              :reauth_required => api_account.reauth_required
           }
         end
 
