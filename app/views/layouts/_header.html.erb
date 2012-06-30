@@ -20,7 +20,7 @@
 				<span class="btn_navSearch"></span>
 				<span>Search</span>
 			</label>
-          <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+          <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto', onFocus: 'window.scrollTo(0, 0)' %>
         </div>
       </div>
 <!-- END QUICK SEARCH -->
