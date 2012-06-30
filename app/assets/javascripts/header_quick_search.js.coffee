@@ -18,12 +18,10 @@ class HeaderSearch extends Backbone.View
       $("html, body").animate
         scrollTop: "0"
       , 100
-      , =>
-          $("#quickSearch").focus()
       @isUp = false
 
     else if not @isUp and not @$el.hasClass("headerUp")
-      @$searchBox.blur()
+      #@$searchBox.blur()
       @$el.removeClass "headerTop"
       @$el.addClass "headerUp"
       @isUp = true
