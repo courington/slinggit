@@ -2,28 +2,24 @@ class JankyHeaderHider extends Backbone.View
 	el: "body"
 
 	initialize: (options)->
-		console.log "init"
+		@headerHidden = false
+		@$headerEl = $("#mainHeader")
 
 	events:
-		"focusin input": "hideHeader"
-		"focusin textarea": "hideHeader"
+		"focus input": "focus"
+		"focus textarea": "focus"
+		"blur input": "blur"
+		"blur textarea": "blur"
 
-	hideHeader: (e)->
-		console.log "Add .headerHideOnFocus"
-		console.log e.target.id
-		$(e.target).focusout @showHeader
+	focus: (e)->
+		@$headerEl.addClass "headerHideOnFocus" unless e.currentTarget.id is "quickSearch"
 
-	showHeader: (e)->
-		console.log "Remove .headerHideOnFocus"
-		$('input, textarea').focus ()->
-			console.log $(@).length
-			if @ is ""
-				console.log "hide"
+	blur: (e)->
+		setTimeout ()=>
+			@$headerEl.removeClass "headerHideOnFocus" if document.activeElement is document.body
+		, 200
+
 		
-
-
-
-
 ## Export
 $(document).ready ->
 	new JankyHeaderHider
