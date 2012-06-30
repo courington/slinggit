@@ -48,41 +48,37 @@
 			}
 		}
 
-		#postArticlesWrapper, #msgArticleWrapper{	
-			strong{
-				font-weight: 600;
-			}
-			
-			.postArticle{
-				border-bottom: 1px solid $lt-grey;
-				padding: 8px 0 8px;
 
-				&:hover{
-					background-color: lighten($lt-grey, 12%) !important;
-				}
-
-				&> a{
-					color: $dk-grey;
-
-				}
-				
-
-				.col5{
-					h4{
-						font-weight: 600;
-					}
-					p{
-						font-size: $font-size * .9;
-					}
-
-					.secondary{
-						margin-top: 10px;
-					}
-				}
-			}
-
-		}// end #postArticlesWrapper
 
 	}// end #userPosts, #postSearchResults
 
+}
+
+// Starting node in _post.html.erb
+.postArticle{
+	border-bottom: 1px solid $lt-grey;
+	padding: 8px 0 8px;
+
+	&:hover{
+		background-color: lighten($lt-grey, 12%) !important;
+	}
+
+	&> a{
+		color: $dk-grey;
+
+	}
+	
+
+	.col5{
+		h4{
+			font-weight: 600;
+		}
+		p{
+			font-size: $font-size * .9;
+		}
+
+		.secondary{
+			margin-top: 10px;
+		}
+	}
 }

@@ -311,7 +311,7 @@
 		}
 	}
 	// style for user show (with list of posts) and post search
-	#userPostsWrapper, #searchPostWrapper{
+	#userPostsWrapper, #searchPostWrapper, #viewPostsWrapper{
 		&> .col2, &> .col4{
 			@include colNoFloatClearFix;
 		}
@@ -338,25 +338,27 @@
 					//text-align: center;
 				}
 			}
-			.postArticle{
-				.col1{
-					width: ($sixCols * 2);
+		}
+	}
 
-					img{
-						width: 80px;
-					}
-				}
-				.col5{
-					width: ($sixCols * 4);
+	// Starting node in _post.html.erb
+	.postArticle{
+		.col1{
+			width: ($sixCols * 2);
 
-					h4{
-						font-size: $font-size * .9;
-					}
+			img{
+				width: 80px;
+			}
+		}
+		.col5{
+			width: ($sixCols * 4);
 
-					p{
-						font-size: $font-size * .8;
-					}
-				}
+			h4{
+				font-size: $font-size * .9;
+			}
+
+			p{
+				font-size: $font-size * .8;
 			}
 		}
 	}
