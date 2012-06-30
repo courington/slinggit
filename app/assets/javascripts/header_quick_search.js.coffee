@@ -13,7 +13,8 @@ class HeaderSearch extends Backbone.View
   upDown: (e) ->
     if @isUp and @$el.hasClass("headerUp")
       @$el.removeClass "headerUp"
-      $('html, body').animate {scrollTop:0}, 200
+      $("html, body").animate {scrollTop:0}, 200
+      @$el.scrollTop(0)
       @$searchBox.focus()
       @isUp = false
     else if not @isUp and not @$el.hasClass("headerUp")
