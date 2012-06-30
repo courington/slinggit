@@ -533,40 +533,40 @@ class MobileController < ApplicationController
     end
   end
 
-  def get_single_slinggit_post_data
-    if not params[:post_id].blank?
-      if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
-        comments_array = []
-        post.comments.each do |comment|
-          if comment.status == STATUS_ACTIVE
-            comments_array << comment.attributes.merge!(
-                :user_name => comment.user.name,
-                :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
-                :created_at_time => comment.created_at.strftime("%H:%M")
-            )
-          end
-        end
-
-        render_success_response(
-            post.attributes.merge!(:comments => comments_array)
-        )
-      else
-        render_error_response(
-            :error_location => 'get_individual_slinggit_post_data',
-            :error_reason => 'not found - post',
-            :error_code => '404',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
-      end
-    else
-      render_error_response(
-          :error_location => 'get_individual_slinggit_post_data',
-          :error_reason => 'missing required_paramater - post_id',
-          :error_code => '403',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
-    end
-  end
+  #def get_single_slinggit_post_data
+  #  if not params[:post_id].blank?
+  #    if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
+  #      comments_array = []
+  #      post.comments.each do |comment|
+  #        if comment.status == STATUS_ACTIVE
+  #          comments_array << comment.attributes.merge!(
+  #              :user_name => comment.user.name,
+  #              :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
+  #              :created_at_time => comment.created_at.strftime("%H:%M")
+  #          )
+  #        end
+  #      end
+  #
+  #      render_success_response(
+  #          post.attributes.merge!(:comments => comments_array)
+  #      )
+  #    else
+  #      render_error_response(
+  #          :error_location => 'get_individual_slinggit_post_data',
+  #          :error_reason => 'not found - post',
+  #          :error_code => '404',
+  #          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+  #      )
+  #    end
+  #  else
+  #    render_error_response(
+  #        :error_location => 'get_individual_slinggit_post_data',
+  #        :error_reason => 'missing required_paramater - post_id',
+  #        :error_code => '403',
+  #        :friendly_error => 'Oops, something went wrong.  Please try again later.'
+  #    )
+  #  end
+  #end
 
   def check_limitations
     if not params[:limitation_type].blank?
@@ -654,14 +654,14 @@ class MobileController < ApplicationController
   end
 
   def get_user_api_accounts
-    if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'id,api_source,real_name,image_url,reauth_required')
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED])
+        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED], :select => 'id,api_source,real_name,image_url,reauth_required,user_id')
 
         if slinggit_twitter_posting_on?
-          slinggit_twitter_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id,api_source,real_name,image_url,reauth_required')
+          slinggit_twitter_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id,api_source,real_name,image_url,reauth_required,user_id')
           if not slinggit_twitter_api_account.blank?
-            api_accounts = slinggit_twitter_api_account | api_accounts
+            api_accounts << slinggit_twitter_api_account
           end
         end
 
@@ -672,7 +672,8 @@ class MobileController < ApplicationController
               :api_source => api_account.api_source,
               :real_name => api_account.real_name,
               :image_url => api_account.image_url,
-              :reauth_required => api_account.reauth_required
+              :reauth_required => api_account.reauth_required,
+              :user_id => api_account.user_id
           }
         end
 
@@ -725,6 +726,66 @@ class MobileController < ApplicationController
       render_error_response(
           :error_location => 'password_reset',
           :error_reason => 'missing required_paramater - email_or_username',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def get_post_comments
+    if not params[:post_id].blank?
+      if not params[:limit].blank?
+        if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE], :select => 'id')
+          #limit cannot be 0
+          limit = params[:limit].to_i
+          limit = 1 if limit <= 0
+
+          #starting_comment_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
+          #we always need to inc by 1
+          starting_comment_id = params[:starting_comment_id]
+
+          if (starting_comment_id.blank? or starting_comment_id.to_i <= 0)
+            starting_comment_id = Comment.find_by_sql('select id from comments order by id desc limit 1')
+            if not starting_comment_id.blank?
+              starting_comment_id = starting_comment_id.first.id + 1
+            end
+          end
+
+          starting_comment_id = 0 if starting_comment_id.blank?
+          starting_comment_id = starting_comment_id.to_i
+
+          comments = Comment.all(:conditions => ['post_id = ? AND status != ? AND id < ?', post.id, STATUS_DELETED, starting_comment_id], :order => 'created_at desc, status desc', :limit => limit, :select => 'id,body,user_id,created_at')
+          render_success_response(
+              :rows_found => comments.length,
+              :filters_used => {:limit => limit, :starting_comment_id => starting_comment_id},
+              :comments => comments.map { |m|
+                m.attributes.merge(
+                    :created_at_time => m.created_at.strftime("%H:%M"),
+                    :created_at_date => m.created_at.strftime("%m-%d-%Y"),
+                    :user_name => m.user.name
+                )
+              }
+          )
+        else
+          render_error_response(
+              :error_location => 'get_post_comments',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'get_post_comments',
+            :error_reason => 'missing required_paramater - limit',
+            :error_code => '403',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_post_comments',
+          :error_reason => 'missing required_paramater - post_id',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
