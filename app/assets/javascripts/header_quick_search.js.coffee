@@ -10,7 +10,6 @@ class HeaderSearch extends Backbone.View
   events:
     "click .quickSearchLabel": "upDown"
     "focus #quickSearch": "setPosition"
-    "touchmove #quickSearch": "prevent"
 
   upDown: (e) ->
 
@@ -31,10 +30,7 @@ class HeaderSearch extends Backbone.View
       @isUp = true
 
   setPosition: (e)->
-    @$el.css("top", "0")
-
-  prevent: (e)->
-    e.preventDefault()
+    @$el.css({"top": "0", "position": "static"})
 
   
 ## Export
