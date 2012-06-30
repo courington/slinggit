@@ -731,6 +731,66 @@ class MobileController < ApplicationController
     end
   end
 
+  def get_post_comments
+    if not params[:post_id].blank?
+      if not params[:limit].blank?
+        if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE], :select => 'id')
+          #limit cannot be 0
+          limit = params[:limit].to_i
+          limit = 1 if limit <= 0
+
+          #starting_comment_id can come in as 0 or blank and needs to be set to the max + 1 if thats the case
+          #we always need to inc by 1
+          starting_comment_id = params[:starting_comment_id]
+
+          if (starting_comment_id.blank? or starting_comment_id.to_i <= 0)
+            starting_comment_id = Comment.find_by_sql('select id from comments order by id desc limit 1')
+            if not starting_comment_id.blank?
+              starting_comment_id = starting_comment_id.first.id + 1
+            end
+          end
+
+          starting_comment_id = 0 if starting_comment_id.blank?
+          starting_comment_id = starting_comment_id.to_i
+
+          comments = Comment.all(:conditions => ['post_id = ? AND status != ? AND id < ?', post.id, STATUS_DELETED, starting_comment_id], :order => 'created_at desc, status desc', :limit => limit, :select => 'id,body,user_id,created_at')
+          render_success_response(
+              :rows_found => comments.length,
+              :filters_used => {:limit => limit, :starting_comment_id => starting_comment_id},
+              :comments => comments.map { |m|
+                m.attributes.merge(
+                    :created_at_time => m.created_at.strftime("%H:%M"),
+                    :created_at_date => m.created_at.strftime("%m-%d-%Y"),
+                    :user_name => m.user.name
+                )
+              }
+          )
+        else
+          render_error_response(
+              :error_location => 'get_post_comments',
+              :error_reason => 'not found - post',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'get_post_comments',
+            :error_reason => 'missing required_paramater - limit',
+            :error_code => '403',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_post_comments',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
   def create_post_comment
     if not params[:post_id].blank?
       if not params[:comment_body].blank?
