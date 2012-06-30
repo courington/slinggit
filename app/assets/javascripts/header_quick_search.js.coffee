@@ -24,13 +24,18 @@ class HeaderSearch extends Backbone.View
       @isUp = false
 
     else if not @isUp and not @$el.hasClass("headerUp")
-      #@$searchBox.blur()
-      @$el.attr "style", ""
+      @$searchBox.blur()
       @$el.addClass "headerUp"
       @isUp = true
 
   setPosition: (e)->
     @$el.css({"top": "0", "position": "static"})
+    $("html, body").animate
+        scrollTop: "0"
+      , 100
+      , =>
+          @$el.attr "style", ""
+
 
   
 ## Export
