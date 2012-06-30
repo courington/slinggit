@@ -18,6 +18,9 @@
 	body > header.headerUp {
 		top: -3.8em;
 	}
+	body > header.headerHideOnFocus {
+		display: none;
+	}
 	body > header {
 		height: 8.4em;
 		hgroup.col2 {

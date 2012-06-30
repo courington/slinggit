@@ -20,6 +20,7 @@ class HeaderSearch extends Backbone.View
       @$el.addClass "headerUp"
       @isUp = true
 
+  
 ## Export
 window.initiHeaderSearch = ->
   new HeaderSearch
