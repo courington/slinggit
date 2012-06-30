@@ -533,40 +533,40 @@ class MobileController < ApplicationController
     end
   end
 
-  def get_single_slinggit_post_data
-    if not params[:post_id].blank?
-      if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
-        comments_array = []
-        post.comments.each do |comment|
-          if comment.status == STATUS_ACTIVE
-            comments_array << comment.attributes.merge!(
-                :user_name => comment.user.name,
-                :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
-                :created_at_time => comment.created_at.strftime("%H:%M")
-            )
-          end
-        end
-
-        render_success_response(
-            post.attributes.merge!(:comments => comments_array)
-        )
-      else
-        render_error_response(
-            :error_location => 'get_individual_slinggit_post_data',
-            :error_reason => 'not found - post',
-            :error_code => '404',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
-      end
-    else
-      render_error_response(
-          :error_location => 'get_individual_slinggit_post_data',
-          :error_reason => 'missing required_paramater - post_id',
-          :error_code => '403',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
-    end
-  end
+  #def get_single_slinggit_post_data
+  #  if not params[:post_id].blank?
+  #    if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
+  #      comments_array = []
+  #      post.comments.each do |comment|
+  #        if comment.status == STATUS_ACTIVE
+  #          comments_array << comment.attributes.merge!(
+  #              :user_name => comment.user.name,
+  #              :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
+  #              :created_at_time => comment.created_at.strftime("%H:%M")
+  #          )
+  #        end
+  #      end
+  #
+  #      render_success_response(
+  #          post.attributes.merge!(:comments => comments_array)
+  #      )
+  #    else
+  #      render_error_response(
+  #          :error_location => 'get_individual_slinggit_post_data',
+  #          :error_reason => 'not found - post',
+  #          :error_code => '404',
+  #          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+  #      )
+  #    end
+  #  else
+  #    render_error_response(
+  #        :error_location => 'get_individual_slinggit_post_data',
+  #        :error_reason => 'missing required_paramater - post_id',
+  #        :error_code => '403',
+  #        :friendly_error => 'Oops, something went wrong.  Please try again later.'
+  #    )
+  #  end
+  #end
 
   def check_limitations
     if not params[:limitation_type].blank?
@@ -654,7 +654,7 @@ class MobileController < ApplicationController
   end
 
   def get_user_api_accounts
-    if mobile_session = MobileSession.first(:conditions => ['mobile_auth_token = ?', @mobile_auth_token], :select => 'id,api_source,real_name,image_url,reauth_required')
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
         api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED])
 
