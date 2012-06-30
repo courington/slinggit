@@ -656,10 +656,10 @@ class MobileController < ApplicationController
   def get_user_api_accounts
     if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED])
+        api_accounts = ApiAccount.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED], :select => 'id,api_source,real_name,image_url,reauth_required,user_id')
 
         if slinggit_twitter_posting_on?
-          slinggit_twitter_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id,api_source,real_name,image_url,reauth_required')
+          slinggit_twitter_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id,api_source,real_name,image_url,reauth_required,user_id')
           if not slinggit_twitter_api_account.blank?
             api_accounts << slinggit_twitter_api_account
           end
@@ -672,7 +672,8 @@ class MobileController < ApplicationController
               :api_source => api_account.api_source,
               :real_name => api_account.real_name,
               :image_url => api_account.image_url,
-              :reauth_required => api_account.reauth_required
+              :reauth_required => api_account.reauth_required,
+              :user_id => api_account.user_id
           }
         end
 
