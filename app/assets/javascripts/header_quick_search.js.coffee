@@ -9,7 +9,7 @@ class HeaderSearch extends Backbone.View
 
   events:
     "click .quickSearchLabel": "upDown"
-    "focus #quickSearch": "setPosition"
+    #"focus #quickSearch": "setPosition"
 
   upDown: (e) ->
 
