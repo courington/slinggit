@@ -54,6 +54,9 @@ a:link, a:visited, a:active, a:hover, a:focus {
    max-width: 100%; /* Add !important if needed. */
    height: auto;    /* Add !important if needed. */
 }
+strong{
+	font-weight: 600;
+}
 
 *{
 	-webkit-box-sizing: border-box;

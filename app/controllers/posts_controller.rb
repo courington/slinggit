@@ -169,6 +169,7 @@ class PostsController < ApplicationController
     search_terms = []
     @posts = []
     if not params[:id].blank?
+      @search_terms_entered = params[:id]
       search_terms = params[:id].split(' ')
       if search_terms.length > 1
         @posts = Post.all(:conditions => ["(content in (?) OR hashtag_prefix in (?) OR location in (?)) AND open = ? AND status = ?", search_terms, search_terms, search_terms, true, STATUS_ACTIVE], :order => 'created_at desc')
@@ -188,11 +189,11 @@ class PostsController < ApplicationController
       end
 
       if @posts.length == 0
-        flash[:notice] = "Shucks, we couldn't find anything matching your search terms.  So, here is a list of items for you to browse.'"
+        flash[:notice] = "No posts were found using <strong>#{params[:id]}</strong>.  Here are some recent posts.".html_safe
         redirect_to :controller => :posts, :action => :index
       end
     else
-      flash[:notice] = "We didn't have anything to search on, so, here is a list of items for you to browse."
+      flash[:notice] = "We didn't have anything to search on. Here are some recent posts."
       redirect_to :controller => :posts, :action => :index
     end
   end
