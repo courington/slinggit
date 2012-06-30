@@ -18,6 +18,9 @@
 	body > header.headerUp {
 		top: -3.8em;
 	}
+	body > header.headerTop{
+		top: 0;
+	}
 	body > header.headerHideOnFocus {
 		display: none;
 	}

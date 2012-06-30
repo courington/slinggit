@@ -9,17 +9,22 @@ class HeaderSearch extends Backbone.View
 
   events:
     "click .quickSearchLabel": "upDown"
+    "focus #quickSearch": "setPosition"
 
   upDown: (e) ->
     if @isUp and @$el.hasClass("headerUp")
+      @$el.removeClass "headerUp"
       $("html, body").animate {scrollTop:0}, 200
       @$searchBox.focus()
-      @$el.removeClass "headerUp"
       @isUp = false
     else if not @isUp and not @$el.hasClass("headerUp")
       @$searchBox.blur()
+      @$el.removeClass "headerTop"
       @$el.addClass "headerUp"
       @isUp = true
+
+  setPosition: (e)->
+    @$el.addClass "headerTop"
 
   
 ## Export
