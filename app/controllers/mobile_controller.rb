@@ -661,7 +661,7 @@ class MobileController < ApplicationController
         if slinggit_twitter_posting_on?
           slinggit_twitter_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id,api_source,real_name,image_url,reauth_required')
           if not slinggit_twitter_api_account.blank?
-            api_accounts = slinggit_twitter_api_account | api_accounts
+            api_accounts = slinggit_twitter_api_account << api_accounts
           end
         end
 
