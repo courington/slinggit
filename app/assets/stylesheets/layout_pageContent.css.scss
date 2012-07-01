@@ -156,6 +156,8 @@ p {
 }
 
 .page_contentContainer {
+	//smooth scrolling for iOS 5.1+ releases of webkit (works on android)
+	-webkit-overflow-scrolling : touch;
   min-height: 64em;
   font-size: 62.5%;
   position: relative;
