@@ -9,10 +9,6 @@ class Photo extends Backbone.View
 
 	events:
 		"click #fileSelect": "trigger"
-		"click #post_photo": "photoInfo"
-
-	photoInfo: (e)->
-		alert e
 
 	trigger: (e)->
 		if $('#post_photo').length 
