@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   before_filter :get_id_for_slinggit_api_account, :only => [:new, :create]
 
   def index
-    @posts = Post.paginate(page: params[:page], :per_page => 10, :conditions => ['open = ? AND status != ?', true, STATUS_DELETED], :order => 'id desc')
+    @posts = Post.paginate(page: params[:page], :per_page => 10, :conditions => ['open = ? AND status = ?', true, STATUS_ACTIVE], :order => 'id desc')
   end
 
   def show
@@ -176,14 +176,14 @@ class PostsController < ApplicationController
         if @posts.length == 0
           search_terms = [search_terms[0], search_terms[1], search_terms[2]] #limit to 3 search terms
           search_terms.each do |search_term|
-            search_term = search_term.strip[1, search_term.length - 1]
+            search_term = search_term[1, search_terms.length - 1]
             @posts | Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms}%", "%#{search_terms}%", "%#{search_terms}%", true, STATUS_ACTIVE], :order => 'created_at desc')
           end
         end
       elsif search_terms.length == 1
         @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms[0]}%", "%#{search_terms[0]}%", "%#{search_terms[0]}%", true, STATUS_ACTIVE], :order => 'created_at desc')
         if @posts.length == 0
-          search_term = search_terms[0].strip[1, search_terms.length - 1]
+          search_term = search_terms[0][1, search_terms.length - 1]
           @posts = Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", search_term, search_term, search_term, true, STATUS_ACTIVE], :order => 'created_at desc')
         end
       end
