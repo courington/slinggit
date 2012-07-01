@@ -16,7 +16,9 @@ class Photo extends Backbone.View
 		e.preventDefault();	
 
 	showFile: (el)->
+		alert "test"
 		file = @files[0]
+		console.log file
 		imageType = /image.*/
 
 		if file.type.match imageType
