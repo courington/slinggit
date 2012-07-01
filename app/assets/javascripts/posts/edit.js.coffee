@@ -12,7 +12,7 @@ class Photo extends Backbone.View
 	trigger: (e)->
 		if $('#post_photo').length and not _.isUndefined window.FileReader
 			$('#post_photo').trigger "click"
-		else
+		else if _.isUndefined window.FileReader
 			"Uploading a photo through the browser is not yet supported on your device or browser."
 		e.preventDefault();	
 

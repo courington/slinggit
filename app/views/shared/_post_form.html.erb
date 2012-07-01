@@ -53,11 +53,11 @@
           <%= f.label :photo, "Item Photo (optional):", for: "post_photo", class: "row" %>
           <div class="controls thumbnail pull_left">
             <!--[if lt IE 9]>
-					<%= f.file_field :photo %>
-				<![endif]-->
+    					<%= f.file_field :photo %>
+    				<![endif]-->
             <!--[if gt IE 9]><!-->
-            <%= f.file_field :photo %>
-            <a href="#" id="fileSelect">Select a photo</a>
+              <%= f.file_field :photo %>
+              <a href="#" id="fileSelect">Select a photo</a>
             <!--<![endif]-->
           </div>
         </fieldset>
