@@ -5,7 +5,7 @@ class BackendController < ApplicationController
     posts_closed = 0
     posts = Post.find_each(:conditions => ['open = ? AND status = ? AND created_at < ?', true, STATUS_ACTIVE, max_days_ago], :select => 'id,status') do |post|
       posts_closed += 1
-      post.update_attribute(:open => false)
+      post.update_attribute(:open, false)
     end
     UserMailer.post_monitor_report(posts_closed).deliver
     render :nothing => true
