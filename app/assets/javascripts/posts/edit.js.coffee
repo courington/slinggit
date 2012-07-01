@@ -1,4 +1,3 @@
-
 ## Module
 class Photo extends Backbone.View
 	el: "#photoControlGroup"
@@ -11,8 +10,10 @@ class Photo extends Backbone.View
 		"click #fileSelect": "trigger"
 
 	trigger: (e)->
-		if $('#post_photo').length 
+		if $('#post_photo').length and not _.isUndefined window.FileReader
 			$('#post_photo').trigger "click"
+		else
+			"Uploading a photo through the browser is not yet supported on your device or browser."
 		e.preventDefault();	
 
 	showFile: (el)->
