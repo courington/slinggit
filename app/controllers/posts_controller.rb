@@ -71,10 +71,10 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
-    success = passes_limitations?(:posts)
+    success, friendly_error_message = passes_limitations?(:total_posts)
     if not success
       @cant_post = true
-      flash[:notice] = 'In order to keep postings on Slinggit relevant, we currently only allow 10 posts every 24 hours.  Please wait a while and post again.'
+      flash[:notice] = friendly_error_message
     end
   end
 

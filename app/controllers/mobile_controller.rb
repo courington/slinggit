@@ -572,7 +572,7 @@ class MobileController < ApplicationController
     if not params[:limitation_type].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
         user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id')
-        success = passes_limitations?(params[:limitation_type], user.id)
+        success, friendly_error_message = passes_limitations?(params[:limitation_type], user.id)
         if success
           render_success_response(
               :limitation_type => params[:limitation_type],
@@ -582,7 +582,7 @@ class MobileController < ApplicationController
           render_success_response(
               :limitation_type => params[:limitation_type],
               :pass => false,
-              :friendly_error => 'You have reached your 24 hours post limit.  Please contact customer service if you wish to increase this limit.'
+              :friendly_error => friendly_error_message
           )
         end
       else

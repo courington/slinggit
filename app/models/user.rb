@@ -162,37 +162,47 @@ class User < ActiveRecord::Base
     #by doing limitations on a per user basis, we can provide different values for different users
     #using a system preference for the defaults will allow us to make a single database change for all new users moving forward
     #if we dont have an active preference for somereason, it will default since we clearly need something here
+    default_posts_user_limit = system_preferences[:default_posts_user_limit] || '{"user_limit":"5","frequency":"","frequency_type":"at_once"}'
+    decoded_default_posts_user_limit = ActiveSupport::JSON.decode(default_posts_user_limit)
+    UserLimitation.create(
+        :user_id => self.id,
+        :limitation_type => 'total_posts',
+        :user_limit => decoded_default_posts_user_limit['user_limit'],
+        :frequency => decoded_default_posts_user_limit['frequency'],
+        :frequency_type => decoded_default_posts_user_limit['frequency_type'],
+        :active => true
+    )
 
-    default_invites_user_limit = system_preferences[:default_invites_user_limit] || '{"user_limit":"100","frequency":"0","frequency_type":""}'
+    default_post_length_user_limit = system_preferences[:default_post_length_user_limit] || '{"user_limit":"1","frequency":"10","frequency_type":"days"}'
+    decoded_default_post_length_user_limit = ActiveSupport::JSON.decode(default_post_length_user_limit)
+    UserLimitation.create(
+        :user_id => self.id,
+        :limitation_type => 'post_length',
+        :user_limit => decoded_default_post_length_user_limit['user_limit'],
+        :frequency => decoded_default_post_length_user_limit['frequency'],
+        :frequency_type => decoded_default_post_length_user_limit['frequency_type'],
+        :active => true
+    )
+
+    default_invites_user_limit = system_preferences[:default_invites_user_limit] || '{"user_limit":"100","frequency":"","frequency_type":"at_once"}'
     decoded_default_invites_user_limit = ActiveSupport::JSON.decode(default_invites_user_limit)
     UserLimitation.create(
         :user_id => self.id,
-        :limitation_type => 'invites',
+        :limitation_type => 'total_invites',
         :user_limit => decoded_default_invites_user_limit['user_limit'],
         :frequency => decoded_default_invites_user_limit['frequency'],
         :frequency_type => decoded_default_invites_user_limit['frequency_type'],
         :active => true
     )
 
-    default_posts_user_limit = system_preferences[:default_posts_user_limit] || '{"user_limit":"10","frequency":"24","frequency_type":"hours"}'
-    decoded_default_posts_user_limit = ActiveSupport::JSON.decode(default_posts_user_limit)
-    UserLimitation.create(
-        :user_id => self.id,
-        :limitation_type => 'posts',
-        :user_limit => decoded_default_posts_user_limit['user_limit'],
-        :frequency => decoded_default_posts_user_limit['frequency'],
-        :frequency_type => decoded_default_posts_user_limit['frequency_type'],
-        :active => true
-    )
-
-    default_images_per_post_user_limit = system_preferences[:default_images_per_post_limit] || '{"user_limit":"1","frequency":"0","frequency_type":""}'
+    default_images_per_post_user_limit = system_preferences[:default_images_per_post_limit] || '{"user_limit":"1","frequency":"","frequency_type":"at_once"}'
     decoded_default_images_per_post_user_limit = ActiveSupport::JSON.decode(default_images_per_post_user_limit)
     UserLimitation.create(
         :user_id => self.id,
-        :limitation_type => 'images',
-        :user_limit => decoded_default_posts_user_limit['user_limit'],
-        :frequency => decoded_default_posts_user_limit['frequency'],
-        :frequency_type => decoded_default_posts_user_limit['frequency_type'],
+        :limitation_type => 'images_per_post',
+        :user_limit => decoded_default_images_per_post_user_limit['user_limit'],
+        :frequency => decoded_default_images_per_post_user_limit['frequency'],
+        :frequency_type => decoded_default_images_per_post_user_limit['frequency_type'],
         :active => true
     )
   end

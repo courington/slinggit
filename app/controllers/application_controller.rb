@@ -79,16 +79,24 @@ class ApplicationController < ActionController::Base
 
     return true if limitation_type.blank?
     return true if user_id.blank?
-    return true unless [:posts].include? limitation_type
+    return true unless [:total_posts, :total_invites, :images_per_post].include? limitation_type
 
     case limitation_type
-      when :posts
-        if  user_limitation = UserLimitation.first(:conditions => ['limitation_type = "posts" AND user_id = ?', user_id], :select => 'frequency_type,frequency,user_limit')
-          time_frame = Time.now.advance(user_limitation.frequency_type.to_sym => user_limitation.frequency * -1)
-          if Post.count(:conditions => ['created_at >= ? AND user_id = ?', time_frame, user_id]) >= user_limitation.user_limit
-            return false
+      when :total_posts
+        if  user_limitation = UserLimitation.first(:conditions => ['limitation_type = "total_posts" AND user_id = ?', user_id], :select => 'frequency_type,frequency,user_limit')
+          if user_limitation.frequency_type == 'at_once'
+            if Post.count(:conditions => ['user_id = ? AND status = ?', user_id, STATUS_ACTIVE]) >= user_limitation.user_limit
+              return [false, "Sorry, you already have #{user_limitation.user_limit} open posts.  You will need to close one before creating another."]
+            end
+          else
+            time_frame = Time.now.advance(user_limitation.frequency_type.to_sym => user_limitation.frequency * -1)
+            if Post.count(:conditions => ['created_at >= ? AND user_id = ? AND status = ?', time_frame, user_id, STATUS_ACTIVE]) >= user_limitation.user_limit
+              return [false, "Sorry, you have reached your #{user_limitation.frequency} #{user_limitation.frequency_type} post limit."]
+            end
           end
         end
+        return true
+      else
         return true
     end
   end
