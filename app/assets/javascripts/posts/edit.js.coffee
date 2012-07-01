@@ -9,6 +9,10 @@ class Photo extends Backbone.View
 
 	events:
 		"click #fileSelect": "trigger"
+		"click #post_photo": "photoInfo"
+
+	photoInfo: (e)->
+		alert e
 
 	trigger: (e)->
 		if $('#post_photo').length 
@@ -16,7 +20,6 @@ class Photo extends Backbone.View
 		e.preventDefault();	
 
 	showFile: (el)->
-		alert "test"
 		file = @files[0]
 		console.log file
 		imageType = /image.*/
@@ -35,8 +38,6 @@ class Photo extends Backbone.View
 			reader.onload = ((aImg)->
 				(e)-> aImg.src = e.target.result)(img)
 			reader.readAsDataURL(file)	
-		else
-			alert "Uploading a photo through the browser is not yet supported on you device."
 
 $(document).ready ->
 	@photo = new Photo
