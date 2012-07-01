@@ -102,5 +102,7 @@
 </article>
 
 <script type="text/javascript">
-        alert(window.FileReader);
+        if( _.isUndefined(window.FileReader) ){
+          alert("Uploading a photo through the browser is not yet supported on your device or browser.")
+        }
 </script>
