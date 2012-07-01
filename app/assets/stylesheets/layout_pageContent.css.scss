@@ -250,7 +250,7 @@ p {
   padding: .3em;
   border: 1px solid #D7D7D7;
   border-radius: .3em;
-  background-color: #E3E3E3;
+  background-color: lighten($lt-grey, 5%);
 }
 
 .transparent_background {

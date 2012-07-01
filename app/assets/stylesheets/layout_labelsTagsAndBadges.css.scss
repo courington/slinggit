@@ -2,9 +2,15 @@
 	color: $white;
 	padding: 3px 5px 3px 5px;
 	line-height: $font-size * 1.1;
-	@include rounded-corners;
+	@include rounded-corners(3px);
 	background-color: $dk-grey;
 	text-shadow: $txt-shdw;
+}
+
+.label_grey{
+	@extend .label;
+ 	background-color: lighten($lt-grey, 5%);
+ 	color: $dk-grey;
 }
 
 .label_yellow{

@@ -2,13 +2,16 @@
 <%= link_to(post_path(post)) do %>
   <div class="col1 pull_left">
     
-          <div class="photo">
-            <% if post.photo_file_name.blank? %>
-              <%= image_tag "noPhoto_80x80.png", :height => "auto", :width => "100%" %>
-            <% else %>
-              <%= image_tag post.photo.url(:search), class: "img_border" %>
-            <% end %>
-          </div>
+    <div class="photo row">
+      <% if post.photo_file_name.blank? %>
+        <%= image_tag "noPhoto_80x80.png", :height => "auto", :width => "100%" %>
+      <% else %>
+        <%= image_tag post.photo.url(:search), class: "img_border" %>
+      <% end %>
+    </div>
+    <div class="row">
+      <span class="label_grey">$<%= number_with_delimiter(post.price, :delimiter => ',') %></span>
+    </div>
     
   </div>
 

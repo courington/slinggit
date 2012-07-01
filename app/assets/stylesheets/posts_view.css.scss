@@ -67,9 +67,20 @@
 		color: $dk-grey;
 
 	}
-	
+	.col1{
+		text-align: center;
+		span{
+			font-size: $font-size * .8;
+			padding-left: 12px;
+			padding-right: 12px;
+		}
+		.row{
+			margin-bottom: 4px;
+		}
+	}
 
 	.col5{
+		padding-left: 15px;
 		h4{
 			font-weight: 600;
 		}

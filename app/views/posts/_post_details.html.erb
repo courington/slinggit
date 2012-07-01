@@ -24,7 +24,7 @@
         <dt class="col2">Location</dt>
         <dd class="col3"><%= @post.location %></dd>
         <dt class="col2">Price</dt>
-        <dd class="col3">$<%= @post.price %></dd>
+        <dd class="col3">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
         <dt class="col2">Interested</dt>
         <dd class="col3"><%= @post.interested %></dd>
       </dl>
