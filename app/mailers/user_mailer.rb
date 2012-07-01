@@ -70,4 +70,9 @@ class UserMailer < ActionMailer::Base
     @content = content.html_safe
     mail(:to => to, :from => from, :reply_to => reply_to, :subject => subject)
   end
+
+  def post_monitor_report(posts_closed)
+    @posts_closed = posts_closed
+    mail(:to => EXECUTIVES, :from => 'Post Monitor <reports@slinggit.com>', :subject => "Daily post monitor report")
+  end
 end
