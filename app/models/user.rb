@@ -173,17 +173,6 @@ class User < ActiveRecord::Base
         :active => true
     )
 
-    default_post_length_user_limit = system_preferences[:default_post_length_user_limit] || '{"user_limit":"1","frequency":"10","frequency_type":"days"}'
-    decoded_default_post_length_user_limit = ActiveSupport::JSON.decode(default_post_length_user_limit)
-    UserLimitation.create(
-        :user_id => self.id,
-        :limitation_type => 'post_length',
-        :user_limit => decoded_default_post_length_user_limit['user_limit'],
-        :frequency => decoded_default_post_length_user_limit['frequency'],
-        :frequency_type => decoded_default_post_length_user_limit['frequency_type'],
-        :active => true
-    )
-
     default_invites_user_limit = system_preferences[:default_invites_user_limit] || '{"user_limit":"100","frequency":"","frequency_type":"at_once"}'
     decoded_default_invites_user_limit = ActiveSupport::JSON.decode(default_invites_user_limit)
     UserLimitation.create(

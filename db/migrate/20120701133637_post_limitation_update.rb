@@ -10,6 +10,10 @@ class PostLimitationUpdate < ActiveRecord::Migration
       system_preference2.destroy
     end
 
+    if system_preference2 = SystemPreference.first(:conditions => ['preference_key = ?', 'default_post_length_user_limit'])
+      system_preference2.destroy
+    end
+
     if system_preference = SystemPreference.first(:conditions => ['preference_key = ?', 'default_posts_user_limit'])
       system_preference.preference_value = '{"user_limit":"5","frequency":"","frequency_type":"at_once"}'
       system_preference.save
@@ -24,10 +28,10 @@ class PostLimitationUpdate < ActiveRecord::Migration
     end
 
     SystemPreference.create(
-        :preference_key => 'default_post_length_user_limit',
-        :preference_value => '{"user_limit":"1","frequency":"10","frequency_type":"hours"}',
+        :preference_key => 'post_max_days_open',
+        :preference_value => '10',
         :constraints => 'true',
-        :description => 'this preference is used to define the max number of days a post may remain open.  It will be set upon user creation.  In this case, 1 post can last 10 hours',
+        :description => 'this preference is used by the post monitor to close posts that have been opened longer than this preference',
         :active => true
     )
 

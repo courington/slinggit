@@ -89,8 +89,10 @@ SlinggitWebapp::Application.routes.draw do
   match 'test' => 'test#index'
   match 'test(/:action)(/:id)', :to => 'test#action#id'
 
-  match '*path', :to => 'application#redirect'
+  ##BACKEND CONTROLLER##
+  match 'backend/post_monitor', :to => 'backend#post_monitor'
 
+  match '*path', :to => 'application#redirect'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
