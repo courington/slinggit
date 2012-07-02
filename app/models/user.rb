@@ -115,6 +115,10 @@ class User < ActiveRecord::Base
       if self.primary_twitter_account
         url = self.primary_twitter_account.image_url
       end
+    elsif self.photo_source == FACEBOOK_PHOTO_SOURCE
+      if self.primary_twitter_account
+        url = self.primary_facebook_account.image_url
+      end 
     elsif self.photo_source == GRAVATAR_PHOTO_SOURCE
       url = gravatar_img_url(self)
     end
