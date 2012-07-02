@@ -5,9 +5,9 @@
 		</a>
 		<header class="col4 pull_right">
 			<h1 class="bottom_border"><%= current_user.name %></h1>
-  			<h6>Open Posts ( <%= current_user.open_post_count %> )</h6>
-  			<h6>All Posts ( <%= current_user.active_post_count %> )</h6>
-  			<h6>Open Post Limit ( <%= current_user.post_limit %> )</h6>
+  			<h6><strong>Open Posts (<%= current_user.open_post_count %>)</strong></h6>
+  			<h6>Posts Remaining (<%= current_user.post_limit - current_user.active_post_count %>)</h6>
+  			<h6>Open Post Limit (<%= current_user.post_limit %>)</h6>
 		</header>
 
 		<% if is_signed_in_and_admin? && !current_user?(@user) %>
