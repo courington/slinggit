@@ -21,30 +21,27 @@
             <%= render 'users/select_photo' %>
         <% end %>
 
-        <% if current_user?(@user) %>
-            <div id="createPostAction" class="row">
+        <% if current_user?(@user) %>        
 
-              <% if not current_user.is_suspended? %>
+          <% if not current_user.is_suspended? %>
 
-                  <% if current_user.email_is_verified? %>
-                      <div class="row">
-                          <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
-                      </div>
-                  <% else %>
-                      <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your
-                        email address.</p>
+            <% if current_user.email_is_verified? %>
+              <div id="createPostAction" class="row">
+                <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
+              </div>
+              <div id="postsFilters" class="row">
+                <%= link_to "My Posts", current_user, class: "#{"active" if @label == "My"}" %>
+                <%= link_to "Watched Posts", {:controller => :users, :action => :watching}, class: "#{"active" if @label == "Watched"}" %>
+              </div>
+            <% else %>
+                <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your
+                  email address.</p>
 
-                      <p>If you haven't recieved an email from us, check your spam folder or you can always have
-                        us <%= link_to "resend it.", "/edit_email_for_verification?id=#{current_user.name}" %></p>
-                  <% end %>
-              <% end %>
+                <p>If you haven't recieved an email from us, check your spam folder or you can always have
+                  us <%= link_to "resend it.", "/edit_email_for_verification?id=#{current_user.name}" %></p>
+            <% end %>
 
-            </div>
-
-            <div id="postsFilters" class="row">
-              <%= link_to "My Posts", current_user, class: "#{"active" if @label == "My"}" %>
-              <%= link_to "Watched Posts", {:controller => :users, :action => :watching}, class: "#{"active" if @label == "Watched"}" %>
-            </div>
+          <% end %>
 
         <% end %>
       </div>

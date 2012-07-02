@@ -27,6 +27,17 @@
 					</div>
 				</div>
 			<% end %>
+			
+			<% if not @user.primary_facebook_account.blank? %>
+				<div class="col2 pull_left">
+					<div class="row">
+						<%= image_tag @user.primary_facebook_account.image_url, id: "FPS" %>F
+					</div>
+					<div class="row">
+						<p>Facebook</p>
+					</div>
+				</div>
+			<% end %>
 
 			<div class="col2 pull_left">
 				<div class="row">
