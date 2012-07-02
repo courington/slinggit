@@ -9,7 +9,6 @@
 		.title_row {
 			margin: 0;
 			margin-bottom: 10px;
-			border-bottom: 1px solid $lt-grey;
 			header{
 				padding-bottom: 10px;
 			}
@@ -46,6 +45,15 @@
 					@include rounded-corners(3px);
 				}
 			}
+			#add_more_networks{
+				.col3{
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
+		}
+		.title_row > .col6 > .row, .grey_well{
+			//margin-bottom: 20px;
 		}
 
 

@@ -2,7 +2,31 @@
 <section id="userPostsWrapper" class="wrapper">
 
 <!-- user info -->
-  <%= render 'shared/user_info' %>
+  <aside class="col2 pull_right userInfo">
+    <div class="white_well row">
+      <a href="<%= user_path(@user) %>" class="col2 pull_left">      
+        <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
+      </a>
+      <header class="col4 pull_right">
+        <h1 class="bottom_border"><%= @user.name %></h1>
+          <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
+          <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
+          <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
+      </header>
+
+      <% if is_signed_in_and_admin? && !current_user?(@user) %>
+            <div class="row adminActions">
+              <!-- ADMIN ONLY FUNCTIONALITY -->
+              <% if !@user.is_considered_deleted? %>
+                  <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?", class: "btn_darkGrey" %>
+              <% end %>
+              <% if !@user.is_suspended? %>
+                  <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?", class: "btn_darkGrey" %>
+              <% end %>
+            </div>
+          <% end %>
+    </div>
+  </aside>
 <!-- end -->
 
 	<article id="userPosts" class="col4 pull_left white_well">
@@ -17,15 +41,18 @@
             <% end %>
           </header>
         </div>
-        <% if !@user.has_photo_source? && current_user?(@user) %>
-            <%= render 'users/select_photo' %>
-        <% end %>
 
         <% if current_user?(@user) %>        
 
           <% if not current_user.is_suspended? %>
 
             <% if current_user.email_is_verified? %>
+              <% if !@user.has_photo_source? && current_user?(@user) %>
+                  <%= render 'users/select_photo' %>
+              <% end %>
+              <% if !@user.posts.any? and (@user.primary_twitter_account.blank? or @user.primary_facebook_account.blank?) %>
+                <%= render 'users/add_more_networks' %>
+              <% end %>
               <div id="createPostAction" class="row">
                 <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
               </div>
@@ -34,11 +61,16 @@
                 <%= link_to "Watched Posts", {:controller => :users, :action => :watching}, class: "#{"active" if @label == "Watched"}" %>
               </div>
             <% else %>
+              <div class="row">
                 <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your
                   email address.</p>
 
                 <p>If you haven't recieved an email from us, check your spam folder or you can always have
                   us <%= link_to "resend it.", "/edit_email_for_verification?id=#{current_user.name}" %></p>
+              </div> 
+              <% if @user.primary_twitter_account.blank? or @user.primary_facebook_account.blank? %>
+                <%= render 'users/add_more_networks' %>
+              <% end %>
             <% end %>
 
           <% end %>

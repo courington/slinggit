@@ -340,6 +340,13 @@
 				#postsFilters{
 					//text-align: center;
 				}
+				#add_more_networks{
+					.col3{
+						padding-left: 0px;
+						padding-right: 0px;
+						@include colNoFloatClearFix;
+					}
+				}
 			}
 		}
 	}

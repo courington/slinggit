@@ -112,11 +112,11 @@ class User < ActiveRecord::Base
       slinggit_images = ['icon_blue_80x80.png', 'icon_red_80x80.png', 'icon_green_80x80.png', 'icon_yellow_80x80.png']
       url = slinggit_images[rand(slinggit_images.length)]
     elsif self.photo_source == TWITTER_PHOTO_SOURCE
-      if self.primary_twitter_account
+      if self.primary_twitter_account.blank?
         url = self.primary_twitter_account.image_url
       end
     elsif self.photo_source == FACEBOOK_PHOTO_SOURCE
-      if self.primary_twitter_account
+      if self.primary_facebook_account
         url = self.primary_facebook_account.image_url
       end 
     elsif self.photo_source == GRAVATAR_PHOTO_SOURCE
