@@ -2,31 +2,7 @@
 <section id="userPostsWrapper" class="wrapper">
 
 <!-- user info -->
-  <aside class="col2 pull_right userInfo">
-    <div class="row white_well">
-      <div class="col2 pull_left">
-        <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
-      </div>
-      <div class="col4 pull_right">
-        <header>
-          <h1 class="bottom_border"><%= @user.name %></h1>
-          <h6><%= pluralize(@user.active_post_count, "post") %></h6>
-        </header>
-      </div>
-
-      <% if is_signed_in_and_admin? && !current_user?(@user) %>
-          <div class="row adminActions">
-            <!-- ADMIN ONLY FUNCTIONALITY -->
-            <% if !@user.is_considered_deleted? %>
-                <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?", class: "btn_darkGrey" %>
-            <% end %>
-            <% if !@user.is_suspended? %>
-                <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?", class: "btn_darkGrey" %>
-            <% end %>
-          </div>
-      <% end %>
-    </div>
-  </aside>
+  <%= render 'shared/user_info' %>
 <!-- end -->
 
 	<article id="userPosts" class="col4 pull_left white_well">

@@ -5,7 +5,21 @@
 		</a>
 		<header class="col4 pull_right">
 			<h1 class="bottom_border"><%= current_user.name %></h1>
-  			<h6><%= pluralize(current_user.active_post_count, "post") %></h6>
+  			<h6>Open Posts ( <%= current_user.open_post_count %> )</h6>
+  			<h6>All Posts ( <%= current_user.active_post_count %> )</h6>
+  			<h6>Open Post Limit ( <%= current_user.post_limit %> )</h6>
 		</header>
+
+		<% if is_signed_in_and_admin? && !current_user?(@user) %>
+          <div class="row adminActions">
+            <!-- ADMIN ONLY FUNCTIONALITY -->
+            <% if !@user.is_considered_deleted? %>
+                <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?", class: "btn_darkGrey" %>
+            <% end %>
+            <% if !@user.is_suspended? %>
+                <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?", class: "btn_darkGrey" %>
+            <% end %>
+          </div>
+      	<% end %>
 	</div>
 </aside>

@@ -49,7 +49,16 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.nil? }
 
   def active_post_count
-    Post.count(:conditions => ['status = ? and user_id = ?', STATUS_ACTIVE, self.id])
+    Post.count(:conditions => ['status = ? and user_id = ?', STATUS_ACTIVE, self.id], :select => 'id')
+  end
+
+  def open_post_count
+    Post.count(:conditions => ['status = ? and user_id = ? and open = ?', STATUS_ACTIVE, self.id, true], :select => 'id')
+  end
+
+  def post_limit
+    user_limitation = UserLimitation.first(:conditions => ['user_id = ? and limitation_type = ?', self.id, 'total_posts'], :select => 'user_limit')
+    return user_limitation.user_limit
   end
 
   def twitter_authorized?
