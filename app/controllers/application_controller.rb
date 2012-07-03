@@ -129,6 +129,7 @@ class ApplicationController < ActionController::Base
             status = STATUS_ACTIVE
           end
 
+          debugger
           api_account = ApiAccount.create(
               :user_id => options[:user_object].id,
               :api_id => options[:api_object].user['id'],
@@ -137,7 +138,7 @@ class ApplicationController < ActionController::Base
               :oauth_secret => options[:api_object].oauth_token_secret,
               :real_name => options[:api_object].user['name'],
               :user_name => options[:api_object].user['screen_name'],
-              :image_url => options[:api_object].user['profile_image_url'],
+              :image_url => options[:api_object].user['profile_image_url_https'],
               :description => options[:api_object].user['description'],
               :language => options[:api_object].user['lang'],
               :location => options[:api_object].user['location'],
