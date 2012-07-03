@@ -18,11 +18,18 @@ test: &test
   pool: 5
   timeout: 5000
 
-production:
+integ:
   adapter: mysql2
   database: slinggit_integ
   host: localhost
   username: slinggit_integ
+  password: g!t&sl1nG
+
+production:
+  adapter: mysql2
+  database: slinggit_prod
+  host: localhost
+  username: slinggit_prod
   password: g!t&sl1nG
 
 cucumber:

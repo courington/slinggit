@@ -1,4 +1,9 @@
-set :application, "slinggit_test"
+set :stages, %w(production staging)
+set :default_stage, "staging"
+require 'capistrano/ext/multistage'
+
+
+#set :application, "slinggit_test"
 set :repository,  "https://slinggit@bitbucket.org/chrisklein/slinggit-webapp-and-services.git"
 
 set :scm, :git
