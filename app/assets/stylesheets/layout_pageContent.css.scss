@@ -259,3 +259,8 @@ p {
   background-color: transparent !important;
   border-color: transparent !important;
 }
+
+.row.termsOfService {
+	margin-top: $font-size * .5;
+	line-height: $leading;
+}

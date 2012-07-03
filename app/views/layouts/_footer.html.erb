@@ -8,6 +8,7 @@
 				<li class="pull_left"><%= link_to "Help", help_path %></li>
 				<li class="pull_left"><%= link_to "Contact", contact_path %></li>
 				<!-- <li class="pull_left <%= 'active' if current_page?(sessions_path) %>"><%= link_to "Sessions", sessions_path %></li> -->
+				<li class="pull_left"><%= link_to "Terms", terms_of_service_path %></li>
 			</ul>
 				
 			<ul class="col2 pull_right">
@@ -35,7 +36,7 @@
 	    	<small class="pull_left">&copy;2012 slinggit llc</small>
 		</div>
 
-<!-- <%= debug(params) if Rails.env.development? %> -->
+<%= debug(params) if Rails.env.development? %>
 
 	</div>
 </footer>
