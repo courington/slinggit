@@ -3,47 +3,35 @@
 
 <!-- if/else for user sign-in/sign-up homepage states -->
 	<div class="row">
-		
-		<!-- <div class="col1 pull_left">
-			<%= image_tag "heroimages/slinggit_icons_326x634.png", width: "100%", height: "auto", title: "Slinggit icons", alt: "Icons representing Slinggit brand", id: "home_slinggitIcons" %>
-		</div> -->
   		
 		<div class="col6">
 			
 <!-- if user is not signed in -->
       <% if current_user.blank? %>
 			<section class="homeNotSignedIn">
-				<div class="col4 pull_left white_well">
-					<header class="row">
-						<h1 class="headline bottom_border">Welcome to Slinggit.</h2>
-						<h2>The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h2>
-					</header>
+				
+				<header class="col6">
+					<h1 class="headline bottom_border">Welcome to Slinggit.</h2>
+				</header>
+				
+				<div class="col2 pull_right white_well">
+					<h2 class="row bottom_border">The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h2>
 					<div class="row">
-						<div class="col4 offset1">
-						<% if invite_only? %>
-							<!-- if invites are active -->
-							<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col4 offset1 btn_darkGrey" %>
-						<% else %>
-							<!-- if invites are NOT active -->
-							<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
-						<% end %>
-						</div>
+					<% if invite_only? %>
+						<!-- if invites are active -->
+						<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col4 offset1 btn_darkGrey" %>
+					<% else %>
+						<!-- if invites are NOT active -->
+						<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
+					<% end %>
 					</div>
 				</div>
-				<section class="col2 pull_right homeBuckets sidebar">
-					<article class="row grey_well">
-						<h1 class="headline">How it works</h1>
-						<p>Post an item for sale on Facebook or search for an item to buy on Twitter from your mobile device or desktop.</p>
-					</article>
-					<article class="row grey_well">
-						<h1 class="headline">Selling</h1>
-						<p>Quickly sling items to your friends and followers or use the Slinggit networks for greater reach. We don&rsquo;t take a cut of your sale.</p>
-					</article>
-					<article class="row grey_well">
-						<h1 class="headline">Buying</h1>
-						<p>Find what you want to git in your network or city feed. Ask questions and make offers without giving out your personal email.</p>
-					</article>
-				</section>
+				
+				<div class="col4 pull_left">
+					<div class="row">
+						<%= image_tag "heroimages/hero_phone_571x446.jpg", width: "100%", height: "auto", title: "Slinggit on your mobile device", alt: "Hero Phone 571x446" %>
+					</div>
+				</div> 
 			</section>
 <!-- end user not signed in if/else -->
 	
@@ -55,7 +43,7 @@
 		<%= render 'shared/user_info' %>
 		<div class="col4 pull_left white_well">
 			<div class="row">
-				<h2 class="headline">Welcome back <%= current_user.name %>!</h2>
+				<h1 class="headline bottom_border">Welcome back <%= current_user.name %>!</h1>
 				<!-- <p class="pull_left headline"> Have something to Sling?</p> -->
 			</div>
 			<div class="row">
@@ -74,8 +62,8 @@
 	
 <!-- show latest slinggit post -->
 	    <% if !@posts.blank? %>
-	        <article class="col4 pull_left home_featurePost">
-	            <div  id="featuredPosts" class="white_well row">
+	        <article class="row grey_well home_featurePost">
+	            <div  id="featuredPosts" class="col6 white_well">
 					<h1 class="row">Recent Items:</h1>
 					<%= render @posts %>
 				</div>
