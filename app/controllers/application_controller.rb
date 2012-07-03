@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
         if  user_limitation = UserLimitation.first(:conditions => ['limitation_type = "total_posts" AND user_id = ?', user_id], :select => 'frequency_type,frequency,user_limit')
           if user_limitation.frequency_type == 'at_once'
             if Post.count(:conditions => ['user_id = ? AND status = ?', user_id, STATUS_ACTIVE]) >= user_limitation.user_limit
-              return [false, "Sorry, you already have #{user_limitation.user_limit} open posts.  You will need to close one before creating another."]
+              return [false, "You have #{user_limitation.user_limit} open posts.  You will need to close one before creating another."]
             end
           else
             time_frame = Time.now.advance(user_limitation.frequency_type.to_sym => user_limitation.frequency * -1)

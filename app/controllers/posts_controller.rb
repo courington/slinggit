@@ -75,6 +75,7 @@ class PostsController < ApplicationController
     if not success
       @cant_post = true
       flash[:notice] = friendly_error_message
+      redirect_to user_path(current_user)
     end
   end
 

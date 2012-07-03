@@ -22,6 +22,15 @@
 				.btn_green {
 					margin-bottom: $leading;
 				}
+
+				p.notice_explanation_bubble{
+					width: 100%;
+					padding-top: 8px;
+					padding-bottom: 8px;
+					margin-top: 0;
+					margin-bottom: 16px;
+					border: 1px solid lighten($main-yellow, 20%);
+				}
 			}
 			#postsFilters{
 				margin-bottom: 5px;

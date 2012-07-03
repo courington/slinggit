@@ -47,7 +47,13 @@ class UsersController < ApplicationController
 
   def show
     @label = "My"
+    #@passes_limitation = nil
     @user = User.first(:conditions => ['name = ?', params[:id]])
+    if signed_in?
+      if current_user.id == @user.id
+        @passes_limitation = passes_limitations?(:total_posts)
+      end
+    end
     if not @user.blank? and not @user.is_considered_deleted?
       @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ?', @user.id, STATUS_ACTIVE])
     else
@@ -61,6 +67,7 @@ class UsersController < ApplicationController
 
   def watching
     @label = "Watched"
+    @passes_limitation = passes_limitations?(:total_posts)
     if signed_in? and not current_user.is_considered_deleted?
       @user = current_user
       @posts = []
