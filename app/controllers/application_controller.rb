@@ -172,7 +172,7 @@ class ApplicationController < ActionController::Base
               :oauth_expiration => Time.now.advance(:seconds => options[:api_object]['expires'].to_i),
               :real_name => options[:api_object]['name'],
               :user_name => options[:api_object]['username'],
-              :image_url => "https://graph.facebook.com/#{options[:api_object]['id']}/picture",
+              :image_url => "https://graph.facebook.com/#{options[:api_object]['id']}/picture?type=large",
               :description => nil,
               :language => options[:api_object]['languages'].blank? ? nil : options[:api_object]['languages'].first['name'],
               :location => location,
