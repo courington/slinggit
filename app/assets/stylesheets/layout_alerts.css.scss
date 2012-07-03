@@ -26,7 +26,7 @@
     background: lighten($main-red, 15%);
 }
 
-#notice_explanation_bubble {
+#notice_explanation_bubble, .notice_explanation_bubble {
     @extend #explanation_bubble;
     background: lighten($main-yellow, 35%);
     color: darken($main-yellow, 25%);
