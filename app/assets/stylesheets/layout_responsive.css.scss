@@ -498,6 +498,11 @@
 		}
 		#photoControlGroup {
 			width: 100%;
+				> .controls.thumbnail > input[type="file"] &.iePhoto {
+				position: relative;
+				top: 0;
+				left: 0;
+			}
 		}
 		.postSocialAccount {
 			margin: ($font-size * .25) auto;
@@ -598,6 +603,9 @@
 // END
 // REQUEST INVITE
 	.invite_wrapper {
+		h1.headline {
+			font-size: ($font-size * 1.875);
+		}
 		.col1, .col2, .col3, .col4, .col5 {
 			width: 100%;
 		}
@@ -607,35 +615,6 @@
 		.pull_left, .pull_right {
 			clear: both;
 			float: none;
-		}
-		
-		#home_slinggitIcons {
-			width: 15%;
-			max-width: 44px;
-			margin-left: 2.5%;
-		}
-		article > .col3.pull_left {
-			float: right;
-			width: 80%;
-			h2.headline { //.headline_bold {
-				font-size: 3.8em;
-			}
-			h3.row {
-				line-height: $leading * 1.2;
-				margin-left: -25%;
-				width: 125%;
-				font-size: 1.4em;
-			}
-		}
-		
- 		article > .col4.offset1.grey_well {
-			display: none;
-		}
-		
-		.row.grey_well {
-			label, p {
-				padding-left: 0;
-			}
 		}
 		input[type="password"], input[type="email"], input[type="text"] {
 			height: 2.6em;
