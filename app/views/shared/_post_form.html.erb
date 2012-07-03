@@ -65,8 +65,8 @@
 	<aside class="col3 pull_right postSocialAccount">
 		<header>Social network(s) to post to:</header>
 			<fieldset class="row">
-				<%= check_box_tag "twitter_accounts[#{@slinggit_account_id}]", 'post', true, class: "pull_left" %>
-				<label for="twitter_accounts[#{@slinggit_account_id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span>Slinggit</label>
+				<%= check_box_tag "selected_networks[#{@slinggit_account_id}]", 'post', true, class: "pull_left" %>
+				<label for="selected_networks[#{@slinggit_account_id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span>Slinggit</label>
 			</fieldset>
 		<% @twitter_accounts.each do |twitter_account| %>
 			<fieldset class="row">
