@@ -21,11 +21,6 @@
 			position: absolute;
 			top: -9999px;
 			left: -9999px;
-			&.iePhoto {
-				position: relative;
-				top: 0;
-				left: 0;
-			}
 		}
 		.controls.thumbnail {
 			font-size: $font-size;

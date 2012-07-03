@@ -10,11 +10,12 @@
       <% if current_user.blank? %>
 			<section class="homeNotSignedIn">
 				
-				<header class="col6">
-					<h1 class="headline bottom_border">Welcome to Slinggit.</h2>
-				</header>
+				<div class="col2 pull_right">
+					<header class="row">
+						<h1 class="headline bottom_border">Welcome to Slinggit.</h2>
+						</header>
 				
-				<div class="col2 pull_right white_well">
+				<div class="row white_well">
 					<h2 class="row bottom_border">The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h2>
 					<div class="row">
 					<% if invite_only? %>
@@ -25,6 +26,7 @@
 						<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
 					<% end %>
 					</div>
+				</div>
 				</div>
 				
 				<div class="col4 pull_left">
