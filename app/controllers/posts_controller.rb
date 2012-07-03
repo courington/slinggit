@@ -103,11 +103,14 @@ class PostsController < ApplicationController
                     :content => @post.content
                 ).do_post
               elsif proposed_api_account.api_source == 'facebook'
+                redirect = Redirect.get_or_create(
+                    :target_uri => "#{BASEURL}/posts/#{@post.id}"
+                )
                 FacebookPost.create(
                     :user_id => @post.user_id,
                     :api_account_id => id.to_i,
                     :post_id => @post.id,
-                    :message => "For sale: ##{@post.hashtag_prefix}",
+                    :message => "##{@post.hashtag_prefix} for sale at #{redirect.get_short_url}",
                     :name => "$#{@post.price}.00",
                     :caption => "Location: #{@post.location}",
                     :description => @post.content,
