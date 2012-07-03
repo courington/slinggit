@@ -24,12 +24,21 @@
 
 class ApiAccount < ActiveRecord::Base
   before_create :create_api_id_hash
+  before_create :change_image_url_to_https
   attr_accessible :user_id, :api_id, :api_source, :oauth_token, :oauth_secret, :real_name, :user_name, :image_url, :description, :language, :location, :status, :reauth_required, :oauth_expiration
 
   private
 
   def create_api_id_hash
     self.api_id_hash = Digest::SHA1.hexdigest(self.api_id.to_s)
-  end	
+  end
+
+  def change_image_url_to_https
+    if self.api_source == :facebook
+      if not self.image_url.blank?
+        self.image_url.gsub!('http','https')
+      end
+    end
+  end
 
 end
