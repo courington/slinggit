@@ -1,47 +1,20 @@
-/*.invite_wrapper {
-	.col4.pull_left.white_well {
-		margin-top: 1em;
+.invite_wrapper {
+	.col6.grey_well {
+		margin: ($font-size * .5) auto;
 	}
 	h1.headline {
-		font-size: $font-size * 2.375;
+		font-size: $font-size * 2.875;
 		#{$ff}text-shadow: 0 1px 0 rgba($black, .15);
 		#{$wk}text-shadow: 0 1px 0 rgba($black, .15);
 		text-shadow: 0 1px 0 rgba($black, .15);
 		text-align: center;
-		& + h2 {
-			font-size: $font-size;
-		}
 	}
-	.row.grey_well {
-		margin: $font-size auto;
-		p {
-			line-height: $leading;
-			padding-left: $leading;
-		}
-		label {
-			font-size: $font-size;
-			margin: 1.2em 0 0 0;
-			color: $main-blue;
-			padding-left: $leading;
-		}
+	h2 {
+		font-size: $font-size;
 	}
-	.homeBuckets {
-		@include sidebarWrapper;
-		h1.headline {
-			font-size: $font-size;
-			background: lighten($lt-grey, 5%);
-			#{$wk}box-shadow: $input-txt-shading;
-			#{$ff}box-shadow: $input-txt-shading;
-			box-shadow: $input-txt-shading;
-			border: 1px solid $lt-grey;
-			color: lighten($main-blue, 0%);
-			padding-top: $font-size * .25;
-			@include rounded-corners;
-		}
-		article {
-			margin: $leading/2 auto;
-			&:first-child {
-				margin-top: 0;
-			}
-		}
-	}*/
+	label {
+		font-size: ($font-size * .75);
+		margin: 1.2em 0 0 0;
+		color: $main-blue;
+	}
+}
