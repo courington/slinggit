@@ -65,8 +65,12 @@
 	<fieldset class="col6 form_hiddenFields">
 		<%= f.button "Create my account", class: "col3 pull_left btn_green" %>
 		<%= link_to 'start over', nil, :onclick => "javascript:void(0)", class: "col2 pull_right", :id => 'signUpStartOverLink' %>
+		<div class="row termsOfService">
+			<small>By signing into Slinggit. You agree to our <%= link_to "Terms of Service", terms_of_service_path %>.</small>
+		</div>
 	</fieldset>
 </div>
+
 <!-- end -->
 	<% end %>
 </div>
