@@ -88,11 +88,6 @@
 	}
 	.col1{
 		text-align: center;
-		span{
-			font-size: $font-size * .8;
-			padding-left: 12px;
-			padding-right: 12px;
-		}
 		.row{
 			margin-bottom: 4px;
 		}
@@ -102,6 +97,13 @@
 		padding-left: 15px;
 		h4{
 			font-weight: 600;
+		}
+		span{
+			font-size: $font-size * .7;
+			padding-left: 12px;
+			padding-right: 12px;
+			margin-top: 5px;
+			margin-left: 10px;
 		}
 		p{
 			font-size: $font-size * .9;

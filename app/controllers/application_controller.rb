@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
             end
           else
             time_frame = Time.now.advance(user_limitation.frequency_type.to_sym => user_limitation.frequency * -1)
-            if Post.count(:conditions => ['created_at >= ? AND user_id = ? AND status = ? and closed = ?', time_frame, user_id, STATUS_ACTIVE, true]) >= user_limitation.user_limit
+            if Post.count(:conditions => ['created_at >= ? AND user_id = ? AND status = ? and open = ?', time_frame, user_id, STATUS_ACTIVE, true]) >= user_limitation.user_limit
               return [false, "Sorry, you have reached your #{user_limitation.frequency} #{user_limitation.frequency_type} post limit."]
             end
           end
