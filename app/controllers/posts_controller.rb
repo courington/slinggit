@@ -112,7 +112,7 @@ class PostsController < ApplicationController
                     :name => "$#{@post.price}.00",
                     :caption => "Location: #{@post.location}",
                     :description => @post.content,
-                    :image_url => @post.has_photo? ? "#{BASEURL}#{@post.root_url_path}" : nil,
+                    :image_url => @post.has_photo? ? "#{BASEURL}#{@post.root_url_path}" : "#{Rails.root}/app/assets/images/noPhoto_80x80.png",
                     :link_url => nil #if this is nil it will default to the post
                 ).do_post
               end
@@ -175,7 +175,7 @@ class PostsController < ApplicationController
       if search_terms.length > 1
         @posts = Post.all(:conditions => ["(content in (?) OR hashtag_prefix in (?) OR location in (?)) AND open = ? AND status = ?", search_terms, search_terms, search_terms, true, STATUS_ACTIVE], :order => 'created_at desc')
         if @posts.length == 0
-          search_terms = [search_terms[0], search_terms[1], search_terms[2]] #limit to 3 search terms
+          search_terms = search_terms[0,3]
           search_terms.each do |search_term|
             search_term = search_term[1, search_terms.length - 1]
             @posts | Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms}%", "%#{search_terms}%", "%#{search_terms}%", true, STATUS_ACTIVE], :order => 'created_at desc')

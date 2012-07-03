@@ -61,7 +61,7 @@
 					.btn_navMessages {
 						display: block;
 						position: relative;
-						left: 1.875em;
+						left: 1.975em;
 						top: -.2em;
 					}
 				}
@@ -250,9 +250,6 @@
 					margin-left: 0;
 				}
 			}
-			.headline {
-				font-size: 2.4em;
-			}
 		}
 		.homeSignedIn {
 			> .col4,
@@ -262,15 +259,19 @@
 			.userInfo {
 				padding-left: 0;
 			}
+			h1 {
+				font-size: ($font-size * 1.125);
+			}
 		}
 		.homeNotSignedIn {
+			h1.headline {
+				font-size: ($font-size * 1.75);
+				margin-top: ($font-size * .5);
+			}
 			.col4,
 			.col2 {
 				width: 100%;
 				margin-left: 0;
-			}
-			.homeBuckets {
-				padding-left: 0;
 			}
 		}
 		.home_featurePost {
@@ -673,7 +674,7 @@
 // END 320-640
 
 // 500-640
-@media all and (min-width: 500px) and (max-width: 640px) {
+@media all and (min-width: 480px) and (max-width: 640px) {
 // HEADER
 	body > header:first-child {
 		hgroup.col2 {
@@ -702,6 +703,15 @@
 			&.col4.pull_right > .row > .col4.pull_right > .row > .col2 {
 				width: 27%;
 				float: left;
+			}
+		}
+		.col4.pull_right > .row > .col4.pull_right > .row > .col2.pull_left:first-child,
+		.col4.pull_right > .row > .col4.pull_right > .row > .col2,
+		.col4.pull_right > .row > .col4.pull_right > .row > .col2.pull_left:nth-of-type(2) {
+			width: $sixCols * 2;
+			padding: 0;
+			a .btn_navMessages {
+				left: 0;
 			}
 		}
 	}

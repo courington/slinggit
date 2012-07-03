@@ -2,52 +2,37 @@
 
 <section class="wrapper invite_wrapper">
 		
-		<!-- <%= image_tag "heroimages/slinggit_icons_326x634.png", width: "100%", height: "auto", title: "Slinggit icons", alt: "Icons representing Slinggit brand", id: "home_slinggitIcons", class: "col1 offset1 pull_left" %> -->
-		
-		<article class="col4 pull_left white_well">
+		<article class="row">
+			<div class="col2 pull_right">
 			<header class="row">
 				<h1 class="headline bottom_border">Welcome to Slinggit.</h2>
-				<h2>The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h2>
 			</header>
-			<div class="row">
-				<div class="col6">
-					<%= form_tag do |f| %>
-						<div class="row grey_well">
-							<p class="col6">Be one of the first to Slinggit!</p>
-				          		<%= label_tag :email, "Email:", for: "invitation_email", class: "col1 pull_left" %>
-									<div class="col4 pull_left">
-				          				<%= email_field_tag :email, @email, placeholder: "Email", class: "row", size: "30" %>
-									</div>
-									<div class="row">
-					  					<%= button_tag "Request Invitation", class: "btn btn_green col2 offset3", :type => 'submit' %>
-									</div>
-						</div>
-					<% end %>
+			
+			<div class="row white_well">
+				<h2 class="col6 bottom_border">The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h2>
+				
+					<div class="col6">
+						<%= form_tag do |f| %>
+							<div class="row grey_well">
+								<p class="col6">Be one of the first to Slinggit!</p>
+					          		<%= label_tag :email, "Email:", for: "invitation_email", class: "col1 pull_left" %>
+										<div class="col4 pull_left">
+					          				<%= email_field_tag :email, @email, placeholder: "Email", class: "row", size: "30" %>
+										</div>
+										<div class="row">
+						  					<%= button_tag "Request Invitation", class: "btn btn_green col2 offset3", :type => 'submit' %>
+										</div>
+							</div>
+						<% end %>
+					</div>
+			</div>
+			</div>
+			
+			<div class="col4 pull_left">
+				<div class="row">
+					<%= image_tag "heroimages/hero_phone_571x446.jpg", width: "100%", height: "auto", title: "Slinggit on your mobile device", alt: "Hero Phone 571x446" %>
 				</div>
 			</div>
 		</article>
-		
-		<!-- <div class="col4 offset1 grey_well">
-			<p class="row">Integrating with:</p>
-			<ul class="row">
-				<li><a href="http://twitter.com/#!/slinggit" title="Twitter" class="offset2 pull_left twitIcon_dark" >Twitter</a></li>
-				<li><a href="https://www.facebook.com/Slinggit" title="Facebook" class="offset1 pull_left facebookIcon">Facebook</a></li>
-			</ul>			
-		</div> -->
-		
-		<section class="col2 pull_right homeBuckets sidebar">
-			<article class="row grey_well">
-				<h1 class="headline">How it works</h1>
-				<p>Post an item for sale on Facebook or search for an item to buy on Twitter from your mobile device or desktop.</p>
-			</article>
-			<article class="row grey_well">
-				<h1 class="headline">Selling</h1>
-				<p>Quickly sling items to your friends and followers or use the Slinggit networks for greater reach. We don&rsquo;t take a cut of your sale.</p>
-			</article>
-			<article class="row grey_well">
-				<h1 class="headline">Buying</h1>
-				<p>Find what you want to git in your network or city feed. Ask questions and make offers without giving out your personal email.</p>
-			</article>
-		</section>
 		
 </section>

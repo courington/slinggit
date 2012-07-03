@@ -54,7 +54,7 @@
                 <%= render 'users/add_more_networks' %>
               <% end %>
               <div id="createPostAction" class="row">
-                <% if @passes_limitation != nil and @passes_limitation[0] == true %>
+                <% if @passes_limitation != nil and @passes_limitation == true %>
                   <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
                 <% elsif @passes_limitation[0] == false %>
                   <p class="row notice_explanation_bubble">Post Limit Reached</p>
