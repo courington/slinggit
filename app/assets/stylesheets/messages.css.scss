@@ -24,6 +24,15 @@
 .messages {
 	article {
 		margin-top: 1em;
+    padding: 20px;
+
+    #postArticlesWrapper{
+      margin-top: 0px;
+    }
+
+    &> .row{
+      margin-top: 20px;
+    }
 	}
 	#counter_message_body {
 		color: $main-red;

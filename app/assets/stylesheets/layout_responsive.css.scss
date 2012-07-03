@@ -569,8 +569,14 @@
 		}
 	}
 	.messages {
-		article .col4 {
+		article.col4 {
 			width: 100%;
+			padding: 15px;
+
+			.postArticle{
+				padding-left: 0px;
+				padding-right: 0px;
+			}
 		}
 	}
 // END

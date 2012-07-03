@@ -82,13 +82,13 @@
 
     <div id="postArticlesWrapper">
       <% if @posts.any? %>
-<div class="row">
+        <div class="row">
           <%= will_paginate @posts %>
-</div>
+        </div>
           <%= render @posts %>
-<div class="row">
+        <div class="row">
           <%= will_paginate @posts %>
-</div>
+        </div>
       <% elsif !@user.posts.any? and !current_user?(@user) %>
           <p><strong><%= @user.name %></strong> has not created any posts yet. Check back soon!</p>
       <% elsif !@posts.any? and current_user?(@user) %>
