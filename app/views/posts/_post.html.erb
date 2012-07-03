@@ -9,16 +9,17 @@
         <%= image_tag post.photo.url(:search), class: "img_border" %>
       <% end %>
     </div>
-    <div class="row">
-      <span class="label_grey">$<%= number_with_delimiter(post.price, :delimiter => ',') %></span>
-    </div>
     
   </div>
 
   <div class="col5 pull_right">
 
     <div class="row">
-      <h4 class="item"><%= post.hashtag_prefix %></h4>
+      <h4 class="item pull_left"><%= post.hashtag_prefix %></h4>
+      <span class="label_grey pull_left">$<%= number_with_delimiter(post.price, :delimiter => ',') %></span>
+    </div>
+
+    <div class="row">
       <p><%= post.content %></p>
     </div>
     

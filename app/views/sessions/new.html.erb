@@ -25,6 +25,10 @@
           <%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, class: "col3 pull_right", :id => 'forgot_password' %>
         </fieldset>
 
+		<div class="row termsOfService">
+			<small>By signing into Slinggit. You agree to our <%= link_to "Terms of Service", terms_of_service_path %>.</small>
+		</div>
+
     	<% end %>
   	</div>
   </div>
