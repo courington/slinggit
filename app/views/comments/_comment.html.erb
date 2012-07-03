@@ -15,7 +15,7 @@
     </div>
     <div class="row">
   		<span class="timestamp">
-    		Asked <%= time_ago_in_words(comment.created_at) %>
+    		Commented on <%= time_ago_in_words(comment.created_at) %>
             ago by <strong><%= link_to "#{comment.user.name}", user_path(comment.user) %></strong>
   		</span>
       <% if signed_in? and (current_user.id == comment.user_id or current_user.id == comment.post('user_id').user_id) %>
