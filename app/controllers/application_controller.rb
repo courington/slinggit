@@ -129,7 +129,6 @@ class ApplicationController < ActionController::Base
             status = STATUS_ACTIVE
           end
 
-          debugger
           api_account = ApiAccount.create(
               :user_id => options[:user_object].id,
               :api_id => options[:api_object].user['id'],
