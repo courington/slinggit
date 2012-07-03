@@ -264,3 +264,11 @@ p {
 	margin-top: $font-size * .5;
 	line-height: $leading;
 }
+.terms_parent, .terms_child {
+font-size: 16px;
+line-height: 22px;
+}
+.terms_child {
+	list-style: disc outside;
+	margin-left: 10px;
+}

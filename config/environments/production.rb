@@ -67,10 +67,10 @@ SlinggitWebapp::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   PROD_ENV = true
-  HOSTURL = "integ.slinggit.com" # I'll be switching this shortly
+  HOSTURL = "slinggit.com" # I'll be switching this shortly
   BASEURL = "https://#{HOSTURL}"
   POST_PHOTO_URL = "/uploads"
-  POST_PHOTO_DIR = "/home/slinggit/webapps/slinggit_test/shared/uploads" # I'll be switching this shortly
+  POST_PHOTO_DIR = "/home/slinggit/webapps/slinggit/shared/uploads" # I'll be switching this shortly
 
   #  Our consumer key and secret for our twitter app (PROD)
   config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
