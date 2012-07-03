@@ -134,6 +134,8 @@ class MessagesController < ApplicationController
               flash[:success] = "Message has been sent."
               session.delete(:message_post_id_hash)
               if signed_in?
+                watchedpost = current_user.watchedposts.build(:post_id => message_post.id) unless current_user.post_in_watch_list?(message_post.id)
+                watchedpost.save unless watchedpost.blank?
                 redirect_to :controller => :messages, :action => :index
               else
                 if not request.referer.blank?
