@@ -1,15 +1,15 @@
-set :stages, %w(production staging)
-set :default_stage, "staging"
+set :stages, %w(production integ)
+set :default_stage, "integ"
 require 'capistrano/ext/multistage'
 
 
-#set :application, "slinggit_test"
+set :application, "slinggit"
 set :repository,  "https://slinggit@bitbucket.org/chrisklein/slinggit-webapp-and-services.git"
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-set :deploy_to, "/home/slinggit/webapps/slinggit_test"
+#set :deploy_to, "/home/slinggit/webapps/slinggit_test"
 
 set :default_environment, {
   'PATH' => "#{deploy_to}/bin:$PATH",
