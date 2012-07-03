@@ -30,6 +30,6 @@ class ApiAccount < ActiveRecord::Base
 
   def create_api_id_hash
     self.api_id_hash = Digest::SHA1.hexdigest(self.api_id.to_s)
-  end	
+  end
 
 end
