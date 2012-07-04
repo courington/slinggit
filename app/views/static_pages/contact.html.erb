@@ -6,7 +6,7 @@
   </header>
 
   <article class="row">
-    <p>Thank you for your interest in Slinggit.  We look forward to hearing from you.</p>
+    <p>Thank you for your interest in Slinggit. We look forward to hearing from you.</p>
 
     <%= form_tag(url_for(:controller => :static_pages, :action => :contact), :class => "col4 offset1 white_well") do %>
 
@@ -15,10 +15,12 @@
           <%= text_field_tag :name, @name, :class => "col6 pull_left", :placeholder => 'Name' %>
         </fieldset>
 
-        <fieldset class="row">
-          <label class="col3 pull_left">Email Address:</label>
-          <%= email_field_tag :email, @email, :class => "col6 pull_left", :placeholder => 'Email' %>
-        </fieldset>
+        <% if not signed_in? %>
+            <fieldset class="row">
+              <label class="col3 pull_left">Email Address:</label>
+              <%= email_field_tag :email, @email, :class => "col6 pull_left", :placeholder => 'Email' %>
+            </fieldset>
+        <% end %>
 
         <fieldset class="row">
           <label class="col3 pull_left">Message:</label>

@@ -105,7 +105,7 @@ class PostsController < ApplicationController
                 ).do_post
               elsif proposed_api_account.api_source == 'facebook'
                 redirect = Redirect.get_or_create(
-                    :target_uri => "#{BASEURL}/posts/#{@post.id}"
+                    :target_uri => "#{BASEURL}/posts/#{@post.id_hash}"
                 )
                 FacebookPost.create(
                     :user_id => @post.user_id,
@@ -156,6 +156,7 @@ class PostsController < ApplicationController
     post = Post.first(:conditions => ['id = ?', params[:id]])
     if not post.blank? and post.user_id == current_user.id
       if post.update_attribute(:status, STATUS_DELETED)
+        Watchedpost.destroy_all(['post_id = ?', post.id])
         flash[:success] = "Post #{post.hashtag_prefix} successfully removed."
         redirect_to user_path(current_user)
       end

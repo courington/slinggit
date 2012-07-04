@@ -133,7 +133,7 @@ class TwitterPost < ActiveRecord::Base
   def tweet_constructor(client)
     content = self.post.content.truncate(54, :omission => "...")
     redirect = Redirect.get_or_create(
-        :target_uri => "#{BASEURL}/posts/#{self.post.id}"
+        :target_uri => "#{BASEURL}/posts/#{self.post.id_hash}"
     )
     #changed to use our url shortner... if twitter does it for us great... but this will track the number of clicks if we use our own
     #NOTE... if testing on localhost, the link wont be clickable in twitter... but once a .com is added it will be.

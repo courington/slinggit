@@ -10,10 +10,16 @@ class SessionsController < ApplicationController
 
   def create
     #error messages copied from google
-    if not params[:session][:email].blank?
-      @email = params[:session][:email]
+    if not params[:email].blank?
+      @email = params[:email]
       user = User.first(:conditions => ['email = ?', @email])
-      if not user.blank? and user.authenticate(params[:session][:password])
+
+      #try to look up the user by username for convienence
+      if user.blank?
+        user = User.first(:conditions => ['name = ?', @email])
+      end
+
+      if not user.blank? and user.authenticate(params[:password])
         sign_in user
         redirect_back_or user
       else

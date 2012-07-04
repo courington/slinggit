@@ -13,7 +13,7 @@ class StaticPagesController < ApplicationController
 
   def contact
     @name = params[:name]
-    @email = params[:email]
+    @email = signed_in? ? current_user.email : params[:email]
     @message = params[:message]
     if request.post?
       if not @name.blank?
@@ -23,6 +23,12 @@ class StaticPagesController < ApplicationController
             from = 'Contact Us <noreply@slinggit.com>'
             subject = "Inquiry from #{@name}"
             content = "<p>Name: #{@name}<p/></br></br><p>Email: #{@email}</p></br></br><p>Message: #{@message}</p>"
+            if signed_in?
+              content << "<p>User was signed in with user_id: #{current_user.id} and their email is #{current_user.email_is_verified? ? 'verified' : 'not verified'}.</p>"
+            end
+            if not request.blank?
+              content << "<p>User Agent: #{request.user_agent}</p>"
+            end
             reply_to = @email
             UserMailer.generic_internal_email(to, from, subject, content, reply_to).deliver
             flash.now[:success] = "Thank you much for your inquiry.  An email has been passed along to the Slinggit team."

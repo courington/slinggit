@@ -8,20 +8,20 @@
 
   <div class ="row">
   	<div class="col3 white_well">
-    <%= form_for(:session, url: sessions_path) do |f| %>
+    <%= form_tag(sessions_path, :novalidate => 'novalidate') do |f| %>
 
         <fieldset class="row">
-          <%= f.label :email, for: "session_email", class: "col6" %>
-          <%= f.email_field :email, class: "col6", :value => @email || params[:email], placeholder: "Email" %>
+          <%= label_tag :email, 'Email or Username', for: "session_email", class: "col6" %>
+          <%= email_field_tag :email, nil, class: "col6", :value => @email || params[:email], placeholder: "Email" %>
         </fieldset>
 
         <fieldset class="row">
-          <%= f.label :password, for: "session_password", class: "col6" %>
-          <%= f.password_field :password, class: "col6", placeholder: "Password" %>
+          <%= label_tag :password, 'Password', for: "session_password", class: "col6" %>
+          <%= password_field_tag :password, nil, class: "col6", placeholder: "Password" %>
         </fieldset>
 
         <fieldset class="row">
-          <%= f.button "Sign in", class: "col3 btn_green pull_left" %>
+          <%= button_tag "Sign in", class: "col3 btn_green pull_left" %>
           <%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, class: "col3 pull_right", :id => 'forgot_password' %>
         </fieldset>
 

@@ -9,7 +9,7 @@
 
         <div class="row">
           <p class="col1 pull_left title">Item:</p>
-          <p class="col2 pull_left"><%= @message.source_object.hashtag_prefix %></p>
+          <p class="col2 pull_left"><%= link_to @message.source_object.hashtag_prefix, :controller => :posts, :action => :show, :id => @message.source_object.id_hash %></p>
         </div>
 
         <div class="row">

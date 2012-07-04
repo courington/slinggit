@@ -1,5 +1,5 @@
 <article class="row postArticle">
-<%= link_to(post_path(post)) do %>
+<%= link_to(:controller => :posts, :action => :show, :id => post.id_hash) do %>
   <div class="col1 pull_left">
     
     <div class="photo row">
