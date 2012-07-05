@@ -15,7 +15,7 @@
 		padding: 0;
 	}
 // HEADER
-	body > header.headerUp {
+	/*body > header.headerUp {
 		top: -3.8em;
 	}
 	body > #mainHeader:focus {
@@ -164,7 +164,7 @@
 				}
 			}
 		}
-	}
+	}*/
 // END
 // GENERAL CONTENT PAGE LAYOUT
 	.page_contentContainer {
@@ -173,24 +173,24 @@
 		padding-top: 4.8em;
 	}
 	.page_contentContainer header:first-child {
-	margin: 0 0 $font-size 0;
-	font-size: $font-size * .5;
-	text-align: center;
+		margin: 0 0 $font-size 0;
+		font-size: $font-size * .5;
+		text-align: center;
 	}
 	.page_contentContainer header p {
-	line-height: 1em;
-	margin: -.975em 0 0 .045em;
+		line-height: 1em;
+		margin: -.975em 0 0 .045em;
 	}
 	.page_contentContainer .posts article:last-child {
-	display: none;
+		display: none;
 	}
 	.page_contentContainer .posts article:first-child {
-	float: left;
-	width: 100%;
+		float: left;
+		width: 100%;
 	}
 	.page_contentContainer .form_initialFields input[type="text"], .page_contentContainer .form_initialFields input[type="email"], .page_contentContainer .form_initialFields input[type="password"], .page_contentContainer .form_hiddenFields input[type="text"], .page_contentContainer .form_hiddenFields input[type="email"], .page_contentContainer .form_hiddenFields input[type="password"] {
-	width: 95%;
-	float: left;
+		width: 95%;
+		float: left;
 	}
  	.btn {
 		display: block;
@@ -207,7 +207,7 @@
 	}
 // END
 // FOOTER
-	.pageFoot {
+	/*.pageFoot {
 		.col4.pull_left {
 			width: 100%;
 			float: none;
@@ -231,7 +231,7 @@
 				margin: 0 ($sixCols * 1.5);
 			}
 		}
-	}
+	}*/
 // END
 // ALERTS
 	#explanation_bubble {

@@ -1,90 +1,74 @@
-<header id="mainHeader" class="headerUp">
-  <div class="row wrapper">
-
-<!-- HEADER LOGO -->
+<header id="mainHeader" class="headerUp row">
+  
+<div class="row wrapper">
+<!-- LOGO -->
     <hgroup class="col2 pull_left">
       <h1>Slinggit</h1>
-      <%= link_to image_tag('logos/slinggit_logotype_blue_417x162.png', width: '100%', height: 'auto', title: 'Slinggit Logo blue', alt: 'Slinggit Logo'), {:action => 'home', :controller => 'static_pages'}, class: 'col2 pull_left' %>
-      <h6 class="col2 pull_left">beta</h6>
+<%= link_to image_tag('logos/slinggit_logotype_blue_417x162.png', width: '100%', height: 'auto', title: 'Slinggit Logo blue', alt: 'Slinggit Logo'), {:action => 'home', :controller => 'static_pages'}, class: 'row' %>
+      <h6>beta</h6>
     </hgroup>
-<!-- END HEADER LOGO -->
+<!-- END LOGO -->
 
-
-<!-- RIGHT NAV GROUP -->
-    <nav class="col4 pull_right">
-
-<!-- QUICK SEARCH -->
-      <div class="row">
-        <div class="col3 offset3" id="quickSearchWrapper">
-			<label class="row quickSearchLabel">
-				<span class="btn_navSearch"></span>
-				<span>Search</span>
-			</label>
-          <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
-        </div>
-      </div>
-<!-- END QUICK SEARCH -->
-
-<!-- NAV BUTTONS WRAPPER -->
       <% if signed_in? %>
-          <div class="row">
-            <div class="col4 pull_right">
+
+<!-- NAV GROUP -->
+    <nav class="col4 pull_left">
+<!-- NAV BUTTONS WRAPPER -->
               <div class="row">
-	
 <!-- POSTS -->	
-                	<div class="col2 pull_left <%= 'active' if current_page?(current_user) %>">                		
-						<%= link_to current_user do %>
-							<span class="btn_navPosts"></span>
-							Posts
-						<% end %>
-                	</div>
+				<%= link_to current_user, class: "col2 pull_left #{'active' if current_page?(current_user)}" do %>
+					<span class="btn_navPosts"></span>
+					Posts
+				<% end %>
 <!-- END POSTS -->
 
 <!-- MESSAGES -->
-					<div class="col2 pull_left">
-                  	
-                  	<%= link_to messages_path do %>
-						<span class="btn_navMessages <%= 'active' if current_page?(current_user) %>"></span>
-						<%= "Messages#{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? ': ' + count.to_s + '' : ''}" %>
-					<% end %>
-                	</div>
+				<%= link_to messages_path, class: "col2 pull_left #{'active' if current_page?(current_user)}" do %>
+					<span class="btn_navMessages"></span>
+					<%= "Messages#{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? ': ' + count.to_s + '' : ''}" %>
+				<% end %>
 <!-- END MESSAGES -->
 
+<!-- SEARCH ICON -->
+				<div class="col2 pull_left quickSearchLabel">
+					<span class="btn_navSearch"></span>
+					<span>Search</span>
+				</div>
+<!-- END SEARCH ICON -->
+
 <!-- DROP DOWN -->
-                	<div id="accountDropDown" class="col2 pull_right dropdown <%= 'active' if current_page?(current_user) || current_page?(edit_user_path(current_user)) %>">
-                  	
-                  	<span class="BTN_nav_dropDown dropdown-toggle" data-toggle="dropdown">
+				<div id="accountDropDown" class="dropdown col2 pull_left #{'active' if current_page?(current_user)} || current_page?(edit_user_path(current_user)) %>">
+					
+					<div class="dropdown-toggle" data-toggle="dropdown">
 						<span class="btn_navSettings"></span>
 						Settings
-					</span>
-                  	
-										<ul class="nav_dropDown dropdown-menu">	
-											<li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
-                      	<%= link_to "Profile", edit_user_path(current_user) %>
+					</div>
+					
+					<ul class="nav_dropDown dropdown-menu">	
+						<li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
+                      		<%= link_to "Profile", edit_user_path(current_user) %>
                     	</li>
                     	
-											<li class="<%= 'active' if current_page?(networks_path) %>">
-                      	<%= link_to "Social Networks", networks_path %>
+						<li class="<%= 'active' if current_page?(networks_path) %>">
+							<%= link_to "Social Networks", networks_path %>
                     	</li>
                     	
-											<li>
-                      	<%= link_to "Sign Out", signout_path, method: "delete" %>
+						<li>
+                      		<%= link_to "Sign Out", signout_path, method: "delete" %>
                     	</li>
 
-											<% if current_user.is_admin? %>
-                      <li class="<%= 'active' if current_page?(users_path) %>">
-                      	<%= link_to "Admin", admin_path %>
-                      </li>
-                    	<% end %>
+						<% if current_user.is_admin? %>
+							<li class="<%= 'active' if current_page?(users_path) %>">
+							<%= link_to "Admin", admin_path %>
+							</li>
+						<% end %>
                   	</ul>
-                	</div>
+                </div>
 <!-- END DROP DOWN -->
-
-
               </div>
-            </div>
-          </div>
 <!-- END BUTTON WRAPPER -->
+    </nav>
+<!-- END RIGHT NAV GROUP -->
 
 <!-- ELSE IF signed_in? -->
       <% else %>
@@ -95,11 +79,18 @@
         </div>
       <% end %>
 <!-- END ELSE IF -->
-
-    </nav>
-<!-- END RIGHT NAV GROUP -->
   </div>
 <!-- END ROW WRAPPER -->
+
+<!-- QUICK SEARCH -->
+      <div class="row" id="quickSearchWrapper">
+        <div class="col3 pull_right">
+			<span class="btn_navSearch"></span>
+          <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
+        </div>
+      </div>
+<!-- END QUICK SEARCH -->
+
 </header>
 <!-- END HEADER -->
 
@@ -110,17 +101,3 @@
 				window.initiHeaderSearch()
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

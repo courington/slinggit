@@ -2,7 +2,6 @@
 	<div class="wrapper">
 		
 		<nav class="row">
-
 			<ul class="col4 pull_left">
 				<li class="pull_left"><%= link_to "About", about_path %></li>
 				<li class="pull_left"><%= link_to "Help", help_path %></li>
@@ -10,13 +9,11 @@
 				<!-- <li class="pull_left <%= 'active' if current_page?(sessions_path) %>"><%= link_to "Sessions", sessions_path %></li> -->
 				<li class="pull_left"><%= link_to "Terms", terms_of_service_path %></li>
 			</ul>
-				
 			<ul class="col2 pull_right">
 				<li class="pull_right"><a href="https://www.facebook.com/Slinggit" title="Facebook" class="facebookIcon">Facebook</a></li>
 				<li class="pull_right"><a href="http://twitter.com/slinggit" title="Twitter" class="twitIcon_dark" >Twitter</a></li>
 				<li class="pull_right"><a href="http://blog.slinggit.com/" title="Blog" class="slinggitIcon">Blog</a></li>
-			</ul>
-			
+			</ul>		
 		</nav>
 
     	<div class="row footerSignIn">
@@ -35,8 +32,8 @@
 			
 	    	<small class="pull_left">&copy;2012 slinggit llc</small>
 		</div>
-
+<!-- 
 <%= debug(params) if Rails.env.development? %>
-
+-->
 	</div>
 </footer>
