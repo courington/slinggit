@@ -26,7 +26,7 @@ class Photo extends Backbone.View
 			img.classList.add "obj"
 			img.classList.add "img_border"
 			img.file = file
-			$('#fileSelect').text("Change photo")
+			$('#fileSelect').text("Change photo").addClass("col3")
 			$controls = $('#photoControlGroup').find('.controls')
 			imageToRemove = $controls.find('.obj')
 			imageToRemove.remove()

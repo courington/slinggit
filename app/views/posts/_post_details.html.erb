@@ -15,7 +15,7 @@
       <% if @post.photo_file_name.blank? %>
         <div id="placeholderWrapper">
           <%= image_tag "noPhoto_300x300.png", :id => "placeholderImg", :height => "auto", :width => "100%" %>
-          <% if current_user?(@post.user) %>
+          <% if current_user?(@post.user) and @post.open? %>
             <%= form_for @post do |f| %>
               <fieldset id="photoControlGroup" class="col6 pull_left">
                 <div class="controls thumbnail pull_left">
@@ -24,7 +24,7 @@
                   <![endif]-->
                   <!--[if gt IE 9]><!-->
                     <%= f.file_field :photo %>
-                    <a href="#" id="fileSelect" class="col3 pull_left">Add your own photo</a>
+                    <a href="#" id="fileSelect" class="pull_left">Add your own photo</a>
                   <!--<![endif]-->
                 </div>
               </fieldset>
