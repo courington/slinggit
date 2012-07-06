@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account]
+  before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account, :edit_user_email_for_verification,  :update_email_and_send_verification]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :user_verified, only: [:edit, :update, :destroy]
   #before_filter :admin_user, only: [:index]
+  before_filter :set_cache_buster, only: [:edit_user_email_for_verification]
 
   USERS_PATH = "/users"
 
@@ -165,22 +166,21 @@ class UsersController < ApplicationController
   end
 
   def edit_user_email_for_verification
-    @user = User.first(:conditions => ['name = ?', params[:id]])
+    if current_user.status != STATUS_UNVERIFIED
+      flash[:notice] = "You have already verfied your email with us."
+      redirect_to user_path(current_user)
+    end
   end
 
   def update_email_and_send_verification
     user_updates = params[:user]
-    @user = User.find(user_updates[:id])
-
-    if current_user.id == @user.id
-      if @user.update_attributes(user_updates)
-        @user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(@user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH))
-        UserMailer.welcome_email(@user).deliver
-        flash[:success] = "A verification email has been sent to #{@user.email}"
-        redirect_to user_path(@user)
-      else
-        render 'edit_user_email_for_verification'
-      end
+    if current_user.update_attributes(user_updates)
+      current_user.update_attribute(:email_activation_code, Digest::SHA1.hexdigest(current_user.email + "slinggit_email_activation_code" + SLINGGIT_SECRET_HASH))
+      UserMailer.welcome_email(current_user).deliver
+      flash[:success] = "A verification email has been sent to #{current_user.email}"
+      redirect_to user_path(current_user)
+    else
+      render 'edit_user_email_for_verification'
     end
   end
 
