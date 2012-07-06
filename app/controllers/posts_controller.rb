@@ -30,7 +30,7 @@ class PostsController < ApplicationController
         @twitter_account = @user.primary_twitter_account
         @facebook_account = @user.primary_facebook_account
 
-        if not @primary_twitter_account.blank?
+        if not @twitter_account.blank?
           @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @twitter_account.id])
         else
           @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND user_id = ?', @post.id, @user.id])
