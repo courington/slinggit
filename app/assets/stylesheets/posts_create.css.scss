@@ -27,11 +27,11 @@
 	label.row {
 		margin: 0;
 	}
-	> .controls.thumbnail > input[type="file"] {
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
+	//> .controls.thumbnail > input[type="file"] {
+	//	position: absolute;
+	//	top: -9999px;
+	//	left: -9999px;
+	//}
 	.controls.thumbnail {
 		font-size: $font-size;
 		margin: ($font-size * .25) auto;
