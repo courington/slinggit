@@ -8,6 +8,7 @@ class Photo extends Backbone.View
 
 	events:
 		"click #fileSelect": "trigger"
+		"click #changePhoto": "changePhoto"
 
 	trigger: (e)->
 		if $('#post_photo').length and not _.isUndefined window.FileReader
@@ -15,6 +16,10 @@ class Photo extends Backbone.View
 		else if _.isUndefined window.FileReader
 			alert "Uploading a photo through the browser is not yet supported on your device or browser."
 		e.preventDefault();	
+
+	changePhoto: (e)->
+		e.preventDefault()
+		$(".edit_post").submit()
 
 	showFile: (el)->
 
@@ -42,7 +47,7 @@ class Photo extends Backbone.View
 			##  redo this once we figure out what we want to do with multiple photos
 			if $("#placeholderWrapper").length > 0
 				$("#placeholderImg").remove() 
-				$('#fileSelect').after("<input class='col3' id='submitNewPost' type='submit' value='Use Photo'></input>")
+				$('#fileSelect').after("<a href='#' class='col3' id='changePhoto'>Use Photo</a>")
 
 $(document).ready ->
 	@photo = new Photo

@@ -38,11 +38,10 @@
 		font-weight: 600;
 		text-decoration: underline;
 
-		input{
-			border:none;
-			background:none;
-			font-weight: 600;
-			text-decoration:underline;
+		a{
+			padding-bottom: 10px;
+			text-decoration: underline;
+			color: $main-blue;
 		}
 	}
 }
