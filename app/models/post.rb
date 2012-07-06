@@ -71,6 +71,16 @@ class Post < ActiveRecord::Base
     end  
   end 
 
+  def hashtag_prefix=(prefix)
+    prefix.gsub!(' ', '') if prefix.is_a?(String)
+    self[:hashtag_prefix] = prefix
+  end
+
+  def location=(loc)
+    loc.gsub!(' ', '') if loc.is_a?(String)
+    self[:location] = loc
+  end
+
   def root_photo_path
     "#{POST_PHOTO_DIR}/posts/#{self.id}"
   end
