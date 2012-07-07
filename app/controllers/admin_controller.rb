@@ -58,8 +58,16 @@ class AdminController < ApplicationController
     @users = User.paginate(page: params[:page], :per_page => 100, :select => 'id,email,name,slug,status,account_reactivation_code,photo_source,created_at')
   end
 
+  def view_posts
+    @posts = Post.paginate(page: params[:page], :per_page => 100)
+  end
+
   def view_user
     @user = User.first(:conditions => ['id = ?', params[:id]])
+  end
+
+  def view_post
+    @post = Post.first(:conditions => ['id = ?', params[:id]])
   end
 
   def view_images

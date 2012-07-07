@@ -1,4 +1,3 @@
-
 <h1>All users</h1>
 
 <%= will_paginate @users%>
@@ -17,11 +16,11 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= image_tag user.profile_photo_url, style: "width: 40px" %></td>
+          <td><%= image_tag user.profile_photo_url %></td>
           <td><%= link_to user.name, {:controller => :admin, :action => :view_user, :id => user.id} %></td>
-          <td>Posts</td>
-          <td>Comments</td>
-          <td>Messages</td>
+          <td>Posts (<%= user.posts.count %>)</td>
+          <td>Comments (<%= user.comments.count %>)</td>
+          <td>Messages </td>
         </tr>
       <% end %>
     </tbody>

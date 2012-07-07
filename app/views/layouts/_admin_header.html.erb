@@ -26,6 +26,12 @@
         <% end %>
 <!-- END USERS -->
 
+<!-- POSTS -->
+        <%= link_to admin_posts_path, class: "col2 pull_left #{'active' if current_page?(admin_posts_path)}" do %>
+        Posts
+        <% end %>
+<!-- END POSTS -->
+
 <!-- PROBLEM REPORTS -->  
         <%= link_to admin_problem_reports_path, class: "col2 pull_left #{'active' if current_page?(admin_problem_reports_path)}" do %>
           Problem Reports
