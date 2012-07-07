@@ -32,6 +32,12 @@
         <% end %>
 <!-- END POSTS -->
 
+<!-- COMMENTS -->
+        <%= link_to admin_comments_path, class: "col2 pull_left #{'active' if current_page?(admin_comments_path)}" do %>
+        Comments
+        <% end %>
+<!-- END COMMENTS -->
+
 <!-- PROBLEM REPORTS -->  
         <%= link_to admin_problem_reports_path, class: "col2 pull_left #{'active' if current_page?(admin_problem_reports_path)}" do %>
           Problem Reports
