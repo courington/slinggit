@@ -21,7 +21,7 @@ class PostsController < ApplicationController
         @post = Post.first(:conditions => ['id = ?', params[:id]])
       end
 
-      if not @post.blank? and not @post.is_deleted?
+      if not @post.blank? and not @post.is_banned?
         @comments = @post.comments.paginate(page: params[:page], :conditions => ['status = ?', STATUS_ACTIVE])
         # creating user object to compare against current_user
         # in order to display edit option.  Dan, if there's a
@@ -60,11 +60,11 @@ class PostsController < ApplicationController
           store_location
         end
       else
-        flash[:error] = 'Oops, we were unable to find the post you were looking for.'
+        flash[:notice] = 'Oops, the post you are looking for either does not exist or has been removed'
         redirect_to :controller => 'static_pages', :action => 'home'
       end
     else
-      flash[:error] = 'Sorry, but we couldnt find the post you were looking for.  Check out these other posts.'
+      flash[:notice] = 'Sorry, but we couldnt find the post you were looking for.  Check out these other posts.'
       redirect_to :controller => 'posts'
     end
   end

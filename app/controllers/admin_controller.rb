@@ -94,12 +94,19 @@ class AdminController < ApplicationController
       if user.update_attribute(:status, status)
         if user.posts.any?
           user.posts.each do |post|
-            if status == STATUS_BANNED
-              post.update_attribute(:status, STATUS_DELETED)
-            elsif status == STATUS_SUSPENDED
-              post.update_attribute(:status, STATUS_ACTIVE)
-            elsif status == STATUS_ACTIVE
-              post.update_attribute(:status, STATUS_ACTIVE)
+            # When we ban a user, we'll set the user's posts' status
+            # to BANNED to start.  This will keep the post from showing
+            # up in the UI, but will allow us to reenable posts in bulk
+            # should we ever reenable this user.  We'll reserve the DELETED
+            # status for posts that cannot be updated in bulk 
+            if post.status != STATUS_DELETED
+              if status == STATUS_BANNED
+                post.update_attribute(:status, STATUS_BANNED)
+              elsif status == STATUS_SUSPENDED
+                post.update_attribute(:status, STATUS_ACTIVE)
+              elsif status == STATUS_ACTIVE
+                post.update_attribute(:status, STATUS_ACTIVE)
+              end
             end
           end
         end
@@ -120,10 +127,14 @@ class AdminController < ApplicationController
     user_status = params[:user_status]
     if not post.blank?
       if post.update_attribute(:status, status)
-        user = User.first(:conditions => ['id = ?', post.user_id])
-        user.update_attribute(:status, user_status)
-        flash[:success] = "Post status set to: #{status} and user status set to: #{user_status}"
-        redirect_to :action => "view_user", :id => user.id
+        if not user_status.blank?
+          user = User.first(:conditions => ['id = ?', post.user_id])
+          user.update_attribute(:status, user_status)
+          flash[:notice] = "Post status set to: #{status} and user status set to: #{user_status}"
+        else
+          flash[:notice] = "Post status set to: #{status}"
+        end 
+        redirect_to admin_user_path(post.user_id)
       end
     end
   end
