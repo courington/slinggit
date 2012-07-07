@@ -91,12 +91,11 @@
         <%= link_to "Suspend", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, class: "btn_yellow col6 .offset1 pull_left", confirm: "Suspend: You sure?" %>
 
       <% elsif current_user.is_admin? && !current_user?(@user) && @user.is_suspended? %>
-        <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, class: "btn_green col6 pull_left", confirm: "Re-enable: You sure?" %>
-        <%= link_to "delete", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
+        <%= link_to "Reenable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, class: "btn_green col6 pull_left", confirm: "Re-enable: You sure?" %>
+        <%= link_to "Ban", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, class: "btn_yellow col6 .offset1 pull_left", confirm: "Ban: You sure?" %>
   
       <% elsif current_user.is_admin? && !current_user?(@user) && @user.is_banned? %>
-        <strong>It looks like we have deleted this user.</strong>
-        <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, confirm: "Re-enable: You sure?" %>
+        <%= link_to "Reenable", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "ACT"}, class: "btn_green col6 pull_left", confirm: "Re-enable: You sure?" %>
   
       <% end %>
     </div>
