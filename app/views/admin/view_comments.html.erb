@@ -16,7 +16,7 @@
       <% @comments.each do |comment| %>
         <tr>
           <td><%= comment.id %></td>
-          <td><%= link_to comment.body, {:controller => :admin, :action => :view_comment, :id => comment.body} %></td>
+          <td><%= link_to comment.body, {:controller => :admin, :action => :view_comment, :id => comment.id} %></td>
           <td><%= link_to comment.post.hashtag_prefix, {:controller => :admin, :action => :view_post, :id => comment.post.id} %></td>
           <td><%= link_to comment.user.name, {:controller => :admin, :action => :view_user, :id => comment.user.id} %></td>
         </tr>
