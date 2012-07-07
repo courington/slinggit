@@ -68,6 +68,8 @@ class AdminController < ApplicationController
 
   def view_user
     @user = User.first(:conditions => ['id = ?', params[:id]])
+    @userposts = @user.posts.paginate(page: params[:page], :per_page => 10)
+    @usercomments = @user.comments.paginate(page: params[:page], :per_page => 10)
   end
 
   def view_post
