@@ -81,9 +81,11 @@ SlinggitWebapp::Application.routes.draw do
   match 'mobile(/:action)(/:id)', :to => 'mobile#action#id'
 
   ##ADMIN CONTROLLER##
-  match 'admin' => 'admin#index'
+  match 'admin' => 'admin#index', :as => :admin_dashboard
   # CMK: added this for more convenient redirect with user destroy/suspend/reenable actions
   match 'admin/users' => 'admin#view_users', :as => :admin_users
+  match 'admin/view_database', to: 'admin#view_database', as: :admin_database
+  match 'admin//problem_reports', to: 'admin#problem_reports', as: :admin_problem_reports
   match 'admin(/:action(/:id))' => 'admin#action#id'
 
   ##TEST CONTROLLER##
