@@ -39,6 +39,9 @@
     <% if is_signed_in_and_admin? && !current_user?(@user)%>
     <div class="row adminActions">
       <!-- ADMIN ONLY FUNCTIONALITY -->
+
+      <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :resource => post} %>
+
         <%= link_to "DELETE and SUSPEND USER", {:controller => :admin, :action => :set_post_status, :id => post.id, :status => "DEL", :user_status => "SUS"}, confirm: "Delete Post: You sure?", class: "col2 btn_darkGrey" %>
 
         <%= link_to "DELETE and BAN USER", {:controller => :admin, :action => :set_post_status, :id => post.id, :status => "DEL", :user_status => "BAN"}, confirm: "Delete Post: You sure?", class: "col2 btn_darkGrey" %> 

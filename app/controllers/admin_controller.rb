@@ -87,6 +87,18 @@ class AdminController < ApplicationController
     end
   end
 
+  def go_to_admin_resource
+    resource = params[:resource]
+    #debugger
+    if resource.instance_of? User
+      redirect_to admin_user_path(resource.id)
+    elsif resource.instance_of? Post
+      redirect_to admin_post_path(resource.id)
+    elsif resource.instance_of? Comment
+      redirect_to admin_comment_path(resource.id)
+    end
+  end
+
   def set_user_status
     user = User.first(:conditions => ['id = ?', params[:id]])
     status = params[:status]
