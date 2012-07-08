@@ -93,6 +93,10 @@ SlinggitWebapp::Application.routes.draw do
   ##BACKEND CONTROLLER##
   match 'backend/post_monitor', :to => 'backend#post_monitor'
 
+  ##SITE MODES##
+  match '/maintenence', to: 'static_pages#maintenence', :as => 'maintenence'
+  match '/over_capacity', to: 'static_pages#over_capacity', :as => 'over_capacity'
+
   match '*path', :to => 'application#redirect'
   # The priority is based upon order of creation:
   # first created -> highest priority.
