@@ -1,13 +1,32 @@
-<section class="row wrapper">
+<section class="row wrapper adminSection">
+
+	<div class="white_well col2 pull_right">
+	    <div class="row admin_controlls">
+	    	<% if @comment.status == "ACT" or @comment.status == "BAN" %>
+	    		<%= link_to "Delete", {:controller => :admin, :action => :set_comment_status, :id => @comment.id, :status => "DEL" }, confirm: "Delete Post: You sure?", class: "col6 btn_red" %>
+
+	    	<% elsif @comment.status == "DEL" %>
+	    		<%= link_to "Reenable", {:controller => :admin, :action => :set_comment_status, :id => @comment.id, :status => "ACT" }, confirm: "Reenable Post: You sure?", class: "col6 btn_green" %>
+
+	    	<% end %>
+	    </div>
+	</div>
+
 	<div class="white_well col4">
+
 		<header class="row">
 			<h1>Comment (<%= @comment.id %>)</h1>
 		</header>
 		<article class="row">
-			<p><%= @comment.body %>
-		</article>
-		<div class="row admin_controlls">
+			<div class="col3 pull_left">
+				<p><%= @comment.body %>
+			</div>
 
-		</div>
+			<div class="col3 pull_right">
+				<h4>Comment by: <%= link_to @comment.user.name, admin_user_path(@comment.user_id) %></h4>
+			</div>
+
+		</article>
+
 	</div>
 </section>

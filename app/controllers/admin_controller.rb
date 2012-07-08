@@ -139,6 +139,17 @@ class AdminController < ApplicationController
     end
   end
 
+  def set_comment_status
+    comment = Comment.first(:conditions => ['id = ?', params[:id]])
+    status = params[:status]
+    if not comment.blank?
+      if comment.update_attribute(:status, status)
+        flash[:notice] = "Comment (#{comment.id}) status set to: #{status}"
+        redirect_to admin_user_path(commend.user_id)
+      end
+    end
+  end
+
   def eradicate_all_from_image
     if request.post?
       Post.transaction do
