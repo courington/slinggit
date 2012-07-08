@@ -6,7 +6,7 @@
 	    		<%= link_to "Delete", {:controller => :admin, :action => :set_comment_status, :id => @comment.id, :status => "DEL" }, confirm: "Delete Post: You sure?", class: "col6 btn_red" %>
 
 	    	<% elsif @comment.status == "DEL" %>
-	    		<%= link_to "Reenable", {:controller => :admin, :action => :set_comment_status, :id => @comment.id, :status => "ACT" }, confirm: "Reenable Post: You sure?", class: "col6 btn_green" %>
+	    		<%= link_to "Allow", {:controller => :admin, :action => :set_comment_status, :id => @comment.id, :status => "ACT" }, confirm: "Reenable Post: You sure?", class: "col6 btn_green" %>
 
 	    	<% end %>
 	    </div>

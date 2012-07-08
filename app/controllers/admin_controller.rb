@@ -145,7 +145,7 @@ class AdminController < ApplicationController
     if not comment.blank?
       if comment.update_attribute(:status, status)
         flash[:notice] = "Comment (#{comment.id}) status set to: #{status}"
-        redirect_to admin_user_path(commend.user_id)
+        redirect_to admin_user_path(comment.user_id)
       end
     end
   end
