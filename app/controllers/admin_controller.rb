@@ -89,13 +89,13 @@ class AdminController < ApplicationController
 
   def go_to_admin_resource
     resource = params[:resource]
-    #debugger
-    if resource.instance_of? User
-      redirect_to admin_user_path(resource.id)
-    elsif resource.instance_of? Post
-      redirect_to admin_post_path(resource.id)
-    elsif resource.instance_of? Comment
-      redirect_to admin_comment_path(resource.id)
+    resource_id = params[:id]
+    if resource == "user"
+      redirect_to admin_user_path(resource_id)
+    elsif resource == "post"
+      redirect_to admin_post_path(resource_id)
+    elsif resource == "comment"
+      redirect_to admin_comment_path(resource_id)
     end
   end
 

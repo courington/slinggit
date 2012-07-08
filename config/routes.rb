@@ -86,9 +86,9 @@ SlinggitWebapp::Application.routes.draw do
   match 'admin/users' => 'admin#view_users', :as => :admin_users
   match 'admin/users(/:id)' => 'admin#view_user#id', :as => :admin_user
   match 'admin/posts' => 'admin#view_posts', :as => :admin_posts
-  match 'admin/post(/:id)', to: 'admin#post#id', :as => :admin_post
+  match 'admin/post(/:id)', to: 'admin#view_post#id', :as => :admin_post
   match 'admin/comments' => 'admin#view_comments', :as => :admin_comments
-  match 'admin/comment(/:id)', to: 'admin#comment#id', :as => :admin_comment
+  match 'admin/comment(/:id)', to: 'admin#view_comment#id', :as => :admin_comment
   match 'admin/view_database', to: 'admin#view_database', as: :admin_database
   match 'admin/problem_reports', to: 'admin#problem_reports', as: :admin_problem_reports
   match 'admin(/:action(/:id))' => 'admin#action#id'
