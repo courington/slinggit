@@ -24,6 +24,8 @@
 
 			<div class="col3 pull_right">
 				<h4>Comment by: <%= link_to @comment.user.name, admin_user_path(@comment.user_id) %></h4>
+				<h4>Belongs to Post: <%= link_to @comment.post.hashtag_prefix, admin_post_path(@comment.post_id) %></h4>
+				<h4>Posted at: <%= link_to @comment.post.hashtag_prefix, post_path(@comment.post_id) %></h4>
 			</div>
 
 		</article>
