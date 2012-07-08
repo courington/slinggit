@@ -281,7 +281,7 @@ class ApplicationController < ActionController::Base
       when :live
         #just be
       when :live_invitation_only
-        if not signed_in? and params[:controller] == 'users' and params[:action] == 'new'
+        if not signed_in? and [new_user_path, root_path].include? request.path
           redirect_to request_invitation_path
         end
       when :maintenence
@@ -320,14 +320,6 @@ class ApplicationController < ActionController::Base
       end
     end
     return true
-  end
-
-  def invite_only_home_redirect
-    if not signed_in?
-      if invite_only?
-        redirect_to request_invitation_path
-      end
-    end
   end
 
   def non_suspended_user
