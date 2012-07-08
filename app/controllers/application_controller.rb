@@ -39,8 +39,16 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def site_mode
+    if not system_preferences[:site_mode].blank?
+      return system_preferences[:site_mode].to_sym
+    else
+      return :live
+    end
+  end
+
   def invite_only?
-    if system_preferences[:invitation_only] and system_preferences[:invitation_only] == "on"
+    if site_mode == :live_invite_only
       return true
     else
       return false
@@ -268,6 +276,27 @@ class ApplicationController < ActionController::Base
   ##       BEFORE FILTERS       ##
   ################################
 
+  def setup_mode
+    case site_mode
+      when :live
+        #just be
+      when :live_invitation_only
+        if not signed_in? and params[:controller] == 'users' and params[:action] == 'new'
+          redirect_to request_invitation_path
+        end
+      when :maintenence
+        redirect_to maintenence_path
+      when :over_capacity
+        redirect_to over_capacity_path
+    end
+  end
+
+  def set_cache_buster
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+  end
+
   def verify_good_standing
     if signed_in?
       # suspended users are allowed to login, they're just notified that their accounts are suspeneded.
@@ -311,7 +340,7 @@ class ApplicationController < ActionController::Base
 
   def user_verified
     ## This method should not be used with a non-signed in user, becuase it doesn't make any
-    ## sense to.  So, I'm not checking for signed in users here, only that their email is 
+    ## sense to.  So, I'm not checking for signed in users here, only that their email is
     ## verified.
     if signed_in?
       if current_user.email_is_verified?
