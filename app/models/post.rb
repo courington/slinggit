@@ -47,7 +47,7 @@ class Post < ActiveRecord::Base
   #validates_attachment_presence :photo
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg', 'image/x-png']
 
-  default_scope order: 'posts.updated_at DESC'
+  default_scope order: 'posts.created_at DESC'
 
   def create_post_history
     if not self.id.blank?
@@ -71,6 +71,16 @@ class Post < ActiveRecord::Base
     end  
   end 
 
+  def hashtag_prefix=(prefix)
+    prefix.gsub!(' ', '') if prefix.is_a?(String)
+    self[:hashtag_prefix] = prefix
+  end
+
+  def location=(loc)
+    loc.gsub!(' ', '') if loc.is_a?(String)
+    self[:location] = loc
+  end
+
   def root_photo_path
     "#{POST_PHOTO_DIR}/posts/#{self.id}"
   end
@@ -82,6 +92,10 @@ class Post < ActiveRecord::Base
   def is_active?
     self.status == STATUS_ACTIVE
   end  
+
+  def is_banned?
+    self.status == STATUS_BANNED
+  end
 
   def is_deleted?
     self.status == STATUS_DELETED

@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @posts = Post.paginate(page: params[:page], :per_page => 2, :conditions => ['open = ? AND status != ?', true, STATUS_DELETED], :order => 'id desc')
+    @posts = Post.paginate(page: params[:page], :per_page => 4, :conditions => ['open = ? AND status = ?', true, STATUS_ACTIVE], :order => 'id desc')
     if signed_in?
       @primary_twitter_account = ApiAccount.first(:conditions => ['user_id = ? AND status = ?', current_user.id, STATUS_PRIMARY])
     end
@@ -29,7 +29,7 @@ class StaticPagesController < ApplicationController
             end
             reply_to = @email
             UserMailer.generic_internal_email(to, from, subject, content, reply_to).deliver
-            flash.now[:success] = "Thank you much for your inquiry.  An email has been passed along to the Slinggit team."
+            flash.now[:success] = "Thanks so much for your inquiry.  An email has been passed along to the Slinggit team."
             @name = @email = @message = ''
           else
             flash.now[:error] = "We would be tickled pink if you could throw together a quick message for us."

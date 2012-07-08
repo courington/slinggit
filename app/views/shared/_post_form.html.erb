@@ -53,10 +53,10 @@
           <%= f.label :photo, "Item Photo (optional):", for: "post_photo", class: "row" %>
           <div class="controls thumbnail pull_left">
             <!--[if lt IE 9]>
-    					<%= f.file_field :photo, class: "iePhoto" %>
-    				<![endif]-->
-            <!--[if gt IE 9]><!-->
               <%= f.file_field :photo %>
+            <![endif]-->
+            <!--[if gt IE 9]><!-->
+              <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
               <a href="#" id="fileSelect">Select a photo</a>
             <!--<![endif]-->
           </div>

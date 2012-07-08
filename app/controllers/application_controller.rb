@@ -39,16 +39,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def site_mode
-    if not system_preferences[:site_mode].blank?
-      return system_preferences[:site_mode].to_sym
-    else
-      return :live
-    end
-  end
-
   def invite_only?
-    if site_mode == :live_invite_only
+    if system_preferences[:invitation_only] and system_preferences[:invitation_only] == "on"
       return true
     else
       return false
@@ -275,21 +267,6 @@ class ApplicationController < ActionController::Base
   ################################
   ##       BEFORE FILTERS       ##
   ################################
-
-  def setup_mode
-    case site_mode
-      when :live
-        #just be
-      when :live_invitation_only
-        if not signed_in? and params[:controller] == 'users' and params[:action] == 'new'
-          redirect_to request_invitation_path
-        end
-      when :maintenence
-        redirect_to maintenence_path
-      when :over_capacity
-        redirect_to over_capacity_path
-    end
-  end
 
   def verify_good_standing
     if signed_in?

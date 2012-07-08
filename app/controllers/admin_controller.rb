@@ -58,14 +58,44 @@ class AdminController < ApplicationController
     @users = User.paginate(page: params[:page], :per_page => 100, :select => 'id,email,name,slug,status,account_reactivation_code,photo_source,created_at')
   end
 
+  def view_posts
+    @posts = Post.paginate(page: params[:page], :per_page => 100)
+  end
+
+  def view_comments
+    @comments = Comment.paginate(page: params[:page], :per_page => 100)
+  end
+
   def view_user
     @user = User.first(:conditions => ['id = ?', params[:id]])
+    @userposts = @user.posts.paginate(page: params[:page], :per_page => 10)
+    @usercomments = @user.comments.paginate(page: params[:page], :per_page => 10)
+  end
+
+  def view_post
+    @post = Post.first(:conditions => ['id = ?', params[:id]])
+  end
+
+  def view_comment
+    @comment = Comment.first(:conditions => ['id = ?', params[:id]])
   end
 
   def view_images
     @image_datas = []
     Post.find_each(:conditions => ['status = ? AND photo_file_name IS NOT NULL', STATUS_ACTIVE], :select => 'id,user_id,photo_file_name,photo_updated_at') do |post|
       @image_datas << {:image_path => post.photo.url(:medium), :post_id => post.id}
+    end
+  end
+
+  def go_to_admin_resource
+    resource = params[:resource]
+    resource_id = params[:id]
+    if resource == "user"
+      redirect_to admin_user_path(resource_id)
+    elsif resource == "post"
+      redirect_to admin_post_path(resource_id)
+    elsif resource == "comment"
+      redirect_to admin_comment_path(resource_id)
     end
   end
 
@@ -76,12 +106,19 @@ class AdminController < ApplicationController
       if user.update_attribute(:status, status)
         if user.posts.any?
           user.posts.each do |post|
-            if status == STATUS_BANNED
-              post.update_attribute(:status, STATUS_DELETED)
-            elsif status == STATUS_SUSPENDED
-              post.update_attribute(:status, STATUS_ACTIVE)
-            elsif status == STATUS_ACTIVE
-              post.update_attribute(:status, STATUS_ACTIVE)
+            # When we ban a user, we'll set the user's posts' status
+            # to BANNED to start.  This will keep the post from showing
+            # up in the UI, but will allow us to reenable posts in bulk
+            # should we ever reenable this user.  We'll reserve the DELETED
+            # status for posts that cannot be updated in bulk 
+            if post.status != STATUS_DELETED
+              if status == STATUS_BANNED
+                post.update_attribute(:status, STATUS_BANNED)
+              elsif status == STATUS_SUSPENDED
+                post.update_attribute(:status, STATUS_ACTIVE)
+              elsif status == STATUS_ACTIVE
+                post.update_attribute(:status, STATUS_ACTIVE)
+              end
             end
           end
         end
@@ -102,10 +139,25 @@ class AdminController < ApplicationController
     user_status = params[:user_status]
     if not post.blank?
       if post.update_attribute(:status, status)
-        user = User.first(:conditions => ['id = ?', post.user_id])
-        user.update_attribute(:status, user_status)
-        flash[:success] = "Post status set to: #{status} and user status set to: #{user_status}"
-        redirect_to :action => "view_user", :id => user.id
+        if not user_status.blank?
+          user = User.first(:conditions => ['id = ?', post.user_id])
+          user.update_attribute(:status, user_status)
+          flash[:notice] = "Post status set to: #{status} and user status set to: #{user_status}"
+        else
+          flash[:notice] = "Post status set to: #{status}"
+        end 
+        redirect_to admin_user_path(post.user_id)
+      end
+    end
+  end
+
+  def set_comment_status
+    comment = Comment.first(:conditions => ['id = ?', params[:id]])
+    status = params[:status]
+    if not comment.blank?
+      if comment.update_attribute(:status, status)
+        flash[:notice] = "Comment (#{comment.id}) status set to: #{status}"
+        redirect_to admin_user_path(comment.user_id)
       end
     end
   end

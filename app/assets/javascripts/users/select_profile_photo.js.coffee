@@ -23,7 +23,7 @@ class PhotoEditor extends PhotoSelector
 
 	events:
 		"click img": "selectPhoto"
-		"click a": "returnPhotos"
+		"click a.col6": "returnPhotos"
 	
 	selectPhoto: (e)->
 		if @selectable

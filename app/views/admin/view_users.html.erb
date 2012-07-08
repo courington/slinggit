@@ -1,30 +1,30 @@
-
 <h1>All users</h1>
 
 <%= will_paginate @users%>
 
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= image_tag user.profile_photo_url %>
-      <%= link_to user.name, {:controller => :admin, :action => :view_user, :id => user.id} %>
-
-      <% if current_user.is_admin? && !current_user?(user) && user.is_active? %>
-      |  <%= link_to "Ban", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
-      |  <%= link_to "suspend", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "SUS"}, confirm: "Suspend: You sure?" %>
-
-      <% elsif current_user.is_admin? && !current_user?(user) && user.is_suspended? %>
-        <strong>User is currently suspended.</strong>
-        <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "ACT"}, confirm: "Re-enable: You sure?" %>
-        |  <%= link_to "delete", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "BAN"}, confirm: "Ban: You sure?" %>
-      
-      <% elsif current_user.is_admin? && !current_user?(user) && user.is_banned? %>
-        <strong>It looks like we have deleted this user.</strong>
-        <%= link_to "renable", {:controller => :admin, :action => :set_user_status, :id => user.id, :status => "ACT"}, confirm: "Re-enable: You sure?" %>
-      
+<section>
+  <table class="admin_table table_bordered table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Username</th>
+        <th>Posts</th>
+        <th>Comments</th>
+        <th>Messages</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= image_tag user.profile_photo_url %></td>
+          <td><%= link_to user.name, {:controller => :admin, :action => :view_user, :id => user.id} %></td>
+          <td>Posts (<%= user.posts.count %>)</td>
+          <td>Comments (<%= user.comments.count %>)</td>
+          <td>Messages </td>
+        </tr>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+    </tbody>
+  </table>
+</section>
 
 <%= will_paginate @users%>

@@ -13,22 +13,6 @@
 		margin: ($font-size * .275) auto;
 		padding-right: .4em;
 	}
-	#photoControlGroup {
-		.row {
-			margin: 0;
-		}
-		> .controls.thumbnail > input[type="file"] {
-			position: absolute;
-			top: -9999px;
-			left: -9999px;
-		}
-		.controls.thumbnail {
-			font-size: $font-size;
-			margin: ($font-size * .25) auto;
-			font-weight: 600;
-			text-decoration: underline;
-		}
-	}
 	#counter_post_hashtag_prefix,
 	#counter_post_content {
 		color: $main-red;
@@ -37,6 +21,29 @@
 		float: right;
 	}
 	
+}
+
+#photoControlGroup {
+	label.row {
+		margin: 0;
+	}
+	//> .controls.thumbnail > input[type="file"] {
+	//	position: absolute;
+	//	top: -9999px;
+	//	left: -9999px;
+	//}
+	.controls.thumbnail {
+		font-size: $font-size;
+		margin: ($font-size * .25) auto;
+		font-weight: 600;
+		text-decoration: underline;
+
+		a{
+			padding-bottom: 10px;
+			text-decoration: underline;
+			color: $main-blue;
+		}
+	}
 }
 
 .postSocialAccount {
