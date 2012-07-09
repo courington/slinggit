@@ -3,7 +3,7 @@ class MobileController < ApplicationController
 
   #filter chain halts with friendly error message for accounts not in good standing
   before_filter :halt_if_banned, :except => [:halt_if_suspended, :user_signup, :user_login, :user_logout, :user_login_status]
-  before_filter :halt_if_suspended, :only => [:add_twitter_account, :add_facebook_account, :create_post, :resubmit_to_post_recipients, :create_post_comment, :send_message, :reply_to_message, :report_abuse, :add_post_to_watch_list]
+  before_filter :halt_if_suspended_or_unverified, :only => [:add_twitter_account, :add_facebook_account, :create_post, :resubmit_to_post_recipients, :create_post_comment, :send_message, :reply_to_message, :report_abuse, :add_post_to_watch_list]
 
   #regular before filters for good standing accounts
   before_filter :set_source
@@ -1815,7 +1815,7 @@ class MobileController < ApplicationController
     end
   end
 
-  def halt_if_suspended
+  def halt_if_suspended_or_unverified
     if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', params[:state], params[:mobile_auth_token]], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status,account_reactivation_code')
         if user.is_suspended?
@@ -1827,6 +1827,14 @@ class MobileController < ApplicationController
               :user_agent => request.user_agent
           )
           return
+        elsif not user.email_is_verified?
+          render_error_response(
+              :error_location => 'global',
+              :error_reason => 'User account had been suspended.',
+              :error_code => '401',
+              :friendly_error => 'That action cannot be performed until you have verified your email address.',
+              :user_agent => request.user_agent
+          )
         end
       end
     end
