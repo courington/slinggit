@@ -23,7 +23,7 @@
 <!-- END POSTS -->
 
 <!-- MESSAGES -->
-				<%= link_to messages_path, class: "col2 pull_left #{'active' if current_page?(current_user)}" do %>
+				<%= link_to messages_path, class: "col2 pull_left #{'active' if current_page?(messages_path)}" do %>
 					<span class="btn_navMessages"></span>
 					<%= "Messages#{(count = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])) > 0 ? ': ' + count.to_s + '' : ''}" %>
 				<% end %>
