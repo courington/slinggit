@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   around_filter :catch_exceptions, :except => [:mobile]
-  before_filter :setup_mode, :except => [:mobile, :admin]
+  before_filter :setup_mode, :except => [:mobile, :admin, :over_capacity, :maintenence]
   before_filter :set_timezone
   before_filter :verify_good_standing, :except => [:mobile, :admin, :suspended_account]
 
