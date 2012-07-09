@@ -794,12 +794,73 @@
 }
 // END 641-800
 
-// 801-960
-@media all and (min-width: 801px) and (max-width: 960px) {
+// 855 and up
+// Droid (and many other android devices) run upto 854px in landscape
+@media all and (min-width: 855px) /*and (max-width: 1024px)*/ {
 // HEADER 
-	header:first-child {
-		nav > .row:nth-of-type(2) > .col4.pull_right {
-			font-size: 14px;
+	#mainHeader {
+			background: $main-blue;
+			#{$ff}box-shadow: $head-shadow;
+			#{$o}box-shadow: $head-shadow;
+			#{$wk}box-shadow: $head-shadow;
+			box-shadow: $head-shadow;
+		.row.wrapper:first-child {
+			background: transparent;
+			#{$ff}box-shadow: none;
+			#{$o}box-shadow: none;
+			#{$wk}box-shadow: none;
+			box-shadow: none;
+			width: $sixCols * 4;
+			float: left;
+		}
+		hgroup {
+			width: $sixCols;
+			min-height: 0;
+			a.row {
+				margin-top: -1em;
+			}
+		}
+		hgroup + .col4.pull_left .nav_dropDown.dropdown-menu,
+		.col2 + .col4.pull_left .nav_dropDown.dropdown-menu {
+			right: auto;
+			top: (($font-size * .675) + 1em);
+		}
+		hgroup + .col4.pull_left > .row > .col2,
+		.col2 + .col4.pull_left > .row > .col2 {
+			width: $sixCols * 2;
+			font-size: ($font-size * .675);
+				.btn_navPosts,
+				.btn_navMessages,
+				.btn_navSettings {
+					display: inline-block;
+					vertical-align: middle;
+					margin: 0 auto;
+				}
+		}
+		.quickSearchLabel {
+			display: none;
+		}
+		.hideSearch {
+			display: inline-block;
+		}
+		#quickSearchWrapper {
+			background: transparent;
+			border-bottom: none;
+			#{$o}box-shadow: none;
+			#{$ff}box-shadow: none;
+			#{$wk}box-shadow: none;
+			box-shadow: none;
+			width: $sixCols * 2;
+			float: right;
+			padding-right: 2.5%;
+			> .col3.pull_right {
+				float: right;
+				margin: -1em 0 0 0;
+				width: 100%;
+				input[name="quickSearch"] {
+				
+				}
+			}
 		}
 	}
 // END HEADER

@@ -37,7 +37,7 @@
 <!-- END SEARCH ICON -->
 
 <!-- DROP DOWN -->
-				<div id="accountDropDown" class="dropdown col2 pull_left #{'active' if current_page?(current_user)} || current_page?(edit_user_path(current_user)) %>">
+				<div id="accountDropDown" class="dropdown col2 pull_left " %>
 					
 					<div class="dropdown-toggle" data-toggle="dropdown">
 						<span class="btn_navSettings"></span>
@@ -100,4 +100,21 @@
         window.quickSearchView()
 				window.initiHeaderSearch()
     });
+
+	$(document).ready(function () {
+		//hide the quick search input field
+		$('#quickSearchWrapper').addClass('hideSearch');
+		
+		$('.quickSearchLabel').click(function (){
+			//check to see if the quicksearch is currently hidden
+			if($('#quickSearchWrapper').hasClass('hideSearch')){
+				$('#quickSearchWrapper').removeClass('hideSearch');
+				$('input#quickSearch').focus();
+			} else {
+				//hide the quick search if it is shown
+				$('#quickSearchWrapper').addClass('hideSearch');
+				$('input#quickSearch').blur();
+			}
+		});
+	});
 </script>
