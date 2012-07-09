@@ -2,8 +2,8 @@ class MobileController < ApplicationController
   include Rack::Utils
 
   #filter chain halts with friendly error message for accounts not in good standing
-  before_filter :halt_if_banned, :except => [:halt_db_changes_if_suspended]
-  before_filter :halt_db_changes_if_suspended, :only => [:add_twitter_account, :add_facebook_account, :create_post, :resubmit_to_post_recipients, :create_post_comment, :send_message, :reply_to_message, :report_abuse]
+  before_filter :halt_if_banned, :except => [:halt_if_suspended, :user_signup, :user_login, :user_logout, :user_login_status]
+  before_filter :halt_if_suspended, :only => [:add_twitter_account, :add_facebook_account, :create_post, :resubmit_to_post_recipients, :create_post_comment, :send_message, :reply_to_message, :report_abuse]
 
   #regular before filters for good standing accounts
   before_filter :set_source
@@ -1710,7 +1710,7 @@ class MobileController < ApplicationController
     end
   end
 
-  def halt_db_changes_if_suspended
+  def halt_if_suspended
     if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status')
         if user.is_suspended?
