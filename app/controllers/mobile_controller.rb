@@ -1817,7 +1817,7 @@ class MobileController < ApplicationController
 
   def halt_if_suspended_or_unverified
     if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', params[:state], params[:mobile_auth_token]], :select => 'user_id')
-      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status,account_reactivation_code')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status,account_reactivation_code,email_activation_code')
         if user.is_suspended?
           render_error_response(
               :error_location => 'global',
