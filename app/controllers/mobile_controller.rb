@@ -1797,8 +1797,8 @@ class MobileController < ApplicationController
 
 #----BEFORE FILTERS----#
   def halt_if_banned
-    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
-      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status')
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', params[:state], params[:mobile_auth_token]], :select => 'user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status,account_reactivation_code')
         if user.is_banned?
           render_error_response(
               :error_location => 'global',
@@ -1814,14 +1814,14 @@ class MobileController < ApplicationController
   end
 
   def halt_if_suspended
-    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
-      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status')
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', params[:state], params[:mobile_auth_token]], :select => 'user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status,account_reactivation_code')
         if user.is_suspended?
           render_error_response(
               :error_location => 'global',
               :error_reason => 'User account had been suspended.',
               :error_code => '401',
-              :friendly_error => "That action cannot be performed while your account is suspended.",
+              :friendly_error => 'That action cannot be performed while your account is suspended.',
               :user_agent => request.user_agent
           )
           return
