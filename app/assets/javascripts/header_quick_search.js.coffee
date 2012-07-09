@@ -5,6 +5,7 @@ class HeaderSearch extends Backbone.View
   initialize: (options) ->
     _.bindAll @
     @$searchBox = $("#quickSearch")
+    @$qsWrapper = $('#quickSearchWrapper')
     @isUp = true
 
   events:
@@ -13,28 +14,18 @@ class HeaderSearch extends Backbone.View
 
   upDown: (e) ->
 
-    if @isUp and @$el.hasClass("headerUp")
-      @$el.removeClass "headerUp"
+    if @isUp and @$qsWrapper.hasClass("hideSearch")
+      @$qsWrapper.removeClass "hideSearch"
       @$searchBox.focus()
       @isUp = false
 
-    else if not @isUp and not @$el.hasClass("headerUp")
+    else if not @isUp and not @$qsWrapper.hasClass("headerUp")
       if @$searchBox.val() isnt ""
         document.location.href = "/posts/results/#{$('#quickSearch').val()}"
       else
         @$searchBox.blur()
-        @$el.addClass "headerUp"
+        @$qsWrapper.addClass "hideSearch"
         @isUp = true
-
-  # Not being used right now, but keeping until we're satified with how it works.
-  setPosition: (e)->
-    @$el.css({"top": "0", "position": "static"})
-    $("html, body").animate
-        scrollTop: "0"
-      , 100
-      , =>
-          @$el.attr "style", ""
-
 
   
 ## Export

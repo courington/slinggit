@@ -1,4 +1,4 @@
-<header id="mainHeader" class="headerUp row">
+<header id="mainHeader" class="row">
   
 <div class="row wrapper">
 <!-- LOGO -->
@@ -83,7 +83,7 @@
 <!-- END ROW WRAPPER -->
 
 <!-- QUICK SEARCH -->
-      <div class="row" id="quickSearchWrapper">
+      <div class="hideSearch row" id="quickSearchWrapper">
         <div class="col3 pull_right">
 			<span class="btn_navSearch"></span>
           <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
@@ -98,23 +98,7 @@
     $(document).ready(function () {
         $('.BTN_nav_dropDown').dropdown()
         window.quickSearchView()
-				window.initiHeaderSearch()
+		window.initiHeaderSearch()
     });
 
-	$(document).ready(function () {
-		//hide the quick search input field
-		$('#quickSearchWrapper').addClass('hideSearch');
-		
-		$('.quickSearchLabel').click(function (){
-			//check to see if the quicksearch is currently hidden
-			if($('#quickSearchWrapper').hasClass('hideSearch')){
-				$('#quickSearchWrapper').removeClass('hideSearch');
-				$('input#quickSearch').focus();
-			} else {
-				//hide the quick search if it is shown
-				$('#quickSearchWrapper').addClass('hideSearch');
-				$('input#quickSearch').blur();
-			}
-		});
-	});
 </script>
