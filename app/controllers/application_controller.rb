@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   around_filter :catch_exceptions, :except => [:mobile]
+  before_filter :setup_mode, :except => [:mobile, :admin]
   before_filter :set_timezone
-  before_filter :verify_good_standing, :except => [:mobile, :admin, :verify_good_standing, :suspended_account]
+  before_filter :verify_good_standing, :except => [:mobile, :admin, :suspended_account]
 
   require "#{Rails.root}/lib/ext/string"
 
@@ -38,8 +39,16 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def site_mode
+    if not system_preferences[:site_mode].blank?
+      return system_preferences[:site_mode].to_sym
+    else
+      return :live
+    end
+  end
+
   def invite_only?
-    if system_preferences[:invitation_only] and system_preferences[:invitation_only] == "on"
+    if site_mode == :live_invite_only
       return true
     else
       return false
@@ -267,6 +276,21 @@ class ApplicationController < ActionController::Base
   ##       BEFORE FILTERS       ##
   ################################
 
+  def setup_mode
+    case site_mode
+      when :live
+        #just be
+      when :live_invitation_only
+        if not signed_in? and [new_user_path, root_path].include? request.path
+          redirect_to request_invitation_path
+        end
+      when :maintenence
+        redirect_to maintenence_path
+      when :over_capacity
+        redirect_to over_capacity_path
+    end
+  end
+
   def set_cache_buster
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
@@ -298,14 +322,6 @@ class ApplicationController < ActionController::Base
     return true
   end
 
-  def invite_only_home_redirect
-    if not signed_in?
-      if invite_only?
-        redirect_to request_invitation_path
-      end
-    end
-  end
-
   def non_suspended_user
     if not current_user.is_suspended?
       return true
@@ -316,7 +332,7 @@ class ApplicationController < ActionController::Base
 
   def user_verified
     ## This method should not be used with a non-signed in user, becuase it doesn't make any
-    ## sense to.  So, I'm not checking for signed in users here, only that their email is 
+    ## sense to.  So, I'm not checking for signed in users here, only that their email is
     ## verified.
     if signed_in?
       if current_user.email_is_verified?

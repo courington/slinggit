@@ -15,16 +15,11 @@
       </header>
 
       <% if is_signed_in_and_admin? && !current_user?(@user) %>
-            <div class="row adminActions">
-              <!-- ADMIN ONLY FUNCTIONALITY -->
-              <% if !@user.is_considered_deleted? %>
-                  <%= link_to "Ban This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "BAN"}, confirm: "Ban: You sure?", class: "btn_darkGrey" %>
-              <% end %>
-              <% if !@user.is_suspended? %>
-                  <%= link_to "Suspend This User", {:controller => :admin, :action => :set_user_status, :id => @user.id, :status => "SUS"}, confirm: "Suspend: You sure?", class: "btn_darkGrey" %>
-              <% end %>
-            </div>
-          <% end %>
+          <div class="row adminActions">
+            <!-- ADMIN ONLY FUNCTIONALITY -->
+              <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
+          </div>
+        <% end %>
     </div>
   </aside>
 <!-- end -->

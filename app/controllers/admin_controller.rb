@@ -87,6 +87,18 @@ class AdminController < ApplicationController
     end
   end
 
+  def go_to_admin_resource
+    resource = params[:resource]
+    resource_id = params[:id]
+    if resource == "user"
+      redirect_to admin_user_path(resource_id)
+    elsif resource == "post"
+      redirect_to admin_post_path(resource_id)
+    elsif resource == "comment"
+      redirect_to admin_comment_path(resource_id)
+    end
+  end
+
   def set_user_status
     user = User.first(:conditions => ['id = ?', params[:id]])
     status = params[:status]
@@ -135,6 +147,17 @@ class AdminController < ApplicationController
           flash[:notice] = "Post status set to: #{status}"
         end 
         redirect_to admin_user_path(post.user_id)
+      end
+    end
+  end
+
+  def set_comment_status
+    comment = Comment.first(:conditions => ['id = ?', params[:id]])
+    status = params[:status]
+    if not comment.blank?
+      if comment.update_attribute(:status, status)
+        flash[:notice] = "Comment (#{comment.id}) status set to: #{status}"
+        redirect_to admin_user_path(comment.user_id)
       end
     end
   end

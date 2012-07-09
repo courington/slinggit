@@ -1,6 +1,4 @@
 class StaticPagesController < ApplicationController
-  before_filter :invite_only_home_redirect, only: [:home]
-
   def home
     @posts = Post.paginate(page: params[:page], :per_page => 4, :conditions => ['open = ? AND status = ?', true, STATUS_ACTIVE], :order => 'id desc')
     if signed_in?

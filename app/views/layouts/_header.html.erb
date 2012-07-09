@@ -59,7 +59,7 @@
 
 						<% if current_user.is_admin? %>
 							<li class="<%= 'active' if current_page?(users_path) %>">
-							<%= link_to "Admin", admin_path %>
+							<%= link_to "Admin", admin_dashboard_path %>
 							</li>
 						<% end %>
                   	</ul>

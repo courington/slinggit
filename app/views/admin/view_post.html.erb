@@ -29,6 +29,7 @@
 			<div class="col3 pull_right">
 				<p><%= @post.content %></p>
 				<h4>Posted by: <%= link_to @post.user.name, {:controller => :admin, :action => :view_user, :id => @post.user_id} %></h4>
+				<h4>Posted at: <%= link_to @post.hashtag_prefix, post_path(@post.id) %></h4>
 			</div>
 		</article>
 

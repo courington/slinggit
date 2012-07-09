@@ -1,6 +1,11 @@
 class MobileController < ApplicationController
   include Rack::Utils
 
+  #filter chain halts with friendly error message for accounts not in good standing
+  before_filter :halt_if_banned, :except => [:halt_if_suspended, :user_signup, :user_login, :user_logout, :user_login_status]
+  before_filter :halt_if_suspended, :only => [:add_twitter_account, :add_facebook_account, :create_post, :resubmit_to_post_recipients, :create_post_comment, :send_message, :reply_to_message, :report_abuse, :add_post_to_watch_list]
+
+  #regular before filters for good standing accounts
   before_filter :set_source
   before_filter :require_post, :except => [:add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account_callback, :finalize_add_facebook_account]
   before_filter :validate_user_agent, :except => [:add_twitter_account, :add_twitter_account_callback, :finalize_add_twitter_account, :add_facebook_account, :add_facebook_account_callback, :finalize_add_facebook_account]
@@ -133,7 +138,7 @@ class MobileController < ApplicationController
   end
 
   def user_logout
-    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,mobile_auth_token')
       mobile_session.update_attribute(:mobile_auth_token, nil)
       render_success_response(
           :logged_in => false
@@ -211,6 +216,93 @@ class MobileController < ApplicationController
       render_error_response(
           :error_location => 'delete_twitter_account',
           :error_reason => 'missing required_paramater - api_account_id',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def add_post_to_watch_list
+    post_id = params[:post_id]
+    if not post_id.blank?
+      if Post.exists?(['id = ?', post_id])
+        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
+          if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+            watchedpost = nil
+            if not user.post_in_watch_list?(post_id)
+              add_to_watchedposts(user, post_id)
+            end
+
+            render_success_response(
+                :watchedpost_id => watchedpost.id,
+            )
+
+          else
+            render_error_response(
+                :error_location => 'add_post_to_watch_list',
+                :error_reason => 'not found - user',
+                :error_code => '404',
+                :friendly_error => 'Oops, something went wrong.  Please try again later.'
+            )
+          end
+        else
+          render_error_response(
+              :error_location => 'add_post_to_watch_list',
+              :error_reason => 'mobile session not found',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'add_post_to_watch_list',
+            :error_reason => 'not found - post',
+            :error_code => '403',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'add_post_to_watch_list',
+          :error_reason => 'missing required_paramater - post_id',
+          :error_code => '403',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+  def remove_post_from_watch_list
+    post_id = params[:post_id]
+    if not post_id.blank?
+      if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
+        if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+          watchedpost = current_user.watchedposts.first(:conditions => ['user_id = ? AND post_id = ?', user.id, post_id])
+          if not watchedpost.blank?
+            watchedpost.destroy
+          end
+
+          render_success_response()
+
+        else
+          render_error_response(
+              :error_location => 'remove_post_from_watch_list',
+              :error_reason => 'not found - user',
+              :error_code => '404',
+              :friendly_error => 'Oops, something went wrong.  Please try again later.'
+          )
+        end
+      else
+        render_error_response(
+            :error_location => 'remove_post_from_watch_list',
+            :error_reason => 'not found - post',
+            :error_code => '403',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'remove_post_from_watch_list',
+          :error_reason => 'missing required_paramater - post_id',
           :error_code => '403',
           :friendly_error => 'Oops, something went wrong.  Please try again later.'
       )
@@ -533,41 +625,6 @@ class MobileController < ApplicationController
     end
   end
 
-  #def get_single_slinggit_post_data
-  #  if not params[:post_id].blank?
-  #    if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
-  #      comments_array = []
-  #      post.comments.each do |comment|
-  #        if comment.status == STATUS_ACTIVE
-  #          comments_array << comment.attributes.merge!(
-  #              :user_name => comment.user.name,
-  #              :created_at_date => comment.created_at.strftime("%m-%d-%Y"),
-  #              :created_at_time => comment.created_at.strftime("%H:%M")
-  #          )
-  #        end
-  #      end
-  #
-  #      render_success_response(
-  #          post.attributes.merge!(:comments => comments_array)
-  #      )
-  #    else
-  #      render_error_response(
-  #          :error_location => 'get_individual_slinggit_post_data',
-  #          :error_reason => 'not found - post',
-  #          :error_code => '404',
-  #          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-  #      )
-  #    end
-  #  else
-  #    render_error_response(
-  #        :error_location => 'get_individual_slinggit_post_data',
-  #        :error_reason => 'missing required_paramater - post_id',
-  #        :error_code => '403',
-  #        :friendly_error => 'Oops, something went wrong.  Please try again later.'
-  #    )
-  #  end
-  #end
-
   def check_limitations
     if not params[:limitation_type].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token])
@@ -796,12 +853,17 @@ class MobileController < ApplicationController
     if not params[:post_id].blank?
       if not params[:comment_body].blank?
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE])
+          if post = Post.first(:conditions => ['id = ? and status = ?', params[:post_id], STATUS_ACTIVE], :select => 'id')
             comment = Comment.create(
                 :post_id => params[:post_id],
                 :user_id => mobile_session.user_id,
                 :body => params[:comment_body]
             )
+
+            if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id')
+              add_to_watchedposts(user, post.id)
+            end
+
             render_success_response(
                 :comment_id => comment.id
             )
@@ -976,6 +1038,7 @@ class MobileController < ApplicationController
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
         if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id], :select => 'id,status')
           post.update_attribute(:status, STATUS_DELETED)
+          Watchedpost.destroy_all(['post_id = ?', post.id])
           render_success_response(
               :post_id => post.id,
               :status => post.status
@@ -1136,6 +1199,11 @@ class MobileController < ApplicationController
             end
 
             if message.save
+
+              if not params[:post_id].blank? and user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id')
+                add_to_watchedposts(user, params[:post_id])
+              end
+
               render_success_response(
                   :message_id => message.id,
                   :email_sent => true
@@ -1586,7 +1654,6 @@ class MobileController < ApplicationController
     end
   end
 
-
   #def send_push_notifications
   #  apns_url = Rails.env == 'development' ? PushNotification::APNS_SANDBOX_HOST : PushNotification::APNS_PRODUCTION_HOST
   #  notifications = PushNotification.all(:conditions => {:status => 'new'})
@@ -1651,6 +1718,11 @@ class MobileController < ApplicationController
 
 
   private
+
+  def add_to_watchedposts(user, post_id)
+    watchedpost = user.watchedposts.build(:post_id => post_id) unless user.post_in_watch_list?(post_id)
+    watchedpost.save unless watchedpost.blank?
+  end
 
   def get_all_slinggit_post_data(filter_data)
     matches = []
@@ -1724,6 +1796,40 @@ class MobileController < ApplicationController
   end
 
 #----BEFORE FILTERS----#
+  def halt_if_banned
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status')
+        if user.is_banned?
+          render_error_response(
+              :error_location => 'global',
+              :error_reason => 'User account had been banned.',
+              :error_code => '401',
+              :friendly_error => 'Your account has been banned for violating our terms of service.',
+              :user_agent => request.user_agent
+          )
+          return
+        end
+      end
+    end
+  end
+
+  def halt_if_suspended
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'status')
+        if user.is_suspended?
+          render_error_response(
+              :error_location => 'global',
+              :error_reason => 'User account had been suspended.',
+              :error_code => '401',
+              :friendly_error => "That action cannot be performed while your account is suspended.",
+              :user_agent => request.user_agent
+          )
+          return
+        end
+      end
+    end
+  end
+
   def validate_request_authenticity
     if not params[:slinggit_access_token] == SLINGGIT_SECRET_HASH
       render_error_response(
