@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
   end
 
   def post_in_watch_list? post_id
-    watched = self.watchedposts.first(:conditions => ['post_id = ?', post_id])
+    watched = self.watchedposts.first(:conditions => ['post_id = ?', post_id], :select => 'id')
     if watched.blank?
       return false
     else
