@@ -1720,8 +1720,10 @@ class MobileController < ApplicationController
   private
 
   def add_to_watchedposts(user, post_id)
-    watchedpost = user.watchedposts.build(:post_id => post_id) unless user.post_in_watch_list?(post_id)
-    watchedpost.save unless watchedpost.blank?
+    if not Post.exists?(:conditions => ['id = ? and user_id = ?', post_id, user.id])
+      watchedpost = user.watchedposts.build(:post_id => post_id) unless user.post_in_watch_list?(post_id)
+      watchedpost.save unless watchedpost.blank?
+    end
   end
 
   def get_all_slinggit_post_data(filter_data)
