@@ -11,10 +11,11 @@ class Photo extends Backbone.View
 		"click #changePhoto": "changePhoto"
 
 	trigger: (e)->
-		if $('#post_photo').length and not _.isUndefined window.FormData
-			$('#post_photo').trigger "click"
-		else if _.isUndefined window.FormData
+		unsupported = ['iPad', 'iPhone', 'iPod']
+		if navigator.platform in unsupported
 			alert "Uploading a photo through the browser is not yet supported on your device or browser."
+		else if $('#post_photo').length
+			$('#post_photo').trigger "click"
 		e.preventDefault();	
 
 	changePhoto: (e)->
