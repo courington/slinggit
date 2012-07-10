@@ -20,10 +20,10 @@
               <fieldset id="photoControlGroup" class="col6 pull_left">
                 <div class="controls thumbnail pull_left">
                   <!--[if lt IE 9]>
-                    <%= f.file_field :photo, class: "iePhoto" %>
+                    <%= f.file_field :photo%>
                   <![endif]-->
                   <!--[if gt IE 9]><!-->
-                    <%= f.file_field :photo %>
+                    <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px"%>
                     <a href="#" id="fileSelect" class="pull_left">Add photo</a>
                   <!--<![endif]-->
                 </div>

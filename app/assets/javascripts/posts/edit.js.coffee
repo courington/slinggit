@@ -19,7 +19,7 @@ class Photo extends Backbone.View
 
 	changePhoto: (e)->
 		e.preventDefault()
-		$(".edit_post").submit()
+		$("#placeholderWrapper").find("form").submit()
 
 	showFile: (el)->
 
