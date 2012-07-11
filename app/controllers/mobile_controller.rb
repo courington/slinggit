@@ -1408,7 +1408,7 @@ class MobileController < ApplicationController
       if not params[:new_password].blank?
         if params[:new_password].length >= 6
           if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-            if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => 'id,password_digest,name,slug')
+            if user = User.first(:conditions => ['id = ?', mobile_session.user_id])
               if user.authenticate(params[:old_password])
                 user.password = params[:new_password]
                 user.password_confirmation = params[:new_password]
