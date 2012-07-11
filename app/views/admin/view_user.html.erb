@@ -32,7 +32,9 @@
 
       <h3>Posts (<%= @userposts.count %>) </h3>
 
+      <div class="row">
       <%= will_paginate @userposts%>
+      </div>
 
         <section>
           <table class="admin_table table_bordered table-striped">
@@ -65,7 +67,10 @@
           </table>
         </section>
 
+        <div class="row">
         <%= will_paginate @userposts%>
+        </div>
+
     </div>
 
     <br>
@@ -74,7 +79,9 @@
 
       <h3>Comments (<%= @usercomments.count %>) </h3>
 
+      <div class="row">
       <%= will_paginate @usercomments%>
+      </div>
 
       <section>
         <table class="admin_table table_bordered table-striped">
@@ -99,7 +106,9 @@
         </table>
       </section>
 
+      <div class="row">
       <%= will_paginate @usercomments%>
+      </div>
     </div>
   </div>
 

@@ -73,6 +73,11 @@ body {
 	float: left;
 }
 
+.well{
+	@include white-well;
+	border: none;
+  	background-color: transparent;
+}
 .grey_well {
 	@include white-well;
   	background-color: $wht;
