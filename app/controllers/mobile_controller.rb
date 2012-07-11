@@ -1726,6 +1726,40 @@ class MobileController < ApplicationController
     end
   end
 
+  def get_watchedposts
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+        watchedposts = Watchedpost.all(:conditions => ['user_id = ?', user.id])
+
+        posts_array = []
+        watchedposts.each do |post|
+          posts_array << post.attributes
+        end
+
+        return_data = {
+            :rows_found => watchedposts.length.to_s,
+            :posts => posts_array
+        }
+
+        render_success_response(return_data)
+      else
+        render_error_response(
+            :error_location => 'get_watchedposts',
+            :error_reason => 'user not found',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_watchedposts',
+          :error_reason => 'mobile session not found',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
   def get_all_slinggit_post_data(filter_data)
     matches = []
     if not filter_data[:search_term].blank?
