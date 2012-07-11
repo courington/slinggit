@@ -546,6 +546,9 @@
 		hgroup {
 			width: $sixCols * .625;
 		}
+		.col2 + .col4.pull_left {
+			float: right;
+		}
 	}
 // END HEADER
 // REQUEST INVITE
@@ -640,6 +643,10 @@
 				
 				}
 			}
+		}
+		hgroup + #header_signUp {
+		width: 85%;
+		margin-left: 0;
 		}
 	}
 // END HEADER
