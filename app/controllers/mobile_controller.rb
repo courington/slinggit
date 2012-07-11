@@ -1040,13 +1040,13 @@ class MobileController < ApplicationController
 
         return_data = []
         watchedposts.each do |post|
-          return_data << post.attributes.merg(
+          return_data << post.attributes.merge!(
               :created_at_time => ms.created_at.strftime("%H:%M"),
               :created_at_date => ms.created_at.strftime("%m-%d-%Y")
           )
         end
         render_success_response(
-          rows_found => watchedposts.lenght,
+          rows_found => watchedposts.length,
           posts => return_data
         )
       else
