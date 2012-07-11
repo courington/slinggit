@@ -7,6 +7,25 @@
 
   <div id="postReplyActions" class="row">
 
+    <aside class="userInfo">
+      <div class="row">
+        <a href="<%= user_path(@user) %>" class="col2 pull_left">      
+          <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
+        </a>
+        <header class="col4 pull_right">
+          <h1 class="bottom_border"><%= @user.name %></h1>
+            <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
+        </header>
+
+        <% if is_signed_in_and_admin? && !current_user?(@user) %>
+            <div class="row adminActions">
+              <!-- ADMIN ONLY FUNCTIONALITY -->
+                <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
+            </div>
+          <% end %>
+      </div>
+    </aside>
+
     <div class="row">
       <%= link_to "Contact Using Slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
     </div>
@@ -37,9 +56,6 @@
       </div> 
     <% end %> 
 
-    <div class="row grey_well">
-      <p>See more <%= link_to "posts by #{@user.name}", user_path(@user.name) %></p>
-    </div> 
 
     <div class="pull_left"><%= link_to "Flag Inappropriate", {:controller => :posts, :action => :report_abuse, :id => @post.id_hash} %>
     </div>

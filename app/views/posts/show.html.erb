@@ -23,16 +23,16 @@
 				<%= render 'posts/post_details' %>
 				<% if @post.open? %>
 					<% if current_user?(@post.user) %>
-						<div id="postControlsWrapper" class="col2 pull_right">
+						<div id="postControlsWrapper" class="col2 pull_left">
 							<%= render 'posts/post_controls' %>
 						</div>
 					<% else %>
-						<div id="postReplyWrapper" class="col2 pull_right">
+						<div id="postReplyWrapper" class="col2 pull_left">
 							<%= render 'posts/post_sidebar' %>
 						</div>
 					<% end %>
 				<% else %>
-					<div id="closedPostWrapper" class="col2 pull_right">
+					<div id="closedPostWrapper" class="col2 pull_left">
 						<%= render 'posts/post_closed_sidebar' %>
 					</div>
 				<% end %>

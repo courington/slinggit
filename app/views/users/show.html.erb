@@ -2,7 +2,7 @@
 <section id="userPostsWrapper" class="wrapper">
 
 <!-- user info -->
-  <aside class="col2 pull_right userInfo">
+  <aside class="col2 pull_left userInfo">
     <div class="white_well row">
       <a href="<%= user_path(@user) %>" class="col2 pull_left">      
         <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
@@ -24,7 +24,7 @@
   </aside>
 <!-- end -->
 
-	<article id="userPosts" class="col4 pull_left white_well">
+	<article id="userPosts" class="col4 pull_right white_well">
     <div class="row title_row">
       <div class="col6 pull_left">
         <div class="row">
