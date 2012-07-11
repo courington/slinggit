@@ -1033,6 +1033,56 @@ class MobileController < ApplicationController
     end
   end
 
+  def get_watchedposts
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+        watchedposts = Watchedpost.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED], :select => 'id,api_source,real_name,image_url,reauth_required,user_id')
+
+        if slinggit_twitter_posting_on?
+          slinggit_twitter_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, Rails.configuration.slinggit_username], :select => 'id,api_source,real_name,image_url,reauth_required,user_id')
+          if not slinggit_twitter_api_account.blank?
+            api_accounts << slinggit_twitter_api_account
+          end
+        end
+
+        api_accounts_array = []
+        api_accounts.each do |api_account|
+          api_accounts_array << {
+              :id => api_account.id.to_s,
+              :api_source => api_account.api_source,
+              :real_name => api_account.real_name,
+              :image_url => api_account.image_url,
+              :reauth_required => api_account.reauth_required,
+              :user_id => api_account.user_id
+          }
+        end
+
+        return_data = {
+            :rows_found => api_accounts.length.to_s,
+            :api_accounts => api_accounts_array
+        }
+
+        render_success_response(return_data)
+
+      else
+        render_error_response(
+            :error_location => 'get_user_api_accounts',
+            :error_reason => 'user not found',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_user_api_accounts',
+          :error_reason => 'mobile session not found',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+
   def delete_post
     if not params[:post_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
@@ -1723,44 +1773,6 @@ class MobileController < ApplicationController
     if not Post.exists?(['id = ? and user_id = ?', post_id, user.id])
       watchedpost = user.watchedposts.build(:post_id => post_id) unless user.post_in_watch_list?(post_id)
       watchedpost.save unless watchedpost.blank?
-    end
-  end
-
-  def get_watchedposts
-    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        watchedposts = Watchedpost.all(:conditions => ['user_id = ?', user.id])
-
-        posts_array = []
-        watchedposts.each do |post|
-          post.attributes.merge!(
-              :created_at_time => post.created_at.strftime("%H:%M"),
-              :created_at_date => post.created_at.strftime("%m-%d-%Y"),
-          )
-          posts_array << post.attributes
-        end
-
-        return_data = {
-            :rows_found => watchedposts.length.to_s,
-            :posts => posts_array
-        }
-
-        render_success_response(return_data)
-      else
-        render_error_response(
-            :error_location => 'get_watchedposts',
-            :error_reason => 'user not found',
-            :error_code => '404',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
-      end
-    else
-      render_error_response(
-          :error_location => 'get_watchedposts',
-          :error_reason => 'mobile session not found',
-          :error_code => '404',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
     end
   end
 
