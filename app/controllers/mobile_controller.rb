@@ -1046,8 +1046,8 @@ class MobileController < ApplicationController
           )
         end
         render_success_response(
-          rows_found => watchedposts.length,
-          posts => return_data
+          :rows_found => watchedposts.length,
+          :posts => return_data
         )
       else
         render_error_response(
