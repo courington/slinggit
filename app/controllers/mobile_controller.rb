@@ -1033,6 +1033,42 @@ class MobileController < ApplicationController
     end
   end
 
+  def get_watchedposts
+    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
+      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
+        watchedposts = Watchedpost.all(:conditions => ['user_id = ?', user.id], :select => 'post_id')
+
+        return_data = []
+        watchedposts.each do |watched_post|
+          post = Post.first(:conditions => ['id = ?', watched_post.post_id])
+          return_data << post.attributes.merge!(
+              :created_at_time => post.created_at.strftime("%H:%M"),
+              :created_at_date => post.created_at.strftime("%m-%d-%Y")
+          )
+        end
+        render_success_response(
+          :rows_found => watchedposts.length,
+          :posts => return_data
+        )
+      else
+        render_error_response(
+            :error_location => 'get_watchedposts',
+            :error_reason => 'user not found',
+            :error_code => '404',
+            :friendly_error => 'Oops, something went wrong.  Please try again later.'
+        )
+      end
+    else
+      render_error_response(
+          :error_location => 'get_watchedposts',
+          :error_reason => 'mobile session not found',
+          :error_code => '404',
+          :friendly_error => 'Oops, something went wrong.  Please try again later.'
+      )
+    end
+  end
+
+
   def delete_post
     if not params[:post_id].blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
@@ -1723,44 +1759,6 @@ class MobileController < ApplicationController
     if not Post.exists?(['id = ? and user_id = ?', post_id, user.id])
       watchedpost = user.watchedposts.build(:post_id => post_id) unless user.post_in_watch_list?(post_id)
       watchedpost.save unless watchedpost.blank?
-    end
-  end
-
-  def get_watchedposts
-    if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-      if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        watchedposts = Watchedpost.all(:conditions => ['user_id = ?', user.id])
-
-        posts_array = []
-        watchedposts.each do |post|
-          post.attributes.merge!(
-              :created_at_time => post.created_at.strftime("%H:%M"),
-              :created_at_date => post.created_at.strftime("%m-%d-%Y"),
-          )
-          posts_array << post.attributes
-        end
-
-        return_data = {
-            :rows_found => watchedposts.length.to_s,
-            :posts => posts_array
-        }
-
-        render_success_response(return_data)
-      else
-        render_error_response(
-            :error_location => 'get_watchedposts',
-            :error_reason => 'user not found',
-            :error_code => '404',
-            :friendly_error => 'Oops, something went wrong.  Please try again later.'
-        )
-      end
-    else
-      render_error_response(
-          :error_location => 'get_watchedposts',
-          :error_reason => 'mobile session not found',
-          :error_code => '404',
-          :friendly_error => 'Oops, something went wrong.  Please try again later.'
-      )
     end
   end
 
