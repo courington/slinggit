@@ -1733,6 +1733,10 @@ class MobileController < ApplicationController
 
         posts_array = []
         watchedposts.each do |post|
+          post.attributes.merge!(
+              :created_at_time => post.created_at.strftime("%H:%M"),
+              :created_at_date => post.created_at.strftime("%m-%d-%Y"),
+          )
           posts_array << post.attributes
         end
 
