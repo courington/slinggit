@@ -12,7 +12,7 @@ class Photo extends Backbone.View
 
 	trigger: (e)->
 		unsupported = ['iPad', 'iPhone', 'iPod']
-		if navigator.platform in unsupported
+		if navigator.platform in unsupported and _.isUndefined window.FileReader
 			alert "Uploading a photo through the browser is not yet supported on your device or browser."
 		else if $('#post_photo').length
 			$('#post_photo').trigger "click"
