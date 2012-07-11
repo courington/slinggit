@@ -1,30 +1,42 @@
 <% provide(:title, @user.name) %>
 <section id="userPostsWrapper" class="wrapper">
 
-<!-- user info -->
-  <aside class="col2 pull_left userInfo">
-    <div class="white_well row">
-      <a href="<%= user_path(@user) %>" class="col2 pull_left">      
-        <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
-      </a>
-      <header class="col4 pull_right">
-        <h1 class="bottom_border"><%= @user.name %></h1>
-          <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
-          <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
-          <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
-      </header>
+  <section class="secondary">
+    <div class="secondary_inner">
 
-      <% if is_signed_in_and_admin? && !current_user?(@user) %>
-          <div class="row adminActions">
-            <!-- ADMIN ONLY FUNCTIONALITY -->
-              <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
-          </div>
-        <% end %>
+        <aside class="userInfo row">
+            <a href="<%= user_path(@user) %>" class="col2 pull_left">      
+              <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
+            </a>
+            <header class="col4 pull_right">
+              <h1 class="bottom_border"><%= @user.name %></h1>
+                <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
+                <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
+                <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
+            </header>
+
+            <% if is_signed_in_and_admin? && !current_user?(@user) %>
+                <div class="row adminActions">
+                  <!-- ADMIN ONLY FUNCTIONALITY -->
+                    <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
+                </div>
+              <% end %>
+        </aside>
+
+        <section class="secondary_actions">
+              <div id="createPostAction" class="row">
+                <% if @passes_limitation != nil and @passes_limitation == true %>
+                  <%= link_to "Create New Post", new_post_path, class: "col6 btn_green" %>
+                <% elsif @passes_limitation[0] == false %>
+                  <p class="row notice_explanation_bubble">Post Limit Reached</p>
+                <% end %>
+              </div>
+        </section>
+
     </div>
-  </aside>
-<!-- end -->
+  </section>
 
-	<article id="userPosts" class="col4 pull_right white_well">
+	<section id="userPosts" class="main">
     <div class="row title_row">
       <div class="col6 pull_left">
         <div class="row">
@@ -48,13 +60,6 @@
               <% if !@user.posts.any? and (@user.primary_twitter_account.blank? or @user.primary_facebook_account.blank?) %>
                 <%= render 'users/add_more_networks' %>
               <% end %>
-              <div id="createPostAction" class="row">
-                <% if @passes_limitation != nil and @passes_limitation == true %>
-                  <%= link_to "Create New Post", new_post_path, class: "col2 btn_green" %>
-                <% elsif @passes_limitation[0] == false %>
-                  <p class="row notice_explanation_bubble">Post Limit Reached</p>
-                <% end %>
-              </div>
               <div id="postsFilters" class="row">
                 <%= link_to "My Posts", current_user, class: "#{"active" if @label == "My"}" %>
                 <%= link_to "Watched Posts", {:controller => :users, :action => :watching}, class: "#{"active" if @label == "Watched"}" %>
@@ -97,7 +102,7 @@
       <% end %>
     </div>
 
-  </article>
+  </section>
 
 </section>
 
