@@ -1040,7 +1040,7 @@ class MobileController < ApplicationController
 
         return_data = []
         watchedposts.each do |watched_post|
-          post = Post.first(:conditions => ['id = ?', post.post_id], :select => 'content,created_at,hashtag_prefix,image_uri,location,open,post_id,price,recipient_api_account_ids,status,user_id')
+          post = Post.first(:conditions => ['id = ?', watched_post.post_id], :select => 'content,created_at,hashtag_prefix,image_uri,location,open,post_id,price,recipient_api_account_ids,status,user_id')
           return_data << post.attributes.merge!(
               :created_at_time => post.created_at.strftime("%H:%M"),
               :created_at_date => post.created_at.strftime("%m-%d-%Y")
