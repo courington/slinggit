@@ -1036,10 +1036,11 @@ class MobileController < ApplicationController
   def get_watchedposts
     if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        watchedposts = Watchedpost.all(:conditions => ['user_id = ?', user.id])
+        watchedposts = Watchedpost.all(:conditions => ['user_id = ?', user.id], :select => 'post_id')
 
         return_data = []
-        watchedposts.each do |post|
+        watchedposts.each do |watched_post|
+          post = Post.first(:conditions => ['id = ?', post.post_id], :select => 'content,created_at,hashtag_prefix,image_uri,location,open,post_id,price,recipient_api_account_ids,status,user_id')
           return_data << post.attributes.merge!(
               :created_at_time => post.created_at.strftime("%H:%M"),
               :created_at_date => post.created_at.strftime("%m-%d-%Y")
