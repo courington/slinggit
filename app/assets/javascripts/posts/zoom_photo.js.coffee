@@ -22,13 +22,15 @@ class PostZoomer extends Backbone.View
 
 	zoomPhoto: (e)->
 		if not @zoomed
-			@$el.empty().append(@$clonedZoomPhoto)
+			$("#postDetailInner").remove()
+			@$el.append(@$clonedZoomPhoto)
 			#@$postImageZoomed.fadeIn(100)
 			@zoomed = true
 
 	hideZoomed: (e)->
 		if @zoomed
-			@$el.empty().append(@clonedInnerDetail)
+			@$clonedZoomPhoto.remove()
+			@$el.append(@clonedInnerDetail)
 			@zoomed = false
 
 
