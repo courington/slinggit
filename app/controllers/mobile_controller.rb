@@ -1036,7 +1036,7 @@ class MobileController < ApplicationController
   def get_watchedposts
     if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
       if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-        watchedposts = Watchedpost.all(:conditions => ['user_id = ? AND status != ?', user.id, STATUS_DELETED])
+        watchedposts = Watchedpost.all(:conditions => ['user_id = ?', user.id])
 
         return_data = []
         watchedposts.each do |post|
