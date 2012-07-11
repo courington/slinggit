@@ -14,158 +14,6 @@
 		max-width: 640px;
 		padding: 0;
 	}
-// HEADER
-	/*body > header.headerUp {
-		top: -3.8em;
-	}
-	body > #mainHeader:focus {
-		top: 0;
-	}
-	body > header.headerTop{
-		top: 0;
-	}
-	body > header.headerHideOnFocus {
-		display: none;
-	}
-	body > header {
-		height: 8.4em;
-		hgroup.col2 {
-			margin: 2.6em 0 0 0;
-			width: 20%;
-			.col2 {
-				width: 100%;
-			}
-			h6.col2 {
-				margin: -.8em 0 0 .6em;
-			}
-		}
-		.row.wrapper {
-			padding-bottom: .2em;
-		}
-		nav.col4.pull_right {
-			width: 80%;
-			margin: -2em 0 0 0;
-			> .row:first-child {
-				display: block;
-				overflow: visible;
-			}
-			> .row > .col4.pull_right > .row > .col2.pull_left:first-child {
-				margin: -1em auto;
-				margin-right: -.25em;
-				width: 30%;
-			}
-			> .row > .col4.pull_right > .row > .col2.pull_left:nth-of-type(2) {
-				width: 39%;
-				a {
-					padding: 1em 5%;
-					.btn_navMessages {
-						display: block;
-						position: relative;
-						left: 1.975em;
-						top: -.2em;
-					}
-				}
-			}
-			#accountDropDown {
-				margin-left: -0.25em;
-			}
-			> .row:last-child {
-				width: 75%;
-				display: inline-block;
-				margin-top: 0;
-				padding-bottom: 0;
-				> .col4.pull_right {
-					margin-left: 0;
-					font-size: .675em;
-					text-align: center;
-					width: 100%;
-					> .row {
-						margin-top: .9em;
-						> .col2 > a, #accountDropDown .BTN_nav_dropDown {
-							display: block;
-							padding: 1em 20%;
-							margin: -.6em auto;
-						}
-					}
-				}
-			}
-			#quickSearchWrapper {
-				width: 100%;
-				margin: .4em 0 0 0;
-				#quickSearch {
-					height: 2em;
-				}
-				.btn_navSearch {
-					background-position: -128px -32px;
-					top: 0;
-				}
-				.quickSearchLabel {
-					display: block;
-				    font-size: .675em;
-				    position: relative;
-				    top: 6.6em;
-				    left: 72%;
-				    width: 25%;
-				    text-align: center;
-				    line-height: 1.2em;
-				    padding: .2em .5em;
-						> span:last-child {
-							display: block;
-							top: 0;
-							position: relative;
-							left: .8em;
-						}
-				}
-			}
-			#accountDropDown .nav_dropDown {
-				@include hardEdge-top;
-				left: -5.6em;
-				width: 9em;
-				margin-top: -($font-size * .675);
-				font-size: $font-size * .875;
-				li:first-child {
-					margin-top: -.05em;
-				}
-				li:last-child {
-					border-top: 1px solid lighten($main-grey, 20%);
-					width: 115%;
-					margin: 0.6em 0 0.3em -7.5%;
-					padding: .7em 30% 0 0;
-					box-shadow: inset 0 1px 0 rgba(($wht), .75);
-				}
-			}
-			div a:link,
-			div a:visited {
-				color: $wht;
-			}
-			.btn_navPosts {
-				@extend .btnNavSprite;
-				background-position: -32px -30px;
-				display: block;
-				margin: .5em auto;
-			}
-			.btn_navSettings {
-				@extend .btnNavSprite;
-				background-position: 0 -31px;
-				margin: .6em auto;
-				display: block;
-			}
-			.BTN_nav_dropDown {
-				position: relative;
-				top: -1.2em;
-			}
-			#header_signIn {
-				margin-top: .7em;
-				font-size: 1.2em;
-				text-align: center;
-				.col1.offset5 {
-					margin: 0;
-					width: auto;
-				}
-			}
-		}
-	}*/
-// END
 // GENERAL CONTENT PAGE LAYOUT
 	.page_contentContainer {
 		//padding-top: 7.8em;
@@ -205,33 +53,6 @@
 		font-weight: 400;
 		text-shadow: none;
 	}
-// END
-// FOOTER
-	/*.pageFoot {
-		.col4.pull_left {
-			width: 100%;
-			float: none;
-			> li {
-				text-align: center;
-			}
-		}
-		.col2.pull_right {
-			float: none;
-			width: $sixCols * 4;
-			margin: ($font-size * .5) 0 ($font-size * .5) $sixCols;
-			> li {
-				float: left;
-			}
-			> li:first-child,
-			> li:last-child {
-				margin: 0;
-				
-			}
-			> li:nth-of-type(2) {
-				margin: 0 ($sixCols * 1.5);
-			}
-		}
-	}*/
 // END
 // ALERTS
 	#explanation_bubble {
@@ -685,51 +506,16 @@
 }
 // END 320-640
 
-// 500-640
+// 480-640
 @media all and (min-width: 480px) and (max-width: 640px) {
 // HEADER
-	body > header:first-child {
-		hgroup.col2 {
-			margin: 1.6em 0 0 0;
-		}
-		nav {
-			overflow: visible;
-			width: 100%;
-			&.col4.pull_right > .row:first-child {
-				width: 50%;
-				float: right;
-				margin: -3.6em 0 0 0;
-			}
-			&.col4.pull_right > .row:last-child {
-				width: 100%;
-				margin:0 0 .4em 0;
-				float: right;
-			}
-			&.col4.pull_right .btn_navMessages {
-				display: block;
-				margin: 0 0 0 2.2em;
-			}
-			.col4.pull_right > .row > .col4.pull_right > .row > .col2.pull_left {
-				margin-left: -.5em;
-			}
-			&.col4.pull_right > .row > .col4.pull_right > .row > .col2 {
-				width: 27%;
-				float: left;
+	#mainHeader {
+		hgroup {
+			width: $sixCols * 1.125;
+			img {
+				margin-top: -.75em;
 			}
 		}
-		.col4.pull_right > .row > .col4.pull_right > .row > .col2.pull_left:first-child,
-		.col4.pull_right > .row > .col4.pull_right > .row > .col2,
-		.col4.pull_right > .row > .col4.pull_right > .row > .col2.pull_left:nth-of-type(2) {
-			width: $sixCols * 2;
-			padding: 0;
-			a .btn_navMessages {
-				left: 0;
-			}
-		}
-	}
-	body > header nav.col4.pull_right {
-	width: 80%;
-	margin: ($font-size) 0 0 0;
 	}
 // END HEADER
 // REQUEST INVITE
@@ -750,23 +536,15 @@
 		}
 	}
 // END REQUEST INVITE
-
 }
-// END 500-640
+// END 480-640
 
 // 641-800
-@media all and (min-width: 641px) and (max-width: 800px) {
+@media all and (min-width: 641px) and (max-width: 854px) {
 // HEADER 
-	body > header:first-child {
-		nav > .row:nth-of-type(2) > .col4.pull_right {
-			font-size: .75em;
-			margin-top: .25em;
-		}
-		.col3 {
-			width: 65%;
-		}
-		.offset3 {
-			margin-left: 35%;
+	#mainHeader {
+		hgroup {
+			width: $sixCols * .625;
 		}
 	}
 // END HEADER
@@ -804,20 +582,19 @@
 			#{$o}box-shadow: $head-shadow;
 			#{$wk}box-shadow: $head-shadow;
 			box-shadow: $head-shadow;
-		.row.wrapper:first-child {
-			background: transparent;
-			#{$ff}box-shadow: none;
-			#{$o}box-shadow: none;
-			#{$wk}box-shadow: none;
-			box-shadow: none;
+		.wrapper > .row:first-child {
 			width: $sixCols * 4;
 			float: left;
 		}
 		hgroup {
-			width: $sixCols;
+			width: ($sixCols * .875);
 			min-height: 0;
 			a.row {
-				margin-top: -1em;
+				margin-top: -.625em;
+			}
+			+ .col4.pull_left {
+				width: 60%;
+				margin-left: 2.5%;
 			}
 		}
 		hgroup + .col4.pull_left .nav_dropDown.dropdown-menu,
@@ -828,7 +605,9 @@
 		hgroup + .col4.pull_left > .row > .col2,
 		.col2 + .col4.pull_left > .row > .col2 {
 			width: $sixCols * 2;
-			font-size: ($font-size * .675);
+			font-size: ($font-size * .5);
+			padding-top: 1em;
+			padding-bottom: .5em;
 				.btn_navPosts,
 				.btn_navMessages,
 				.btn_navSettings {
@@ -852,7 +631,7 @@
 			box-shadow: none;
 			width: $sixCols * 2;
 			float: right;
-			padding-right: 2.5%;
+			padding-left: 10px;
 			> .col3.pull_right {
 				float: right;
 				margin: -1em 0 0 0;
@@ -912,8 +691,28 @@
 	}
 // END REQUEST INVITE
 }
-
 // END 801-960
 
+// 1025 and up
+@media all and (min-width: 1025px) {
+	#mainHeader {
+		.wrapper > .row:first-child {
+			width: $sixCols * 3;
+			float: left;
+		}
+		hgroup + .col4.pull_left > .row > .col2,
+		.col2 + .col4.pull_left > .row > .col2 {
+			width: $sixCols * 2;
+		}
+		hgroup {
+			width: $sixCols;
+			padding-top: 1.125em;
+			+ .col4.pull_left {
+				width: 80%;
+			}
+		}
+	}
+}
+// END 1025 and up
 
 //just a little white space for buffer
