@@ -55,25 +55,28 @@
 			text-align: center;
 			.btn_navPosts {
 				@extend .btnNavSprite;
-				background-position: -32px -32px;
+				background-position: -40px -92px;
 				display: block;
 				margin: 0 auto;
+				&:hover {
+					background-position: -8px -92px;
+				}
 			}
 			.btn_navMessages {
 				@extend .btnNavSprite;
-				background-position: -66px -21px;
+				background-position: -40px -153px;
 				display: block;
 				margin: 0 auto;
 			}
 			.btn_navSearch {
 				@extend .btnNavSprite;
-				background-position: -128px -32px;
+				background-position: -169px -152px;
 				display: block;
 				margin: 0 auto;
 			}
 			.btn_navSettings {
 				@extend .btnNavSprite;
-				background-position: 0 -32px;
+				background-position: -40px -33px;
 				display: block;
 				margin: 0 auto;
 			}
@@ -126,7 +129,7 @@
 			}
 			.btn_navSearch {
 				@extend .btnNavSprite;
-				background-position: -96px -32px;
+				background-position: -169px -152px;
 				position: relative;
 				top: 26px;
 				left: 6px;

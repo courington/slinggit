@@ -41,13 +41,14 @@
 	}
 	.coloradoIcon {
 		@extend .btnNavSprite;
-		background-position: -257px 0;
-		height: 27px;
-		width: 27px;
+		background-position: -296px -152px;
+		height: 16px;
+		width: 16px;
 		+ span {
-			//font-size: $font-size * .75;
+			font-size: $font-size * .5;
 			color: $main-grey;
-			margin-top: .6em;
+			margin-top: $font-size * .125;
+			margin-left: $font-size * .25;
 		}
 	}
 }
