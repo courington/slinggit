@@ -9,568 +9,81 @@
 
 // 320-640
 @media all and (min-width: 320px) and (max-width: 640px) {
-	.wrapper {
-		width: 96%;
-		max-width: 640px;
-		padding: 0;
-	}
-// GENERAL CONTENT PAGE LAYOUT
-	.page_contentContainer {
-		//padding-top: 7.8em;
-		margin-top: 0;
-		padding-top: 4.8em;
-	}
-	.page_contentContainer header:first-child {
-		margin: 0 0 $font-size 0;
-		font-size: $font-size * .5;
-		text-align: center;
-	}
-	.page_contentContainer header p {
-		line-height: 1em;
-		margin: -.975em 0 0 .045em;
-	}
-	.page_contentContainer .posts article:last-child {
-		display: none;
-	}
-	.page_contentContainer .posts article:first-child {
-		float: left;
-		width: 100%;
-	}
-	.page_contentContainer .form_initialFields input[type="text"], .page_contentContainer .form_initialFields input[type="email"], .page_contentContainer .form_initialFields input[type="password"], .page_contentContainer .form_hiddenFields input[type="text"], .page_contentContainer .form_hiddenFields input[type="email"], .page_contentContainer .form_hiddenFields input[type="password"] {
-		width: 95%;
-		float: left;
-	}
- 	.btn {
-		display: block;
-		width: 100%;
-		text-align: center;
-		padding: .6em .4em;
-		font-size: $font-size * 1.2;
-		font-weight: bold;
-		text-shadow: $txt-shdw;
-	}
-	.btn_ltGrey{
-		font-weight: 400;
-		text-shadow: none;
-	}
-// END
-// ALERTS
-	#explanation_bubble {
-		width: 100%;
-	}
-// HOMEPAGE
-	.homepage {
-		> .row {
-			> .col6 {
-				> .row > .col3.offset1{
-					width: 100%;
-					margin-left: 0;
-				}
-				> aside > .col2.offset2.btn_blue {
-					width: 100%;
-					margin-left: 0;
-				}
-			}
-		}
-		.homeSignedIn {
-			> .col4,
-			> .col2 {
-				width: 100%;
-			}
-			.userInfo {
-				padding-left: 0;
-			}
-			h1 {
-				font-size: ($font-size * 1.125);
-			}
-		}
-		.homeNotSignedIn {
-			h1.headline {
-				font-size: ($font-size * 1.75);
-				margin-top: ($font-size * .5);
-			}
-			.col4,
-			.col2 {
-				width: 100%;
-				margin-left: 0;
-			}
-		}
-		.home_featurePost {
-			width: 100%;
-			margin-left: 0;
-		}
-	}
-// END
-// SIGN IN
-	#newSessionWrapper {
-		.col3 {
-			width: 100%;
-		}
-		.offset4 {
-			margin-left: 0;
-		}
-	}
-// END
-// SIGN UP
-	.wrapper_newUser {
-		.col3, .col4, .col2 {
-			width: 100%;
-			display: block;
-		}
-	}
-// END
-// EMAIL REFERENCE PAGE
-		#emailVerificationWrapper{
-			.col3{
-				width: 100%;
-				p{
-					font-size: $font-size * .8;
-				}
-			}
-		}
-// END
-// USER EDIT
-	#editUsers{
-		.col3{
-			width: 100%;
-		}
-	}
-	// style for user show (with list of posts) and post search
-	#userPostsWrapper, #searchPostWrapper, #viewPostsWrapper{
-		&> .col2, &> .col4{
-			@include colNoFloatClearFix;
-		}
-	}
-	#userPostsWrapper, #searchPostWrapper{
 
-		.userInfo{
-			padding-left: 0;
+	// GENERAL CONTENT PAGE LAYOUT
+	@import "320-640/layout/common.css.scss"; 
 
-			
-		}
+	// SHARED
+	// notices
+	@import "320-640/shared/flash_notices.css.scss";
+		
+	// HOMEPAGE
+	@import "320-640/static/home.css.scss";
 
-		#userPosts, #postSearchResults{
-			padding: 20px 10px 20px 10px;
-			.title_row{
-				header{
-					margin-bottom: 0px;
-					padding-bottom: 5px;
-				}
-				.btn_green{
-					width: 100%;
-				}
-				#postsFilters{
-					//text-align: center;
-				}
-				#add_more_networks{
-					.col3{
-						padding-left: 0px;
-						padding-right: 0px;
-						@include colNoFloatClearFix;
-					}
-				}
-			}
-		}
-	}
+	// SIGN IN
+	@import "320-640/static/signin.css.scss";
 
-	// Starting node in _post.html.erb
-	.postArticle{
-		.col1{
-			width: ($sixCols * 2);
+	// SIGN UP
+	@import "320-640/static/signup.css.scss";
 
-			img{
-				width: 80px;
-			}
-		}
-		.col5{
-			padding-left: 0px;
-			width: ($sixCols * 4);
+	// EMAIL REFERENCE PAGE
+	@import "320-640/static/email_verification.css.scss";
 
-			h4{
-				font-size: $font-size * .9;
-			}
+	// USERS
+	@import "320-640/users/show.css.scss";
+	@import "320-640/users/edit.css.scss";
 
-			span{
-				font-size: $font-size * .7;
-				padding-top: 2px;
-				padding-bottom: 2px;
-				padding-left: 12px;
-				padding-right: 12px;
-				margin-top: 0px;
-				margin-left: 10px;
-			}
+	// POSTS
+	@import "320-640/posts/show.css.scss";
+	@import "320-640/posts/new.css.scss";
+	@import "320-640/posts/common.css.scss";
+	@import "320-640/posts/_post.css.scss";
 
-			p{
-				font-size: $font-size * .8;
-			}
-		}
-	}
+	// MESSAGES
+	@import "320-640/messages/show.css.scss";
+	@import "320-640/messages/index.css.scss";
 
-	// styles for post (not comments)
-	#post {
-		.col4, .col2 {
-			@include colNoFloatClearFix;
-		}
-		#postContent{
-			padding: 0px 0px 0px 0px;
+	// SOCIAL NETWORKS
+	@import "320-640/static/social_networks.css.scss";
 
-			.innerHeader {
-				p{
-					text-align: center;
-				}
-			}
+	// REQUEST INVITE
+	@import "320-640/static/request_invite.css.scss";
 
-			#postDetails{
-				.col3.pull_right {
-					width: 35%;
-					.img_border {
-						position: relative;
-						z-index: 9999;
-					}
-				}
-				.col3.pull_left.postInfo {
-				width: 65%;
-				}
-				#postInfo{
-					.col2, .col3{
-						width: auto;
-						float: left;
-					}
-					dl{
-						font-size: $font-size * .8;
-						padding-top: 0px;
-						padding-left: 0px;
-						dt.col2{
-							padding: 3px 3px;
-							width: 54%;
-						}
-						dd{
-							padding: 3px 3px;
-						}
-					}
-				}
+	// ABOUT US PAGE
+	@import "320-640/static/about.css.scss";
 
-				#postDescription{
-					width: 100%;
-					p{
-						font-size: $font-size * .9;
-					}
-					a{
-						width: 30%;
-					}
-				}
-			}// end #postDetails
-			#postReplyWrapper, #postControlsWrapper{
-				padding: 0px 0px 0px 0px;
-				#postReply{
-					padding: 20px 20px 5px 20px;
-				}
-				.innerHeader {
-					p{
-						text-align: left;
-					}
-				}
-			}// end #postReplyWrapper
-			#closedPostWrapper, #postControls{
-				padding: 0px 0px 0px 0px;
-				#closedPost{
-					padding: 20px 20px 20px 20px;
-				}
-			}
-		}// end #post
-		#comments {
-			margin-top: 10px;
+	// CONTACT US PAGE
+	@import "320-640/static/contact.css.scss";	
 
-			#commentContent{
-				p{
-					font-size: $font-size * .7;
-				}
+	// HELP PAGE
+	@import "320-640/static/help.css.scss";
 
-				.comment{
-
-					.col5{
-						margin: 0 !important;
-
-						.timestamp{
-							font-size: $font-size * .5 !important;
-						}
-					}
-				}
-			}
-			#signUpWrapper{
-				p{
-					font-size: $font-size * .8;
-				}
-				.col2{
-					.offset1{
-						margin-left:0px;
-					}
-				}
-				.col4{
-					margin-top: 10px;
-				}
-			}	
-
-		}// end #comments
-	}// end #posts
-	
-// CREATE POST
-	.createPost {
-		.row > article.col4 {
-			width: 100%;
-			display: block;
-		}
-		.userInfo {
-			display: none;
-		}
-		#post_content {
-			width: 100%;
-			height: 4.8em;
-		}
-		#photoControlGroup {
-			width: 100%;
-				> .controls.thumbnail > input[type="file"] &.iePhoto {
-				position: relative;
-				top: 0;
-				left: 0;
-				display: block;
-			}
-		}
-		.postSocialAccount {
-			margin: ($font-size * .25) auto;
-			width: 100%;
-			header {
-				font-size: $font-size * .875;
-				border-bottom: 1px solid $lt-grey;
-				border-top: 1px solid $lt-grey;
-				padding: ($font-size * .25) 0;
-				margin: ($font-size * .25) auto;
-			}
-			> fieldset > label {
-				text-indent: $font-size;
-				> span {
-					//margin-left: 2em;
-					//margin-top: -($font-size * .5);
-				}
-			}
-		}
-	}// End CREAT POST
-	#placeholderWrapper{
-		.controls.thumbnail{
-			font-size: $font-size * .8;
-			a{
-				width: 100%;
-			}
-		}
-	}
-	#post_location {
-		width: 100%;
-	}
-	.form-actions {
-		float: right;
-		&> span {
-			display: block;
-		}
-	}
-// END
-// FLASH NOTICES
-	#success_explanation,
-	#error_explanation,
-	#notice_explanation {
-		width: 98%;
-		text-align: left;
-	} 
-// END
-// SHOW MESSAGE
-	#msgArticles {
-		&.col4, &.pull_left {
-			width: 100%;
-			float: none;
-		}
-	}
-	.message {
-		> .col4, .col2, .pull_left, .pull_right {
-			width:100%;
-			float: none;
-		}
-		> aside {
-			margin-top: ($font-size * .5);
-		}
-	}
-	.messages {
-		article.col4 {
-			width: 100%;
-			padding: 15px;
-
-			.postArticle{
-				padding-left: 0px;
-				padding-right: 0px;
-			}
-		}
-	}
-// END
-// SOCIAL NETWORKS
-	.accounts {
-		.col4, .col2 {
-			width: 100%;
-			display: block;
-		}
-		.col2 {
-			padding-left: 0;
-		}
-		article ul {
-			li {
-				margin-bottom: ($font-size * 1.5);
-				&:first-child {
-				margin-bottom: 0;
-				}
-			}
-			&:last-child li {
-				margin: 1.6em 0;
-				&:first-child {
-					margin-top: .8em;
-				}
-			}
-		}
-		ul.networks_metaData,
-		#account-actions > span {
-			display: none;
-		}
-		ul.col1 {
-			width: 25%;
-		}
-		#account-actions > a:last-child {
-			width: auto;
-		}
-		#account-actions > a:first-child {
-			display: none;
-		}
-	}
-// END
-// REQUEST INVITE
-	.invite_wrapper {
-		h1.headline {
-			font-size: ($font-size * 1.875);
-		}
-		.col1, .col2, .col3, .col4, .col5 {
-			width: 100%;
-		}
-		.offset1, .offset2, .offset3, .offset4, .offset5 {
-			margin-left: 0;
-		}
-		.pull_left, .pull_right {
-			clear: both;
-			float: none;
-		}
-		input[type="password"], input[type="email"], input[type="text"] {
-			height: 2.6em;
-		}
-	}
-//END
-// ABOUT US PAGE
-	.aboutUs {
-		.col3 {
-			width: 100%;
-		}
-	}
-//END
-// CONTACT US PAGE
-	.contactUs {
-		.col4 {
-			width: 100%;
-		}
-		.offset1 {
-			margin-left: 0;
-		}
-	}
-//END
-// HELP PAGE
-	.getHelp {
-		> .col3.grey_well {
-			width: 100%;
-			background-color: none;
-			border: none;
-			padding: 0;
-		}
-	}
-// END
-
-// ADMIN STUFF
-.adminSection{
-	.white_well.col2, .white_well.col4{
-		@include colNoFloatClearFix;
-	}
-}
-// END ADMIN STUFF
+	// ADMIN STUFF
+	@import "320-640/admin/common.css.scss";
 
 }
 // END 320-640
 
 // 480-640
 @media all and (min-width: 480px) and (max-width: 640px) {
-// HEADER
-	#mainHeader {
-		hgroup {
-			width: $sixCols * 1.125;
-			img {
-				margin-top: -.75em;
-			}
-		}
-	}
-// END HEADER
-// REQUEST INVITE
-	.invite_wrapper {
-		article{
-		
-			> #home_slinggitIcons {
-			width: 15%;
-			max-width: none;
-			margin-left: 2.5%;
-			}
-		
-			> .col3.pull_left h3.row {
-			width: 100%;
-			margin-left: 0;
-			}
-		
-		}
-	}
-// END REQUEST INVITE
+
+	// HEADER
+	@import "480-640/layout/header.css.scss";
+
+	// REQUEST INVITE
+	@import "480-640/static/request_invite.css.scss";
+
 }
 // END 480-640
 
 // 641-800
 @media all and (min-width: 641px) and (max-width: 854px) {
-// HEADER 
-	#mainHeader {
-		hgroup {
-			width: $sixCols * .625;
-		}
-		.col2 + .col4.pull_left {
-			float: right;
-		}
-	}
-// END HEADER
-// REQUEST INVITE
-	.invite_wrapper {
-		> .col4,
-		> .col2 {
-			width: 100%;
-		}
-		.homeBuckets {
-			padding-left: 0;
-		}
- 		article .row.grey_well {
-		    width: 100%;
-			p {
-				padding-left: 0;
-			}
-			label {
-				padding-left: 0;
-			}
-		}	
-	}
-// END REQUEST INVITE
+	
+	// HEADER 
+	@import "641-800/layout/header.css.scss";
+
+	// REQUEST INVITE
+	@import "641-800/static/request_invite.css.scss";
 
 }
 // END 641-800
@@ -578,147 +91,22 @@
 // 855 and up
 // Droid (and many other android devices) run upto 854px in landscape
 @media all and (min-width: 855px) /*and (max-width: 1024px)*/ {
-// HEADER 
-	#mainHeader {
-			background: $main-blue;
-			#{$ff}box-shadow: $head-shadow;
-			#{$o}box-shadow: $head-shadow;
-			#{$wk}box-shadow: $head-shadow;
-			box-shadow: $head-shadow;
-		.wrapper > .row:first-child {
-			width: $sixCols * 4;
-			float: left;
-		}
-		hgroup {
-			width: ($sixCols * .875);
-			min-height: 0;
-			a.row {
-				margin-top: -.625em;
-			}
-			+ .col4.pull_left {
-				width: 60%;
-				margin-left: 2.5%;
-			}
-		}
-		hgroup + .col4.pull_left .nav_dropDown.dropdown-menu,
-		.col2 + .col4.pull_left .nav_dropDown.dropdown-menu {
-			right: auto;
-			top: (($font-size * .675) + 1em);
-		}
-		hgroup + .col4.pull_left > .row > .col2,
-		.col2 + .col4.pull_left > .row > .col2 {
-			width: $sixCols * 2;
-			font-size: ($font-size * .5);
-			padding-top: 1em;
-			padding-bottom: .5em;
-				.btn_navPosts,
-				.btn_navMessages,
-				.btn_navSettings {
-					display: inline-block;
-					vertical-align: middle;
-					margin: 0 auto;
-				}
-		}
-		.quickSearchLabel {
-			display: none;
-		}
-		.hideSearch {
-			display: inline-block;
-		}
-		#quickSearchWrapper {
-			background: transparent;
-			border-bottom: none;
-			#{$o}box-shadow: none;
-			#{$ff}box-shadow: none;
-			#{$wk}box-shadow: none;
-			box-shadow: none;
-			width: $sixCols * 2;
-			float: right;
-			padding-left: 10px;
-			> .col3.pull_right {
-				float: right;
-				margin: -1em 0 0 0;
-				width: 100%;
-				input[name="quickSearch"] {
-				
-				}
-			}
-		}
-		hgroup + #header_signUp {
-		width: 85%;
-		margin-left: 0;
-		}
-	}
-// END HEADER
-// REQUEST INVITE
-	.invite_wrapper {
-		article{
-			> #home_slinggitIcons {
-				width: ($sixCols * 1.5);
-				margin-left: ($sixCols * .25);
-				margin-right: ($sixCols * .25);
-			}
-			> .col3.pull_left {
-				width: ($sixCols * 4);
-			}
-			.headline { //.headline_bold {
-				font-size: $font-size * 2.25;
-			}
-			h3.row.headline {
-				font-size: 3.6em;
-			}
-			> .col4.offset1.grey_well {
-				margin-top: 0;
-				margin-left: 0;
-				width: ($sixCols * 2);
-				font-size: ($font-size * .5);
-				clear: left;
-				float: left;
-				.twitIcon {
-					margin-left: $sixCols;
-					margin-right: $sixCols;
-				}
-				.facebookIcon {
-					margin-left: $sixCols;
-				}
-			}
-			> .col4.offset1 {
-				margin-left: 0;
-				margin-top: 0;
-				clear: right;
-				float: right;
-				.row.grey_well {
-					margin: 0;
-					label, p {
-						padding-left: 2.4em;
-					}
-				}
-			}
-		}
-	}
-// END REQUEST INVITE
+
+	// HEADER 
+	@import "855-1024/layout/header.css.scss";
+
+	// REQUEST INVITE
+	@import "855-1024/static/request_invite.css.scss";
+
 }
 // END 801-960
 
 // 1025 and up
 @media all and (min-width: 1025px) {
-	#mainHeader {
-		.wrapper > .row:first-child {
-			width: $sixCols * 3;
-			float: left;
-		}
-		hgroup + .col4.pull_left > .row > .col2,
-		.col2 + .col4.pull_left > .row > .col2 {
-			width: $sixCols * 2;
-		}
-		hgroup {
-			width: $sixCols;
-			padding-top: 1.125em;
-			+ .col4.pull_left {
-				width: 80%;
-			}
-		}
-	}
+
+	// HEADER 
+	@import "1025-UP/layout/header.css.scss";
+
 }
 // END 1025 and up
 
