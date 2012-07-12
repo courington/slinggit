@@ -1,0 +1,22 @@
+.comment{
+	border-bottom: 1px solid $lt-grey;
+	padding: 8px 0 8px;
+	.col1{
+		max-width: 90px;
+	}
+	.col5{
+		padding-left: 10px;
+		margin-top: 10px;
+		.timestamp{
+			font-size: $font-size * .75;
+			line-height: $leading;
+			a{
+				font-weight: 600;
+				color: $dk-grey;
+			}
+		}
+	}
+}
+hr{
+	background-color: green;
+}
