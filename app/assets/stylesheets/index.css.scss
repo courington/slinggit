@@ -13,31 +13,30 @@
 @import "layout/inputs.css.scss";
 @import "layout/alerts.css.scss";
 @import "layout/labelsTagsAndBadges.css.scss";
+@import "layout/dropdown.css.scss";
 
-@import "static_homePage.css.scss";
-@import "static_request_invite.css.scss";
-@import "static_aboutUs.css.scss";
+@import "shared/photo_selector.css.scss";
 
-@import "user_signUp.css.scss";
-@import "user_signin.css.scss";
-@import "user_edit.css.scss";
-@import "user_info.css.scss";
+@import "static/home.css.scss";
+@import "static/request_invite.css.scss";
+@import "static/about.css.scss";
+@import "static/networks.css.scss";
+
+@import "users/signup.css.scss";
+@import "users/signin.css.scss";
+@import "users/edit.css.scss";
+@import "users/_user_info.css.scss";
 @import "users/show.css.scss";
-
-@import "photo_selector.css.scss";
-
-@import "dropdown.css.scss";
 
 @import "posts/show.css.scss";
 @import "posts/new.css.scss";
 @import "posts/_post.css.scss";
 @import "posts/index.css.scss";
 
-@import "networks_manage.css.scss";
+@import "messages/index.css.scss";
+@import "messages/show.css.scss";
 
 @import "admin/admin.css.scss";
-
-@import "messages.css.scss";
 
 //make this guy last
 @import "layout_responsive.css.scss";
