@@ -1,97 +1,101 @@
-// styles for post (not comments)
-#post {
-	.col4, .col2 {
-		@include colNoFloatClearFix;
-	}
-	#postContent{
-		padding: 0px 0px 0px 0px;
+/*
+ *  FILENAME: 320-640/posts/show
+ */
+
+// Using until we decide on offcanvas implementation
+.main, .secondary {
+	@include colNoFloatClearFix;
+}
+
+#postContent{
+
+	#postDetails{
 
 		.innerHeader {
-			p{
-				text-align: center;
+			header{
+				text-align: left;
 			}
 		}
 
-		#postDetails{
-			.col3.pull_right {
-				width: 35%;
-				.img_border {
-					position: relative;
-					z-index: 9999;
-				}
-			}
-			.col3.pull_left.postInfo {
-			width: 65%;
-			}
-			#postInfo{
-				.col2, .col3{
-					width: auto;
-					float: left;
-				}
-				dl{
-					font-size: $font-size * .8;
-					padding-top: 0px;
-					padding-left: 0px;
-					dt.col2{
-						padding: 3px 3px;
-						width: 54%;
-					}
-					dd{
-						padding: 3px 3px;
-					}
-				}
-			}
-
-			#postDescription{
-				width: 100%;
-				p{
-					font-size: $font-size * .9;
-				}
-				a{
-					width: 30%;
-				}
-			}
-		}// end #postDetails
-		#postReplyWrapper, #postControlsWrapper{
-			padding: 0px 0px 0px 0px;
-			#postReply{
-				padding: 20px 20px 5px 20px;
-			}
-			.innerHeader {
-				p{
-					text-align: left;
-				}
-			}
-		}// end #postReplyWrapper
-		#closedPostWrapper, #postControls{
-			padding: 0px 0px 0px 0px;
-			#closedPost{
-				padding: 20px 20px 20px 20px;
+		.col3.pull_right {
+			width: 35%;
+			.img_border {
+				position: relative;
+				z-index: 9999;
 			}
 		}
-	}// end #post
-	#comments {
-		margin-top: 10px;
-
-		#commentContent{
-			p{
-				font-size: $font-size * .7;
-			}
-
+		.col3.pull_left.postInfo {
+		width: 65%;
 		}
-		#signUpWrapper{
-			p{
+		#postInfo{
+			.col2, .col3{
+				width: auto;
+				float: left;
+			}
+			dl{
 				font-size: $font-size * .8;
-			}
-			.col2{
-				.offset1{
-					margin-left:0px;
+				padding-top: 0px;
+				padding-left: 0px;
+				dt.col2{
+					padding: 3px 3px;
+					width: 54%;
+				}
+				dd{
+					padding: 3px 3px;
 				}
 			}
-			.col4{
-				margin-top: 10px;
-			}
-		}	
+		}
 
-	}// end #comments
-}// end #posts
+		#postDescription{
+			width: 100%;
+			p{
+				font-size: $font-size * .9;
+			}
+			a{
+				width: 30%;
+			}
+		}
+	}// end #postDetails
+	#postReplyWrapper, #postControlsWrapper{
+		padding: 0px 0px 0px 0px;
+		#postReply{
+			padding: 20px 20px 5px 20px;
+		}
+		.innerHeader {
+			p{
+				text-align: left;
+			}
+		}
+	}// end #postReplyWrapper
+	#closedPostWrapper, #postControls{
+		padding: 0px 0px 0px 0px;
+		#closedPost{
+			padding: 20px 20px 20px 20px;
+		}
+	}
+}// end #post
+
+#comments {
+	margin-top: 10px;
+
+	#commentContent{
+		p{
+			font-size: $font-size * .7;
+		}
+
+	}
+	#signUpWrapper{
+		p{
+			font-size: $font-size * .8;
+		}
+		.col2{
+			.offset1{
+				margin-left:0px;
+			}
+		}
+		.col4{
+			margin-top: 10px;
+		}
+	}	
+
+}// end #comments

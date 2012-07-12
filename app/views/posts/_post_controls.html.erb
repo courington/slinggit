@@ -12,11 +12,15 @@
       <%= form_for(@post) do |f| %>
         <% if @post.open? %>
           <%= f.hidden_field :open, value: false %>
-          <%= f.button "Close", type: "submit", class: "col6 btn_ltGrey", confirm: "Are you sure?  This action cannot be undone!" %>
+          <div class="button-wrapper pull_left col3 first">
+            <%= f.button "Close", type: "submit", class: "col6 btn_ltGrey", confirm: "Are you sure?  This action cannot be undone!" %>
+          </div>
         <% end %>
       <% end %>
 
-      <%= link_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
+      <div class="button-wrapper pull_right col3 last">
+        <%= button_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
+      </div>
 
     <% else %>
       <div id="notice_explanation_bubble" style="width:100%">
