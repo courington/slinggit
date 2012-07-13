@@ -61,6 +61,7 @@ $btn-active-txt: 0 0 8px rgba($black, .75);
 }
 
 // BORDER RADIUS
+$border-width: 1px;
 $radius: ($font-size * .125);
 $side-tl: top-left;
 $side-bl: bottom-left;
@@ -119,10 +120,18 @@ $side-br: bottom-right;
 // -- SHADOWS -- 
 $head-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.25), inset 0 3px 13px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, .15);
 $foot-shadow: 0 -1px 1px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .5);
+$wrapper-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 3px rgba(0, 0, 0, .1);
 
-@mixin white-well {
+@mixin box-shadow($shadow){
+	#{$ff}box-shadow: $shadow;
+	#{$o}box-shadow: $shadow;
+    #{$wk}box-shadow: $shadow;
+   	box-shadow: $shadow;
+}
+
+@mixin white-well($border-width) {
 	background-color: $white;
-	border: 1px solid $lt-grey;
+	border: $border-width solid $lt-grey;
 	padding: 1.5em;
 	@include rounded-corners(5px);
 }
