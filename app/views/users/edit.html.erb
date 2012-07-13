@@ -65,7 +65,7 @@
 	</div>
 	
 	<div class="row">
-		<div id="editUserFormWrapper" class="col3 pull_left">
+		<div id="editUserFormWrapper" class="col3 pull_left white_well">
 			
 		<%= form_for @user do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
@@ -97,7 +97,7 @@
 					<%= f.hidden_field :twitter_asecret, value: session['access_secret'] %>
 	            <% end %>
 
-	              <%= f.submit "Save changes", type: "submit", class: "btn" %>
+	              <%= f.button "Save", type: "submit", class: "btn_green col3" %>
 		<% end %>
 		</div>
 
