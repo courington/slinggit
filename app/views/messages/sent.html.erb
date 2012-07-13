@@ -1,7 +1,15 @@
 <% provide(:title, "Inbox") %>
 <section id="userMessages" class="wrapper">
 
-  <section id="msgArticles" class="col5 pull_left">
+  <section class="secondary">
+    <div class="secondary_inner">
+
+      <%= render 'shared/user_info' %>
+
+    </div>
+  </section>
+
+  <section id="msgArticles" class="main">
 
     <div class="row">
       <header>
