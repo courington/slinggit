@@ -107,7 +107,7 @@ body {
 
 	// Not sure if we want this nested or not.  Leaving it for now
 	.secondary_actions{
-		margin-top: 1.8em;
+		//margin-top: 1.8em;
 	}
 }
 
@@ -165,21 +165,21 @@ body {
 
 //BASIC TYPOGRAPHY
 h1 {
-  font-size: $font-size * 1.6;
+  font-size: $font-size * 1.5;
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
   text-rendering: optimizeLegibility;
-line-height: $leading;
+  line-height: $leading;
 }
 
 h2, h3 {
   font-size: $font-size * 1.4;
-line-height: $leading;
+  line-height: $leading;
 }
 
 h4, h5 {
   font-size: $font-size * 1.2;
-line-height: $leading;
+	line-height: $leading;
 }
 
 h6, p {
