@@ -19,7 +19,7 @@
       <% end %>
 
       <div class="button-wrapper pull_right col3 last">
-        <%= button_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, type: "submit", confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
+        <%= button_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
       </div>
 
     <% else %>

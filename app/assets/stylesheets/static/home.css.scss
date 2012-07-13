@@ -1,3 +1,7 @@
+/*
+ *  FILENAME: static/home
+ */
+
 .homepage {
 	.home_featurePost {
 		margin: ($font-size * .5) auto;
@@ -33,6 +37,25 @@
 		}
 		h2 {
 			font-size: ($font-size * 1.125);
+		}
+	}
+
+	// CMK we'll need to refactor this, but for now..
+	.secondary_inner{
+		.headline{
+			text-align: center;
+			font-size: $font-size * 1;
+		}
+	}
+	.wrong-user {
+		font-size: $font-size * .75;
+		line-height: $leading;
+		margin-top: $font-size;
+		a {
+			color: $main-blue;
+			span {
+				color: $main-grey;
+			}
 		}
 	}
 }

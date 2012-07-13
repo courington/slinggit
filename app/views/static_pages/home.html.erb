@@ -1,79 +1,90 @@
 <% provide(:title, 'Home') %>
 <section class="wrapper homepage">
 
-<!-- if/else for user sign-in/sign-up homepage states -->
-	<div class="row">
-  		
-		<div class="col6">
-			
 <!-- if user is not signed in -->
-      <% if current_user.blank? %>
-			<section class="homeNotSignedIn">
-				
-				<div class="col2 pull_right">
-					<header class="row">
-						<h1 class="headline bottom_border">Welcome to Slinggit.</h1>
-						</header>
-				
-				<div class="row white_well">
-					<h2 class="row bottom_border">The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h2>
-					<div class="row">
-					<% if invite_only? %>
-						<!-- if invites are active -->
-						<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col4 offset1 btn_darkGrey" %>
-					<% else %>
-						<!-- if invites are NOT active -->
-						<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
-					<% end %>
+    <% if current_user.blank? %>
+
+	    <div class="row">	
+			<div class="col6">
+
+				<section class="homeNotSignedIn">
+					
+					<div class="col2 pull_right">
+						<header class="row">
+							<h1 class="headline bottom_border">Welcome to Slinggit.</h1>
+							</header>
+					
+					<div class="row white_well">
+						<h2 class="row bottom_border">The fastest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</h2>
+						<div class="row">
+						<% if invite_only? %>
+							<!-- if invites are active -->
+							<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col4 offset1 btn_darkGrey" %>
+						<% else %>
+							<!-- if invites are NOT active -->
+							<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
+						<% end %>
+						</div>
 					</div>
-				</div>
-				</div>
-				
-				<div class="col4 pull_left">
-					<div class="row">
-						<%= image_tag "heroimages/hero_phone_571x446.jpg", width: "100%", height: "auto", title: "Slinggit on your mobile device", alt: "Hero Phone 571x446" %>
 					</div>
-				</div> 
-			</section>
-<!-- end user not signed in if/else -->
-	
+					
+					<div class="col4 pull_left">
+						<div class="row">
+							<%= image_tag "heroimages/hero_phone_571x446.jpg", width: "100%", height: "auto", title: "Slinggit on your mobile device", alt: "Hero Phone 571x446" %>
+						</div>
+					</div> 
+
+				</section>
+
+			</div> <!-- close col6 -->
+		</div> <!-- close row -->
 
 <!-- if user is signed in -->
 	<% elsif not current_user.blank? %>
-	<div class="row homeSignedIn">
-<!-- USER INFO PARTIAL RENDERS AS .col2 -->
-		<%= render 'shared/user_info' %>
-		<div class="col4 pull_left white_well">
-			<div class="row">
-				<h1 class="headline bottom_border">Welcome back <%= current_user.name %>!</h1>
-				<!-- <p class="pull_left headline"> Have something to Sling?</p> -->
-			</div>
-			<div class="row">
-				<%= link_to "Create New Post", new_post_path, class: "col3 btn_green" %>
-				<%= link_to "View My Posts", current_user, class: "col2 pull_right btn_ltGrey" %>
-			</div>
-			<div class="row">
-				<%= link_to signout_path, method: "delete", class: "pull_right" do %>
-					<span>Not <%= current_user.name %>?</span> Sign Out.
-				<% end %>
-			</div>
-		</div>
-	</div>
-<!-- end the user is signed in if/else -->
-	<% end %>
-	
-<!-- show latest slinggit post -->
-	    <% if !@posts.blank? %>
-	        <article class="row grey_well home_featurePost">
-	            <div  id="featuredPosts" class="col6 white_well">
-					<h1 class="row">Recent Items:</h1>
-					<%= render @posts %>
-				</div>
-	        </article>
-	    <% end %>
-<!-- end -->
 
-<!-- end the homepage sign-in/sign-up if/else -->
-		</div> <!-- close col6 -->
-	</div> <!-- close row -->
+		<section class="secondary">
+    		<div class="secondary_inner">
+
+    			<%= render 'shared/user_info' %>
+
+    		</div>
+
+    		<div class="secondary_inner">
+
+	    		<div class="row">
+					<h1 class="headline bottom_border">Welcome back <%= current_user.name %>!</h1>
+					<!-- <p class="pull_left headline"> Have something to Sling?</p> -->
+				</div>
+				<div class="row">
+					<%= link_to "Create New Post", new_post_path, class: "col6 btn_green" %>
+					<%= link_to "View My Posts", current_user, class: "col6 pull_right btn_ltGrey" %>
+				</div>
+				<div class="row wrong-user">
+					<%= link_to signout_path, method: "delete", class: "pull_right" do %>
+						<span>Not <%= current_user.name %>?</span> Sign Out.
+					<% end %>
+				</div>
+
+    		</div>
+    	</section>
+
+
+
+    	<section class="main">
+
+    		<% if !@posts.blank? %>
+		        <article class="row home_featurePost">
+		            <div  id="featuredPosts" class="col6">
+						<h1 class="row">Recent Items:</h1>
+						<%= render @posts %>
+					</div>
+		        </article>
+		    <% end %>
+
+    	</section>
+
+
+	<% end %>
+
+
 </section>
