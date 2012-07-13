@@ -40,21 +40,23 @@ textarea {
 	box-shadow: $btn-shading;
 	@include rounded-corners($radius);
 	@include transition;
+	-webkit-appearance: none;
 	&:hover,
 	&:focus {
 		box-shadow: $btn-focus;
-		color: darken($wht, 5%);
+		color: $wht;
 		outline:none;
 	}
 	&:active {
 		box-shadow: $btn-active;
-		color: darken($wht, 10%);
+		color: $wht;
 	}
 }
 
 .btn_green {
 	@extend .btn;
-	background: $main-green;
+	background: darken($main-green, 10%);
+	color: $white;
 }
 .btn_blue {
 	@extend .btn;
