@@ -84,12 +84,24 @@ body {
 .secondary{
 	@extend .col2;
 	@extend .pull_left;
-	margin-top: 1em;
+	//margin-top: 1em;
 	padding-right: 1em;
 }
+// Top and bottom I don't really have a use for yet
+// but keeping them for a few
+.secondary-top{
+	margin-top: 1em;
+
+}
+.secondary-bottom{
+	margin-top: 1em;
+}
+// Top and bottom end
+
 .secondary_inner{
 	@extend .white_well;
 	vertical-align: top;
+	margin-top: 1em;
 
 	// Not sure if we want this nested or not.  Leaving it for now
 	.secondary_actions{

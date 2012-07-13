@@ -1,3 +1,7 @@
+/*
+ *  FILENAME: 320-640/layout/common
+ */
+
 .wrapper {
 	width: 96%;
 	max-width: 640px;
@@ -37,6 +41,14 @@
 	font-weight: bold;
 	text-shadow: $txt-shdw;
 }
+.main, .secondary {
+	@include colNoFloatClearFix;
+}
+.secondary{
+	padding-right: 0px;
+}
+
+// Adjustments to font
 .btn_ltGrey{
 	font-weight: 400;
 	text-shadow: none;

@@ -3,9 +3,10 @@
  */
 
 // Using until we decide on offcanvas implementation
-.main, .secondary {
-	@include colNoFloatClearFix;
-}
+// .main, .secondary {
+// 	@include colNoFloatClearFix;
+// }
+// .secondary{}
 
 #postContent{
 
