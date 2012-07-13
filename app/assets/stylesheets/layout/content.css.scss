@@ -78,8 +78,9 @@ body {
 .main{
 	@extend .col4;
 	@extend .pull_right;
-	@extend .white_well;
+	@include white-well;
 	margin-top: 1em;
+	@include box-shadow($wrapper-shadow);
 }
 .secondary{
 	@extend .col2;
@@ -99,9 +100,10 @@ body {
 // Top and bottom end
 
 .secondary_inner{
-	@extend .white_well;
+	@include white-well;
 	vertical-align: top;
 	margin-top: 1em;
+	@include box-shadow($wrapper-shadow);
 
 	// Not sure if we want this nested or not.  Leaving it for now
 	.secondary_actions{
