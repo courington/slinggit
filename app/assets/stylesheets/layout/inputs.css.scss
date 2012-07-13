@@ -40,6 +40,7 @@ textarea {
 	box-shadow: $btn-shading;
 	@include rounded-corners($radius);
 	@include transition;
+	-webkit-appearance: none;
 	&:hover,
 	&:focus {
 		box-shadow: $btn-focus;
