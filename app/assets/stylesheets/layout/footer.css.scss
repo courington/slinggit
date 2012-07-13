@@ -1,12 +1,11 @@
 .pageFoot {
 	clear:both;
-	//font-size: 1em;
+	font-size: ($font-size * .5);
 	box-shadow: $foot-shadow, inset 0 5px 15px rgba(255,255,255,.3);
 	position:relative;
 	z-index:9999;
 	padding-bottom: $font-size;
 		nav {
-			//font-size: $font-size;
 			color: $main-grey;
 			text-shadow: $txt-shdw;
 			margin-top: $font-size * .5;
@@ -22,28 +21,34 @@
 					}	
 				}
 			}
-			.col2.pull_right > li {
-				margin-left: $sixCols/2;
-			}
 		}
 	.footerSignIn {
-		//font-size: $font-size;
 		line-height: $leading;
 		a {
 			color: $main-blue;
 		}
 	}
 	small {
-		//font-size: 1.1em;
 		color: $main-grey;
 		line-height: 1.2em;
 		margin-top: .7em;
 	}
+	.facebookIconSmall,
+	.twitIconSmall_dark,
+	.blogIconSmall {
+		text-indent: 20px;
+		&:visited,
+		&:link {
+			color: lighten($main-grey, 15%);
+		}
+		&:hover,
+		&:focus {
+			color: $main-grey;
+		}
+	}
 	.coloradoIcon {
 		@extend .btnNavSprite;
 		background-position: -296px -152px;
-		height: 16px;
-		width: 16px;
 		+ span {
 			font-size: $font-size * .5;
 			color: $main-grey;

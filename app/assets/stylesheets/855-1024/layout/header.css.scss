@@ -8,6 +8,9 @@
 		width: $sixCols * 4;
 		float: left;
 	}
+	.wrapper > .row {
+		padding-top: .5em;
+	}
 	hgroup {
 		width: ($sixCols * .875);
 		min-height: 0;
