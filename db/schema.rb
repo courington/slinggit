@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120707135050) do
+ActiveRecord::Schema.define(:version => 20120711043011) do
 
   create_table "additional_photos", :force => true do |t|
     t.integer  "user_id"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20120707135050) do
   end
 
   create_table "messages", :force => true do |t|
-    t.integer  "creator_user_id"
+    t.integer  "sender_user_id"
     t.integer  "recipient_user_id"
     t.string   "source"
     t.integer  "source_id"
@@ -104,11 +104,14 @@ ActiveRecord::Schema.define(:version => 20120707135050) do
     t.string   "id_hash"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
-    t.integer  "parent_source_id"
+    t.integer  "parent_id"
+    t.string   "mthread_id"
+    t.string   "recipient_status"
+    t.string   "sender_status"
   end
 
-  add_index "messages", ["creator_user_id"], :name => "index_messages_on_creator_user_id"
   add_index "messages", ["id_hash"], :name => "index_messages_on_id_hash"
+  add_index "messages", ["sender_user_id"], :name => "index_messages_on_creator_user_id"
   add_index "messages", ["source"], :name => "index_messages_on_source"
   add_index "messages", ["status"], :name => "index_messages_on_status"
 
@@ -256,8 +259,8 @@ ActiveRecord::Schema.define(:version => 20120707135050) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "email_activation_code"
     t.string   "time_zone"
+    t.string   "email_activation_code"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"

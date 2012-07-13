@@ -3,7 +3,7 @@
 # Table name: messages
 #
 #  id                :integer         not null, primary key
-#  creator_user_id   :integer
+#  sender_user_id   :integer
 #  recipient_user_id :integer
 #  source            :string(255)
 #  source_id         :integer
@@ -17,7 +17,7 @@
 #
 
 #create_table :messages do |t|
-#  t.integer :creator_user_id
+#  t.integer :sender_user_id
 #  t.integer :recipient_user_id
 #  t.string :source
 #  t.integer :source_id
@@ -28,7 +28,7 @@
 #end
 
 class Message < ActiveRecord::Base
-  attr_accessible :creator_user_id, :recipient_user_id, :source, :source_id, :contact_info_json, :body, :status, :send_email, :parent_source_id
+  attr_accessible :sender_user_id, :recipient_user_id, :source, :source_id, :contact_info_json, :body, :status, :send_email, :parent_source_id
   attr_accessor :send_email
 
   before_create :create_id_hash
@@ -95,9 +95,19 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def creator_user_name
-    if not self.creator_user_id.blank?
-      user = User.first(:conditions => ['id = ?', self.creator_user_id], :select => 'name')
+  def sender_user_name
+    if not self.sender_user_id.blank?
+      user = User.first(:conditions => ['id = ?', self.sender_user_id], :select => 'name')
+      if not user.blank?
+        return user.name
+      end
+    end
+    return nil
+  end
+
+  def recipient_user_name
+    if not self.recipient_user_id.blank?
+      user = User.first(:conditions => ['id = ?', self.recipient_user_id], :select => 'name')
       if not user.blank?
         return user.name
       end
@@ -107,8 +117,8 @@ class Message < ActiveRecord::Base
 
   def from
     from_string = ''
-    if not self.creator_user_id.blank?
-      user = User.first(:conditions => ['id = ?', self.creator_user_id], :select => 'name')
+    if not self.sender_user_id.blank?
+      user = User.first(:conditions => ['id = ?', self.sender_user_id], :select => 'name')
       if not user.blank?
         from_string = user.name
       end
@@ -119,6 +129,54 @@ class Message < ActiveRecord::Base
     end
 
     return from_string
+  end
+
+  def thread_history(current_user)
+    if not self.thread_id.blank?
+      if not @messages.blank?
+        return @messages
+      else
+        @messages = Message.all(:conditions => ['thread_id = ?', self.thread_id], :select => 'id,body,recipient_user_id,sender_user_id,created_at,contact_info_json', :order => 'id desc')
+        if not @messages.blank?
+          @messages.each do |message|
+            if message.recipient_user_id == current_user.id
+              message.update_attribute(:recipient_status, STATUS_READ)
+            end
+          end
+          return @messages
+        else
+          return nil
+        end
+      end
+    else
+      return nil
+    end
+  end
+
+  def last_in_thread
+    if not self.thread_id.blank?
+      if not @last_in_thread.blank?
+        return @last_in_thread
+      else
+        @last_in_thread = Message.first(:conditions => ['thread_id = ?', self.thread_id], :select => 'id,body,recipient_user_id,sender_user_id,created_at', :order => 'id desc')
+        return @last_in_thread
+      end
+    else
+      return nil
+    end
+  end
+
+  def delete_history(current_user, status_column)
+    if not self.thread_id.blank?
+      messages = Message.all(:conditions => ['thread_id = ? AND id != ?', self.thread_id, self.id], :select => 'id,body,recipient_user_id,sender_user_id,created_at')
+      if not messages.blank?
+        messages.each do |messages|
+          messages.update_attribute(status_column, STATUS_DELETED)
+        end
+      end
+    else
+      return nil
+    end
   end
 
 end

@@ -3,14 +3,20 @@ class MessagesController < ApplicationController
   before_filter :user_verified, only: [:index, :show, :new, :create, :delete, :reply]
 
   def index
-    @messages = Message.paginate(page: params[:page], :per_page => 10, :conditions => ['recipient_user_id = ? AND status != ?', current_user.id, STATUS_DELETED], :order => 'id desc, status desc')
-    @unread = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', current_user.id, STATUS_UNREAD])
+    @messages = Message.paginate(page: params[:page], :per_page => 10, :conditions => ['recipient_user_id = ? AND status != ? AND recipient_status != ?', current_user.id, STATUS_ARCHIVED, STATUS_DELETED], :order => 'id desc, status desc', :select => 'thread_id,id,id_hash,body,recipient_status,source_id,source,created_at')
+    @unread = Message.count(:conditions => ['recipient_user_id = ? AND recipient_status = ?', current_user.id, STATUS_UNREAD])
+  end
+
+  def sent
+    @messages = Message.paginate(page: params[:page], :per_page => 10, :conditions => ['sender_user_id = ? AND status != ? AND sender_status != ?', current_user.id, STATUS_ARCHIVED, STATUS_DELETED], :order => 'id desc, status desc', :select => 'thread_id,id,id_hash,body,recipient_status,source_id,source,created_at')
   end
 
   def show
     if not params[:id].blank?
-      if @message = Message.first(:conditions => ['id_hash = ? AND recipient_user_id = ?', params[:id], current_user.id], :select => 'id,status,body,created_at,id_hash,contact_info_json,creator_user_id,source_id,source')
-        @message.update_attribute(:status, STATUS_READ)
+      if @message = Message.first(:conditions => ['id_hash = ? AND (recipient_user_id = ? or sender_user_id = ?) AND status = ?', params[:id], current_user.id, current_user.id, STATUS_ACTIVE], :select => 'id,status,body,created_at,id_hash,contact_info_json,sender_user_id,source_id,source,thread_id,recipient_user_id')
+        if @message.recipient_user_id == current_user.id
+          @message.update_attribute(:recipient_status, STATUS_READ)
+        end
       else
         flash[:error] = "Message not found"
       end
@@ -84,15 +90,20 @@ class MessagesController < ApplicationController
         if params[:message]
           parent_message = Message.first(:conditions => ['id_hash = ? and recipient_user_id = ? AND status != ?', session[:parent_message_id_hash], current_user.id, STATUS_DELETED])
           @message = Message.new(params[:message])
-          @message.creator_user_id = current_user.id
-          @message.recipient_user_id = parent_message.creator_user_id
+          @mesender_user_idser_id = current_user.id
+          @message.recipient_user_id = parent_message.sender_user_id
+          @message.sender_user_id = current_user.id
           @message.source = parent_message.source
           @message.source_id = parent_message.source_id
           @message.contact_info_json = current_user.email
-          @message.parent_source_id = parent_message.id
+          @message.thread_id = parent_message.thread_id
+          @message.status = STATUS_ACTIVE
+          @message.recipient_status = STATUS_UNREAD
+          @message.sender_status = STATUS_UNREAD
           @message.send_email = true
 
           if @message.save
+            parent_message.update_attribute(:status, STATUS_ARCHIVED)
             flash[:success] = "Message has been sent."
             session.delete(:parent_message_id_hash)
             redirect_to :controller => :messages, :action => :index
@@ -124,13 +135,25 @@ class MessagesController < ApplicationController
               end
             end
 
-            @message.creator_user_id = signed_in? ? current_user.id : nil
+            thread_id = Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH + message_post.id.to_s + message_post.user_id.to_s) + (signed_in? ? "_#{current_user.id}" : "_un")
+            @message.sender_user_id = signed_in? ? current_user.id : nil
             @message.recipient_user_id = message_post.user_id
             @message.source = 'post'
             @message.source_id = message_post.id
+            @message.thread_id = thread_id
+            @message.status = STATUS_ACTIVE
+            @message.recipient_status = STATUS_UNREAD
+            @message.sender_status = STATUS_UNREAD
             @message.send_email = true
 
+            if signed_in?
+              last_message_from_user = Message.last(:conditions => ['status = ? AND thread_id = ? AND sender_user_id = ?', STATUS_ACTIVE, thread_id, current_user.id], :select => 'id,status')
+            end
+
             if @message.save
+              if not last_message_from_user.blank?
+                last_message_from_user.update_attribute(:status, STATUS_ARCHIVED)
+              end
               flash[:success] = "Message has been sent."
               session.delete(:message_post_id_hash)
               if signed_in?
@@ -165,25 +188,39 @@ class MessagesController < ApplicationController
   #TODO ajaxify these methods
   def delete
     if not params[:id].blank?
-      if message = Message.first(:conditions => ['id_hash = ? AND recipient_user_id = ?', params[:id], current_user.id], :select => 'id,status')
-        message.update_attribute(:status, STATUS_DELETED)
-        flash[:success] = "Message deleted"
+      if message = Message.first(:conditions => ['id_hash = ? AND (recipient_user_id = ? or sender_user_id = ?)', params[:id], current_user.id, current_user.id], :select => 'id,recipient_status,sender_status,recipient_user_id,thread_id')
+        if message.recipient_user_id == current_user.id
+          message.update_attribute(:recipient_status, STATUS_DELETED)
+          message.delete_history(current_user, :recipient_status)
+          flash[:success] = "Message deleted"
+          redirect_to :action => :index
+        else
+          message.update_attribute(:sender_status, STATUS_DELETED)
+          message.delete_history(current_user, :sender_status)
+          flash[:success] = "Message deleted"
+          redirect_to :action => :sent
+        end
       else
         flash[:error] = "Message not found"
       end
-      redirect_to :action => :index
     end
   end
 
   def delete_all
     if not params[:message_ids].blank?
       params[:message_ids].split(',').each do |message_id_hash|
-        if message = Message.first(:conditions => ['id_hash = ? AND recipient_user_id = ?', message_id_hash, current_user.id], :select => 'id,status')
-          message.update_attribute(:status, STATUS_DELETED)
+        if message = Message.first(:conditions => ['id_hash = ? AND (recipient_user_id = ? or sender_user_id = ?)', message_id_hash, current_user.id, current_user.id], :select => 'id,recipient_status,sender_status,recipient_user_id,thread_id')
+          if message.recipient_user_id == current_user.id
+            @action = :index
+            message.update_attribute(:recipient_status, STATUS_DELETED)
+          else
+            @action = :index
+            message.update_attribute(:sender_status, STATUS_DELETED)
+          end
         end
       end
     end
     flash[:success] = "Messages deleted"
-    redirect_to :action => :index
+    redirect_to :action => @action
   end
 end

@@ -90,6 +90,7 @@ SlinggitWebapp::Application.configure do
   STATUS_READ = "RED"
   STATUS_FAILED = "FAL"
   STATUS_PROCESSING = "PRC"
+  STATUS_ARCHIVED = "ARC"
 
   ## ROLES ##
   ROLE_ADMIN = "ADM"
