@@ -981,14 +981,14 @@ class MobileController < ApplicationController
             starting_message_id = 0 if starting_message_id.blank?
             starting_message_id = starting_message_id.to_i
 
-            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id < ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,creator_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
+            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id < ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,sender_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
             number_unread = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', user.id, STATUS_UNREAD])
             render_success_response(
                 :number_unread => number_unread,
                 :rows_found => messages.length,
                 :filters_used => {:offset => offset, :limit => limit, :starting_message_id => starting_message_id},
                 :messages => messages.map { |m|
-                  m.contact_info_json = (ActiveSupport::JSON.decode(m.contact_info_json)).merge(:user_name => m.creator_user_name)
+                  m.contact_info_json = (ActiveSupport::JSON.decode(m.contact_info_json)).merge(:user_name => m.sender_user_name)
                   source_object = m.source_object(:table => 'Post', :columns => 'status,hashtag_prefix,content')
                   source_object_attributes = nil
                   source_object_attributes = source_object.attributes if not source_object.blank?
@@ -1221,7 +1221,7 @@ class MobileController < ApplicationController
           if recipient = User.first(:conditions => ['id = ? AND status != ?', params[:recipient_user_id].to_i, STATUS_DELETED], :select => 'email')
             message = Message.new(
                 :send_email => true,
-                :creator_user_id => mobile_session.user_id,
+                :sender_user_id => mobile_session.user_id,
                 :recipient_user_id => params[:recipient_user_id].to_i,
                 :contact_info_json => recipient.email,
                 :body => params[:body]
@@ -1293,8 +1293,8 @@ class MobileController < ApplicationController
         if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
           if parent_message = Message.first(:conditions => ['id = ? and recipient_user_id = ?', params[:parent_message_id], mobile_session.user_id])
             message = Message.new(
-                :creator_user_id => mobile_session.user_id,
-                :recipient_user_id => parent_message.creator_user_id,
+                :sender_user_id => mobile_session.user_id,
+                :recipient_user_id => parent_message.sender_user_id,
                 :source => parent_message.source,
                 :source_id => parent_message.source_id,
                 :body => params[:body],
