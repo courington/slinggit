@@ -73,6 +73,42 @@ body {
 	float: left;
 }
 
+// The following few classes represent the two column layout we'll use for most of
+// the app and will be used to help layout new off-canvas design on mobile
+.main{
+	@extend .col4;
+	@extend .pull_right;
+	@extend .white_well;
+	margin-top: 1em;
+}
+.secondary{
+	@extend .col2;
+	@extend .pull_left;
+	//margin-top: 1em;
+	padding-right: 1em;
+}
+// Top and bottom I don't really have a use for yet
+// but keeping them for a few
+.secondary-top{
+	margin-top: 1em;
+
+}
+.secondary-bottom{
+	margin-top: 1em;
+}
+// Top and bottom end
+
+.secondary_inner{
+	@extend .white_well;
+	vertical-align: top;
+	margin-top: 1em;
+
+	// Not sure if we want this nested or not.  Leaving it for now
+	.secondary_actions{
+		margin-top: 1.8em;
+	}
+}
+
 .well{
 	@include white-well;
 	border: none;
@@ -176,7 +212,7 @@ p {
   }
 
 .btnNavSprite {
-	background: url("icons/navigation/primaryNav_sprite_312x48.png") no-repeat 0 0;
+	background: url("icons/navigation/primaryNav_sprite_320x244.png") no-repeat 0 0;
 	display: inline-block;
 	height: 16px;
 	width: 16px;
@@ -184,7 +220,7 @@ p {
 
 .twitIconSmall {
 	@extend .btnNavSprite;
-	background-position: -162px -32px;
+	background-position: -264px -212px;
 	//margin: 2px 2px -2px 0;
 }
 
@@ -204,12 +240,12 @@ p {
 
 .twitIcon_dark {
 	@extend .twitIcon;
-	background-position: -194px 0;
+	background-position: -289px -180px;
 }
 
 .facebookIcon {
 	@extend .btnNavSprite;
-	background-position: -226px 0;
+	background-position: -256px -120px;
 	display: inline-block;
 	height: 32px;
 	width: 32px;
@@ -225,7 +261,7 @@ p {
 
 .slinggitIcon {
 	@extend .btnNavSprite;
-  	background-position: -282px 0;
+  	background-position: -33px -183px;
 	display: inline-block;
 	height: 32px;
 	width: 32px;

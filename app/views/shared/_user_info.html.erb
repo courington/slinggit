@@ -1,13 +1,11 @@
-<aside class="col2 pull_right userInfo">
-	<div class="white_well row">
-		<a href="<%= user_path(current_user) %>" class="col2 pull_left">
-			<%= image_tag current_user.profile_photo_url, :height => "auto", :width => "100%" %>
-		</a>
-		<header class="col4 pull_right">
-			<h1 class="bottom_border"><%= current_user.name %></h1>
-  			<h6><strong>Open Posts (<%= current_user.open_post_count %>)</strong></h6>
-  			<h6>Posts Remaining (<%= (current_user.post_limit) - (current_user.open_post_count) %>)</h6>
-  			<h6>Open Post Limit (<%= current_user.post_limit %>)</h6>
-		</header>
-	</div>
+<aside class="userInfo row">
+	<a href="<%= user_path(current_user) %>" class="col2 pull_left">
+		<%= image_tag current_user.profile_photo_url, :height => "auto", :width => "100%" %>
+	</a>
+	<header class="col4 pull_right">
+		<h1 class="bottom_border"><%= current_user.name %></h1>
+			<h6><strong>Open Posts (<%= current_user.open_post_count %>)</strong></h6>
+			<h6>Posts Remaining (<%= (current_user.post_limit) - (current_user.open_post_count) %>)</h6>
+			<h6>Open Post Limit (<%= current_user.post_limit %>)</h6>
+	</header>
 </aside>

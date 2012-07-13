@@ -70,7 +70,8 @@ textarea {
 }
 .btn_red {
 	@extend .btn;
-	background: $main-red;
+	color: $white;
+	background: darken($main-red, 17%);
 }
 .btn_yellow {
 	@extend .btn;

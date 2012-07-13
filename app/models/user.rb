@@ -109,8 +109,9 @@ class User < ActiveRecord::Base
     # This insures that at least one photo url is returned
     url = "icon_blue_80x80.png"
     if self.photo_source == SLINGGIT_PHOTO_SOURCE
-      slinggit_images = ['icon_blue_80x80.png', 'icon_red_80x80.png', 'icon_green_80x80.png', 'icon_yellow_80x80.png']
-      url = slinggit_images[rand(slinggit_images.length)]
+      #slinggit_images = ['icon_blue_80x80.png', 'icon_red_80x80.png', 'icon_green_80x80.png', 'icon_yellow_80x80.png']
+      #url = slinggit_images[rand(slinggit_images.length)]
+      url = 'icon_blue_80x80.png'
     elsif self.photo_source == TWITTER_PHOTO_SOURCE
       if not self.primary_twitter_account.blank?
         url = self.primary_twitter_account.image_url

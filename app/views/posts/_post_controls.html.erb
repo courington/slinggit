@@ -1,58 +1,59 @@
-<div id="postControls">
+<div id="postContolsActions" class="row">
+
   <div class="row contentHeader">
     <div class="col5 innerHeader">
       <p><strong>Edit post</strong></p>
     </div>  
   </div> 
 
-  <div id="postContolsActions" class="row">
+  <div class="row">
+    <% if not current_user.is_suspended? %>
 
-    <div class="row">
-      <% if not current_user.is_suspended? %>
-
-        <%= form_for(@post) do |f| %>
-          <% if @post.open? %>
-            <%= f.hidden_field :open, value: false %>
+      <%= form_for(@post) do |f| %>
+        <% if @post.open? %>
+          <%= f.hidden_field :open, value: false %>
+          <div class="button-wrapper pull_left col3 first">
             <%= f.button "Close", type: "submit", class: "col6 btn_ltGrey", confirm: "Are you sure?  This action cannot be undone!" %>
-          <% end %>
+          </div>
         <% end %>
-
-        <%= link_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
-
-      <% else %>
-        <div id="notice_explanation_bubble" style="width:100%">
-          You are currently in time out.  As a result of this, you cannot edit this post.
-        </div>
       <% end %>
-    </div>
 
+      <div class="button-wrapper pull_right col3 last">
+        <%= button_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
+      </div>
+
+    <% else %>
+      <div id="notice_explanation_bubble" style="width:100%">
+        You are currently in time out.  As a result of this, you cannot edit this post.
+      </div>
+    <% end %>
   </div>
 
-  
-  <% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC")%>
-    <div id="networkActions" class="row">
-      <div class="row">
-        <div class="col5 innerHeader">
-          <p>Posted on:</p>
-        </div>  
-      </div> 
-
-      <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and @post.open? and not @twitter_account.blank? %>
-        <div class="row">
-          <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b", target: "_blank" do %>
-            Twitter &rarr;
-          <% end %>
-        </div>
-      <% end %>
-
-       <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? and not @facebook_account.blank? %>
-        <div class="row">  
-         <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 b", target: "_blank" do %>
-            Facebook &rarr;
-          <% end %>
-        </div>
-       <% end %>
-    </div> 
-  <% end %> 
-  
 </div>
+
+
+<% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC")%>
+  <div id="networkActions" class="row">
+    <div class="row">
+      <div class="col5 innerHeader">
+        <p>Posted on:</p>
+      </div>  
+    </div> 
+
+    <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and @post.open? and not @twitter_account.blank? %>
+      <div class="row">
+        <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b", target: "_blank" do %>
+          Twitter &rarr;
+        <% end %>
+      </div>
+    <% end %>
+
+     <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? and not @facebook_account.blank? %>
+      <div class="row">  
+       <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 b", target: "_blank" do %>
+          Facebook &rarr;
+        <% end %>
+      </div>
+     <% end %>
+  </div> 
+<% end %> 

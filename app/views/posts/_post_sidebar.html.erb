@@ -1,48 +1,37 @@
-<div id="postReply">
-  <div class="row contentHeader">
-    <div class="col5 innerHeader">
-      <p>Contact <strong><%= @user.name %></strong></p>
-    </div>  
-  </div> 
+<div id="postReplyActions" class="row">
 
-  <div id="postReplyActions" class="row">
-
-    <div class="row">
-      <%= link_to "Contact Using Slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
-    </div>
-
-    <% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC")%>
-      <div id="networkActions" class="row">
-        <div class="row">
-          <div class="col5 innerHeader">
-            <p>Posted on:</p>
-          </div>  
-        </div> 
-
-        <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and @post.open? and not @twitter_account.blank? %>
-          <div class="row">
-            <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b", target: "_blank" do %>
-              Twitter &rarr;
-            <% end %>
-          </div>
-        <% end %>
-
-         <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? and not @facebook_account.blank? %>
-          <div class="row">  
-           <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 b", target: "_blank" do %>
-              Facebook &rarr;
-            <% end %>
-          </div>
-         <% end %>
-      </div> 
-    <% end %> 
-
-    <div class="row grey_well">
-      <p>See more <%= link_to "posts by #{@user.name}", user_path(@user.name) %></p>
-    </div> 
-
-    <div class="pull_left"><%= link_to "Flag Inappropriate", {:controller => :posts, :action => :report_abuse, :id => @post.id_hash} %>
-    </div>
-
+  <div class="row">
+    <%= link_to "Contact Using Slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
   </div>
+
+  <% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC")%>
+    <div id="networkActions" class="row">
+      <div class="row">
+        <div class="col5 innerHeader">
+          <p>Posted on:</p>
+        </div>  
+      </div> 
+
+      <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and @post.open? and not @twitter_account.blank? %>
+        <div class="row">
+          <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col6 b", target: "_blank" do %>
+            Twitter &rarr;
+          <% end %>
+        </div>
+      <% end %>
+
+       <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? and not @facebook_account.blank? %>
+        <div class="row">  
+         <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 b", target: "_blank" do %>
+            Facebook &rarr;
+          <% end %>
+        </div>
+       <% end %>
+    </div> 
+  <% end %> 
+
+
+  <div class="pull_left flag"><%= link_to "Flag Inappropriate", {:controller => :posts, :action => :report_abuse, :id => @post.id_hash} %>
+  </div>
+
 </div>

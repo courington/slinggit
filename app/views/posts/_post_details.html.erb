@@ -1,7 +1,24 @@
-<div id="postDetails" class="col4 pull_left <%= @post.open_class %>">
+<div id="postDetails" class="col6 <%= @post.open_class %>">
+
+  <div class="row contentHeader">
+    <div class="innerHeader row">
+      <header class="col3 pull_left">
+        <h1><%= @post.hashtag_prefix %></h1>
+      </header>
+      <p id="postStatus" class="col3 <%=@post.open?%> pull_right">
+            <% if @post.open? %>
+              Open
+            <% else %>  
+              Closed
+            <% end %>
+      </p>  
+    </div>  
+  </div>  <!-- contentHeader End-->
 
   <div id="postDetailInner" class="row">
+
     <div id="postImageWrapper" class="col3 pull_right">
+
       <div id="addPhotoControlGroup">
         <!-- if false to prevent this until we want to implement it-->
         <% if false and not @post.has_photo? and signed_in? and @post.user_id == current_user.id %>
@@ -12,6 +29,7 @@
             <% end %>
         <% end %>
       </div>
+
       <% if @post.photo_file_name.blank? %>
         <div id="placeholderWrapper">
           <%= image_tag "noPhoto_300x300.png", :id => "placeholderImg", :height => "auto", :width => "100%" %>
@@ -31,10 +49,12 @@
             <% end %>
           <% end %>
         </div>
+
       <% else %>
           <%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%", :id => 'post_mainImage' %>
       <% end %>
-    </div>
+
+    </div> <!-- postImageWrapper End -->
 
     <div id="postInfo" class="col3 pull_left">
       <dl>
@@ -45,7 +65,8 @@
         <dt class="col2">Interested</dt>
         <dd class="col3"><%= @post.interested %></dd>
       </dl>
-    </div>
+    </div> <!-- postInfo End -->
+
     <div id="postDescription" class="col3">
       <p class="col6"><%= @post.content %></p>
       <% if signed_in? && !current_user?(@post.user) %>
@@ -57,8 +78,9 @@
             <% end %>
           </div>
       <% end %>
-    </div>
-  </div>
+    </div> <!-- postDescription End -->
+
+  </div> <!-- postDetailInner end -->
 
   <div id='post_imagePort'></div>
 </div>

@@ -3,7 +3,15 @@
 		<h1 class="bottom_border">Create a post:</h1>
 	</header>
 	<div class="row createPost">
-		<%= render 'shared/post_form' %>
-		<%= render 'shared/user_info' %>
+		<section class="main">
+			<%= render 'shared/post_form' %>
+		</section>
+
+		<section class="secondary">
+    		<div class="secondary_inner">
+				<%= render 'shared/user_info' %>
+			</div>
+		</section>
+
 	</div>
 </section>
