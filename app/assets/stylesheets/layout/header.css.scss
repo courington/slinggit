@@ -53,14 +53,18 @@
 		> .row > .col2 {
 			width: $sixCols * 1.5;
 			text-align: center;
+			.active {
+				.btn_navPosts {
+					background-position: -8px -92px;
+					//position: relative !important;
+					//top: -.25em !important;
+				}
+			}
 			.btn_navPosts {
 				@extend .btnNavSprite;
 				background-position: -40px -92px;
 				display: block;
 				margin: 0 auto;
-				&:hover {
-					background-position: -8px -92px;
-				}
 			}
 			.btn_navMessages {
 				@extend .btnNavSprite;
