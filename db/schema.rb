@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(:version => 20120711043011) do
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
     t.integer  "parent_id"
-    t.string   "mthread_id"
+    t.string   "thread_id"
     t.string   "recipient_status"
     t.string   "sender_status"
   end
@@ -259,8 +259,8 @@ ActiveRecord::Schema.define(:version => 20120711043011) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "time_zone"
     t.string   "email_activation_code"
+    t.string   "time_zone"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
