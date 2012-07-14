@@ -233,9 +233,8 @@ class MobileController < ApplicationController
               add_to_watchedposts(user, post_id)
             end
 
-            render_success_response(
-                :watchedpost_id => watchedpost.id,
-            )
+            render_success_response()
+
 
           else
             render_error_response(
@@ -276,7 +275,7 @@ class MobileController < ApplicationController
     if not post_id.blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
         if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-          watchedpost = current_user.watchedposts.first(:conditions => ['user_id = ? AND post_id = ?', user.id, post_id])
+          watchedpost = user.watchedposts.first(:conditions => ['user_id = ? AND post_id = ?', user.id, post_id])
           if not watchedpost.blank?
             watchedpost.destroy
           end
@@ -1043,12 +1042,13 @@ class MobileController < ApplicationController
           post = Post.first(:conditions => ['id = ?', watched_post.post_id])
           return_data << post.attributes.merge!(
               :created_at_time => post.created_at.strftime("%H:%M"),
-              :created_at_date => post.created_at.strftime("%m-%d-%Y")
+              :created_at_date => post.created_at.strftime("%m-%d-%Y"),
+              :image_uri => post.has_photo? ? "#{BASEURL}/#{post.photo.url(:search)}" : nil,
           )
         end
         render_success_response(
-          :rows_found => watchedposts.length,
-          :posts => return_data
+            :rows_found => watchedposts.length,
+            :posts => return_data
         )
       else
         render_error_response(
