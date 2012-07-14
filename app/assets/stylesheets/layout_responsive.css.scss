@@ -58,14 +58,6 @@
 }
 // END 320-640
 
-// target hi-res
-@media screen and (device-aspect-ratio: 16/9) {
-		.wrapper, .main, .secondary, .grey_well, .white.well {
-			background-color: $main-blue;
-		}
-}
-//END
-
 // 480-640
 /*@media all and (min-width: 480px) and (max-width: 640px) {
 
