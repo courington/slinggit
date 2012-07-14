@@ -1,5 +1,5 @@
 // 320-640
-@media all and (min-width: 320px) and (max-width: 640px) {
+@media all and (min-width: 320px) and (max-width: 720px) {
 
 	// GENERAL CONTENT PAGE LAYOUT
 	@import "320-640/layout/common.css.scss"; 
@@ -58,8 +58,16 @@
 }
 // END 320-640
 
+// target hi-res
+@media screen and (device-aspect-ratio: 16/9) {
+		.wrapper, .main, .secondary, .grey_well, .white.well {
+			background-color: $main-blue;
+		}
+}
+//END
+
 // 480-640
-@media all and (min-width: 480px) and (max-width: 640px) {
+/*@media all and (min-width: 480px) and (max-width: 640px) {
 
 	// HEADER
 	@import "480-640/layout/header.css.scss";
@@ -67,11 +75,11 @@
 	// REQUEST INVITE
 	@import "480-640/static/request_invite.css.scss";
 
-}
+}*/
 // END 480-640
 
 // 641-800
-@media all and (min-width: 641px) and (max-width: 854px) {
+@media all and (min-width: 721px) and (max-width: 854px) {
 	
 	// HEADER 
 	@import "641-800/layout/header.css.scss";
