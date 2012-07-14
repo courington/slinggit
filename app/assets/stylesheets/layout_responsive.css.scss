@@ -59,7 +59,7 @@
 // END 320-640
 
 // 480-640
-/*@media all and (min-width: 480px) and (max-width: 640px) {
+@media all and (min-width: 480px) and (max-width: 640px) {
 
 	// HEADER
 	@import "480-640/layout/header.css.scss";
@@ -67,11 +67,11 @@
 	// REQUEST INVITE
 	@import "480-640/static/request_invite.css.scss";
 
-}*/
+}
 // END 480-640
 
 // 641-800
-@media all and (min-width: 721px) and (max-width: 854px) {
+@media all and (min-width: 641px) and (max-width: 854px) {
 	
 	// HEADER 
 	@import "641-800/layout/header.css.scss";
