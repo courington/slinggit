@@ -233,9 +233,8 @@ class MobileController < ApplicationController
               add_to_watchedposts(user, post_id)
             end
 
-            render_success_response(
-                :watchedpost_id => watchedpost.id,
-            )
+            render_success_response()
+
 
           else
             render_error_response(
