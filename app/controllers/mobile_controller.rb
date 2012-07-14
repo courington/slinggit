@@ -1042,12 +1042,13 @@ class MobileController < ApplicationController
           post = Post.first(:conditions => ['id = ?', watched_post.post_id])
           return_data << post.attributes.merge!(
               :created_at_time => post.created_at.strftime("%H:%M"),
-              :created_at_date => post.created_at.strftime("%m-%d-%Y")
+              :created_at_date => post.created_at.strftime("%m-%d-%Y"),
+              :image_uri => post.has_photo? ? "#{BASEURL}/#{post.photo.url(:search)}" : nil,
           )
         end
         render_success_response(
-          :rows_found => watchedposts.length,
-          :posts => return_data
+            :rows_found => watchedposts.length,
+            :posts => return_data
         )
       else
         render_error_response(
