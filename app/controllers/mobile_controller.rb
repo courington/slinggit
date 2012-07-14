@@ -276,7 +276,7 @@ class MobileController < ApplicationController
     if not post_id.blank?
       if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'user_id')
         if user = User.first(:conditions => ['id = ?', mobile_session.user_id], :select => ['id'])
-          watchedpost = current_user.watchedposts.first(:conditions => ['user_id = ? AND post_id = ?', user.id, post_id])
+          watchedpost = user.watchedposts.first(:conditions => ['user_id = ? AND post_id = ?', user.id, post_id])
           if not watchedpost.blank?
             watchedpost.destroy
           end
