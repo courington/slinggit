@@ -17,7 +17,7 @@ class JankyHeaderHider extends Backbone.View
 	blur: (e)->
 		setTimeout ()=>
 			@$headerEl.removeClass "headerHideOnFocus" if document.activeElement is document.body
-		, 200
+		, 1000
 
 		
 ## Export
