@@ -220,6 +220,11 @@ p {
 	width: 16px;
 }
 
+.logoSmall{
+	@extend .btnNavSprite;
+	background-position: -160px -180px;
+}
+
 .twitIconSmall {
 	@extend .btnNavSprite;
 	background-position: -264px -212px;
