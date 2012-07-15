@@ -73,6 +73,18 @@ body {
 	float: left;
 }
 
+// Visibility
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 // The following few classes represent the two column layout we'll use for most of
 // the app and will be used to help layout new off-canvas design on mobile
 .main{
@@ -200,7 +212,7 @@ p {
 
 .page_contentContainer {
 	//smooth scrolling for iOS 5.1+ releases of webkit (works on android)
-	-webkit-overflow-scrolling : touch;
+	//-webkit-overflow-scrolling : touch;
   min-height: 64em;
   font-size: 62.5%;
   position: relative;

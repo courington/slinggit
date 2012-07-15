@@ -9,17 +9,31 @@
   <div class="row">
     <% if not current_user.is_suspended? %>
 
-      <%= form_for(@post) do |f| %>
-        <% if @post.open? %>
-          <%= f.hidden_field :open, value: false %>
-          <div class="button-wrapper pull_left col3 first">
-            <%= f.button "Close", type: "submit", class: "col6 btn_ltGrey", confirm: "Are you sure?  This action cannot be undone!" %>
-          </div>
-        <% end %>
-      <% end %>
+      <div id="closePromptModal" class="modal hide fade">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h3>Modal Heading</h3>
+        </div>
+        <div class-"modal-body">
+          <%= form_for(@post) do |f| %>
+            <% if @post.open? %>
+              <%= f.hidden_field :open, value: false %>
+              
+                <%= f.button "Archive", type: "submit", class: "col3 btn_blue", confirm: "Are you sure?  This action cannot be undone!" %>
+     
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="button-wrapper pull_left col3 first">
+        <button class="col6 btn_ltGrey" type="button" id="archivePrompt">
+            Archive
+        </button>
+      </div>
 
       <div class="button-wrapper pull_right col3 last">
-        <%= button_to "Remove", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
+        <%= button_to "Delete", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
       </div>
 
     <% else %>
@@ -57,3 +71,9 @@
      <% end %>
   </div> 
 <% end %> 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      window.initPostModal()
+  })
+</script>

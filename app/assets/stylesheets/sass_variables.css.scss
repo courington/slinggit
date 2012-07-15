@@ -109,6 +109,29 @@ $side-br: bottom-right;
 	border-#{$side-tl}-radius: $radius;
 }
 
+// Background clipping
+@mixin background-clip($clip) {
+	-webkit-background-clip: $clip;
+	-moz-background-clip: $clip;
+	background-clip: $clip;
+}
+
+// Opacity
+@mixin opacity($opacity) {
+  opacity: $opacity / 100;
+  filter: alpha(opacity=$opacity);
+  //filter: ~"alpha(opacity=@{opacity})";
+}
+
+// Modal
+@mixin modal-sizer($modal-width){
+	width: $modal-width;
+	margin-top: -($modal-width/2);
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left: -($modal-width/2);
+}
+
 // small handheld device
 @mixin colNoFloatClearFix{
 	display: block;
@@ -121,6 +144,7 @@ $side-br: bottom-right;
 $head-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.25), inset 0 3px 13px rgba(0, 0, 0, 0.2), inset 0 0 30px rgba(0, 0, 0, .15);
 $foot-shadow: 0 -1px 1px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .5);
 $wrapper-shadow: 0 1px 3px rgba(0, 0, 0, 0), 0 1px 3px rgba(0, 0, 0, .1);
+$modal-shadow: 0 3px 7px rgba(0,0,0,0.3);
 
 @mixin box-shadow($shadow){
 	#{$ff}box-shadow: $shadow;

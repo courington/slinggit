@@ -7,39 +7,21 @@
 //@import url(https://fonts.googleapis.com/css?family=Arvo:400,700);
 @import url(https://fonts.googleapis.com/css?family=Rokkitt:400,700);
 
-@import "layout/content.css.scss";
-@import "layout/header.css.scss";
-@import "layout/footer.css.scss";
-@import "layout/inputs.css.scss";
-@import "layout/alerts.css.scss";
-@import "layout/labelsTagsAndBadges.css.scss";
-@import "layout/dropdown.css.scss";
+@import "layout/*";
 
-@import "shared/photo_selector.css.scss";
-@import "shared/flag.css.scss";
+@import "shared/*";
 
-@import "static/home.css.scss";
-@import "static/request_invite.css.scss";
-@import "static/about.css.scss";
-@import "static/networks.css.scss";
+@import "static/*";
 
-@import "users/signup.css.scss";
-@import "users/signin.css.scss";
-@import "users/edit.css.scss";
-@import "users/_user_info.css.scss";
-@import "users/show.css.scss";
+@import "users/*";
 
-@import "posts/show.css.scss";
-@import "posts/new.css.scss";
-@import "posts/_post.css.scss";
-@import "posts/index.css.scss";
+@import "posts/*";
 
-@import "comments/_comment.css.scss";
+@import "comments/*";
 
-@import "messages/index.css.scss";
-@import "messages/show.css.scss";
+@import "messages/*";
 
-@import "admin/admin.css.scss";
+@import "admin/*";
 
 //make this guy last
 @import "layout_responsive.css.scss";
