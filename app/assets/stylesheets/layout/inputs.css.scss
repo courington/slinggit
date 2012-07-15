@@ -4,6 +4,7 @@ input[type="text"] {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
+	line-height: $leading;
 	margin: ($font-size * .275) auto;
 		&:focus {
 		outline: none;

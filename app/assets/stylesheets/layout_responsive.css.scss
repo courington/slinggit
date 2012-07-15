@@ -1,6 +1,5 @@
 // 320-640
 @media all and (min-width: 320px) and (max-width: 640px) {
-
 	// GENERAL CONTENT PAGE LAYOUT
 	@import "320-640/layout/common.css.scss"; 
 
@@ -54,25 +53,21 @@
 
 	// ADMIN STUFF
 	@import "320-640/admin/common.css.scss";
-
 }
 // END 320-640
 
 // 480-640
 @media all and (min-width: 480px) and (max-width: 640px) {
-
 	// HEADER
 	@import "480-640/layout/header.css.scss";
 
 	// REQUEST INVITE
 	@import "480-640/static/request_invite.css.scss";
-
 }
 // END 480-640
 
 // 641-800
-@media all and (min-width: 641px) and (max-width: 854px) {
-	
+@media all and (min-width: 641px) and (max-width: 854px) {	
 	// HEADER 
 	@import "641-800/layout/header.css.scss";
 
@@ -81,29 +76,23 @@
 
 	// POSTS
 	@import "641-800/posts/show.css.scss";
-
 }
 // END 641-800
 
 // 855 and up
-// Droid (and many other android devices) run upto 854px in landscape
-@media all and (min-width: 855px) /*and (max-width: 1024px)*/ {
-
+@media all and (min-width: 855px) {
 	// HEADER 
 	@import "855-1024/layout/header.css.scss";
 
 	// REQUEST INVITE
 	@import "855-1024/static/request_invite.css.scss";
-
 }
 // END 801-960
 
 // 1025 and up
 @media all and (min-width: 1025px) {
-
 	// HEADER 
 	@import "1025-UP/layout/header.css.scss";
-
 }
 // END 1025 and up
 

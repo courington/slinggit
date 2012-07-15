@@ -2,16 +2,13 @@
 // Author: chase courington & chris klein
 
 body {
-//	height: 100%;
   font-family: $main-font;
-  //overflow-x: hidden;
-  //box-shadow: inset 0 0 72px rgba(0, 0, 0, .25);
   background: darken($wht, 5%);
   color: $dk-grey;
 }
 //WEB FONTS FOR HEADLINES
 .headline {
-	font-family: /*'Nixie One',*/ /*'Alfa Slab One',*/ /*'Arvo',*/ 'Rokkitt', 'helvetica neue', helvetica, arial, sans-serif;
+	font-family: 'Rokkitt', 'helvetica neue', helvetica, arial, sans-serif;
 	color: $main-blue;
 	text-rendering: optimizelegibility;
 	letter-spacing: .05em;
