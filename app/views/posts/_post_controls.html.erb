@@ -11,19 +11,43 @@
 
       <div id="closePromptModal" class="modal hide fade">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h3>Modal Heading</h3>
+          <h3>Reason for closing</h3>
         </div>
-        <div class-"modal-body">
-          <%= form_for(@post) do |f| %>
-            <% if @post.open? %>
+        
+        <%= form_for @post, html: { class: "modal-form"} do |f| %>
+          <% if @post.open? %>
+
+            <div class="modal-body">
               <%= f.hidden_field :open, value: false %>
-              
-                <%= f.button "Archive", type: "submit", class: "col3 btn_blue", confirm: "Are you sure?  This action cannot be undone!" %>
-     
-            <% end %>
+
+              <fieldset class="row">
+                <%= f.radio_button :closing_reason, "SLD", class: "col1 pull_left", :checked => true %> 
+                <%= f.label :closing_reason, "Sold it", class: "col4 pull_left" %>
+              </fieldset>
+
+              <fieldset class="row">
+                <%= f.radio_button :closing_reason, "NSL", class: "col1 pull_left" %>
+                <%= f.label :closing_reason, "Didn't sell", class: "col4 pull_left" %>
+              </fieldset>
+
+              <fieldset class="row">
+                <%= f.radio_button :closing_reason, "OTH", class: "col1 pull_left" %>
+                <%= f.label :closing_reason, "Other", class: "col4 pull_left" %>
+              </fieldset>
+            </div>
+
+            <div class="modal-footer">
+              <div class="button-wrapper pull_left col3 first">
+                <button type="button" class="close col6 btn_ltGrey" data-dismiss="modal">Cancel</button>
+              </div>
+              <div class="button-wrapper pull_right col3 last">
+                <%= f.button "Archive", type: "submit", class: "col6 btn_blue" %>
+              </div>
+            </div>
+            
+   
           <% end %>
-        </div>
+        <% end %>
       </div>
 
       <div class="button-wrapper pull_left col3 first">
@@ -33,7 +57,7 @@
       </div>
 
       <div class="button-wrapper pull_right col3 last">
-        <%= button_to "Delete", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Remove Post: You sure?", class: "col6 btn_red" %>
+        <%= button_to "Delete", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Delete Post? This action cannot be undone!", class: "col6 btn_red" %>
       </div>
 
     <% else %>

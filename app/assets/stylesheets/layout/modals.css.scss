@@ -53,6 +53,10 @@
   border-bottom: 1px solid #eee;
   // Close icon
   .close { margin-top: 2px; }
+
+  h3{
+    font-size: $font-size * 1;
+  }
 }
 
 // Body (where all modal content resides)
@@ -64,12 +68,25 @@
 // Remove bottom margin if need be
 .modal-form {
   margin-bottom: 0;
+
+  fieldset.row{
+    margin-bottom: 10px;
+    padding-left: 20px;
+    input[type="radio"]{
+      margin-top: 10px;
+    }
+    label{
+      margin-top: 0;
+      font-size: $font-size * .7;
+    }
+  }
 }
 
 // Footer (for actions)
 .modal-footer {
-  padding: 14px 15px 15px;
-  margin-bottom: 0;
+  //Cleafix issue.  Need to refactor when we have more than one modal.
+  padding: 15px 15px 70px 15px;
+  //margin-bottom: 0;
   text-align: right; // right align buttons
   background-color: #f5f5f5;
   border-top: 1px solid #ddd;
@@ -77,5 +94,8 @@
   @include box-shadow(0 1px 0 $white);
   // Leaving this in for now, because we may want to see how bootstratp does this.
   //.clearfix(); // clear it in case folks use .pull-* classes on buttons
-  @include colNoFloatClearFix;
+
+  button{
+    font-size: $font-size * .6;
+  }
 }

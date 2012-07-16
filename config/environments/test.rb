@@ -96,4 +96,9 @@ SlinggitWebapp::Application.configure do
   ROLE_ADMIN = "ADM"
   ROLE_EXTERNAL = "EXT"
 
+  ## CLOSING REASONS ##
+  ITEM_SOLD = "SLD"
+  ITEM_NOT_SELLING = "NSL"
+  ITEM_OTHER = "OTH"
+
 end

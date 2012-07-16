@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711043011) do
+ActiveRecord::Schema.define(:version => 20120715212854) do
 
   create_table "additional_photos", :force => true do |t|
     t.integer  "user_id"
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(:version => 20120711043011) do
     t.integer  "user_id"
     t.string   "status"
     t.string   "id_hash"
+    t.string   "closing_reason"
   end
 
   create_table "posts", :force => true do |t|
@@ -161,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20120711043011) do
     t.string   "recipient_api_account_ids"
     t.string   "status",                                 :default => "ACT"
     t.string   "id_hash"
+    t.string   "closing_reason"
   end
 
   add_index "posts", ["location"], :name => "index_posts_on_location"
