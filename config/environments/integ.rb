@@ -77,8 +77,8 @@ SlinggitWebapp::Application.configure do
   config.twitter_consumer_secret = 'rwN7VmydrgRlRdb0kev1XxRi30YSpXHI7oXQEpPgUE'
 
   #  Facebook app id and secret
-  config.facebook_app_id = '392096110827698'
-  config.facebook_app_secret = '14b1c6a62167d04c87f08bb90b61b7b8'
+  config.facebook_app_id = '187772238018779'
+  config.facebook_app_secret = 'a9665d164c1de339c773bfcb55368604'
 
   # @slinggit's authentication token and password, generated from the above consumer
   # key and secret.
