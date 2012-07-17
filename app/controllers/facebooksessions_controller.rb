@@ -43,7 +43,7 @@ class FacebooksessionsController < ApplicationController
               redirect_to :controller => :networks, :action => :index
             end
           rescue Exception => exception
-            create_problem_report(exception)
+            create_problem_report(exception, Rails.env)
             if PROD_ENV
               flash[:error] = "Oops, something went wrong.  We have been notified and will fix the issue rapidly."
               redirect_to :controller => :networks, :action => :index

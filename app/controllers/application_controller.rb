@@ -351,7 +351,7 @@ class ApplicationController < ActionController::Base
   def catch_exceptions
     yield
   rescue => exception
-    create_problem_report(exception)
+    create_problem_report(exception, Rails.env)
     if PROD_ENV
       redirect_to '/500.html'
     else
@@ -359,7 +359,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def create_problem_report(exception, send_email = true)
+  def create_problem_report(exception, environment, send_email = true)
     user_agent = nil
     ip_address = nil
     url_referrer = nil
@@ -371,7 +371,7 @@ class ApplicationController < ActionController::Base
     end
 
     ProblemReport.create(
-        :exception_message => exception.message,
+        :exception_message => environment + ' - ' + exception.message,
         :exception_class => exception.class.to_s,
         :exception_backtrace => exception.backtrace,
         :user_agent => user_agent,
