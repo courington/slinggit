@@ -15,7 +15,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/delete_account', :to => 'users#delete_account', via: :get
   match 'users/verify_email(/:id)', :to => 'users#verify_email#id'
   match 'users/new(/:id)', :to => 'users#new#id'
-  match 'users/watching', :to => 'users#watching', via: :get
+  match 'users/:id/watching', :to => 'users#watching', via: :get
+  match 'users/:id/archived', to: 'users#archived', via: :get
   match 'networks/delete_account', :to => 'networks#delete_account', via: :post
   match 'networks/add_api_account(/:id)', :to => 'networks#add_api_account#id', via: :get
   match 'networks/twitter_callback', :to => 'networks#twitter_callback', via: :get
