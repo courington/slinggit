@@ -1226,13 +1226,16 @@ class MobileController < ApplicationController
                 :contact_info_json => recipient.email,
                 :body => params[:body],
                 :recipient_status => STATUS_UNREAD,
-                :sender_status => STATUS_UNREAD
+                :sender_status => STATUS_UNREAD,
+                :thread_id => thread_id
             )
 
             if not params[:post_id].blank?
-              if Post.exists?(['id = ?', params[:post_id]])
+              if post = Post.first?(:conditions => ['id = ?', params[:post_id]], :select => 'id,user_id')
+                thread_id = Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH + post.id.to_s + post.user_id.to_s) + "_#{mobile_session.user_id.to_s}"
                 message.source = 'post'
                 message.source_id = params[:post_id].to_i
+                message.thread_id = thread_id
               end
             end
 
@@ -1304,6 +1307,7 @@ class MobileController < ApplicationController
                 :parent_id => parent_message.id,
                 :recipient_status => STATUS_UNREAD,
                 :sender_status => STATUS_UNREAD,
+                :thread_id => parent_message.thread_id,
                 :send_email => true
             )
 
