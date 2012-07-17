@@ -1226,8 +1226,7 @@ class MobileController < ApplicationController
                 :contact_info_json => recipient.email,
                 :body => params[:body],
                 :recipient_status => STATUS_UNREAD,
-                :sender_status => STATUS_UNREAD,
-                :thread_id => thread_id
+                :sender_status => STATUS_UNREAD
             )
 
             if not params[:post_id].blank?
