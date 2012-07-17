@@ -903,26 +903,17 @@ class MobileController < ApplicationController
   def delete_post_comment
     if not params[:post_id].blank?
       if not params[:comment_id].blank?
-        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
-            if comment = Comment.first(:conditions => ['post_id = ? and id = ?', params[:post_id], params[:comment_id]])
-              comment.update_attribute(:status, STATUS_DELETED)
-              render_success_response(
-                  :comment_id => comment.id,
-                  :status => comment.status
-              )
-            else
-              render_error_response(
-                  :error_location => 'delete_post_comment',
-                  :error_reason => 'not found - comment for owner',
-                  :error_code => '404',
-                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
-              )
-            end
+        if Post.exists?(['id = ?', params[:post_id]], :select => 'id')
+          if comment = Comment.first(:conditions => ['post_id = ? and id = ?', params[:post_id], params[:comment_id]])
+            comment.update_attribute(:status, STATUS_DELETED)
+            render_success_response(
+                :comment_id => comment.id,
+                :status => comment.status
+            )
           else
             render_error_response(
                 :error_location => 'delete_post_comment',
-                :error_reason => 'not found - post',
+                :error_reason => 'not found - comment for owner',
                 :error_code => '404',
                 :friendly_error => 'Oops, something went wrong.  Please try again later.'
             )
@@ -930,7 +921,7 @@ class MobileController < ApplicationController
         else
           render_error_response(
               :error_location => 'delete_post_comment',
-              :error_reason => 'not found - mobile_session',
+              :error_reason => 'not found - post',
               :error_code => '404',
               :friendly_error => 'Oops, something went wrong.  Please try again later.'
           )
@@ -1224,13 +1215,17 @@ class MobileController < ApplicationController
                 :sender_user_id => mobile_session.user_id,
                 :recipient_user_id => params[:recipient_user_id].to_i,
                 :contact_info_json => recipient.email,
-                :body => params[:body]
+                :body => params[:body],
+                :recipient_status => STATUS_UNREAD,
+                :sender_status => STATUS_UNREAD
             )
 
             if not params[:post_id].blank?
-              if Post.exists?(['id = ?', params[:post_id]])
+              if post = Post.first(:conditions => ['id = ?', params[:post_id]], :select => 'id,user_id')
+                thread_id = Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH + post.id.to_s + post.user_id.to_s) + "_#{mobile_session.user_id.to_s}"
                 message.source = 'post'
                 message.source_id = params[:post_id].to_i
+                message.thread_id = thread_id
               end
             end
 
@@ -1300,6 +1295,9 @@ class MobileController < ApplicationController
                 :body => params[:body],
                 :contact_info_json => ActiveSupport::JSON.decode(parent_message.contact_info_json)['email'],
                 :parent_id => parent_message.id,
+                :recipient_status => STATUS_UNREAD,
+                :sender_status => STATUS_UNREAD,
+                :thread_id => parent_message.thread_id,
                 :send_email => true
             )
 
@@ -2000,7 +1998,7 @@ class MobileController < ApplicationController
   def catch_exceptions
     yield
   rescue => exception
-    create_problem_report(exception)
+    create_problem_report(exception, Rails.env)
     if session[:source] and session[:source] == NATIVE_APP_WEB_VIEW
       redirect_to :action => :finalize_add_twitter_account, :result_status => ERROR_STATUS, :friendly_error => 'Oops, something went wrong.  Please try again later.', :error_reason => exception.to_s
     else
