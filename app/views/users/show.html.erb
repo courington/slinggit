@@ -2,27 +2,7 @@
 <section id="userPostsWrapper" class="wrapper">
 
   <section class="secondary">
-    <div class="secondary_inner">
 
-        <aside class="userInfo row">
-            <a href="<%= user_path(@user) %>" class="col2 pull_left">      
-              <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
-            </a>
-            <header class="col4 pull_right">
-              <h1 class="bottom_border"><%= @user.name %></h1>
-                <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
-                <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
-                <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
-            </header>
-
-            <% if is_signed_in_and_admin? && !current_user?(@user) %>
-                <div class="row adminActions">
-                  <!-- ADMIN ONLY FUNCTIONALITY -->
-                    <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
-                </div>
-              <% end %>
-        </aside>
-    </div>
 
     <div class="secondary_inner">
 
@@ -38,6 +18,13 @@
                   <% elsif @passes_limitation[0] == false %>
                     <p class="row notice_explanation_bubble">Post Limit Reached</p>
                   <% end %>
+                <div id="postsFilters" class="row" style="margin-top: 20px;">
+                  <%= link_to  current_user, class: "#{"active" if @label == "My"} col6" do %>
+                    Slinggin <span class='nav_arrow pull_right'>&rarr;</span>
+                  <% end %>
+                  <%= link_to "Watching <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"} col6" %>
+                  <%= link_to "Archived <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"} col6" %>
+                </div>
                 </div>
               <% end %>
 
@@ -47,6 +34,7 @@
         </section>
 
     </div>
+
 
   </section>
 
@@ -74,11 +62,6 @@
               <% if !@user.posts.any? and (@user.primary_twitter_account.blank? or @user.primary_facebook_account.blank?) %>
                 <%= render 'users/add_more_networks' %>
               <% end %>
-              <div id="postsFilters" class="row">
-                <%= link_to "Slinggin", current_user, class: "#{"active" if @label == "My"}" %>
-                <%= link_to "Watching", {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"}" %>
-                <%= link_to "Archived", {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"}" %>
-              </div>
             <% else %>
               <div class="row">
                 <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your
@@ -115,6 +98,34 @@
               <% end %>
           <% end %>
       <% end %>
+    </div>
+
+  </section>
+
+  <section class="secondary">
+
+
+    <div class="secondary_inner">
+
+        <aside class="userInfo row">
+          <a href="<%= user_path(@user) %>" class="col2 pull_left">      
+            <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
+          </a>
+          <header class="col4 pull_right">
+            <h1 class="bottom_border"><%= @user.name %></h1>
+              <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
+              <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
+              <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
+          </header>
+
+          <% if is_signed_in_and_admin? && !current_user?(@user) %>
+              <div class="row adminActions">
+                <!-- ADMIN ONLY FUNCTIONALITY -->
+                  <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
+              </div>
+            <% end %>
+      </aside>
+
     </div>
 
   </section>
