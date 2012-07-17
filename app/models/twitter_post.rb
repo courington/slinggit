@@ -138,9 +138,9 @@ class TwitterPost < ActiveRecord::Base
     #changed to use our url shortner... if twitter does it for us great... but this will track the number of clicks if we use our own
     #NOTE... if testing on localhost, the link wont be clickable in twitter... but once a .com is added it will be.
     if self.post.photo_file_name.blank?
-      return client.update("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}")
+      return client.update("#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}")
     else
-      return client.update_with_media("##{self.post.hashtag_prefix}forsale ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}", File.new(self.post.photo.path(:medium)))
+      return client.update_with_media("#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}", File.new(self.post.photo.path(:medium)))
     end
   end
 

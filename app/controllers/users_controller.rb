@@ -56,7 +56,7 @@ class UsersController < ApplicationController
       end
     end
     if not @user.blank? and not @user.is_considered_deleted?
-      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ?', @user.id, STATUS_ACTIVE])
+      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, true])
     else
       if signed_in?
         redirect_to current_user
@@ -69,7 +69,7 @@ class UsersController < ApplicationController
   def watching
     @label = "Watched"
     @passes_limitation = passes_limitations?(:total_posts)
-    if signed_in? and not current_user.is_considered_deleted?
+    if signed_in? and params[:id] == current_user.name and not current_user.is_considered_deleted?
       @user = current_user
       @posts = []
       Watchedpost.find_each(:conditions => ['user_id = ?', @user.id], :select => 'post_id') do |watched_post|
@@ -78,11 +78,19 @@ class UsersController < ApplicationController
       @posts = @posts.paginate(:page => params[:page], :per_page => 20)
       render 'show'
     else
-      if signed_in?
-        redirect_to current_user
-      else
-        redirect_to new_user_path
-      end
+      redirect_to signin_path
+    end
+  end
+
+  def archived
+    @label = "Archived"
+    @passes_limitation = passes_limitations?(:total_posts)
+    if signed_in? and params[:id] == current_user.name and not current_user.is_considered_deleted?
+      @user = current_user
+      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, false])     
+      render 'show'
+    else
+      redirect_to signin_path
     end
   end
 

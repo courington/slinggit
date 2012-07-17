@@ -75,8 +75,9 @@
                 <%= render 'users/add_more_networks' %>
               <% end %>
               <div id="postsFilters" class="row">
-                <%= link_to "My Posts", current_user, class: "#{"active" if @label == "My"}" %>
-                <%= link_to "Watched Posts", {:controller => :users, :action => :watching}, class: "#{"active" if @label == "Watched"}" %>
+                <%= link_to "Slinggin", current_user, class: "#{"active" if @label == "My"}" %>
+                <%= link_to "Watching", {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"}" %>
+                <%= link_to "Archived", {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"}" %>
               </div>
             <% else %>
               <div class="row">

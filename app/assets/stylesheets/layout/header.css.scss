@@ -1,7 +1,7 @@
 #mainHeader {
 	position: fixed;
 	top: 0;
-	z-index: 8888;
+	z-index: 1020;
 	overflow: visible;
 	background: $main-blue;
 	#{$ff}box-shadow: $head-shadow;
@@ -148,4 +148,9 @@
 	padding-bottom: .5em;
 	margin-left: 25%;
 	}
+}
+.ie_logo_hack{
+	height: 20px;
+	width: 60px;
+	@extend .logoSmall;
 }

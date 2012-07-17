@@ -25,7 +25,7 @@ class Post < ActiveRecord::Base
 
   before_create :create_id_hash
 
-  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open, :status, :id_hash
+  attr_accessible :content, :user_id, :photo, :hashtag_prefix, :location, :price, :open, :status, :id_hash, :closing_reason
 
   belongs_to :user
   has_many :comments, dependent: :destroy
@@ -43,7 +43,7 @@ class Post < ActiveRecord::Base
   VALID_HASHTAG_REGEX = /\A[a-z0-9_]{,20}\z/i
   validates :hashtag_prefix, presence: true, length: {maximum: 15}, format: {with: VALID_HASHTAG_REGEX, :message => "(Item) cannot contain spaces.  Characters must be either a-z, 0-9, or _"}
   #VALID_PRICE_REGEX = /\A[0-9]{,20}\z/i
-  validates :price, presence: true, :numericality => { :only_integer => true, :message => "must be a number and cannot be longer than 5 characters" }#, length: {maximum: 5}, format: {with: VALID_PRICE_REGEX, :message => "cannot be more than $99999 and cannot include commas"}
+  validates :price, presence: true, :numericality => { :only_integer => true, :message => "must be a number and cannot be longer than 5 characters" }
   #validates_attachment_presence :photo
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg', 'image/x-png']
 
