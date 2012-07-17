@@ -90,6 +90,8 @@ body {
 	@include white-well;
 	margin-top: 1em;
 	@include box-shadow($wrapper-shadow);
+	// Def need to change this up, just proving out a concept right now.
+	min-height: 220px;
 }
 .secondary{
 	@extend .col2;
