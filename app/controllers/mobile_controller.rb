@@ -1224,7 +1224,9 @@ class MobileController < ApplicationController
                 :sender_user_id => mobile_session.user_id,
                 :recipient_user_id => params[:recipient_user_id].to_i,
                 :contact_info_json => recipient.email,
-                :body => params[:body]
+                :body => params[:body],
+                :recipient_status => STATUS_UNREAD,
+                :sender_status => STATUS_UNREAD
             )
 
             if not params[:post_id].blank?
@@ -1300,6 +1302,8 @@ class MobileController < ApplicationController
                 :body => params[:body],
                 :contact_info_json => ActiveSupport::JSON.decode(parent_message.contact_info_json)['email'],
                 :parent_id => parent_message.id,
+                :recipient_status => STATUS_UNREAD,
+                :sender_status => STATUS_UNREAD,
                 :send_email => true
             )
 
