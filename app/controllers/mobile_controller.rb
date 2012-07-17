@@ -903,7 +903,7 @@ class MobileController < ApplicationController
   def delete_post_comment
     if not params[:post_id].blank?
       if not params[:comment_id].blank?
-        if Post.exists?(['id = ?', params[:post_id]], :select => 'id')
+        if Post.exists?(['id = ?', params[:post_id]])
           if comment = Comment.first(:conditions => ['post_id = ? and id = ?', params[:post_id], params[:comment_id]])
             comment.update_attribute(:status, STATUS_DELETED)
             render_success_response(
