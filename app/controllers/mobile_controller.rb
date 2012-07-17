@@ -903,26 +903,17 @@ class MobileController < ApplicationController
   def delete_post_comment
     if not params[:post_id].blank?
       if not params[:comment_id].blank?
-        if mobile_session = MobileSession.first(:conditions => ['unique_identifier = ? AND mobile_auth_token = ?', @state, @mobile_auth_token], :select => 'id,user_id')
-          if post = Post.first(:conditions => ['id = ? and user_id = ?', params[:post_id], mobile_session.user_id])
-            if comment = Comment.first(:conditions => ['post_id = ? and id = ?', params[:post_id], params[:comment_id]])
-              comment.update_attribute(:status, STATUS_DELETED)
-              render_success_response(
-                  :comment_id => comment.id,
-                  :status => comment.status
-              )
-            else
-              render_error_response(
-                  :error_location => 'delete_post_comment',
-                  :error_reason => 'not found - comment for owner',
-                  :error_code => '404',
-                  :friendly_error => 'Oops, something went wrong.  Please try again later.'
-              )
-            end
+        if Post.exists?(['id = ?', params[:post_id]], :select => 'id')
+          if comment = Comment.first(:conditions => ['post_id = ? and id = ?', params[:post_id], params[:comment_id]])
+            comment.update_attribute(:status, STATUS_DELETED)
+            render_success_response(
+                :comment_id => comment.id,
+                :status => comment.status
+            )
           else
             render_error_response(
                 :error_location => 'delete_post_comment',
-                :error_reason => 'not found - post',
+                :error_reason => 'not found - comment for owner',
                 :error_code => '404',
                 :friendly_error => 'Oops, something went wrong.  Please try again later.'
             )
@@ -930,7 +921,7 @@ class MobileController < ApplicationController
         else
           render_error_response(
               :error_location => 'delete_post_comment',
-              :error_reason => 'not found - mobile_session',
+              :error_reason => 'not found - post',
               :error_code => '404',
               :friendly_error => 'Oops, something went wrong.  Please try again later.'
           )
