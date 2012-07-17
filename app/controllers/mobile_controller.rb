@@ -980,8 +980,8 @@ class MobileController < ApplicationController
             starting_message_id = 0 if starting_message_id.blank?
             starting_message_id = starting_message_id.to_i
 
-            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id < ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,sender_user_id, recipient_user_id,source,source_id,contact_info_json,body,status,created_at')
-            number_unread = Message.count(:conditions => ['recipient_user_id = ? AND status = ?', user.id, STATUS_UNREAD])
+            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id < ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,sender_user_id,recipient_user_id,source,source_id,contact_info_json,body,status,sender_status,recipient_status,created_at')
+            number_unread = Message.count(:conditions => ['recipient_user_id = ? AND recipient_status = ?', user.id, STATUS_UNREAD])
             render_success_response(
                 :number_unread => number_unread,
                 :rows_found => messages.length,
@@ -1299,7 +1299,7 @@ class MobileController < ApplicationController
                 :source_id => parent_message.source_id,
                 :body => params[:body],
                 :contact_info_json => ActiveSupport::JSON.decode(parent_message.contact_info_json)['email'],
-                :parent_source_id => parent_message.id,
+                :parent_id => parent_message.id,
                 :send_email => true
             )
 
@@ -1361,7 +1361,7 @@ class MobileController < ApplicationController
         messages = Message.all(:conditions => ['id in (?)', params[:message_ids].split(',')], :select => 'id,recipient_user_id,status')
         messages.each do |message|
           if message.recipient_user_id == mobile_session.user_id
-            message.update_attribute(:status, STATUS_DELETED)
+            message.update_attribute(:recipient_status, STATUS_DELETED)
             messages_deleted += 1
           else
             messages_not_deleted += 1
@@ -1405,7 +1405,7 @@ class MobileController < ApplicationController
         messages = Message.all(:conditions => ['id in (?)', params[:message_ids].split(',')], :select => 'id,recipient_user_id,status')
         messages.each do |message|
           if message.recipient_user_id == mobile_session.user_id
-            message.update_attribute(:status, STATUS_READ)
+            message.update_attribute(:recipient_status, STATUS_READ)
             messages_marked_read += 1
           else
             messages_not_marked_read += 1
