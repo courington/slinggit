@@ -3,38 +3,56 @@
 
   <section class="secondary">
 
-
     <div class="secondary_inner">
 
-        <section class="secondary_actions">
-          <% if current_user?(@user) %>        
+      <aside class="userInfo row">
+        <a href="<%= user_path(@user) %>" class="col2 pull_left">      
+          <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
+        </a>
+        <header class="col4 pull_right">
+          <h1 class="bottom_border"><%= @user.name %></h1>
+            <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
+            <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
+            <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
+        </header>
 
-            <% if not current_user.is_suspended? %>
-
-              <% if current_user.email_is_verified? %>
-                <div id="createPostAction" class="row">
-                  <% if @passes_limitation != nil and @passes_limitation == true %>
-                    <%= link_to "Create New Post", new_post_path, class: "col6 btn_green" %>
-                  <% elsif @passes_limitation[0] == false %>
-                    <p class="row notice_explanation_bubble">Post Limit Reached</p>
-                  <% end %>
-                <div id="postsFilters" class="row" style="margin-top: 20px;">
-                  <%= link_to  current_user, class: "#{"active" if @label == "My"} col6" do %>
-                    Slinggin <span class='nav_arrow pull_right'>&rarr;</span>
-                  <% end %>
-                  <%= link_to "Watching <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"} col6" %>
-                  <%= link_to "Archived <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"} col6" %>
-                </div>
-                </div>
-              <% end %>
-
-            <% end %>
-
+        <% if is_signed_in_and_admin? && !current_user?(@user) %>
+            <div class="row adminActions">
+              <!-- ADMIN ONLY FUNCTIONALITY -->
+                <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
+            </div>
           <% end %>
-        </section>
+      </aside>
 
     </div>
 
+
+      <% if current_user?(@user) and not current_user.is_suspended? and current_user.email_is_verified? %>        
+
+        <div class="secondary_inner">
+
+          <section class="secondary_actions">
+            
+            <div id="createPostAction" class="row">
+              <% if @passes_limitation != nil and @passes_limitation == true %>
+                <%= link_to "Create New Post", new_post_path, class: "col6 btn_green" %>
+              <% elsif @passes_limitation[0] == false %>
+                <p class="row notice_explanation_bubble">Post Limit Reached</p>
+              <% end %>
+            <div id="postsFilters" class="row" style="margin-top: 20px;">
+              <%= link_to  current_user, class: "#{"active" if @label == "My"} col6" do %>
+                Posted <span class='nav_arrow pull_right'>&rarr;</span>
+              <% end %>
+              <%= link_to "Watching <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"} col6" %>
+              <%= link_to "Archived <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"} col6" %>
+            </div>
+            </div>
+
+          </section>
+
+        </div>
+
+    <% end %>
 
   </section>
 
@@ -44,9 +62,9 @@
         <div class="row">
           <header>
             <% if (signed_in? and params[:id] == current_user.name) or params[:id].blank? %>
-                <h1><%= @label %> Posts (<%= @posts.count %>)</h1>
+                <h1><%= @label %> Posts: <%= @posts.count %></h1>
             <% else %>
-                <h1><%= params[:id] %>'s Posts (<%= @posts.count %>)</h1>
+                <h1><%= params[:id] %>'s Posts: <%= @posts.count %></h1>
             <% end %>
           </header>
         </div>
@@ -93,6 +111,8 @@
           <% if current_user.email_is_verified? %>
               <% if @label == 'Watched' %>
                   <p>You aren't watching any posts.</p>
+              <% elsif @lable == 'Archived' %>
+                  <p>Nothing has been archived.</p>
               <% else %>
                   <p>You haven't created any posts yet.</p>
               <% end %>
@@ -102,33 +122,6 @@
 
   </section>
 
-  <section class="secondary">
-
-
-    <div class="secondary_inner">
-
-        <aside class="userInfo row">
-          <a href="<%= user_path(@user) %>" class="col2 pull_left">      
-            <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
-          </a>
-          <header class="col4 pull_right">
-            <h1 class="bottom_border"><%= @user.name %></h1>
-              <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
-              <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
-              <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
-          </header>
-
-          <% if is_signed_in_and_admin? && !current_user?(@user) %>
-              <div class="row adminActions">
-                <!-- ADMIN ONLY FUNCTIONALITY -->
-                  <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
-              </div>
-            <% end %>
-      </aside>
-
-    </div>
-
-  </section>
 
 </section>
 

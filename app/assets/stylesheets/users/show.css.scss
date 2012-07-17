@@ -30,6 +30,8 @@
 		margin-bottom: 10px;
 		header{
 			padding-bottom: 10px;
+			
+	border-bottom: 1px solid $lt-grey;
 		}
 	}
 	.title_row > .col6 > .grey_well{
@@ -42,7 +44,6 @@
 #postsFilters{
 	margin-bottom: 5px;
 	padding-bottom: 7px;
-	border-bottom: 1px solid $lt-grey;
 	a{
 		display: inline-block;
 		padding: 10px 10px 10px 10px;
