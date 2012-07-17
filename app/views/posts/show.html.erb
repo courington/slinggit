@@ -5,7 +5,7 @@
 		<div class="secondary_inner">
 			<aside class="userInfo row">
 		        <a href="<%= user_path(@user) %>" class="col2 pull_left">      
-		          <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%" %>
+		          <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%", class: "profile_pic" %>
 		        </a>
 		        <header class="col4 pull_right">
 		          <h1 class="bottom_border"><%= @user.name %></h1>
