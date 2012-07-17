@@ -28,7 +28,7 @@
 #end
 
 class Message < ActiveRecord::Base
-  attr_accessible :sender_user_id, :recipient_user_id, :source, :source_id, :contact_info_json, :body, :status, :send_email, :parent_id, :thread-id, :recipient_status, :sender_status
+  attr_accessible :sender_user_id, :recipient_user_id, :source, :source_id, :contact_info_json, :body, :status, :send_email, :parent_id, :thread_id, :recipient_status, :sender_status
   attr_accessor :send_email
 
   before_create :create_id_hash
