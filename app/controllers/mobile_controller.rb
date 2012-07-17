@@ -1230,7 +1230,7 @@ class MobileController < ApplicationController
             )
 
             if not params[:post_id].blank?
-              if post = Post.first?(:conditions => ['id = ?', params[:post_id]], :select => 'id,user_id')
+              if post = Post.first(:conditions => ['id = ?', params[:post_id]], :select => 'id,user_id')
                 thread_id = Digest::SHA1.hexdigest(SLINGGIT_SECRET_HASH + post.id.to_s + post.user_id.to_s) + "_#{mobile_session.user_id.to_s}"
                 message.source = 'post'
                 message.source_id = params[:post_id].to_i
