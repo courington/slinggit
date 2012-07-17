@@ -971,7 +971,7 @@ class MobileController < ApplicationController
             starting_message_id = 0 if starting_message_id.blank?
             starting_message_id = starting_message_id.to_i
 
-            messages = Message.all(:conditions => ['recipient_user_id = ? AND status != ? AND id < ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,sender_user_id,recipient_user_id,source,source_id,contact_info_json,body,status,sender_status,recipient_status,created_at')
+            messages = Message.all(:conditions => ['recipient_user_id = ? AND recipient_status != ? AND id < ?', user.id, STATUS_DELETED, starting_message_id], :order => 'created_at desc, status desc', :limit => limit, :offset => offset, :select => 'id,sender_user_id,recipient_user_id,source,source_id,contact_info_json,body,status,sender_status,recipient_status,created_at')
             number_unread = Message.count(:conditions => ['recipient_user_id = ? AND recipient_status = ?', user.id, STATUS_UNREAD])
             render_success_response(
                 :number_unread => number_unread,
