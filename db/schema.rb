@@ -100,15 +100,20 @@ ActiveRecord::Schema.define(:version => 20120717044154) do
     t.integer  "source_id"
     t.string   "contact_info_json"
     t.string   "body",              :limit => 1200
-    t.string   "status"
+    t.string   "status",                            :default => "UNR"
     t.string   "id_hash"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.integer  "parent_id"
     t.string   "thread_id"
     t.string   "recipient_status",                  :default => "UNR"
     t.string   "sender_status",                     :default => "UNR"
   end
+
+  add_index "messages", ["id_hash"], :name => "index_messages_on_id_hash"
+  add_index "messages", ["sender_user_id"], :name => "index_messages_on_creator_user_id"
+  add_index "messages", ["source"], :name => "index_messages_on_source"
+  add_index "messages", ["status"], :name => "index_messages_on_status"
 
   create_table "mobile_sessions", :force => true do |t|
     t.integer  "user_id"
@@ -256,8 +261,8 @@ ActiveRecord::Schema.define(:version => 20120717044154) do
     t.boolean  "admin",                     :default => false
     t.string   "status",                    :default => "UVR"
     t.string   "password_reset_code"
-    t.string   "time_zone"
     t.string   "email_activation_code"
+    t.string   "time_zone"
     t.string   "account_reactivation_code"
     t.string   "slug"
     t.string   "role",                      :default => "EXT"
