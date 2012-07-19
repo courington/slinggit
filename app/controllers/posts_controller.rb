@@ -212,7 +212,32 @@ class PostsController < ApplicationController
     if request.post?
       if not params[:id].blank? and not params[:field].blank? and not params[:value].blank?
         if post = Post.first(:conditions => ['id_hash = ? AND user_id = ?', params[:id], current_user.id])
-          post.update_attribute(params[:field].to_sym, params[:value])
+          location_before_save = post.location
+          price_before_save = post.price
+          hashtag_prefix_before_save = post.hashtag_prefix
+          case params[:field]
+            when 'price'
+              post.price = params[:value]
+              if post.save
+                render :text => "$#{params[:value]}", :status => 200
+              else
+                render :text => "$#{price_before_save}", :status => 500
+              end
+            when 'location'
+              post.location = params[:value]
+              if post.save
+                render :text => "#{params[:value]}", :status => 200
+              else
+                render :text => "#{location_before_save}", :status => 500
+              end
+            when 'hashtag_prefix'
+              post.hashtag_prefix = params[:value]
+              if post.save
+                render :text => "#{params[:value]}", :status => 200
+              else
+                render :text => "#{hashtag_prefix_before_save}", :status => 500
+              end
+          end
         end
       end
     end

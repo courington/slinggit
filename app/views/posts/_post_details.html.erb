@@ -3,7 +3,7 @@
   <div class="row contentHeader">
     <div class="innerHeader row">
       <header class="col3 pull_left">
-        <h1><%= @post.hashtag_prefix %></h1>
+        <h1 class="editable" edit_field='hashtag_prefix'><%= @post.hashtag_prefix %></h1>
       </header>
       <p id="postStatus" class="col3 <%= @post.open? %> pull_right">
         <% if @post.open? %>
@@ -61,9 +61,19 @@
     <div id="postInfo" class="col3 pull_left">
       <dl>
         <dt class="col2">Location</dt>
-        <dd class="col3" id="editable_location"><%= @post.location %></dd>
+        <% if signed_in? and @post.user_id == current_user.id %>
+            <dd class="col3 editable" edit_field="location"><%= @post.location %></dd>
+        <% else %>
+            <dd class="col3" edit_field="location"><%= @post.location %></dd>
+        <% end %>
+
         <dt class="col2">Price</dt>
-        <dd class="col3" id="editable_price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
+        <% if signed_in? and @post.user_id == current_user.id %>
+            <dd class="col3 editable" edit_field="price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
+        <% else %>
+            <dd class="col3" edit_field="price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
+        <% end %>
+
         <dt class="col2">Interested</dt>
         <dd class="col3"><%= @post.interested %></dd>
       </dl>
@@ -94,40 +104,76 @@
     $(document).ready(function () {
         window.startPostZoomer()
 
-        $('[id^=editable_]').dblclick(function (e) {
-            editable_element = $('#' + e.target.id)
-            swapVal = editable_element.html();
+        $('[class~=editable]').dblclick(function (e) {
+            swapVal = e.target.innerHTML;
+            edit_field = e.target.getAttribute('edit_field');
 
-            editable_element.html('<input type="text" style="font-size: 0.9em" id="' + e.target.id + '_active" value="' + swapVal + '"/>');
-            active_textbox = $('#' + e.target.id + '_active');
+            if (edit_field == 'price') {
+                swapVal = swapVal.replace('$', '');
+                maxlength = 6;
+            }else if(edit_field == 'location'){
+                maxlength = 16
+            }else if(edit_field == 'hashtag_prefix'){
+                maxlength = 15
+            }
+
+            e.target.innerHTML = '<input maxlength="' + maxlength.toString() + ' type="text" style="font-size: 0.9em" id="' + edit_field + '_edit_active" value="' + swapVal + '"/>'
+            active_textbox = $('#' + edit_field + '_edit_active');
             active_textbox.focus();
-            active_textbox.keypress(function (e) {
-                if ((e.keyCode || e.which) == 13) {
-                    closeTextbox(active_textbox, swapVal, e);
-                }
-            }).blur(function () {
-                closeTextbox(active_textbox, swapVal, e);
-            });
-
-
+            active_textbox.keypress(
+                    function (key_enter) {
+                        if ((key_enter.keyCode || key_enter.which) == 13) {
+                            closeTextbox(active_textbox, swapVal, edit_field, e);
+                        }else if((key_enter.keyCode || key_enter.which) == 27) {
+                            alert('steve')
+                            e.target.innerHTML = '$' + swapVal;
+                        }
+                    }).blur(function () {
+                        closeTextbox(active_textbox, swapVal, edit_field, e);
+                    })
         });
     })
 
-    function closeTextbox(active_textbox, swapVal, e) {
-        if (active_textbox.val() != swapVal) {
-            $.ajax({
-                url:'<%= url_for :controller => :posts, :action => :edit_field, :id => @post.id_hash %>',
-                type:"POST",
-                data:'field=' + e.target.id.split('_')[1] + '&value=' + active_textbox.val(),
-                success:function () {
-
-                },
-                error:function () {
-
+    function closeTextbox(active_textbox, swapVal, edit_field, e) {
+            if (active_textbox.val() != swapVal && validateEditField(edit_field, active_textbox.val())) {
+                $.ajax({
+                    url:'<%= url_for :controller => :posts, :action => :edit_field, :id => @post.id_hash %>',
+                    type:"POST",
+                    data:'field=' + edit_field + '&value=' + active_textbox.val(),
+                    complete:function (requestObj, textStatus) {
+                        e.target.innerHTML = requestObj.responseText;
+                    }
+                });
+            } else {
+                if (edit_field == 'price') {
+                    e.target.innerHTML = '$' + swapVal.toString();
+                } else {
+                    e.target.innerHTML = swapVal.toString();
                 }
-            });
+            }
+
+    }
+
+    function validateEditField(edit_field, value) {
+        value.replace(/\s+/g, ' ');
+        if (value.length == 0) {
+            return false;
         }
-        editable_element.html(active_textbox.val())
+
+        if (edit_field == 'location') {
+            if (value.length <= 16) {
+                return true;
+            }
+        } else if (edit_field == 'price') {
+            if (value.length <= 6 && parseInt(value, 10) > 0) {
+                return true;
+            }
+        }else if (edit_field == 'hashtag_prefix') {
+            if (value.length <= 15) {
+                return true;
+            }
+        }
+        return false;
     }
 </script>
 
