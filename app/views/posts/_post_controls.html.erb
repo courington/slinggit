@@ -70,7 +70,7 @@
 </div>
 
 
-<% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC") %>
+<% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC") and @post.open? %>
     <div id="networkActions" class="row">
       <div class="row">
         <div class="col5 innerHeader">
@@ -78,7 +78,7 @@
         </div>
       </div>
 
-      <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and @post.open? and not @twitter_account.blank? %>
+      <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and not @twitter_account.blank? %>
           <div class="row">
             <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col4 b", target: "_blank" do %>
                 Twitter &rarr; <%= link_to "Repost", {:controller => :posts, :action => :repost, :id => @post.id_hash, :to => 'twitter'}, class: "col2 b" %>
@@ -86,7 +86,7 @@
           </div>
       <% end %>
 
-      <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and @post.open? and not @facebook_account.blank? %>
+      <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and not @facebook_account.blank? %>
           <div class="row">
             <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 b", target: "_blank" do %>
                 Facebook &rarr; <%= link_to "Repost", {:controller => :posts, :action => :repost, :id => @post.id_hash, :to => 'facebook'}, class: "col2 b" %>
