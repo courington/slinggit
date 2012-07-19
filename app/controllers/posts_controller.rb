@@ -215,6 +215,7 @@ class PostsController < ApplicationController
           location_before_save = post.location
           price_before_save = post.price
           hashtag_prefix_before_save = post.hashtag_prefix
+          content_before_save = post.content
           case params[:field]
             when 'price'
               post.price = params[:value]
@@ -236,6 +237,13 @@ class PostsController < ApplicationController
                 render :text => "#{params[:value]}", :status => 200
               else
                 render :text => "#{hashtag_prefix_before_save}", :status => 500
+              end
+            when 'content'
+              post.content = params[:value]
+              if post.save
+               render :text => "#{params[:value]}", :status => 200
+              else
+               render :text => "#{content_before_save}", :status => 500
               end
           end
         end
