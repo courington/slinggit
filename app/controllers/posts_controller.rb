@@ -179,7 +179,7 @@ class PostsController < ApplicationController
       if search_terms.length > 1
         @posts = Post.all(:conditions => ["(content in (?) OR hashtag_prefix in (?) OR location in (?)) AND open = ? AND status = ?", search_terms, search_terms, search_terms, true, STATUS_ACTIVE], :order => 'created_at desc')
         if @posts.length == 0
-          search_terms = search_terms[0,3]
+          search_terms = search_terms[0, 3]
           search_terms.each do |search_term|
             search_term = search_term[1, search_terms.length - 1]
             @posts | Post.all(:conditions => ["(content like ? OR hashtag_prefix like ? OR location like ?) AND open = ? AND status = ?", "%#{search_terms}%", "%#{search_terms}%", "%#{search_terms}%", true, STATUS_ACTIVE], :order => 'created_at desc')
@@ -219,6 +219,55 @@ class PostsController < ApplicationController
       redirect_to request.referer
     else
       redirect_to post_path
+    end
+  end
+
+  def repost
+    if signed_in?
+      if not params[:id].blank?
+        if post = Post.first(:conditions => ['id_hash = ? AND user_id = ?', params[:id], current_user.id])
+          post.update_attributes(:status => STATUS_ACTIVE, :open => true)
+          if not post.recipient_api_account_ids.blank?
+            post.recipient_api_account_ids.split(',').each do |api_account_id|
+              if api_account = ApiAccount.first(:conditions => ['id = ?', api_account_id])
+                if api_account.api_source == 'twitter'
+                  TwitterPost.create(
+                      :user_id => post.user_id,
+                      :api_account_id => api_account.id,
+                      :post_id => post.id,
+                      :content => post.content
+                  ).do_post
+                elsif api_account.api_source == 'facebook'
+                  redirect = Redirect.get_or_create(
+                      :target_uri => "#{BASEURL}/posts/#{post.id_hash}"
+                  )
+                  FacebookPost.create(
+                      :user_id => post.user_id,
+                      :api_account_id => api_account.id,
+                      :post_id => post.id,
+                      :message => "##{post.hashtag_prefix} for sale at #{redirect.get_short_url}",
+                      :name => "$#{post.price}.00",
+                      :caption => "Location: #{post.location}",
+                      :description => post.content,
+                      :image_url => post.has_photo? ? "#{BASEURL}#{post.root_url_path}" : "#{Rails.root}/app/assets/images/noPhoto_80x80.png",
+                      :link_url => nil #if this is nil it will default to the post
+                  ).do_post
+                end
+              end
+              flash[:success] = "Post has been reopened and resubmitted to your social networks."
+            end
+          end
+        else
+          flash[:error] = "You can only repost items that belong to you."
+        end
+        redirect_to :controller => :posts, :action => :show, :id => params[:id]
+      else
+        flash[:error] = "Oops, something strange happened and we were unable to complete your request."
+        redirect_to root_path
+      end
+    else
+      flash[:notice] = "Please sign in."
+      redirect_to root_path
     end
   end
 
