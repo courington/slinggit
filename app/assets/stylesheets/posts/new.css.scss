@@ -48,6 +48,13 @@
 			color: $main-blue;
 		}
 	}
+	.photoIcon {
+		@extend .btnNavSprite;
+		height: 32px;
+		width: 32px;
+		background-position: -224px -119px;
+		display: block;
+	}
 }
 
 .postSocialAccount {
