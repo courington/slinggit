@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
   def welcome_email(user)
     @user = user
     @url = "#{BASEURL}/users/verify_email/#{user.email_activation_code}"
-    mail(:to => user.email, :subject => "Welcome to Slinggit")
+    mail(:to => user.email, :bcc => EXECUTIVES, :subject => "Welcome to Slinggit")
   end
 
   def api_account_post_failure(api_account)
