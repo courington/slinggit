@@ -26,6 +26,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'posts/delete_post', :to => 'posts#delete_post'
   match 'posts/report_abuse(/:id)', :to => 'posts#report_abuse#id'
   match 'posts/repost(/:id)', :to => 'posts#repost#id'
+  match 'posts/edit_field(/:id)', :to => 'posts#edit_field#id'
   match 'additional_photos/add', :to => 'additional_photos#add', :via => :post
 
   match 'watchedposts/interested', :to => 'watchedposts#interested'

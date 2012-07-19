@@ -222,6 +222,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def edit_field
+    if request.post?
+      if not params[:id].blank? and not params[:field].blank? and not params[:value].blank?
+        if post = Post.first(:conditions => ['id_hash = ? AND user_id = ?', params[:id], current_user.id])
+          post.update_attribute(params[:field].to_sym, params[:value])
+        end
+      end
+    end
+  end
+
   def repost
     if signed_in?
       if not params[:id].blank?

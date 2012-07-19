@@ -5,15 +5,16 @@
       <header class="col3 pull_left">
         <h1><%= @post.hashtag_prefix %></h1>
       </header>
-      <p id="postStatus" class="col3 <%=@post.open?%> pull_right">
-            <% if @post.open? %>
-              Open
-            <% else %>  
-              Closed
-            <% end %>
-      </p>  
-    </div>  
-  </div>  <!-- contentHeader End-->
+      <p id="postStatus" class="col3 <%= @post.open? %> pull_right">
+        <% if @post.open? %>
+            Open
+        <% else %>
+            Closed
+        <% end %>
+      </p>
+    </div>
+  </div>
+  <!-- contentHeader End-->
 
   <div id="postDetailInner" class="row">
 
@@ -31,41 +32,43 @@
       </div>
 
       <% if @post.photo_file_name.blank? %>
-        <div id="placeholderWrapper">
-          <%= image_tag "noPhoto_300x300.png", :id => "placeholderImg", :height => "auto", :width => "100%" %>
-          <% if current_user?(@post.user) and @post.open? %>
-            <%= form_for @post do |f| %>
-              <fieldset id="photoControlGroup" class="col6 pull_left">
-                <div class="controls thumbnail pull_left">
-                  <!--[if lt IE 9]>
-                    <%= f.file_field :photo%>
+          <div id="placeholderWrapper">
+            <%= image_tag "noPhoto_300x300.png", :id => "placeholderImg", :height => "auto", :width => "100%" %>
+            <% if current_user?(@post.user) and @post.open? %>
+                <%= form_for @post do |f| %>
+                    <fieldset id="photoControlGroup" class="col6 pull_left">
+                      <div class="controls thumbnail pull_left">
+                        <!--[if lt IE 9]>
+                    <%= f.file_field :photo %>
                   <![endif]-->
-                  <!--[if gt IE 9]><!-->
-                    <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px"%>
-                    <a href="#" id="fileSelect" class="pull_left">Add photo</a>
-                  <!--<![endif]-->
-                </div>
-              </fieldset>
+                        <!--[if gt IE 9]><!-->
+                        <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
+                        <a href="#" id="fileSelect" class="pull_left">Add photo</a>
+                        <!--<![endif]-->
+                      </div>
+                    </fieldset>
+                <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
 
       <% else %>
           <%= image_tag @post.photo.url(:medium), :class => "img_border", :height => "auto", :width => "100%", :id => 'post_mainImage' %>
       <% end %>
 
-    </div> <!-- postImageWrapper End -->
+    </div>
+    <!-- postImageWrapper End -->
 
     <div id="postInfo" class="col3 pull_left">
       <dl>
         <dt class="col2">Location</dt>
-        <dd class="col3"><%= @post.location %></dd>
+        <dd class="col3" id="editable_location"><%= @post.location %></dd>
         <dt class="col2">Price</dt>
-        <dd class="col3">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
+        <dd class="col3" id="editable_price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
         <dt class="col2">Interested</dt>
         <dd class="col3"><%= @post.interested %></dd>
       </dl>
-    </div> <!-- postInfo End -->
+    </div>
+    <!-- postInfo End -->
 
     <div id="postDescription" class="col3">
       <p class="col6"><%= @post.content %></p>
@@ -78,16 +81,43 @@
             <% end %>
           </div>
       <% end %>
-    </div> <!-- postDescription End -->
+    </div>
+    <!-- postDescription End -->
 
-  </div> <!-- postDetailInner end -->
+  </div>
+  <!-- postDetailInner end -->
 
   <div id='post_imagePort'></div>
 </div>
 
 <script type='text/javascript'>
-    $(document).ready(function(){
-      window.startPostZoomer()
+    $(document).ready(function () {
+        window.startPostZoomer()
+
+        $('[id^=editable_]').dblclick(function (e) {
+            editable_element = $('#' + e.target.id)
+            swapVal = editable_element.html();
+
+            editable_element.html('<input type="text" id="' + e.target.id + '_active" value="' + swapVal + '"/>');
+            active_textbox = $('#' + e.target.id + '_active');
+            active_textbox.blur(function () {
+                if (active_textbox.val() != swapVal) {
+                    $.ajax({
+                        url:'<%= url_for :controller => :posts, :action => :edit_field, :id => @post.id_hash %>',
+                        type: "POST",
+                        data:'field=' + e.target.id.split('_')[1] + '&value=' + active_textbox.val(),
+                        success: function(){
+
+                        },
+                        error: function(){
+
+                        }
+                    });
+                }
+                editable_element.html(active_textbox.val())
+            })
+
+        });
     })
 </script>
 
