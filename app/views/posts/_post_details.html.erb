@@ -3,7 +3,7 @@
   <div class="row contentHeader">
     <div class="innerHeader row">
       <header class="col3 pull_left">
-        <h1><%= @post.hashtag_prefix %></h1>
+        <h1 class="editable" edit_field='hashtag_prefix'><%= @post.hashtag_prefix %></h1>
       </header>
       <p id="postStatus" class="col3 <%= @post.open? %> pull_right">
         <% if @post.open? %>
@@ -107,10 +107,14 @@
         $('[class~=editable]').dblclick(function (e) {
             swapVal = e.target.innerHTML;
             edit_field = e.target.getAttribute('edit_field');
-            maxlength = 16
+
             if (edit_field == 'price') {
-                maxlength = 6
                 swapVal = swapVal.replace('$', '');
+                maxlength = 6;
+            }else if(edit_field == 'location'){
+                maxlength = 16
+            }else if(edit_field == 'hashtag_prefix'){
+                maxlength = 15
             }
 
             e.target.innerHTML = '<input maxlength="' + maxlength.toString() + ' type="text" style="font-size: 0.9em" id="' + edit_field + '_edit_active" value="' + swapVal + '"/>'
@@ -162,6 +166,10 @@
             }
         } else if (edit_field == 'price') {
             if (value.length <= 6 && parseInt(value, 10) > 0) {
+                return true;
+            }
+        }else if (edit_field == 'hashtag_prefix') {
+            if (value.length <= 15) {
                 return true;
             }
         }
