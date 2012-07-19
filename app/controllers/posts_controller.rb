@@ -1,10 +1,14 @@
 class PostsController < ApplicationController
+  include PostsHelper
+
   before_filter :user_verified, only: [:create, :destroy, :eidt, :new]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
   before_filter :non_suspended_user, only: [:new]
   before_filter :correct_user, only: [:destroy, :edit, :update]
   before_filter :load_api_accounts, :only => [:new, :create]
   before_filter :get_id_for_slinggit_api_account, :only => [:new, :create]
+
+  helper :posts
 
   def index
     @posts = Post.paginate(page: params[:page], :per_page => 10, :conditions => ['open = ? AND status = ?', true, STATUS_ACTIVE], :order => 'id desc')
@@ -30,29 +34,11 @@ class PostsController < ApplicationController
         @twitter_account = @user.primary_twitter_account
         @facebook_account = @user.primary_facebook_account
 
-        if not @twitter_account.blank?
-          @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @twitter_account.id])
-        else
-          @twitter_post = TwitterPost.first(conditions: ['post_id = ? AND user_id = ?', @post.id, @user.id])
-          @twitter_account = ApiAccount.first(:conditions => ['id = ?', @twitter_post.api_account_id], :select => 'user_name') unless @twitter_post == nil
-        end
+        # PostsHelper method
+        generate_twitter_link @twitter_account, @post, @user
 
-        if not @facebook_account.blank?
-          @facebook_truncated_id = nil
-          @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND api_account_id = ? ', @post.id, @facebook_account.id])
-          if @facebook_post != nil and @facebook_post.facebook_post_id != nil
-            delims = @facebook_post.facebook_post_id.to_s.split("_")
-            @facebook_truncated_id = delims[1]
-          end
-        else
-          @facebook_truncated_id = nil
-          @facebook_post = FacebookPost.first(conditions: ['post_id = ? AND user_id = ? ', @post.id, @user.id])
-          @facebook_account = ApiAccount.first(:conditions => ['id = ?', @facebook_post.api_account_id], :select => 'user_name') unless @facebook_post == nil
-          if @facebook_post != nil and @facebook_post.facebook_post_id != nil
-            delims = @facebook_post.facebook_post_id.to_s.split("_")
-            @facebook_truncated_id = delims[1]
-          end
-        end
+        # PostsHelper method
+        generate_facebook_link @facebook_account, @post, @user
 
         # Since we give an non-singed in user the option to sign in, we
         # want to return them to the post after signin.
@@ -313,6 +299,7 @@ class PostsController < ApplicationController
   end
 
   private
+
 
   def correct_user
     if signed_in?
