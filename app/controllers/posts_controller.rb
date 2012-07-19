@@ -226,18 +226,18 @@ class PostsController < ApplicationController
     if signed_in?
       if not params[:id].blank?
         if post = Post.first(:conditions => ['id_hash = ? AND user_id = ?', params[:id], current_user.id])
-          post.update_attributes(:status => STATUS_ACTIVE, :open => true)
           if not post.recipient_api_account_ids.blank?
+            post_to = params[:to] || ''
             post.recipient_api_account_ids.split(',').each do |api_account_id|
               if api_account = ApiAccount.first(:conditions => ['id = ?', api_account_id])
-                if api_account.api_source == 'twitter'
+                if api_account.api_source == 'twitter' and post_to.include? 'twitter'
                   TwitterPost.create(
                       :user_id => post.user_id,
                       :api_account_id => api_account.id,
                       :post_id => post.id,
                       :content => post.content
                   ).do_post
-                elsif api_account.api_source == 'facebook'
+                elsif api_account.api_source == 'facebook' and post_to.include? 'facebook'
                   redirect = Redirect.get_or_create(
                       :target_uri => "#{BASEURL}/posts/#{post.id_hash}"
                   )
@@ -254,7 +254,13 @@ class PostsController < ApplicationController
                   ).do_post
                 end
               end
-              flash[:success] = "Post has been reopened and resubmitted to your social networks."
+              if post_to == 'twitter'
+                flash[:success] = "Post has been retweeted."
+              elsif post_to == 'facebook'
+                flash[:success] = "Item has been re posted to your wall."
+              elsif post_to == 'facebook,twitter'
+                flash[:success] = "Post has been resubmitted to your social networks"
+              end
             end
           end
         else
