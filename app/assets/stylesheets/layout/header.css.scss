@@ -60,30 +60,7 @@
 					//top: -.25em !important;
 				}
 			}
-			.btn_navPosts {
-				@extend .btnNavSprite;
-				background-position: -40px -92px;
-				display: block;
-				margin: 0 auto;
-			}
-			.btn_navMessages {
-				@extend .btnNavSprite;
-				background-position: -40px -153px;
-				display: block;
-				margin: 0 auto;
-			}
-			.btn_navSearch {
-				@extend .btnNavSprite;
-				background-position: -169px -152px;
-				display: block;
-				margin: 0 auto;
-			}
-			.btn_navSettings {
-				@extend .btnNavSprite;
-				background-position: -40px -33px;
-				display: block;
-				margin: 0 auto;
-			}
+			
 		}
 		.dropdown-toggle {
 			padding: 1em 0;
@@ -132,8 +109,6 @@
 				border: 1px solid darken($lt-grey, 5%);
 			}
 			.btn_navSearch {
-				@extend .btnNavSprite;
-				background-position: -169px -152px;
 				position: relative;
 				top: 26px;
 				left: 6px;

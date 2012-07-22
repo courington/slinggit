@@ -224,66 +224,6 @@ p {
     }
   }
 
-.btnNavSprite {
-	background: url("icons/navigation/primaryNav_sprite_320x244.png") no-repeat 0 0;
-	display: inline-block;
-	height: 16px;
-	width: 16px;
-}
-
-.logoSmall{
-	@extend .btnNavSprite;
-	background-position: -160px -180px;
-}
-
-.twitIconSmall {
-	@extend .btnNavSprite;
-	background-position: -264px -212px;
-}
-
-.twitIcon {
-	@extend .btnNavSprite;
-	background-position: -163px 0;
-	height: 32px;
-	width: 32px;
-}
-
-.twitIconSmall_dark {
-	@extend .btnNavSprite;
-	background-position: -296px -213px;
-}
-
-.twitIcon_dark {
-	@extend .btnNavSprite;
-	background-position: -289px -180px;
-	height: 32px;
-	width: 32px;
-}
-
-.facebookIcon {
-	@extend .btnNavSprite;
-	background-position: -256px -120px;
-	height: 32px;
-	width: 32px;
-}
-
-.facebookIconSmall {
-	@extend .btnNavSprite;
-	background-position: -264px -152px;
-}
-
-.blogIcon {
-	@extend .btnNavSprite;
-  	background-position: -33px -183px;
-	height: 32px;
-	width: 32px;
-}
-
-.blogIconSmall {
-	@extend .btnNavSprite;
-	background-position: -33px -215px;
-}
-
 .pagination ul li {
 	float: left;
 	margin-right: ($font-size /2) !important;
