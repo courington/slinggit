@@ -85,7 +85,7 @@
     <!-- postInfo End -->
 
     <div id="postDescription" class="col3">
-      <p class="col6"><%= @post.content %></p>
+      <p class="col6 editable" edit_field="content" id="editable_content"><%= @post.content %></p> <%= image_tag 'pencil.gif', :class => 'editGraphic editable_remote', :edit_field => 'content', :edit_target => 'editable_content' %>
       <% if signed_in? && !current_user?(@post.user) %>
           <div class="row">
             <% if !current_user.post_in_watch_list?(@post.id) %>
@@ -105,7 +105,6 @@
 </div>
 
 <script type='text/javascript'>
-    target_object = null
     $(document).ready(function () {
         window.startPostZoomer()
 
@@ -119,7 +118,8 @@
     })
 
     function editEvent(target_id) {
-        target_object = $('#' + target_id)
+
+        target_object = $('#' + target_id);
         swapVal = target_object.text();
         edit_field = target_object.attr('edit_field');
 
@@ -127,12 +127,14 @@
             swapVal = swapVal.replace('$', '');
             maxlength = 6;
         } else if (edit_field == 'location') {
-            maxlength = 16
+            maxlength = 16;
         } else if (edit_field == 'hashtag_prefix') {
-            maxlength = 15
+            maxlength = 15;
+        } else if (edit_field == 'content'){
+           maxlength = 300;
         }
 
-        target_object.html('<input maxlength="' + maxlength.toString() + ' type="text" style="font-size: 0.9em" id="' + edit_field + '_edit_active" value="' + swapVal + '"/>');
+        target_object.html('<input maxlength="' + maxlength.toString() + '" type="text" style="font-size: 0.9em" id="' + edit_field + '_edit_active" value="' + swapVal + '"/>');
         active_textbox = $('#' + edit_field + '_edit_active');
         active_textbox.focus();
         active_textbox.keypress(
@@ -140,7 +142,11 @@
                     if ((key_enter.keyCode || key_enter.which) == 13) {
                         closeTextbox(active_textbox, swapVal, edit_field, target_object);
                     } else if ((key_enter.keyCode || key_enter.which) == 27) {
-                        target_object.html('$' + swapVal);
+                        if(edit_field == 'price'){
+                            target_object.html('$' + swapVal);
+                        }else{
+                            target_object.html(swapVal);
+                        }
                     }
                 }).blur(function () {
                     closeTextbox(active_textbox, swapVal, edit_field, target_object);
@@ -185,8 +191,11 @@
             if (value.length <= 15) {
                 return true;
             }
+        } else if (edit_field == 'content'){
+           if (value.length <= 300){
+return true;
+}
         }
         return false;
     }
 </script>
-

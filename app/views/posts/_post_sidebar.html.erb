@@ -31,7 +31,11 @@
   <% end %> 
 
 
-  <div class="pull_left flag"><%= link_to "Flag Inappropriate", {:controller => :posts, :action => :report_abuse, :id => @post.id_hash} %>
+  <div class="pull_left flag">
+	<%= link_to :controller => :posts, :action => :report_abuse, :id => @post.id_hash do %>
+	<span class="flagIconSmall"></span>
+	Flag Inappropriate
+	<% end %>
   </div>
 
 </div>

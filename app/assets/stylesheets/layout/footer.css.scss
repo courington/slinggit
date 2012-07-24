@@ -66,8 +66,6 @@
 		}
 	}
 	.coloradoIcon {
-		@extend .btnNavSprite;
-		background-position: -296px -152px;
 		+ span {
 			color: $main-grey;
 			margin-left: $font-size * .25;
