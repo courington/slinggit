@@ -128,4 +128,8 @@ class Post < ActiveRecord::Base
     return photo_urls
   end
 
+  def twitter_link
+    Slinggit::CreatesLinksToNetworkPosts.for_twitter_post self
+  end
+
 end

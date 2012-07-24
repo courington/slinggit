@@ -139,6 +139,23 @@ class FacebookPost < ActiveRecord::Base
     return http.post(uri.path, URI.escape(param_string))
   end
 
+  def link_to_post
+    facebook_account = ApiAccount.first(:conditions => ['id = ?', self.api_account_id], :select => 'user_name')
+    # Because a user could delete a facebook account after they've posted a link, we should check for nil, even
+    # though we don't actually delete it, we just change the status
+    if not facebook_account.blank? 
+      delims = self.facebook_post_id.to_s.split("_")
+      facebook_truncated_id = delims[1]
+      return "https://www.facebook.com/#{facebook_account.user_name}/posts/#{facebook_truncated_id}"
+    else
+      return nil
+    end 
+  end
+
+  def primary_account
+    facebook_account = ApiAccount.first(:conditions => ['id = ?', self.api_account_id], :select => 'status')
+  end
+
   # Problem reports
   def send_problem_report exception
     ProblemReport.create(

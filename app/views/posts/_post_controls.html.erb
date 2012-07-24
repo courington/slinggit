@@ -70,7 +70,8 @@
 </div>
 
 
-<% if (not @twitter_post.blank? and @twitter_post.status == "SUC") or (not @facebook_post.blank? and @facebook_post.status == "SUC") and @post.open? %>
+<% if (@twitter_posts.any? or @facebook_posts.any?) %>
+
     <div id="networkActions" class="row">
       <div class="row">
         <div class="col5 innerHeader">
@@ -78,22 +79,23 @@
         </div>
       </div>
 
-      <% if not @twitter_post.blank? and @twitter_post.status == "SUC" and not @twitter_account.blank? %>
+      <% if not get_post_link(@post, @twitter_posts, 'twitter').blank? %>
           <div class="row">
-            <%= link_to "https://twitter.com/#!/#{@twitter_account.user_name}/status/#{@twitter_post.twitter_post_id}", class: "col4 b", target: "_blank" do %>
+            <%= link_to "#{get_post_link(@post, @twitter_posts, 'twitter').link_to_post}", class: "col4 b", target: "_blank" do %>
                 Twitter &rarr; <%= link_to "Repost", {:controller => :posts, :action => :repost, :id => @post.id_hash, :to => 'twitter'}, class: "col2 b" %>
             <% end %>
           </div>
       <% end %>
 
-      <% if not @facebook_post.blank? and @facebook_post.status == "SUC" and not @facebook_account.blank? %>
+      <% if not get_post_link(@post, @facebook_posts, 'facebook').blank? %>
           <div class="row">
-            <%= link_to "https://www.facebook.com/#{@facebook_account.user_name}/posts/#{@facebook_truncated_id}", class: "col6 b", target: "_blank" do %>
+            <%= link_to "#{get_post_link(@post, @facebook_posts, 'facebook').link_to_post}", class: "col6 b", target: "_blank" do %>
                 Facebook &rarr; <%= link_to "Repost", {:controller => :posts, :action => :repost, :id => @post.id_hash, :to => 'facebook'}, class: "col2 b" %>
             <% end %>
           </div>
       <% end %>
     </div>
+
 <% end %>
 
 <script type="text/javascript">

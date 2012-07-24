@@ -144,6 +144,15 @@ class TwitterPost < ActiveRecord::Base
     end
   end
 
+  def link_to_post
+    twitter_account = ApiAccount.first(:conditions => ['id = ?', self.api_account_id], :select => 'user_name')
+    twitter_account.blank? ? nil : "https://twitter.com/#!/#{twitter_account.user_name}/status/#{self.twitter_post_id}"
+  end
+
+  def primary_account
+    twitter_account = ApiAccount.first(:conditions => ['id = ?', self.api_account_id], :select => 'status')
+  end
+
   # Problem reports
   def send_problem_report exception
     ProblemReport.create(

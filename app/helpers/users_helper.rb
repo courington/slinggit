@@ -8,4 +8,12 @@ module UsersHelper
     image_tag(gravatar_url, alt: user.name , id: "GPS", class: "gravatar", :height => "auto", :width => "100%", :style => "max-width: 80px;")
   end
 
+  # Let's make this a nice generic method for creating post feeds
+  # to be shown on the user show page.  Might even be able to abstract 
+  # this to application helper something so that it can be used with
+  # seaches and what not.
+  def get_posts_for_user filter, page, per_page, user_id, status, open
+  	@posts = Post.paginate(page: page, :per_page => per_page, :conditions => ['user_id = ? AND status = ? AND open = ?', user_id, status, open])
+  end
+
 end
