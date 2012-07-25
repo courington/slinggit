@@ -5,7 +5,6 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
-gem 'rabl'
 gem "paperclip", "3.0.2"
 gem "twitter", "2.2.3"
 gem "oauth", "0.4.6"
@@ -50,7 +49,7 @@ end
 
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'jbuilder'
 
 # Use unicorn as the app server
 # gem 'unicorn'

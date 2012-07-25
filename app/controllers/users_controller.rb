@@ -61,8 +61,13 @@ class UsersController < ApplicationController
       end
     end
     if not @user.blank? and not @user.is_considered_deleted?
+      #@posts = Post.all(:conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, true])
       @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, true])
       #get_posts_for_user 'show', params[:page], 20, @user.id, STATUS_ACTIVE, true
+      # respond_to do |format|
+      #   format.html
+      #   format.json { render json: @posts }
+      # end
     else
       if signed_in?
         redirect_to current_user

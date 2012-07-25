@@ -23,4 +23,5 @@
 //= require bootstrap
 //= require happy
 //= require hide-address-bar
+//= require initializer
 //= require_tree .
