@@ -63,12 +63,14 @@ class Post < ActiveRecord::Base
   end
 
   def price=(num)
-    # strip commas
-    num.gsub!(',','') if num.is_a?(String)
-    # then check if the string is an int
-    if !!(num =~ /^[-+]?[0-9]+$/)
-      self[:price] = num.to_i 
-    end  
+    if not num.blank?
+      # strip commas
+      num.gsub!(',','') if num.is_a?(String)
+      # then check if the string is an int
+      if !!(num =~ /^[-+]?[0-9]+$/)
+        self[:price] = num.to_i 
+      end  
+    end
   end 
 
   def hashtag_prefix=(prefix)

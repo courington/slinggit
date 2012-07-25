@@ -49,13 +49,13 @@ describe Post do
     # end    
   end
 
-  describe "when user_id is not present" do
-    before { @post.user_id = nil }
+  describe "with blank content" do
+    before { @post.content = " " }
     it { should_not be_valid }
   end
 
-  describe "with blank content" do
-    before { @post.content = " " }
+    describe "with blank price" do
+    before { @post.price = " " }
     it { should_not be_valid }
   end
 
