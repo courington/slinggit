@@ -25,7 +25,7 @@ require 'spec_helper'
 describe Post do
 
   let(:user) { FactoryGirl.create(:user) }
-  before { @post = user.posts.build(content: "Lorem ipsum", hashtag_prefix: "bike", price: 20) }
+  before { @post = user.posts.build(content: "Lorem ipsum", hashtag_prefix: "bike", price: '20') }
 
   subject { @post }
 
@@ -42,16 +42,11 @@ describe Post do
   end
 
   describe "accessible attributes" do
-    it "should not allow access to user_id" do
-      expect do
-        Post.new(user_id: user.id)
-      end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
-    end    
-  end
-
-  describe "when user_id is not present" do
-    before { @post.user_id = nil }
-    it { should_not be_valid }
+    # it "should not allow access to user_id" do
+    #   expect do
+    #     Post.new(user_id: user.id)
+    #   end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    # end    
   end
 
   describe "with blank content" do
@@ -59,8 +54,13 @@ describe Post do
     it { should_not be_valid }
   end
 
+    describe "with blank price" do
+    before { @post.price = " " }
+    it { should_not be_valid }
+  end
+
   describe "with content that is too long" do
-    before { @post.content = "a" * 101 }
+    before { @post.content = "a" * 301 }
     it { should_not be_valid }
   end
 

@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  include PostsHelper
 
   before_filter :user_verified, only: [:create, :destroy, :eidt, :new]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
@@ -7,8 +6,6 @@ class PostsController < ApplicationController
   before_filter :correct_user, only: [:destroy, :edit, :update]
   before_filter :load_api_accounts, :only => [:new, :create]
   before_filter :get_id_for_slinggit_api_account, :only => [:new, :create]
-
-  helper :posts
 
   def index
     @posts = Post.paginate(page: params[:page], :per_page => 10, :conditions => ['open = ? AND status = ?', true, STATUS_ACTIVE], :order => 'id desc')
@@ -31,14 +28,9 @@ class PostsController < ApplicationController
         # in order to display edit option.  Dan, if there's a
         # better way, fell free to change this.
         @user = User.find(@post.user_id)
-        @twitter_account = @user.primary_twitter_account
-        @facebook_account = @user.primary_facebook_account
 
-        # PostsHelper method
-        generate_twitter_link @twitter_account, @post, @user
-
-        # PostsHelper method
-        generate_facebook_link @facebook_account, @post, @user
+        @twitter_posts = TwitterPost.all(:conditions => ['post_id = ?', @post.id], order: "created_at DESC")
+        @facebook_posts = FacebookPost.all(:conditions => ['post_id = ?', @post.id], order: "created_at DESC")
 
         # Since we give an non-singed in user the option to sign in, we
         # want to return them to the post after signin.

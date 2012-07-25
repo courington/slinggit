@@ -2,11 +2,15 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account, :edit_user_email_for_verification,  :update_email_and_send_verification]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :user_verified, only: [:edit, :update, :destroy]
-  #before_filter :admin_user, only: [:index]
+  
+  # Method is in application_controller
   before_filter :set_cache_buster, only: [:edit_user_email_for_verification]
 
+  # Controller specific, non-environement dependent, constants
   USERS_PATH = "/users"
 
+  # CMK: Don't remember if I put this here or not, but will look at once we
+  # start our async stuff
   respond_to :json
 
   def index
@@ -46,6 +50,7 @@ class UsersController < ApplicationController
     end
   end
 
+
   def show
     @label = "My"
     #@passes_limitation = nil
@@ -56,7 +61,13 @@ class UsersController < ApplicationController
       end
     end
     if not @user.blank? and not @user.is_considered_deleted?
+      #@posts = Post.all(:conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, true])
       @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, true])
+      #get_posts_for_user 'show', params[:page], 20, @user.id, STATUS_ACTIVE, true
+      # respond_to do |format|
+      #   format.html
+      #   format.json { render json: @posts }
+      # end
     else
       if signed_in?
         redirect_to current_user
