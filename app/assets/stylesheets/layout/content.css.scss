@@ -8,7 +8,7 @@ body {
 }
 //WEB FONTS FOR HEADLINES
 .headline {
-	font-family: 'Rokkitt', 'helvetica neue', helvetica, arial, sans-serif;
+	font-family: /*'Oswald'*/ 'Bree Serif', 'helvetica neue', helvetica, arial, sans-serif;
 	color: $main-blue;
 	text-rendering: optimizelegibility;
 	letter-spacing: .05em;
@@ -18,6 +18,7 @@ body {
 //	font-size: 7.2em;
 //	letter-spacing: .03em;
 //	line-height: ($leading * .875);
+//	font-weight: 700;
 //}
 //END
 //COLUMNS and OFFSETS
