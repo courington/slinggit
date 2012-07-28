@@ -50,6 +50,8 @@
           <% end %>
         </div>
 
+          <%= link_to "Edit", edit_post_path(@post), class: "col6 btn_yellow" %>
+
         <div class="button-wrapper pull_left col3 first">
           <button class="col6 btn_ltGrey" type="button" id="archivePrompt">
             Archive
@@ -81,8 +83,8 @@
 
       <% if not get_post_link(@post, @twitter_posts, 'twitter').blank? %>
           <div class="row">
-            <%= link_to "#{get_post_link(@post, @twitter_posts, 'twitter').link_to_post}", class: "col4 b", target: "_blank" do %>
-                Twitter &rarr; <%= link_to "Repost", {:controller => :posts, :action => :repost, :id => @post.id_hash, :to => 'twitter'}, class: "col2 b" %>
+            <%= link_to "#{get_post_link(@post, @twitter_posts, 'twitter').link_to_post}", class: "col6 b", target: "_blank" do %>
+                Twitter &rarr; 
             <% end %>
           </div>
       <% end %>
@@ -90,7 +92,7 @@
       <% if not get_post_link(@post, @facebook_posts, 'facebook').blank? %>
           <div class="row">
             <%= link_to "#{get_post_link(@post, @facebook_posts, 'facebook').link_to_post}", class: "col6 b", target: "_blank" do %>
-                Facebook &rarr; <%= link_to "Repost", {:controller => :posts, :action => :repost, :id => @post.id_hash, :to => 'facebook'}, class: "col2 b" %>
+                Facebook &rarr;
             <% end %>
           </div>
       <% end %>

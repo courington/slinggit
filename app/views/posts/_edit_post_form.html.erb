@@ -1,0 +1,93 @@
+  <%= form_for @post do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <!-- item name -->
+      <fieldset class="row">
+
+        <%= f.label :hashtag_prefix, "Your item", class: "col6", for: "post_hashtag_prefix" %>
+
+        <div class="col6">
+          <%= f.text_field :hashtag_prefix, class: "hardEdge-right col4 pull_left", placeholder: "#", maxLength: "15", counterMax: "15" %>
+          <span class="pull_left add_on">forsale</span>
+        </div>
+
+      </fieldset>
+      <!-- end item name -->
+
+
+      <!-- price and location -->
+      <div class="row">
+
+        <fieldset class="col3 pull_left">
+          <%= f.label :price, class: "row", for: "post_price" %>
+          <div class="row">
+            <%= f.text_field :price, class: "hardEdge-right col4 pull_left", id: "post_price", placeholder: "$", maxLength: "6"  %>
+            <span class="pull_left add_on">.00</span>
+          </div>
+        </fieldset>
+
+        <fieldset class="col3 pull_right">
+          <%= f.label :location, "Location", class: "row", for: "post_hashtag_prefix" %>
+          <%= f.text_field :location, class: "row", placeholder: "City, State, or Zip", maxLength: "16" %>
+        </fieldset>
+
+      </div>
+      <!-- end price and location  -->
+
+
+      <!-- description -->
+      <fieldset class="row">
+
+        <%= f.label :content, "Quick description", class: "col3", for: "post_content" %>
+        <%= f.text_area :content, class: "row", rows: "3", counterMax: "300", placeholder: "#hashtags can help with search" %>
+
+      </fieldset>
+      <!-- end description -->
+
+
+      <!-- photo and twitter -->
+      <div class="row grey_well">
+
+        <fieldset id="photoControlGroup" class="col3 pull_left">
+          <%= f.label :photo, "Item Photo (optional):", for: "post_photo", class: "row" %>
+          <div class="controls thumbnail pull_left">
+            <!--[if lt IE 9]>
+              <%= f.file_field :photo %>
+            <![endif]-->
+            <!--[if gt IE 9]><!-->
+              <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
+              <a href="#" id="fileSelect"><span class="photoIcon"></span>Select a photo</a>
+            <!--<![endif]-->
+          </div>
+        </fieldset>
+
+        <aside class="col3 pull_right postSocialAccount">
+        <header>Social network(s) to post to:</header>
+          <fieldset class="row">
+            <%= check_box_tag "selected_networks[#{@slinggit_account_id}]", 'post', true, class: "pull_left" %>
+            <label for="selected_networks[#{@slinggit_account_id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span>Slinggit</label>
+          </fieldset>
+        <% @twitter_accounts.each do |twitter_account| %>
+          <fieldset class="row">
+            <%= check_box_tag "selected_networks[#{twitter_account.id}]", 'post', true, class: "pull_left" %>
+            <label for="selected_networks[#{twitter_account.id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span><%= twitter_account.user_name %></label>
+          </fieldset>
+        <% end %>
+        <% @facebook_accounts.each do |facebook_account| %>
+            <fieldset class="row">
+            <%= check_box_tag "selected_networks[#{facebook_account.id}]", 'post', true, class: "pull_left" %>
+            <label for="selected_networks[#{facebook_account.id}]" class="col5 pull_left"><span class="facebookIconSmall"></span><%= facebook_account.user_name %></label>
+          </fieldset>
+        <% end %>
+      </aside>
+
+      </div>
+      <!-- end photo and twitter -->
+
+
+      <fieldset class="row">
+            <%= f.button "Repost Item", type: "submit", class: "col3 btn_green", id: "submitNewPost" %>
+            <%= link_to "Cancel", user_path(current_user), class: "col1 pull_right btn_ltGrey" %>
+      </fieldset>
+  <% end %>
+  
