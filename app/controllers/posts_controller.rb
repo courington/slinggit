@@ -69,11 +69,7 @@ class PostsController < ApplicationController
     else
       if not selected_networks.blank?
         post_to_social_newtorks(@post, selected_networks)
-        if not recipient_api_account_ids.blank?
-          @post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
-        end
       end
-
       flash[:success] = "Post successfully created!"
       redirect_to current_user
     end
@@ -81,16 +77,14 @@ class PostsController < ApplicationController
 
   def edit
     # Don't need to find Post here because of correct_user filter
-    #debugger
-    #store_location if !@post.open?
   end
 
   def update
     # Don't need to find Post here because of correct_user filter
     social_networks = params[:selected_networks]
     if @post.update_attributes(params[:post])
-      flash[:success] = "Post updated"
-      repost @post, social_networks
+      repost @post, social_networks unless social_networks.blank?
+      flash[:success] = "Successfully Reposted"
       redirect_back_or post_path(@path)
     else
       render 'edit'
@@ -111,12 +105,6 @@ class PostsController < ApplicationController
       end
     end
   end
-
-  # def destroy
-  #   @post.status = 'deleted'
-  #   @post.save
-  #   redirect_back_or current_user
-  # end
 
   def results
     #rework this again later
@@ -214,28 +202,24 @@ class PostsController < ApplicationController
     end
   end
 
-  def repost post, social_networks
-    if signed_in?
-      if not post.blank? and not social_networks.blank?
-        post_to_social_newtorks(post, social_networks)
-      else
-
-      end
-    end
-  end
 
   private
 
+  def repost post, social_networks
+    if not post.blank? and not social_networks.blank?
+      post_to_social_newtorks(post, social_networks)
+    end
+  end
+
   def post_to_social_newtorks post, social_networks
     recipient_api_account_ids = []
+
     social_networks.each do |id, value|
       # We need to first make sure the user is the owner of this account, or that
       # it is the slinggit account. Should we log a volation here?
       if proposed_api_account = ApiAccount.first(:conditions => ['id = ?', id], :select => 'user_id,api_source')
-
         if current_user.id == proposed_api_account.user_id || proposed_api_account.user_id == 0
           recipient_api_account_ids << id
-
           if proposed_api_account.api_source == 'twitter'
             TwitterPost.create(
                 :user_id => post.user_id,
@@ -259,11 +243,13 @@ class PostsController < ApplicationController
                 :link_url => nil #if this is nil it will default to the post
             ).do_post
           end
-
         end
-
       end
-    end    
+    end  
+
+    if not recipient_api_account_ids.blank?
+      post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
+    end
   end
 
   def correct_user
