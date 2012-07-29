@@ -68,38 +68,7 @@ class PostsController < ApplicationController
       return
     else
       if not selected_networks.blank?
-        selected_networks.each do |id, value|
-          # We need to first make sure the user is the owner of this account, or that
-          # it is the slinggit account. Should we log a volation here?
-          if proposed_api_account = ApiAccount.first(:conditions => ['id = ?', id], :select => 'user_id,api_source')
-            if current_user.id == proposed_api_account.user_id || proposed_api_account.user_id == 0
-              recipient_api_account_ids << id
-              if proposed_api_account.api_source == 'twitter'
-                TwitterPost.create(
-                    :user_id => @post.user_id,
-                    :api_account_id => id.to_i,
-                    :post_id => @post.id,
-                    :content => @post.content
-                ).do_post
-              elsif proposed_api_account.api_source == 'facebook'
-                redirect = Redirect.get_or_create(
-                    :target_uri => "#{BASEURL}/posts/#{@post.id_hash}"
-                )
-                FacebookPost.create(
-                    :user_id => @post.user_id,
-                    :api_account_id => id.to_i,
-                    :post_id => @post.id,
-                    :message => "##{@post.hashtag_prefix} for sale at #{redirect.get_short_url}",
-                    :name => "$#{@post.price}.00",
-                    :caption => "Location: #{@post.location}",
-                    :description => @post.content,
-                    :image_url => @post.has_photo? ? "#{BASEURL}#{@post.root_url_path}" : "#{Rails.root}/app/assets/images/noPhoto_80x80.png",
-                    :link_url => nil #if this is nil it will default to the post
-                ).do_post
-              end
-            end
-          end
-        end
+        post_to_social_newtorks(@post, selected_networks)
         if not recipient_api_account_ids.blank?
           @post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
         end
@@ -247,7 +216,7 @@ class PostsController < ApplicationController
 
   def repost post, social_networks
     if signed_in?
-      if not post.blank? and social_networks.any?
+      if not post.blank? and not social_networks.blank?
         post_to_social_newtorks(post, social_networks)
       else
 

@@ -56,7 +56,8 @@
             <![endif]-->
             <!--[if gt IE 9]><!-->
               <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>
-              <a href="#" id="fileSelect"><span class="photoIcon"></span>Select a photo</a>
+              <a href="#" id="fileSelect" class="col3">Change photo</a>
+              <%= image_tag @post.post_medium_image_src, :class => "obj img_border", :height => "auto", :width => "100%", :id => 'post_mainImage' %>
             <!--<![endif]-->
           </div>
         </fieldset>
