@@ -49,10 +49,13 @@
       <div class="row grey_well">
 
         <fieldset id="photoControlGroup" class="col3 pull_left">
-          <%= f.label :photo, "Item Photo (optional):", for: "post_photo", class: "row" %>
           <div class="controls thumbnail pull_left">
             <!--[if lt IE 9]>
+              <span>Uploading a new photo will change your current post photo.</span>
+              <br/>
               <%= f.file_field :photo %>
+              <br/>
+              <%= image_tag @post.post_medium_image_src, :class => "obj img_border", :height => "auto", :width => "100%", :id => 'post_mainImage' %>
             <![endif]-->
             <!--[if gt IE 9]><!-->
               <%= f.file_field :photo, style: "position:absolute; top:-999px; left:-999px" %>

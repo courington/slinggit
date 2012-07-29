@@ -14,7 +14,7 @@ class AdminPhotoView extends Backbone.View
   	"click span": "deletePhoto"
 
   deletePhoto: (e)->
-  	console.log @postId
+  	#console.log @postId
   	self = @
   	if confirm "Are you sure?"
   		$.ajax(
@@ -22,7 +22,7 @@ class AdminPhotoView extends Backbone.View
   			url: @eradicateUrl
   			data: {post_id: self.postId}
   		).done (response)->
-  			console.log response
+  			#console.log response
   			unless response.toLowerCase().indexOf("error") is -1
   				$("#errorDiv").html response
   			else
