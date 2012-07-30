@@ -111,6 +111,10 @@ class Post < ActiveRecord::Base
     end
   end
 
+  def post_medium_image_src
+    return self.photo_file_name.blank? ? "noPhoto_300x300.png" : self.photo.url(:medium)
+  end
+
   def interested
     Watchedpost.count(:conditions => ['post_id = ?', self.id], :select => 'id')
   end
@@ -128,10 +132,6 @@ class Post < ActiveRecord::Base
       end
     end
     return photo_urls
-  end
-
-  def twitter_link
-    Slinggit::CreatesLinksToNetworkPosts.for_twitter_post self
   end
 
 end

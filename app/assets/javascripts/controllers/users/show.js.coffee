@@ -7,4 +7,4 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		""   :  "root"
 
 	root: ->
-		console.log "root"
+		#console.log "root"

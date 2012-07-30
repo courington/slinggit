@@ -15,7 +15,7 @@ class Validator
 
 				empty: (element)->
 					self.validator.emailMessage.message = self.validator.emailMessage.default
-					console.log self.validator.emailMessage.message
+					#console.log self.validator.emailMessage.message
 					resut = true
 
 			result

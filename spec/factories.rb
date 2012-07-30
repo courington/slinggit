@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
     sequence(:name)  { |n| "Person#{n}" }
-    sequence(:email) { |n| "person_#{n}@example.com"}   
+    sequence(:email) { |n| "person_#{n}@nowaythisisadomain.com"}   
     password "foobar"
     password_confirmation "foobar"
 
@@ -14,6 +14,7 @@ FactoryGirl.define do
   factory :post do
     content "In dope bow wow whw its fo rizzle nisi. Mammasay mammasa bamma oo sa rhoncizzle."
     hashtag_prefix "bike"
+    location "Denver"
     price '20'
     user
   end

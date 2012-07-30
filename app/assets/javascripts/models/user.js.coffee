@@ -3,4 +3,4 @@
 ## Module
 class Slinggit.Models.Post extends Backbone.Model
 	initialize: ->
-		console.log @.get("content")
+		#console.log @.get("content")
