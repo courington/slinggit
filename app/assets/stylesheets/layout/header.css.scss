@@ -3,17 +3,17 @@
 	top: 0;
 	z-index: 1020;
 	overflow: visible;
-	background: $main-blue;
-	#{$ff}box-shadow: $head-shadow;
-	#{$o}box-shadow: $head-shadow;
-	#{$wk}box-shadow: $head-shadow;
-	box-shadow: $head-shadow;
+	background: $dk-grey;
+	//#{$ff}box-shadow: $head-shadow;
+	//#{$o}box-shadow: $head-shadow;
+	//#{$wk}box-shadow: $head-shadow;
+	//box-shadow: $head-shadow;
 	.hideSearch {
 		display: none;
 	}
 	.active {
-		border: 1px solid darken($main-blue, 15%);
-		background: darken($main-blue, 10%);
+		border: 1px solid darken($dk-grey, 15%);
+		background: darken($dk-grey, 10%);
 		#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
 		#{$o}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
 		#{$wk}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
@@ -48,7 +48,7 @@
 	hgroup  + .col4.pull_left {
 		width: 80%;
  		* {
-			color: $wht;
+			color: $main-yellow;
 		}
 		> .row > .col2 {
 			width: $sixCols * 1.5;
@@ -70,7 +70,7 @@
 			top: 4.5em;
 			right: 0;
 			z-index: 9999;
-			background: $main-blue;
+			background: $dk-grey;
 			//@include rounded-corners($font-size * .375);
 			@include hardEdge-top;
 			#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
@@ -123,6 +123,11 @@
 	margin-left: 25%;
 	}
 }
+
+.quickSearchLabel span:last-child {
+display: block;
+}
+
 .ie_logo_hack{
 	height: 20px;
 	width: 60px;

@@ -23,7 +23,7 @@
 			@include transition;
 			&:hover,
 			&:focus {
-				color: $main-blue;
+				color: darken($main-yellow, 15%);
 			}	
 		}
 		nav >.row:first-child {
@@ -41,7 +41,7 @@
 		line-height: $leading;
 		text-align: right;
 		a {
-			color: $main-blue;
+			color: darken($main-yellow, 15%);
 		}
 	}
 	small {
@@ -62,7 +62,7 @@
 		}
 		&:hover,
 		&:focus {
-			color: $main-blue;
+			color: darken($main-yellow, 15%);
 		}
 	}
 	.coloradoIcon {
