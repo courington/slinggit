@@ -19,7 +19,7 @@
 		line-height: $leading;
 		margin-top: $font-size;
 		a {
-			color: $main-blue;
+			color: darken($main-yellow, 15%);
 			span {
 				color: $main-grey;
 			}
@@ -52,7 +52,7 @@
 		line-height: $leading;
 		margin-top: $font-size;
 		a {
-			color: $main-blue;
+			color: darken($main-yellow, 15%);
 			span {
 				color: $main-grey;
 			}
