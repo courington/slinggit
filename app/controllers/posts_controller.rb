@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_filter :user_verified, only: [:create, :destroy, :eidt, :new]
+  before_filter :user_verified, only: [:create, :destroy, :edit, :new]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new]
   before_filter :non_suspended_user, only: [:new]
   before_filter :correct_user, only: [:destroy, :edit, :update]

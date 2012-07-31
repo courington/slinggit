@@ -17,7 +17,8 @@ def sign_in(user)
 end
 
 def fill_in_post
-  fill_in 'post_content', with: "Lorem ipsum"
   fill_in 'post_hashtag_prefix', with: "bike"
-  fill_in 'post_price',  with: 20
+  fill_in 'post_content', with: "Shizznit uhuh ... yih! lorizzle, pulvinar ac, condimentum egizzle, shizzlin dizzle izzle, diam"
+  fill_in 'post_location', with: "Denver"
+  fill_in 'post_price',  with: '20'
 end  

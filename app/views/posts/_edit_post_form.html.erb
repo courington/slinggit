@@ -71,18 +71,25 @@
             <%= check_box_tag "selected_networks[#{@slinggit_account_id}]", 'post', true, class: "pull_left" %>
             <label for="selected_networks[#{@slinggit_account_id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span>Slinggit</label>
           </fieldset>
+
+        <% if not @twitter_accounts.blank? %>
         <% @twitter_accounts.each do |twitter_account| %>
           <fieldset class="row">
             <%= check_box_tag "selected_networks[#{twitter_account.id}]", 'post', true, class: "pull_left" %>
             <label for="selected_networks[#{twitter_account.id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span><%= twitter_account.user_name %></label>
           </fieldset>
         <% end %>
+        <% end %>
+
+        <% if not @facebook_accounts.blank? %>
         <% @facebook_accounts.each do |facebook_account| %>
             <fieldset class="row">
             <%= check_box_tag "selected_networks[#{facebook_account.id}]", 'post', true, class: "pull_left" %>
             <label for="selected_networks[#{facebook_account.id}]" class="col5 pull_left"><span class="facebookIconSmall"></span><%= facebook_account.user_name %></label>
           </fieldset>
         <% end %>
+        <% end %>
+
       </aside>
 
       </div>

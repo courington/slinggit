@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# HEADS UP!!  When testing controllers, don't forget about before filters!
+
 describe "PostPages" do
 
   subject { page }
@@ -12,29 +14,35 @@ describe "PostPages" do
   ## Commenting out any specs that don't currently work
   ## Uncomment them as you work through them.
 
-  # describe "post creation" do
-  #   before { visit new_post_path }
+  describe "post creation" do
+    
+    before { visit new_post_path }
 
-  #   describe "with invalid information" do
+    describe "with invalid information" do
+  
+      it { should have_selector('#post_hashtag_prefix')}
+      it { should have_selector('#post_price')}
+      it { should have_selector('#post_location')}
+      it { should have_selector('#post_content')}
 
-  #     it "should not create a post" do
-  #       expect { click_button "Post" }.should_not change(Post, :count)
-  #     end
+      it "should not create a post" do
+        expect { click_button "submitNewPost" }.should_not change(Post, :count)
+      end
 
-  #     describe "error messages" do
-  #       before { click_button "Post" }
-  #       it { should have_content('error') } 
-  #     end
-  #   end
+      describe "error messages" do
+        before { click_button "submitNewPost" }
+        it { should have_content('error') } 
+      end
+    end
 
-  #   describe "with valid information" do
+    describe "with valid information" do
 
-  #     before { fill_in_post }
-  #     it "should create a post" do
-  #       expect { click_button "Post" }.should change(Post, :count).by(1)
-  #     end
-  #   end
-  # end
+      before { fill_in_post }
+      it "should create a post" do
+        expect { click_button "Post" }.should change(Post, :count).by(1)
+      end
+    end
+  end
 
   # describe "post destruction" do
   #   before { FactoryGirl.create(:post, user: user) }
@@ -67,25 +75,25 @@ describe "PostPages" do
       # it { should have_selector('label', text: "mitchcumstein")}
   	end
 
-  	# describe "with invalid information" do
-  	#   let(:new_content)  { " " }
-   #    before do
-   #      fill_in "Content",             with: new_content
-   #      click_button "Save changes"
-   #    end
-   #    it { should have_content('error') }
-   #  end
+  	describe "with invalid information" do
+  	  let(:new_content)  { " " }
+      before do
+        fill_in "post_content",             with: new_content
+        click_button "Repost Item"
+      end
+      it { should have_content('error') }
+    end
 
-   #  describe "with valid information" do
-   #   let(:new_content)  { "New content" }
-   #    before do
-   #      fill_in "Content",             with: new_content
-   #      click_button "Save changes"
-   #    end
+    describe "with valid information" do
+     let(:new_content)  { "New content" }
+      before do
+        fill_in "post_content",             with: new_content
+        click_button "Repost Item"
+      end
 
-   #    it { should have_selector('div.alert.alert-success') }
-   #    specify { p1.reload.content.should  == new_content }
-   #  end	
+      it { should have_selector('div.alert.alert-success') }
+      specify { p1.reload.content.should  == new_content }
+    end	
   end	
 
 end
