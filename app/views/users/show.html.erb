@@ -127,7 +127,7 @@
 
 
 <script>
-  var Posts = new Slinggit.Collections.Posts({model: Slinggit.Models.Post})
+  var Posts = new Slinggit.Collections.Posts()
   Posts.reset(<%= @posts.to_json.html_safe %>)
   $(document).ready(function(){
     Slinggit.initUsersShow()
