@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   # CMK: Don't remember if I put this here or not, but will look at once we
   # start our async stuff
-  respond_to :json
+  #respond_to :json
 
   def index
     if signed_in?
@@ -64,10 +64,6 @@ class UsersController < ApplicationController
       #@posts = Post.all(:conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, true])
       @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, true])
       #get_posts_for_user 'show', params[:page], 20, @user.id, STATUS_ACTIVE, true
-      # respond_to do |format|
-      #   format.html
-      #   format.json { render json: @posts }
-      # end
     else
       if signed_in?
         redirect_to current_user

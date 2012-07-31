@@ -15,8 +15,8 @@
 	Collections: {}
 
 	# Probably going to refactor these initializers.
-	initUsersShow: ->
-		new Slinggit.Controllers.Users.Show()
+	initUsersShow: (initialJson)->
+		new Slinggit.Controllers.Users.Show( json: initialJson )
 		Backbone.history.start()
 
 

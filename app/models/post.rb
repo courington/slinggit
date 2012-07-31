@@ -112,7 +112,7 @@ class Post < ActiveRecord::Base
   end
 
   def post_medium_image_src
-    return self.photo_file_name.blank? ? "noPhoto_300x300.png" : self.photo.url(:medium)
+    return self.photo_file_name.blank? ? "/assets/noPhoto_80x80.png" : self.photo.url(:medium)
   end
 
   def interested
