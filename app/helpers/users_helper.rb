@@ -13,7 +13,21 @@ module UsersHelper
   # this to application helper something so that it can be used with
   # seaches and what not.
   def get_posts_for_user filter, page, per_page, user_id, status, open
-  	@posts = Post.paginate(page: page, :per_page => per_page, :conditions => ['user_id = ? AND status = ? AND open = ?', user_id, status, open])
+    if filter == "open"
+      @posts = Post.paginate(page: page, :per_page => per_page, :conditions => ['user_id = ? AND status = ? AND open = ?', user_id, status, open])
+    elsif filter == "watched"
+      @user = current_user
+      @posts = []
+      Watchedpost.find_each(:conditions => ['user_id = ?', @user.id], :select => 'post_id') do |watched_post|
+        @posts << Post.first(:conditions => ['id = ?', watched_post.post_id])
+      end
+      @posts = @posts.paginate(:page => params[:page], :per_page => 20)
+    elsif filter == "archived"
+      @user = current_user
+      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, false]) 
+    else
+
+    end
   end
 
 end

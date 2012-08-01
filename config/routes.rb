@@ -79,6 +79,11 @@ SlinggitWebapp::Application.routes.draw do
   end
   match 'comments/delete(/:id)', :to => 'comments#delete#id'
 
+  ## API ##
+  scope "api" do
+    resources :posts, :path => "/posts/watched"
+  end
+
 
   ##MOBILE CONTROLLER##
   match 'mobile' => 'mobile#index'

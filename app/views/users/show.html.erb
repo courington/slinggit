@@ -43,6 +43,9 @@
               <%= link_to  current_user, class: "#{"active" if @label == "My"} col6" do %>
                 Posted <span class='nav_arrow pull_right'>&rarr;</span>
               <% end %>
+              <a href="#watching" class="col6">
+                Watching <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
               <%= link_to "Watching <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"} col6" %>
               <%= link_to "Archived <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"} col6" %>
             </div>
