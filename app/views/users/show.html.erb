@@ -47,6 +47,9 @@
                 Watching <span class='nav_arrow pull_right'>&rarr;</span>
               </a>
               <%= link_to "Watching <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"} col6" %>
+              <a href="#archived" class="col6">
+                Archived <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
               <%= link_to "Archived <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"} col6" %>
             </div>
             </div>
@@ -129,9 +132,9 @@
 
 </section>
 
-<%= content_tag "div", "Posts..", id: "container", data: {user: render(template: 'users/show', formats: [:json], handlers: [:jbuilder], locals: { user: @user })} %>
+<%= content_tag "div", "", id: "container", data: {user: render(template: 'users/show', formats: [:json], handlers: [:jbuilder])} %>
 <script>
   $(document).ready(function(){
-    Slinggit.initUsersShow(<%= render(template: 'users/show', formats: [:json], handlers: [:jbuilder], locals: { user: @user }).html_safe %>)
+    Slinggit.initUsersShow(<%= render(template: 'users/show', formats: [:json], handlers: [:jbuilder]).html_safe %>)
   })
 </script>

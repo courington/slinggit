@@ -16,15 +16,14 @@ module UsersHelper
     if filter == "open"
       @posts = Post.paginate(page: page, :per_page => per_page, :conditions => ['user_id = ? AND status = ? AND open = ?', user_id, status, open])
     elsif filter == "watched"
-      @user = current_user
+      #debugger
       @posts = []
-      Watchedpost.find_each(:conditions => ['user_id = ?', @user.id], :select => 'post_id') do |watched_post|
+      Watchedpost.find_each(:conditions => ['user_id = ?', user_id], :select => 'post_id') do |watched_post|
         @posts << Post.first(:conditions => ['id = ?', watched_post.post_id])
       end
       @posts = @posts.paginate(:page => params[:page], :per_page => 20)
     elsif filter == "archived"
-      @user = current_user
-      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, false]) 
+      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', user_id, STATUS_ACTIVE, false]) 
     else
 
     end

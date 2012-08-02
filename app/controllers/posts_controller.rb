@@ -11,6 +11,9 @@ class PostsController < ApplicationController
     @posts = Post.paginate(page: params[:page], :per_page => 10, :conditions => ['open = ? AND status = ?', true, STATUS_ACTIVE], :order => 'id desc')
   end
 
+  def filtered_list
+  end
+
   def show
     if not params[:id].blank?
       @additional_photo = AdditionalPhoto.new
