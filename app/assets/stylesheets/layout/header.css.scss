@@ -3,7 +3,7 @@
 	top: 0;
 	z-index: 1020;
 	overflow: visible;
-	background: $dk-grey;
+	background: $main-blue;
 	//#{$ff}box-shadow: $head-shadow;
 	//#{$o}box-shadow: $head-shadow;
 	//#{$wk}box-shadow: $head-shadow;
@@ -48,7 +48,7 @@
 	hgroup  + .col4.pull_left {
 		width: 80%;
  		* {
-			color: $main-yellow;
+			color: $wht;
 		}
 		> .row > .col2 {
 			width: $sixCols * 1.5;

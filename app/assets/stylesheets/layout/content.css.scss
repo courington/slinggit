@@ -5,6 +5,9 @@ body {
   font-family: $main-font;
   background: darken($wht, 5%);
   color: $dk-grey;
+  * {
+  text-rendering: optimizeLegibility;
+  }
 }
 //WEB FONTS FOR HEADLINES
 .headline {
@@ -20,6 +23,7 @@ body {
 //	line-height: ($leading * .875);
 //	font-weight: 700;
 //}
+
 //END
 //COLUMNS and OFFSETS
 .col1 {
@@ -178,9 +182,9 @@ body {
 //BASIC TYPOGRAPHY
 h1 {
   font-size: $font-size * 1.5;
-  text-transform: uppercase;
+  //text-transform: uppercase;
   font-weight: 600;
-  text-rendering: optimizeLegibility;
+  //text-rendering: optimizeLegibility;
   line-height: $leading;
 }
 
@@ -248,7 +252,7 @@ p {
 
 .img_border {
   padding: .3em;
-  border: 1px solid #D7D7D7;
+  border: 1px solid $lt-grey;
   border-radius: .3em;
   background-color: lighten($lt-grey, 5%);
 }
