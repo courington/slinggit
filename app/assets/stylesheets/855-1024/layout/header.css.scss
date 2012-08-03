@@ -1,9 +1,4 @@
 #mainHeader {
-		//background: $main-blue;
-		//#{$ff}box-shadow: $head-shadow;
-		//#{$o}box-shadow: $head-shadow;
-		//#{$wk}box-shadow: $head-shadow;
-		//box-shadow: $head-shadow;
 	.wrapper > .row:first-child {
 		width: $sixCols * 4;
 		float: left;
@@ -68,6 +63,13 @@
 	}
 	hgroup + #header_signUp {
 	width: 85%;
+	margin-left: 0;
+	}
+	hgroup + #header_signIn > .row > a:link {
+	font-size: $font-size;
+	min-height: 0;
+	padding-bottom: $small-font;
+	line-height: $small-font;
 	margin-left: 0;
 	}
 }
