@@ -2,8 +2,15 @@
 $main-font: 'Bree Serif', 'helvetica neue', helvetica, arial, sans-serif;
 $txt-shdw: 0 1px 0 rgba(0, 0, 0, .2);
 $padding: .4em .6em;
-$font-size: 1.6em;
-$leading: ($font-size * 1.12);
+$leading: 1.618;
+
+//FONT SIZING 1:1.618 golden ratio with ideal font size of 24px for headline based on 16px default
+$bigger-font: 1.618em; //25.888px //really big, loud stuff
+$big-font: 1.5em; //24px //item name, user name
+$font-size: 1em; //16px //navigation, labels
+$body-font: .927em; //14.833 //post details, copy
+$small-font: .573em; //9.167px  //footer, small print
+//END
 
 //COLUMN WIDTH
 $sixCols: 16.66666667%;
