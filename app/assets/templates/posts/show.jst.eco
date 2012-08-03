@@ -4,7 +4,7 @@
 	  <a href="/posts/<%= post.get("id_hash") %>">
 		  <div class="col1 pull_left">
 		    <div class="photo row">
-		        <img src="<%= post.get("post_medium_image_src") %>" class="img_border" >
+		        <img src="<%= post.get("post_medium_image_src") %>" class="<%= "img_border" if post.get("has_photo?") %>" >
 		    </div>
 		    
 		  </div>

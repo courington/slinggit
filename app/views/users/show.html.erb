@@ -34,24 +34,24 @@
           <section class="secondary_actions">
             
             <div id="createPostAction" class="row">
+
               <% if @passes_limitation != nil and @passes_limitation == true %>
                 <%= link_to "Create New Post", new_post_path, class: "col6 btn_green" %>
               <% elsif @passes_limitation[0] == false %>
                 <p class="row notice_explanation_bubble">Post Limit Reached</p>
               <% end %>
-            <div id="postsFilters" class="row" style="margin-top: 20px;">
-              <%= link_to  current_user, class: "#{"active" if @label == "My"} col6" do %>
-                Posted <span class='nav_arrow pull_right'>&rarr;</span>
-              <% end %>
-              <a href="#watching" class="col6">
-                Watching <span class='nav_arrow pull_right'>&rarr;</span>
-              </a>
-              <%= link_to "Watching <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"} col6" %>
-              <a href="#archived" class="col6">
-                Archived <span class='nav_arrow pull_right'>&rarr;</span>
-              </a>
-              <%= link_to "Archived <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"} col6" %>
-            </div>
+              <div id="postsFilters" class="row" style="margin-top: 20px;">
+                <a href="#posted" class="col6 active">
+                  Currently Posted <span class='nav_arrow pull_right'>&rarr;</span>
+                </a>
+                <a href="#watching" class="col6">
+                  Watching <span class='nav_arrow pull_right'>&rarr;</span>
+                </a>
+                <a href="#archived" class="col6">
+                  Archived <span class='nav_arrow pull_right'>&rarr;</span>
+                </a>
+              </div>
+
             </div>
 
           </section>
@@ -67,11 +67,7 @@
       <div class="col6 pull_left">
         <div class="row">
           <header>
-            <% if (signed_in? and params[:id] == current_user.name) or params[:id].blank? %>
-                <h1><%= @label %> Posts: <%= @posts.count %></h1>
-            <% else %>
-                <h1><%= params[:id] %>'s Posts: <%= @posts.count %></h1>
-            <% end %>
+              <h1><%= params[:id] %>'s Posts: <%= @posts.count %></h1>
           </header>
         </div>
 
@@ -104,13 +100,7 @@
 
     <div id="postArticlesWrapper">
       <% if @posts.any? %>
-        <div class="row">
-          <%= will_paginate @posts %>
-        </div>
-          <%= render @posts %>
-        <div class="row">
-        <div class="row">
-          <%= will_paginate @posts %>
+        <div id="postArticles" class="row">
         </div>
       <% elsif !@user.posts.any? and !current_user?(@user) %>
           <p><strong><%= @user.name %></strong> has not created any posts yet. Check back soon!</p>
