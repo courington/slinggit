@@ -41,13 +41,13 @@
                 <p class="row notice_explanation_bubble">Post Limit Reached</p>
               <% end %>
               <div id="postsFilters" class="row" style="margin-top: 20px;">
-                <a href="#posted" class="col6 active">
-                  Currently Posted <span class='nav_arrow pull_right'>&rarr;</span>
+                <a href="#posted" class="col6 active" id="posted">
+                  Posted <span class='nav_arrow pull_right'>&rarr;</span>
                 </a>
-                <a href="#watching" class="col6">
+                <a href="#watching" class="col6" id="watching">
                   Watching <span class='nav_arrow pull_right'>&rarr;</span>
                 </a>
-                <a href="#archived" class="col6">
+                <a href="#archived" class="col6" id="archived">
                   Archived <span class='nav_arrow pull_right'>&rarr;</span>
                 </a>
               </div>
@@ -67,7 +67,6 @@
       <div class="col6 pull_left">
         <div class="row">
           <header>
-              <h1><%= params[:id] %>'s Posts: <%= @posts.count %></h1>
           </header>
         </div>
 
@@ -99,22 +98,6 @@
     </div>
 
     <div id="postArticlesWrapper">
-      <% if @posts.any? %>
-        <div id="postArticles" class="row">
-        </div>
-      <% elsif !@user.posts.any? and !current_user?(@user) %>
-          <p><strong><%= @user.name %></strong> has not created any posts yet. Check back soon!</p>
-      <% elsif !@posts.any? and current_user?(@user) %>
-          <% if current_user.email_is_verified? %>
-              <% if @label == 'Watched' %>
-                  <p>You aren't watching any posts.</p>
-              <% elsif @label == 'Archived' %>
-                  <p>Nothing has been archived.</p>
-              <% else %>
-                  <p>You haven't created any posts yet.</p>
-              <% end %>
-          <% end %>
-      <% end %>
     </div>
 
   </section>

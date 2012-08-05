@@ -1,7 +1,7 @@
 # File: collections/posts
 
 ## Imports
-Slinggit.Models ||= {}
+Slinggit.Collections ||= {}
 
 ## Module
 class Slinggit.Collections.Posts extends Backbone.Collection
@@ -10,7 +10,13 @@ class Slinggit.Collections.Posts extends Backbone.Collection
 
 	initialize: (options)->
 		@defaultUrl = @url
-		console.log @defaultUrl
+		@postType = options.post_list_type
 
 	restoreDefualtUrl: =>
 		@url = @defaultUrl
+
+	setPostType: (type)=>
+		@postType = type
+
+	getPostType: =>
+		return @postType

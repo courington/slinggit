@@ -7,7 +7,7 @@ Slinggit.Views.Posts ||= {}
 class Slinggit.Views.Posts.PostListView extends Backbone.View
 	template: JST["posts/show"]
 
-	el: "#postArticles"
+	el: "#postArticlesWrapper"
 
 	initialize: (options)->
 		@collection = options.collection
