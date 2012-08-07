@@ -17,5 +17,6 @@ class Slinggit.Views.Posts.PostListView extends Backbone.View
 
 	addAll: ->
 		@$el.empty()
-		@$el.append(@template(posts: @collection))
+		compiledTemplate = @template(posts: @collection)
+		@$el.append(compiledTemplate)
 
