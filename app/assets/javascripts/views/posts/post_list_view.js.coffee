@@ -11,12 +11,12 @@ class Slinggit.Views.Posts.PostListView extends Backbone.View
 
 	initialize: (options)->
 		@collection = options.collection
-		@collection.bind 'reset', @addAll, @
-		@collection.bind 'fetch', @addAll, @
+		@collection.on 'reset', @addAll, @
+		@collection.on 'fetch', @addAll, @
 
 
 	addAll: ->
 		@$el.empty()
-		console.log @collection
-		@$el.append(@template(posts: @collection))
+		compiledTemplate = @template(posts: @collection)
+		@$el.append(compiledTemplate)
 

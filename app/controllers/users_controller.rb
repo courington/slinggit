@@ -73,6 +73,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def watched
+  end
+
   def watching
     @label = "Watched"
     @passes_limitation = passes_limitations?(:total_posts)

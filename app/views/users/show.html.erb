@@ -39,13 +39,18 @@
               <% elsif @passes_limitation[0] == false %>
                 <p class="row notice_explanation_bubble">Post Limit Reached</p>
               <% end %>
-            <div id="postsFilters" class="row" style="margin-top: 20px;">
-              <%= link_to  current_user, class: "#{"active" if @label == "My"} col6" do %>
-                Posted <span class='nav_arrow pull_right'>&rarr;</span>
-              <% end %>
-              <%= link_to "Watching <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :watching, :id => current_user.name}, class: "#{"active" if @label == "Watched"} col6" %>
-              <%= link_to "Archived <span class='nav_arrow pull_right'>&rarr;</span>".html_safe, {:controller => :users, :action => :archived, :id => current_user.name}, class: "#{"active" if @label == "Archived"} col6" %>
             </div>
+
+            <div id="postsFilters" class="row" style="margin-top: 20px;">
+              <a href="#posted" class="col6 active" id="posted">
+                Posted <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
+              <a href="#watching" class="col6" id="watching">
+                Watching <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
+              <a href="#archived" class="col6" id="archived">
+                Archived <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
             </div>
 
           </section>
@@ -61,11 +66,6 @@
       <div class="col6 pull_left">
         <div class="row">
           <header>
-            <% if (signed_in? and params[:id] == current_user.name) or params[:id].blank? %>
-                <h1><%= @label %> Posts: <%= @posts.count %></h1>
-            <% else %>
-                <h1><%= params[:id] %>'s Posts: <%= @posts.count %></h1>
-            <% end %>
           </header>
         </div>
 
@@ -97,28 +97,6 @@
     </div>
 
     <div id="postArticlesWrapper">
-      <% if @posts.any? %>
-        <div class="row">
-          <%= will_paginate @posts %>
-        </div>
-          <%= render @posts %>
-        <div class="row">
-        <div class="row">
-          <%= will_paginate @posts %>
-        </div>
-      <% elsif !@user.posts.any? and !current_user?(@user) %>
-          <p><strong><%= @user.name %></strong> has not created any posts yet. Check back soon!</p>
-      <% elsif !@posts.any? and current_user?(@user) %>
-          <% if current_user.email_is_verified? %>
-              <% if @label == 'Watched' %>
-                  <p>You aren't watching any posts.</p>
-              <% elsif @label == 'Archived' %>
-                  <p>Nothing has been archived.</p>
-              <% else %>
-                  <p>You haven't created any posts yet.</p>
-              <% end %>
-          <% end %>
-      <% end %>
     </div>
 
   </section>
@@ -126,9 +104,9 @@
 
 </section>
 
-<%= content_tag "div", "Posts..", id: "container", data: {user: render(template: 'users/show', formats: [:json], handlers: [:jbuilder], locals: { user: @user })} %>
+<%= content_tag "div", "", id: "container", data: {user: render(template: 'users/show', formats: [:json], handlers: [:jbuilder])} %>
 <script>
   $(document).ready(function(){
-    Slinggit.initUsersShow(<%= render(template: 'users/show', formats: [:json], handlers: [:jbuilder], locals: { user: @user }).html_safe %>)
+    Slinggit.initUsersShow(<%= render(template: 'users/show', formats: [:json], handlers: [:jbuilder]).html_safe %>)
   })
 </script>

@@ -3,7 +3,7 @@
 	top: 0;
 	z-index: 1020;
 	overflow: visible;
-	background: $dk-grey;
+	background: $main-blue;
 	//#{$ff}box-shadow: $head-shadow;
 	//#{$o}box-shadow: $head-shadow;
 	//#{$wk}box-shadow: $head-shadow;
@@ -12,8 +12,8 @@
 		display: none;
 	}
 	.active {
-		border: 1px solid darken($dk-grey, 15%);
-		background: darken($dk-grey, 10%);
+		border: 1px solid darken($main-blue, 15%);
+		background: darken($main-blue, 10%);
 		#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
 		#{$o}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
 		#{$wk}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
@@ -22,12 +22,12 @@
 	}
 	hgroup {
 		width: $sixCols * 1.2;
-		min-height: ($font-size * 2.875);
+		min-height: $big-font;
 		padding-top: 1em;
-		font-size: ($font-size * .375);
+		font-size: $small-font;
 		cursor: pointer;
 		h1 {
-			font-size: $font-size;
+			//font-size: $font-size;
 			//hide the h1 off canvas
 			position: absolute;
 			top: -9999px;
@@ -37,7 +37,7 @@
 			padding-right: 5%;
 		}
 		h6 {
-			font-size: ($font-size * .375);
+			//font-size: ($font-size * .375);
 			color: $lt-grey;
 			display: none;
 		}
@@ -48,7 +48,7 @@
 	hgroup  + .col4.pull_left {
 		width: 80%;
  		* {
-			color: $main-yellow;
+			color: $wht;
 		}
 		> .row > .col2 {
 			width: $sixCols * 1.5;
@@ -70,7 +70,7 @@
 			top: 4.5em;
 			right: 0;
 			z-index: 9999;
-			background: $dk-grey;
+			background: darken($main-blue, 10%);
 			//@include rounded-corners($font-size * .375);
 			@include hardEdge-top;
 			#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
@@ -99,13 +99,14 @@
 			margin: -1em 0 0 $sixCols;
 			width: $sixCols * 4;
 			input[name="quickSearch"] {
-				font-size: ($font-size * .5);
+				font-size: $small-font;
 				line-height: $leading;
-				@include rounded-corners($font-size * .375);
-				padding:($font-size * .25) $font-size;
+				@include rounded-corners($small-font);
+				padding: $body-font $font-size;
 				width: 100%;
 				font-family: $main-font;
 				border: 1px solid darken($lt-grey, 5%);
+				text-indent: $big-font;
 			}
 			.btn_navSearch {
 				position: relative;
@@ -117,9 +118,9 @@
 	}
 	//SIGN IN LINK
 	hgroup + #header_signIn > .row > a:link {
-	font-size: 1em;
+	font-size: $font-size;
 	min-height: 0;
-	padding-bottom: .5em;
+	padding-bottom: $small-font;
 	margin-left: 25%;
 	}
 }

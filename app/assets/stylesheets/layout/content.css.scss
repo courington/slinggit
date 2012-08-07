@@ -3,6 +3,7 @@
 
 body {
   font-family: $main-font;
+  font-size: $font-size;
   background: darken($wht, 5%);
   color: $dk-grey;
 }
@@ -10,8 +11,9 @@ body {
 .headline {
 	font-family: /*'Oswald'*/ 'Bree Serif', 'helvetica neue', helvetica, arial, sans-serif;
 	color: $dk-grey;
-	text-rendering: optimizelegibility;
-	letter-spacing: .05em;
+	//text-rendering: optimizelegibility;
+	//letter-spacing: .05em;
+	font-size: $big-font;
 }
 //.headline_bold {
 //	@extend .headline;
@@ -20,6 +22,7 @@ body {
 //	line-height: ($leading * .875);
 //	font-weight: 700;
 //}
+
 //END
 //COLUMNS and OFFSETS
 .col1 {
@@ -177,28 +180,23 @@ body {
 
 //BASIC TYPOGRAPHY
 h1 {
-  font-size: $font-size * 1.5;
-  text-transform: uppercase;
+  font-size: $big-font;
   font-weight: 600;
-  text-rendering: optimizeLegibility;
   line-height: $leading;
 }
 
 h2, h3 {
-  font-size: $font-size * 1.4;
+  font-size: $big-font;
   line-height: $leading;
 }
 
 h4, h5 {
-  font-size: $font-size * 1.2;
+  font-size: $font-size;
 	line-height: $leading;
 }
 
 h6, p {
-  font-size: $font-size;
-}
-
-p {
+  font-size: $body-font;
   line-height: $leading;
 }
 
@@ -211,14 +209,14 @@ p {
 }
 
 .page_contentContainer {
-	//smooth scrolling for iOS 5.1+ releases of webkit (works on android)
-	//-webkit-overflow-scrolling : touch;
-  min-height: 64em;
-  font-size: 62.5%;
+  //smooth scrolling for iOS 5.1+ releases of webkit (works on android)
+  //-webkit-overflow-scrolling : touch;
+  min-height: 31.314em;
+  //font-size: 62.5%;
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 6.3em 0 3.4em 0;
+  padding: 3.927em 0 2.427em 0;
   background: $wht url("textures/texture_angle_8x8.png") repeat 0 0;
     &:first-child {
       margin: 0 5% 0 0;
@@ -236,9 +234,8 @@ p {
 
 .label.label-success,
 .posts .col4 .pull_right a {
-	font-size: 1.2em;
-	line-height: 1.46em;
-	text-rendering: optimizelegibility;
+	font-size: $font-size;
+	line-height: $leading;
 	letter-spacing: .1em;
 	word-spacing: .1em;
 	width: 20%;
@@ -247,9 +244,9 @@ p {
 }
 
 .img_border {
-  padding: .3em;
-  border: 1px solid #D7D7D7;
-  border-radius: .3em;
+  padding: 3px;
+  border: 1px solid $lt-grey;
+  border-radius: 3px;
   background-color: lighten($lt-grey, 5%);
 }
 
@@ -259,14 +256,14 @@ p {
 }
 
 .row.termsOfService {
-	margin-top: $font-size * .5;
+	margin-top: $font-size;
 	line-height: $leading;
 }
 .terms_parent, .terms_child {
-font-size: 16px;
-line-height: 22px;
+font-size: $body-font;
+line-height: $leading;
 }
 .terms_child {
 	list-style: disc outside;
-	margin-left: 10px;
+	margin-left: $font-size;
 }

@@ -15,7 +15,7 @@
 		margin-top: 1em;
 	}
 	.homeSignedIn > .col4 > .row:last-child {
-		font-size: $font-size * .75;
+		font-size: .618em;
 		line-height: $leading;
 		margin-top: $font-size;
 		a {
@@ -27,16 +27,16 @@
 	}
 	.homeNotSignedIn {
 		h1.headline {
-			font-size: $font-size * 2.875;
+			font-size: $big-font;
 			#{$ff}text-shadow: 0 1px 0 rgba($black, .15);
 			#{$wk}text-shadow: 0 1px 0 rgba($black, .15);
 			text-shadow: 0 1px 0 rgba($black, .15);
 			text-align: center;
 			padding-bottom: 0;
-			line-height: 1.2em;
+			//line-height: 1.2em;
 		}
-		h2 {
-			font-size: ($font-size * 1.125);
+		p {
+			font-size: $font-size;
 		}
 	}
 
@@ -44,15 +44,14 @@
 	.secondary_inner{
 		.headline{
 			text-align: center;
-			font-size: $font-size * 1;
 		}
 	}
 	.wrong-user {
-		font-size: $font-size * .75;
+		font-size: $small-font;
 		line-height: $leading;
 		margin-top: $font-size;
 		a {
-			color: darken($main-yellow, 15%);
+			color: $main-blue;
 			span {
 				color: $main-grey;
 			}

@@ -7,6 +7,8 @@ SlinggitWebapp::Application.routes.draw do
   match 'users/update_email_and_send_verification', :to => 'users#update_email_and_send_verification', via: :put
   match '/edit_email_for_verification', :to => 'users#edit_user_email_for_verification', :as => 'prep_for_reverification'
   match 'networks/set_primary_account', :to => 'networks#set_primary_account', via: :post
+  # CMK -> I really don't like this design, need to come back and refactor this.
+  match 'posts/filtered_list', :to => 'posts#filtered_list'
 
   match 'users/enter_new_password/(:id)', :to => 'users#enter_new_password#id'
   match 'users/password_reset', :to => 'users#password_reset'
@@ -78,7 +80,6 @@ SlinggitWebapp::Application.routes.draw do
     resources :comments
   end
   match 'comments/delete(/:id)', :to => 'comments#delete#id'
-
 
   ##MOBILE CONTROLLER##
   match 'mobile' => 'mobile#index'
