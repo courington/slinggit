@@ -34,24 +34,23 @@
           <section class="secondary_actions">
             
             <div id="createPostAction" class="row">
-
               <% if @passes_limitation != nil and @passes_limitation == true %>
                 <%= link_to "Create New Post", new_post_path, class: "col6 btn_green" %>
               <% elsif @passes_limitation[0] == false %>
                 <p class="row notice_explanation_bubble">Post Limit Reached</p>
               <% end %>
-              <div id="postsFilters" class="row" style="margin-top: 20px;">
-                <a href="#posted" class="col6 active" id="posted">
-                  Posted <span class='nav_arrow pull_right'>&rarr;</span>
-                </a>
-                <a href="#watching" class="col6" id="watching">
-                  Watching <span class='nav_arrow pull_right'>&rarr;</span>
-                </a>
-                <a href="#archived" class="col6" id="archived">
-                  Archived <span class='nav_arrow pull_right'>&rarr;</span>
-                </a>
-              </div>
+            </div>
 
+            <div id="postsFilters" class="row" style="margin-top: 20px;">
+              <a href="#posted" class="col6 active" id="posted">
+                Posted <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
+              <a href="#watching" class="col6" id="watching">
+                Watching <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
+              <a href="#archived" class="col6" id="archived">
+                Archived <span class='nav_arrow pull_right'>&rarr;</span>
+              </a>
             </div>
 
           </section>
