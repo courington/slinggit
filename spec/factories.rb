@@ -5,6 +5,7 @@ FactoryGirl.define do
     password "foobar"
     password_confirmation "foobar"
     status "ACT"
+    photo_source "SPS"
 
     factory :admin do
       admin true
