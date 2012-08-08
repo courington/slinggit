@@ -28,6 +28,7 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		# Putting the click event in the initializer for now.  Probably should factor
 		# this out into a view
 		@$postFilters.find('a').live "click", (e)=>
+			e.preventDefault()
 			locations = e.currentTarget.href.split "#"
 			window.location.hash = locations[1]
 			false
