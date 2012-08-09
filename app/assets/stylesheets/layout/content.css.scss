@@ -4,24 +4,24 @@
 body {
   font-family: $main-font;
   font-size: $font-size;
+  font-weight: 300;
   background: darken($wht, 5%);
   color: $dk-grey;
 }
 //WEB FONTS FOR HEADLINES
-.headline {
-	font-family: /*'Oswald'*/ 'Bree Serif', 'helvetica neue', helvetica, arial, sans-serif;
-	color: $dk-grey;
-	//text-rendering: optimizelegibility;
-	//letter-spacing: .05em;
-	font-size: $big-font;
+.headline,
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Bree Serif', verdana, arial, sans-serif;
 }
-//.headline_bold {
-//	@extend .headline;
-//	font-size: 7.2em;
-//	letter-spacing: .03em;
-//	line-height: ($leading * .875);
-//	font-weight: 700;
-//}
+
+.postArticle {
+	a:link, a:visited, a:active {
+		color: darken($main-blue, 10%);
+	}
+	a:hover, a:focus {
+		color: darken($main-blue, 20%);
+	}
+}
 
 //END
 //COLUMNS and OFFSETS
@@ -180,18 +180,18 @@ body {
 
 //BASIC TYPOGRAPHY
 h1 {
-  font-size: $big-font;
-  font-weight: 600;
+  font-size: $biggest-font;
+  //font-weight: 600;
   line-height: $leading;
 }
 
 h2, h3 {
-  font-size: $big-font;
+  font-size: $bigger-font;
   line-height: $leading;
 }
 
 h4, h5 {
-  font-size: $font-size;
+  font-size: $big-font;
 	line-height: $leading;
 }
 

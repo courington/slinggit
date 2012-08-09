@@ -1,7 +1,5 @@
-/*
- *  FILENAME: static/home
- */
-
+//*  FILENAME: static/home
+ 
 .homepage {
 	.home_featurePost {
 		margin: ($font-size * .5) auto;
@@ -26,17 +24,12 @@
 		}
 	}
 	.homeNotSignedIn {
-		h1.headline {
-			font-size: $big-font;
+		h1 {
 			#{$ff}text-shadow: 0 1px 0 rgba($black, .15);
 			#{$wk}text-shadow: 0 1px 0 rgba($black, .15);
 			text-shadow: 0 1px 0 rgba($black, .15);
 			text-align: center;
 			padding-bottom: 0;
-			//line-height: 1.2em;
-		}
-		p {
-			font-size: $font-size;
 		}
 	}
 

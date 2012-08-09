@@ -1,15 +1,17 @@
 // TYPOGRAPHY
-$main-font: 'Bree Serif', 'helvetica neue', helvetica, arial, sans-serif;
+$main-font: 'Varela', verdana, helvetica, arial, sans-serif;
 $txt-shdw: 0 1px 0 rgba(0, 0, 0, .2);
 $padding: .4em .6em;
-$leading: 1.618;
+$leading: 1.5em; //correlates to the 1:1.5 ratio for font sizing
 
-//FONT SIZING 1:1.618 golden ratio with ideal font size of 24px for headline based on 16px default
-$bigger-font: 1.618em; //25.888px //really big, loud stuff
-$big-font: 1.5em; //24px //item name, user name
-$font-size: 1em; //16px //navigation, labels
-$body-font: .927em; //14.833 //post details, copy
-$small-font: .573em; //9.167px  //footer, small print
+//FONT SIZING 1:1.5 perfect fifth ratio
+$biggest-font: 1.898em; //30.375px //mastheads
+$bigger-font: 1.5em; //24px //really big, loud stuff
+$big-font: 1.266em; //20.25 //item name, user name
+$font-size: 1em;
+$body-font: 1em; //16px //post details, copy
+$small-font: .844em; //13.5px  //small copy points
+$smaller-font: .667em; //10.667 //fine print
 //END
 
 //COLUMN WIDTH
@@ -163,7 +165,8 @@ $modal-shadow: 0 3px 7px rgba(0,0,0,0.3);
 @mixin white-well($border-width) {
 	background-color: $white;
 	border: $border-width solid $lt-grey;
-	padding: 1.5em;
+	//padding: 1.5em;
+	padding: $small-font;
 	@include rounded-corners(5px);
 }
 

@@ -1,6 +1,5 @@
-/*
- *  FILENAME: 320-640/layout/common
- */
+// *  FILENAME: 320-640/layout/common
+
 .wrapper {
 	width: 96%;
 	max-width: 640px;
@@ -12,13 +11,13 @@
 	padding-top: 4.8em;
 }
 .page_contentContainer header:first-child {
-	margin: 0 0 $font-size 0;
-	font-size: $font-size * .5;
+	//margin: 0 0 $font-size 0;
+	//font-size: $font-size * .5;
 	text-align: center;
 }
 .page_contentContainer header p {
-	line-height: 1em;
-	margin: -.975em 0 0 .045em;
+	//line-height: 1em;
+	//margin: -.975em 0 0 .045em;
 }
 .page_contentContainer .posts article:last-child {
 	display: none;

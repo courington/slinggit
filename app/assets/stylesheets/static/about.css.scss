@@ -1,6 +1,5 @@
-/*
- *  FILENAME: static/about
- */
+// *  FILENAME: static/about
+ 
 .aboutUs {
 	article {
 		p {
@@ -22,12 +21,14 @@
 			}
 		}
 		figcaption {
-			font-size: $font-size;
+			font-size: $small-font;
 			padding-left: $small-font;
+			font-weight: 400;
 			span {
 				display: block;
-				font-size: $body-font;
-				margin-top: $small-font;
+				font-weight: 300;
+				//font-size: $body-font;
+				//margin-top: $small-font;
 			}
 		}
 	}
