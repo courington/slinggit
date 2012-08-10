@@ -27,11 +27,12 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 
 		# Putting the click event in the initializer for now.  Probably should factor
 		# this out into a view
-		#@$postFilters.find('a').live "click", (e)=>
-			#e.preventDefault()
-			#locations = e.currentTarget.href.split "#"
-			#window.location.hash = locations[1]
-			#false
+		@$postFilters.find('a').live "click", (e)=>
+			e.preventDefault()
+			locations = e.currentTarget.href.split "#"
+			window.location.hash = locations[1]
+			window.scrollTo( 0, 0 );
+			false
 
 	routes:
 		""   :  "root"
@@ -40,7 +41,7 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		"archived":  "archivedPosts"
 
 	root: =>
-		window.scrollTo( 0, 0 );
+		#window.scrollTo( 0, 0 );
 		@posts.setPostType("posted")
 		@posts.reset @json.open_posts
 		@changePostHeader(if @user.get("current_user") then "My" else @user.get("name"))
@@ -50,7 +51,7 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		@root()
 
 	watchedPosts: =>
-		window.scrollTo( 0, 0 );
+		#window.scrollTo( 0, 0 );
 		#Slinggit.Utils.ViewUtils.set_scroll true
 		@posts.setPostType("watched")
 		@changeActive(@$watching)
@@ -64,7 +65,7 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 				# error code
 
 	archivedPosts: =>
-		window.scrollTo( 0, 0 );
+		#window.scrollTo( 0, 0 );
 		#Slinggit.Utils.ViewUtils.set_scroll true
 		@posts.setPostType("archived")
 		@changeActive(@$archived)
