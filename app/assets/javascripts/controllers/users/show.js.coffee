@@ -40,16 +40,17 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		"archived":  "archivedPosts"
 
 	root: =>
+		window.scrollTo( 0, 1 );
 		@posts.setPostType("posted")
 		@posts.reset @json.open_posts
 		@changePostHeader(if @user.get("current_user") then "My" else @user.get("name"))
 		@changeActive(@$posted)
-		window.scrollTo( 0, 1 );
 
 	currentPosts: =>
 		@root()
 
 	watchedPosts: =>
+		window.scrollTo( 0, 1 );
 		#Slinggit.Utils.ViewUtils.set_scroll true
 		@posts.setPostType("watched")
 		@changeActive(@$watching)
@@ -58,12 +59,12 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		@posts.fetch
 			success: =>
 				#Slinggit.Utils.ViewUtils.get_scroll()
-				window.scrollTo( 0, 1 );
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code
 
 	archivedPosts: =>
+		window.scrollTo( 0, 1 );
 		#Slinggit.Utils.ViewUtils.set_scroll true
 		@posts.setPostType("archived")
 		@changeActive(@$archived)
@@ -72,7 +73,6 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		@posts.fetch
 			success: =>
 				#Slinggit.Utils.ViewUtils.get_scroll()
-				window.scrollTo( 0, 1 );
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code
