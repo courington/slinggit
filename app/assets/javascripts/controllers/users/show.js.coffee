@@ -27,11 +27,11 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 
 		# Putting the click event in the initializer for now.  Probably should factor
 		# this out into a view
-		@$postFilters.find('a').live "click", (e)=>
-			e.preventDefault()
-			locations = e.currentTarget.href.split "#"
-			window.location.hash = locations[1]
-			false
+		#@$postFilters.find('a').live "click", (e)=>
+			#e.preventDefault()
+			#locations = e.currentTarget.href.split "#"
+			#window.location.hash = locations[1]
+			#false
 
 	routes:
 		""   :  "root"
@@ -44,28 +44,35 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		@posts.reset @json.open_posts
 		@changePostHeader(if @user.get("current_user") then "My" else @user.get("name"))
 		@changeActive(@$posted)
+		window.scrollTo( 0, 1 );
 
 	currentPosts: =>
 		@root()
 
 	watchedPosts: =>
+		#Slinggit.Utils.ViewUtils.set_scroll true
 		@posts.setPostType("watched")
 		@changeActive(@$watching)
 		@changePostHeader "Watched"
 		@posts.url = "/posts/filtered_list.json?id=#{@user.get('id')}&filter=watched"
 		@posts.fetch
 			success: =>
+				#Slinggit.Utils.ViewUtils.get_scroll()
+				window.scrollTo( 0, 1 );
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code
 
 	archivedPosts: =>
+		#Slinggit.Utils.ViewUtils.set_scroll true
 		@posts.setPostType("archived")
 		@changeActive(@$archived)
 		@changePostHeader "Archived"
 		@posts.url = "/posts/filtered_list.json?id=#{@user.get('id')}&filter=archived"
 		@posts.fetch
 			success: =>
+				#Slinggit.Utils.ViewUtils.get_scroll()
+				window.scrollTo( 0, 1 );
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code
@@ -76,3 +83,6 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 	changeActive: (a)=>
 		@$postFilters.find('a').removeClass("active")
 		a.addClass("active")
+
+
+

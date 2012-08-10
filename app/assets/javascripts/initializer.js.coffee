@@ -13,6 +13,7 @@
 		Users: {}
 	Models: {}
 	Collections: {}
+	Utils: {}
 
 	# Probably going to refactor these initializers.
 	initUsersShow: (initialJson)->
