@@ -1,8 +1,8 @@
 #mainHeader {
-	position: fixed;
-	top: 0;
-	z-index: 1020;
-	overflow: visible;
+	//position: fixed;
+	//top: 0;
+	//z-index: 1020;
+	//overflow: visible;
 	background: $main-blue;
 	//#{$ff}box-shadow: $head-shadow;
 	//#{$o}box-shadow: $head-shadow;
@@ -108,11 +108,12 @@
 				border: 1px solid darken($lt-grey, 5%);
 				text-indent: $big-font;
 			}
-			.btn_navSearch {
+			.ss-search {
 				position: relative;
 				top: 32px;
 				left: 6px;
 				z-index: 9999;
+				color: lighten($main-blue, 25%);
 			}
 		}
 	}

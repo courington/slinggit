@@ -92,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
 	@extend .col4;
 	@extend .pull_right;
 	@include white-well;
-	margin-top: 1em;
+	//margin-top: 1em;
 	@include box-shadow($wrapper-shadow);
 	// Def need to change this up, just proving out a concept right now.
 	min-height: 220px;
@@ -117,7 +117,7 @@ h1, h2, h3, h4, h5, h6 {
 .secondary_inner{
 	@include white-well;
 	vertical-align: top;
-	margin-top: 1em;
+	margin-bottom: $leading;
 	@include box-shadow($wrapper-shadow);
 
 	// Not sure if we want this nested or not.  Leaving it for now
@@ -216,7 +216,7 @@ h6, p {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 3.927em 0 2.427em 0;
+  padding: $leading 0;
   background: $wht url("textures/texture_angle_8x8.png") repeat 0 0;
     &:first-child {
       margin: 0 5% 0 0;
