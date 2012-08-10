@@ -29,9 +29,10 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		# this out into a view
 		@$postFilters.find('a').live "click", (e)=>
 			e.preventDefault()
+			yOffset = window.pageYOffset;
 			locations = e.currentTarget.href.split "#"
 			window.location.hash = locations[1]
-			window.scrollTo( 0, 0 );
+			window.scrollTo( 0, yOffset );
 			false
 
 	routes:
