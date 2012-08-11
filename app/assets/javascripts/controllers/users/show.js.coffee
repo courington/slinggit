@@ -51,23 +51,23 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		@root()
 
 	watchedPosts: =>
-		@posts.setPostType("watched")
-		@changeActive(@$watching)
-		@changePostHeader "Watched"
 		@posts.url = "/posts/filtered_list.json?id=#{@user.get('id')}&filter=watched"
 		@posts.fetch
 			success: =>
+				@posts.setPostType("watched")
+				@changeActive(@$watching)
+				@changePostHeader "Watched"
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code
 
 	archivedPosts: =>
-		@posts.setPostType("archived")
-		@changeActive(@$archived)
-		@changePostHeader "Archived"
 		@posts.url = "/posts/filtered_list.json?id=#{@user.get('id')}&filter=archived"
 		@posts.fetch
 			success: =>
+				@posts.setPostType("archived")
+				@changeActive(@$archived)
+				@changePostHeader "Archived"
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code
