@@ -1,13 +1,6 @@
 #mainHeader {
-	//position: fixed;
-	//top: 0;
-	//z-index: 1020;
-	//overflow: visible;
 	background: $main-blue;
-	//#{$ff}box-shadow: $head-shadow;
-	//#{$o}box-shadow: $head-shadow;
-	//#{$wk}box-shadow: $head-shadow;
-	//box-shadow: $head-shadow;
+	border-bottom: 1px solid darken($main-blue, 15%);
 	.hideSearch {
 		display: none;
 	}
@@ -20,34 +13,35 @@
 		box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
 		@include rounded-corners(.3em);
 	}
+	.wrapper > .row:first-of-type {
+		padding-top: ($body-font * .25)
+	}
 	hgroup {
 		width: $sixCols * 1.2;
-		min-height: $big-font;
-		padding-top: 1em;
 		font-size: $small-font;
 		cursor: pointer;
 		h1 {
-			//font-size: $font-size;
 			//hide the h1 off canvas
 			position: absolute;
 			top: -9999px;
 			left: -9999px;
 		}
-		img {
-			padding-right: 5%;
-		}
-		h6 {
-			//font-size: ($font-size * .375);
-			color: $lt-grey;
-			display: none;
-		}
+		//img {
+		//	padding-right: 5%;
+		//}
+		//small {
+		//	color: $wht;
+		//	font-size: $small-font;
+		//	//display: none;
+		//}
 	}
 	.col2 {
 		@extend hgroup;
 	}
-	hgroup  + .col4.pull_left {
+	nav {
 		width: 80%;
- 		* {
+		font-size: $small-font;
+		* {
 			color: $wht;
 		}
 		> .row > .col2 {
@@ -56,27 +50,25 @@
 			.active {
 				.btn_navPosts {
 					background-position: -8px -92px;
-					//position: relative !important;
-					//top: -.25em !important;
 				}
 			}
 		}
-		.dropdown-toggle {
-			padding: 1em 0;
-			margin-top: -1em;
-		}
+		//.dropdown-toggle {
+		//	padding: 1em 0;
+		//	margin-top: -1em;
+		//}
 		.nav_dropDown.dropdown-menu {
 			position: absolute;
-			top: 4.5em;
-			right: 0;
+			//top: 4.5em;
+			//right: 0;
 			z-index: 9999;
-			background: darken($main-blue, 10%);
+			background: darken($main-blue, 5%);
 			//@include rounded-corners($font-size * .375);
-			@include hardEdge-top;
-			#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-			#{$o}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-			#{$wk}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-			box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15), 0 0 10px rgba($black, .25);
+			//@include hardEdge-top;
+			//#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
+			//#{$o}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
+			//#{$wk}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
+			//box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15), 0 0 10px rgba($black, .25);
 		}
 		.dropdown-menu > li {
 			padding: ($font-size * 1.4575) ($font-size * .5);
@@ -85,35 +77,35 @@
 				border-top: none;
 			}
 		}
+		.ss-home, .ss-inbox, .ss-search, .ss-settings {
+			display: block;
+		}
 	}
 	#quickSearchWrapper {
-		//display: none;
-		//background: $lt-grey;
-		//border-bottom: 1px solid darken($lt-grey, 10%);
-		//#{$ff}box-shadow: $head-shadow;
-		//#{$o}box-shadow: $head-shadow;
-		//#{$wk}box-shadow: $head-shadow;
-		//box-shadow: $head-shadow;
 		> .col3.pull_right {
 			float: none;
-			margin: -1em 0 0 $sixCols;
+			margin: -($body-font * 1.125) 0 0 $sixCols;
 			width: $sixCols * 4;
 			input[name="quickSearch"] {
 				font-size: $small-font;
-				line-height: $leading;
-				@include rounded-corners($small-font);
-				padding: $body-font $font-size;
+				//line-height: $leading;
+				@include rounded-corners($biggest-font);
+				//padding: $body-font $font-size;
 				width: 100%;
-				font-family: $main-font;
-				border: 1px solid darken($lt-grey, 5%);
-				text-indent: $big-font;
+				//font-family: $main-font;
+				//border: 1px solid darken($lt-grey, 5%);
+				padding: ($smallest-font * .5) $biggest-font;
+				margin: 0;
+				//margin: ($body-font * .375) auto;
+				border: none;
 			}
 			.ss-search {
 				position: relative;
-				top: 32px;
-				left: 6px;
-				z-index: 9999;
+				top: $biggest-font;
+				left: $smallest-font;
+				z-index: 1333;
 				color: lighten($main-blue, 25%);
+				font-size: $small-font;
 			}
 		}
 	}
