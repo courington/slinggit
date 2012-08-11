@@ -62,8 +62,6 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 				# error code
 
 	archivedPosts: =>
-		#window.scrollTo( 0, 0 );
-		#Slinggit.Utils.ViewUtils.set_scroll true
 		@posts.setPostType("archived")
 		@changeActive(@$archived)
 		@changePostHeader "Archived"
