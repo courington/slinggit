@@ -104,9 +104,9 @@
 
 </section>
 
-<%= content_tag "div", "", id: "container", data: {user: render(template: 'users/show', formats: [:json], handlers: [:jbuilder])} %>
+<%= content_tag "div", "", id: "userJson", data: {user: render(template: 'users/show', formats: [:json], handlers: [:jbuilder])} %>
 <script>
   $(document).ready(function(){
-    Slinggit.initUsersShow(<%= render(template: 'users/show', formats: [:json], handlers: [:jbuilder]).html_safe %>)
+    Slinggit.initUsersShow()
   })
 </script>
