@@ -1,11 +1,13 @@
 input[type="password"],
 input[type="email"],
-input[type="text"] {
+input[type="text"],
+input[type="search"],
+textarea {
 	@include textInput;
 	@include rounded-corners($radius);
 	@include transition;
 	line-height: $leading;
-	margin: ($font-size * .275) auto;
+	margin: ($smallest-font * .5) auto;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
@@ -13,19 +15,10 @@ input[type="text"] {
 		}
 }
 textarea {
-	@include textInput;
-	@include rounded-corners($radius);
-	@include transition;
 	resize: none;
-	height: 6.3em;
-	clear: left;
-	float: left;
-	margin: ($font-size * .5) auto;
-		&:focus {
-		outline: none;
-		box-shadow: $input-focus-shdw;
-		border: 1px solid $main-blue;
-		}
+	height: ($leading * 5);
+	//clear: left;
+	//float: left;
 }
 
 .btn {
@@ -126,9 +119,9 @@ textarea {
 	padding-right: 0px;
 }
 fieldset > label {
-	font-size: $font-size * .875;
+	//font-size: $font-size * .875;
 	line-height: $leading;
 	display: block;
-	margin: .8em 0 -.4em 0;
+	//margin: .8em 0 -.4em 0;
 }
 // end

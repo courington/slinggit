@@ -1,10 +1,10 @@
 // TYPOGRAPHY
 $main-font: 'Varela', verdana, helvetica, arial, sans-serif;
 $txt-shdw: 0 1px 0 rgba(0, 0, 0, .2);
-$padding: .4em .6em;
-$leading: 1.5em; //correlates to the 1:1.5 ratio for font sizing
+//$padding: .4em .6em;
 
 //FONT SIZING 1:1.5 perfect fifth ratio
+$leading: 1.5em; //correlates to the 1:1.5 ratio for font sizing
 $biggest-font: 1.898em; //30.375px //mastheads
 $bigger-font: 1.5em; //24px //really big, loud stuff
 $big-font: 1.266em; //20.25 //item name, user name
@@ -12,6 +12,7 @@ $font-size: 1em;
 $body-font: 1em; //16px //post details, copy
 $small-font: .844em; //13.5px  //small copy points
 $smaller-font: .667em; //10.667 //fine print
+$smallest-font: 0.563em; //9px //tiny copy and spacing
 //END
 
 //COLUMN WIDTH
@@ -59,19 +60,19 @@ $btn-active: inset 0 0 1px rgba($black, .5), 0 0 2px rgba($white, .75);
 $btn-active-txt: 0 0 8px rgba($black, .75);
 
 @mixin textInput {
-	padding: .5em 0;
-	font-size: $font-size;
+	padding: $radius;
+	font-size: $body-font;
 	font-family: $main-font;
 	color: $main-grey;
 	border: 1px solid $lt-grey;
-	box-shadow: $input-txt-shading;
-	text-indent: .2em;
-	height: 2em;
+	//box-shadow: $input-txt-shading;
+	//text-indent: .2em;
+	//height: 2em;
 }
 
 // BORDER RADIUS
 $border-width: 1px;
-$radius: ($font-size * .125);
+$radius: ($body-font * .125);
 $side-tl: top-left;
 $side-bl: bottom-left;
 $side-tr: top-right;

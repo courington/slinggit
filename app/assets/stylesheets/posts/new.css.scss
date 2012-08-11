@@ -3,19 +3,19 @@
  */
 
 .createPost {
-	> .row > article {
-		margin-top: 1em;
-	}
+	//> .row > article {
+	//	margin-top: 1em;
+	//}
 	.add_on {
-		@include hardEdge-left;
-		background: $wht;
-		padding: .5em 0 .5em .2em;
+		//@include hardEdge-left;
+		//background: $wht;
+		//padding: .5em 0 .5em .2em;
 		font-size: $font-size;
 		color: $main-grey;
-		border: 1px solid darken($wht, 10%);
+		//border: 1px solid darken($wht, 10%);
 		height: 2em;
-		margin: ($font-size * .275) auto;
-		padding-right: .4em;
+		margin: $smallest-font ($smallest-font * .5);
+		//padding-right: .4em;
 	}
 	#counter_post_hashtag_prefix,
 	#counter_post_content {
