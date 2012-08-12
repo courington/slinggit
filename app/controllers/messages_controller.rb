@@ -106,7 +106,7 @@ class MessagesController < ApplicationController
             parent_message.update_attribute(:status, STATUS_ARCHIVED)
             flash[:success] = "Message has been sent."
             session.delete(:parent_message_id_hash)
-            redirect_to :controller => :messages, :action => :index
+            redirect_to :controller => :messages, :action => :sent
           else
             @parent_message = parent_message
             @message = Message.new(params[:message])
@@ -159,12 +159,12 @@ class MessagesController < ApplicationController
               if signed_in?
                 watchedpost = current_user.watchedposts.build(:post_id => message_post.id) unless current_user.post_in_watch_list?(message_post.id)
                 watchedpost.save unless watchedpost.blank?
-                redirect_to :controller => :messages, :action => :index
+                redirect_to :controller => :messages, :action => :sent
               else
                 if not request.referer.blank?
                   redirect_to request.referer
                 else
-                  redirect_to :controller => :posts, :action => :index
+                  redirect_to :controller => :posts, :action => :sent
                 end
               end
             else
