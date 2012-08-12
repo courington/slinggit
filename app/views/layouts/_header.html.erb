@@ -79,14 +79,17 @@
       <% else %>
         <div class="col4 pull_left" id="header_signIn">
               <div class="row">
-								<%= link_to "Sign In", signin_path, class: "col2 pull_left" %>
-								<!-- SEARCH ICON -->
-												<div class="col2 pull_right quickSearchLabel ss-search">
-													
-													<span>Search</span>
-												</div>
-								<!-- END SEARCH ICON -->
-							</div>
+				<%= link_to signin_path, class: "col2 pull_left" do%>
+					<span class="ss-connection"></span>
+					Sign In
+				<% end %>
+				<!-- SEARCH ICON -->
+				<div class="col2 pull_right quickSearchLabel">
+					<span class="ss-search"></span>
+					<span>Search</span>
+				</div>
+				<!-- END SEARCH ICON -->
+			</div>
         </div>
       <% end %>
 <!-- END ELSE IF -->
