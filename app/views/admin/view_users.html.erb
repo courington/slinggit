@@ -13,7 +13,7 @@
           <th>Username</th>
           <th>Posts</th>
           <th>Comments</th>
-          <th>Messages</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +23,7 @@
             <td><%= link_to user.name, {:controller => :admin, :action => :view_user, :id => user.id} %></td>
             <td>Posts (<%= user.posts.count %>)</td>
             <td>Comments (<%= user.comments.count %>)</td>
-            <td>Messages </td>
+            <td><%= user.status %></td>
           </tr>
         <% end %>
       </tbody>
