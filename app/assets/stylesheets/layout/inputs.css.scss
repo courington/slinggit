@@ -8,6 +8,9 @@ textarea {
 	@include transition;
 	line-height: $leading;
 	margin: ($smallest-font * .5) auto;
+	#{$ff}box-shaodw: none;
+	#{$wk}box-shadow: none;
+	box-shadow: none;
 		&:focus {
 		outline: none;
 		box-shadow: $input-focus-shdw;
