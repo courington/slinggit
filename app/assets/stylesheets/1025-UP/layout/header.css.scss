@@ -1,17 +1,3 @@
 #mainHeader {
-	.wrapper > .row:first-child {
-		width: $sixCols * 3;
-		float: left;
-	}
-	//hgroup + .col4.pull_left > .row > .col2,
-	//.col2 + .col4.pull_left > .row > .col2 {
-	//	width: $sixCols * 2;
-	//}
-	hgroup {
-		width: $sixCols;
-		//padding-top: 1.125em;
-		+ .col4.pull_left {
-			width: 80%;
-		}
-	}
+	
 }

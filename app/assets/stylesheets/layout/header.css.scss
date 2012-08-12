@@ -4,15 +4,6 @@
 	.hideSearch {
 		display: none;
 	}
-	.active {
-		border: 1px solid darken($main-blue, 15%);
-		background: darken($main-blue, 10%);
-		#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-		#{$o}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-		#{$wk}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-		box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-		@include rounded-corners(.3em);
-	}
 	.wrapper > .row:first-of-type {
 		padding-top: ($body-font * .25)
 	}
@@ -20,55 +11,34 @@
 		width: $sixCols * 1.2;
 		font-size: $small-font;
 		cursor: pointer;
+		text-align: center;
 		h1 {
 			//hide the h1 off canvas
 			position: absolute;
 			top: -9999px;
 			left: -9999px;
 		}
-		//img {
-		//	padding-right: 5%;
-		//}
-		//small {
-		//	color: $wht;
-		//	font-size: $small-font;
-		//	//display: none;
-		//}
 	}
 	.col2 {
-		@extend hgroup;
+		font-size: $smaller-font;
+		cursor: pointer;
+		text-align: center;
+		color: $wht;
 	}
 	nav {
 		width: 80%;
-		font-size: $small-font;
-		* {
-			color: $wht;
-		}
 		> .row > .col2 {
 			width: $sixCols * 1.5;
 			text-align: center;
-			.active {
-				.btn_navPosts {
-					background-position: -8px -92px;
-				}
+			color: lighten($main-blue, 25%);
+			&.active {
+				color: lighten($main-blue, 50%);
 			}
 		}
-		//.dropdown-toggle {
-		//	padding: 1em 0;
-		//	margin-top: -1em;
-		//}
 		.nav_dropDown.dropdown-menu {
 			position: absolute;
-			//top: 4.5em;
-			//right: 0;
 			z-index: 9999;
 			background: darken($main-blue, 5%);
-			//@include rounded-corners($font-size * .375);
-			//@include hardEdge-top;
-			//#{$ff}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-			//#{$o}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-			//#{$wk}box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15);
-			//box-shadow: inset 0 2px 6px rgba($black, .15), inset 0 -1px 1px rgba($white, .15), 0 0 10px rgba($black, .25);
 		}
 		.dropdown-menu > li {
 			padding: ($font-size * 1.4575) ($font-size * .5);
@@ -76,9 +46,9 @@
 			&:first-child {
 				border-top: none;
 			}
-		}
-		.ss-home, .ss-inbox, .ss-search, .ss-settings {
-			display: block;
+			a {
+				color: $wht;
+			}
 		}
 	}
 	#quickSearchWrapper {
@@ -88,33 +58,36 @@
 			width: $sixCols * 4;
 			input[name="quickSearch"] {
 				font-size: $small-font;
-				//line-height: $leading;
 				@include rounded-corners($biggest-font);
-				//padding: $body-font $font-size;
 				width: 100%;
-				//font-family: $main-font;
-				//border: 1px solid darken($lt-grey, 5%);
 				padding: ($smallest-font * .5) $biggest-font;
 				margin: 0;
-				//margin: ($body-font * .375) auto;
 				border: none;
 			}
-			.ss-search {
+			.col2.pull_right.quickSearchLabel {
+
+					color: $wht;
+
+			&.ss-search {
 				position: relative;
 				top: $biggest-font;
 				left: $smallest-font;
 				z-index: 1333;
 				color: lighten($main-blue, 25%);
 				font-size: $small-font;
+				}
 			}
 		}
 	}
+	.ss-home, .ss-inbox, .ss-search, .ss-settings, .ss-connection {
+			display: block;
+		}
 	//SIGN IN LINK
-	hgroup + #header_signIn > .row > a:link {
-	font-size: $font-size;
-	min-height: 0;
-	padding-bottom: $small-font;
-	margin-left: 25%;
+	#header_signIn {
+		width: 80%;
+		> .row > a.col2.pull_left {
+			margin-left: 22.5%;
+		}
 	}
 }
 
