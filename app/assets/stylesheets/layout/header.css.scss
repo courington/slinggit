@@ -61,14 +61,12 @@
 				@include rounded-corners($biggest-font);
 				width: 100%;
 				padding: ($smallest-font * .5) $biggest-font;
-				margin: 0;
+				margin: 0 0 $smallest-font;
 				border: none;
 			}
 			.col2.pull_right.quickSearchLabel {
-
 					color: $wht;
-
-			&.ss-search {
+			span.ss-search {
 				position: relative;
 				top: $biggest-font;
 				left: $smallest-font;
@@ -77,6 +75,14 @@
 				font-size: $small-font;
 				}
 			}
+		}
+		span.ss-search {
+			position: relative;
+			top: $biggest-font;
+			left: $smallest-font;
+			z-index: 1333;
+			color: lighten($main-blue, 25%);
+			font-size: $small-font;
 		}
 	}
 	.ss-home, .ss-inbox, .ss-search, .ss-settings, .ss-connection {
