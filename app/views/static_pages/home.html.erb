@@ -14,18 +14,24 @@
 							<h1>Welcome to Slinggit.</h1>
 						</header>
 					
-					<div class="row white_well">
-						<p>The easiest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</p>
-						<div class="row">
-						<% if invite_only? %>
-							<!-- if invites are active -->
-							<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col4 offset1 btn_darkGrey" %>
-						<% else %>
-							<!-- if invites are NOT active -->
-							<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
-						<% end %>
+						<div class="row white_well">
+							<p>The easiest way to connect with your social networks to git the things you want and sling the things you don&rsquo;t.</p>
+							<div class="row">
+							<% if invite_only? %>
+								<!-- if invites are active -->
+								<%= link_to "Request Invitation", {:controller => :users, :action => :request_invitation}, class: "col4 offset1 btn_darkGrey" %>
+							<% else %>
+								<!-- if invites are NOT active -->
+								<%= link_to "Sign up now!", signup_path, class: "col4 offset1 btn_green" %>
+							<% end %>
+							</div>
 						</div>
-					</div>
+
+						<div class="app-link">
+							<a href="http://itunes.apple.com/us/app/slinggit/id543458895?mt=8&uo=4" target="itunes_store">
+								<img src="http://r.mzstatic.com/images/web/linkmaker/badge_appstore-lrg.gif" alt="Slinggit - Slinggit" style="border: 0;width:116px;height:40px"/>
+							</a>
+						</div>
 					</div>
 					
 					<div class="col4 pull_left">
