@@ -26,26 +26,26 @@ textarea {
 
 .btn {
 	cursor: pointer;
-	padding: .5em;
-	margin-top: ($font-size * .4);
+	padding: ($smallest-font * .5) $smallest-font;
+	margin-top: ($smallest-font * .5);
 	color: $wht;
 	font-size: $font-size;
 	font-family: $main-font;
 	background: $main-grey;
 	border: 1px solid $main-grey;
 	text-align: center;
-	box-shadow: $btn-shading;
+	//box-shadow: $btn-shading;
 	@include rounded-corners($radius);
 	@include transition;
 	-webkit-appearance: none;
 	&:hover,
 	&:focus {
-		box-shadow: $btn-focus;
+		//box-shadow: $btn-focus;
 		color: $wht;
 		outline:none;
 	}
 	&:active {
-		box-shadow: $btn-active;
+		//box-shadow: $btn-active;
 		color: $wht;
 	}
 }
