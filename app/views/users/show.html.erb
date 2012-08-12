@@ -83,11 +83,11 @@
                 <%= render 'users/add_more_networks' %>
               <% end %>
             <% else %>
-              <div class="row">
-                <p><strong><%= current_user.name %></strong>, before you begin posting, we need you to verify your
+              <div class="row unverified_user">
+                <p><span class="user-name"><%= current_user.name %></span>, before you begin posting, we need you to verify your
                   email address.</p>
 
-                <p>If you haven't recieved an email from us, check your spam folder or you can always have
+                <p>If you haven't recieved an email from us, check your <span class="notice">spam folder</span> or you can always have
                   us <%= link_to "resend it.", prep_for_reverification_path %></p>
               </div> 
             <% end %>

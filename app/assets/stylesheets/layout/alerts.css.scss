@@ -52,8 +52,15 @@
 	background: lighten($main-yellow, 15%);
 	color: $main-grey;
 }
+
 .notice_text {
 	background: lighten($main-yellow, 15%);
 	padding: .1em 0;
+}
+
+.notice_bubble{
+	width: 90%;
+	margin-top: 10px;
+	@extend #notice_explanation_bubble;
 }
   //end

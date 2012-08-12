@@ -1,13 +1,13 @@
 <% if @posts.length is 0: %>
-
+	<div class="row notice_bubble">
 	<% if @posts.getPostType() is "posted": %>
-		<p>You haven't created any posts yet. <%= @posts.getPostType() %></p> 
+		<p>You haven't created any posts yet. Get started now by clicking on Create Post!</p> 
 	<% else if @posts.getPostType() is "watched": %>
-		<p>You aren't watching any posts.</p>
+		<p>You aren't watching any posts.  You should check out what people are selling.</p>
 	<% else if @posts.getPostType() is "archived": %>
 		<p>Nothing has been archived.</p>
 	<% end %>
-
+	</div>
 <% else: %>
 
 	<% for post in @posts.models: %>

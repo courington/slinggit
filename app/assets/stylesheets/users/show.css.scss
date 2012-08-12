@@ -71,3 +71,18 @@
 		padding-right: 5px;
 	}
 }
+
+.user-name{
+	font-size: $big-font;
+}
+
+.unverified_user{
+	padding-top: 10px;
+	border-bottom: 1px solid $lt-grey;
+	.notice{
+		text-decoration: underline;
+	}
+	p{
+		padding: 0px 10px 10px 10px;
+	}
+}
