@@ -12,30 +12,38 @@
 		font-size: $font-size;
 		color: $main-grey;
 		//border: 1px solid darken($wht, 10%);
-		height: 2em;
+		//height: 2em;
 		margin: $smallest-font ($smallest-font * .5);
 		//padding-right: .4em;
 	}
 	#counter_post_hashtag_prefix,
 	#counter_post_content {
 		color: $main-red;
-		position: relative;
-		top: ($font-size * .5) + $leading;
+		//position: relative;
+		//top: ($font-size * .5) + $leading;
 		float: right;
+		font-size: $smallest-font;
 	}
-	
+	small {
+		font-size: $smaller-font;
+		color: $main-grey;
+	}
 }
 
 #photoControlGroup {
-	font-size: $body-font;
-	label.row {
+	//font-size: $body-font;
+	//label.row {
 	//	margin: 0;
-	}
+	//}
 	//> .controls.thumbnail > input[type="file"] {
 	//	position: absolute;
 	//	top: -9999px;
 	//	left: -9999px;
 	//}
+	label[for="post_photo"] {
+		text-align: center;
+		//font-size: .863em;
+	}
 	.controls.thumbnail {
 		//font-size: $font-size;
 		//margin: ($font-size * .25) auto;
@@ -50,6 +58,7 @@
 				background: $main-blue;
 				@include rounded-corners($radius);
 				padding: $smallest-font ($smallest-font * .5) ($smallest-font * .5);
+				border: 1px solid darken($main-blue, 10%);
 			}
 			span {
 				font-size: $smallest-font;
@@ -58,30 +67,47 @@
 		}
 	}
 }
-
-.postSocialAccount {
-	header {
-		font-size: $font-size * .875;
-		line-height: $leading;
-	}
+#post_content,
+.postSocialAccount,
+#photoControlGroup {
+	width: 100%;
+	display: block;
+}
+fieldset {
+	margin-bottom: $small-font;
+}
+//#photoControlGroup {
+	//	width: 100%;
+	//		> .controls.thumbnail > input[type="file"] &.iePhoto {
+	//		position: relative;
+	//		top: 0;
+	//		left: 0;
+	//		display: block;
+	//	}
+	//}
+	.postSocialAccount {
+	//header {
+		//font-size: $font-size * .875;
+	//	line-height: $leading;
+	//}
 	fieldset {
-		margin: ($font-size * .75) auto;
+		//margin-top: $leading;
 		> label {
-			font-size: $font-size * .875;
-			line-height: $leading;
-			vertical-align: middle;
+			//font-size: $font-size * .875;
+			//line-height: $leading;
+			//vertical-align: middle;
 			span {
-				float: left;
-				margin: ($font-size * .125) ($font-size * .25) 0 0;
+				//float: left;
+				//margin: ($font-size * .125) ($font-size * .25) 0 0;
 			}
 		}
 	}
 	input[type="checkbox"] {
-		float: left;
-		margin: $font-size $font-size 0 0;
-		width: auto;
-		display: block;
-		clear: left;
-		padding: ($font-size * .5);
+		//float: left;
+		margin: 0 $font-size 0 0;
+		//width: auto;
+		//display: block;
+		//clear: left;
+		padding: $smallest-font;
 	}
 }

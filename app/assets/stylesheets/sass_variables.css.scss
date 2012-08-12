@@ -168,7 +168,7 @@ $modal-shadow: 0 3px 7px rgba(0,0,0,0.3);
 	border: $border-width solid $lt-grey;
 	//padding: 1.5em;
 	padding: $small-font;
-	@include rounded-corners(5px);
+	@include rounded-corners($radius);
 }
 
 //sidebar styling
