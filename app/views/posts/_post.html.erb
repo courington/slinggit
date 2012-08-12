@@ -6,7 +6,7 @@
       <% if post.photo_file_name.blank? %>
         <%= image_tag "noPhoto_80x80.png", :height => "auto", :width => "100%" %>
       <% else %>
-        <%= image_tag post.photo.url(:search), class: "img_border" %>
+        <%= image_tag post.photo.url(:medium), class: "img_border" %>
       <% end %>
     </div>
     

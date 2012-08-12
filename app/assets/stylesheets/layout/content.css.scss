@@ -244,10 +244,10 @@ h6, p {
 }
 
 .img_border {
-  padding: 3px;
+  padding: 4px;
   border: 1px solid $lt-grey;
-  border-radius: 3px;
-  background-color: lighten($lt-grey, 5%);
+  background-color: $wht;
+  @include box-shadow($image-shadow);
 }
 
 .transparent_background {
@@ -266,4 +266,17 @@ line-height: $leading;
 .terms_child {
 	list-style: disc outside;
 	margin-left: $font-size;
+}
+
+.dl-horizontal {
+  font-size: $small-font;
+  dt {
+    float: left;
+    color: $dk-grey;
+    clear: left;
+    text-align: right;
+  }
+  dd {
+    margin-left: 130px;
+  }
 }

@@ -114,7 +114,8 @@ class User < ActiveRecord::Base
       url = 'icon_blue_80x80.png'
     elsif self.photo_source == TWITTER_PHOTO_SOURCE
       if not self.primary_twitter_account.blank?
-        url = self.primary_twitter_account.image_url
+        thumbnail_url = self.primary_twitter_account.image_url
+        url = thumbnail_url.gsub('_normal', '')
       end
     elsif self.photo_source == FACEBOOK_PHOTO_SOURCE
       if not self.primary_facebook_account.blank?
