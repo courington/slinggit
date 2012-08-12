@@ -244,10 +244,10 @@ h6, p {
 }
 
 .img_border {
-  padding: 3px;
+  padding: 4px;
   border: 1px solid $lt-grey;
-  border-radius: 3px;
-  background-color: lighten($lt-grey, 5%);
+  background-color: $wht;
+  @include box-shadow($image-shadow);
 }
 
 .transparent_background {
