@@ -11,9 +11,11 @@
         </a>
         <header class="col4 pull_right">
           <h1 class="bottom_border"><%= @user.name %></h1>
-            <h6><strong>Open Posts (<%= @user.open_post_count %>)</strong></h6>
-            <h6>Posts Remaining (<%= (@user.post_limit) - (@user.open_post_count) %>)</h6>
-            <h6>Open Post Limit (<%= @user.post_limit %>)</h6>
+            <dl class="dl-horizontal">
+              <dt>Open Posts:</dt> <dd><%= @user.open_post_count %></dd>
+              <dt>Posts Remaining:</dt> <dd><%= (@user.post_limit) - (@user.open_post_count) %></dd>
+              <dt>Open Post Limit:</dt> <dd><%= @user.post_limit %></dd>
+            </dl>
         </header>
 
         <% if is_signed_in_and_admin? && !current_user?(@user) %>

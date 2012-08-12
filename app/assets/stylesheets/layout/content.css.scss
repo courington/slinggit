@@ -267,3 +267,16 @@ line-height: $leading;
 	list-style: disc outside;
 	margin-left: $font-size;
 }
+
+.dl-horizontal {
+  font-size: $small-font;
+  dt {
+    float: left;
+    color: $dk-grey;
+    clear: left;
+    text-align: right;
+  }
+  dd {
+    margin-left: 130px;
+  }
+}
