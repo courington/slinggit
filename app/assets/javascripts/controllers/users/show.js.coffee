@@ -8,7 +8,7 @@ Slinggit.Models ||= {}
 ## Module
 class Slinggit.Controllers.Users.Show extends Backbone.Router
 	initialize: (options)->
-		@json = options.json
+		@json = $("#userJson").data('user')
 		@posts = new Slinggit.Collections.Posts(post_list_type: "posted")
 		@postListView = new Slinggit.Views.Posts.PostListView( collection: @posts )
 		@user = new Slinggit.Models.User(id: @json.id, name: @json.name, current_user: @json.current_user)
@@ -36,13 +36,12 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 			false
 
 	routes:
-		""   :  "root"
+		""        :  "root"
 		"posted"  :  "currentPosts"
 		"watching":  "watchedPosts"
 		"archived":  "archivedPosts"
 
 	root: =>
-		#window.scrollTo( 0, 0 );
 		@posts.setPostType("posted")
 		@posts.reset @json.open_posts
 		@changePostHeader(if @user.get("current_user") then "My" else @user.get("name"))
@@ -52,29 +51,23 @@ class Slinggit.Controllers.Users.Show extends Backbone.Router
 		@root()
 
 	watchedPosts: =>
-		#window.scrollTo( 0, 0 );
-		#Slinggit.Utils.ViewUtils.set_scroll true
-		@posts.setPostType("watched")
-		@changeActive(@$watching)
-		@changePostHeader "Watched"
 		@posts.url = "/posts/filtered_list.json?id=#{@user.get('id')}&filter=watched"
 		@posts.fetch
 			success: =>
-				#Slinggit.Utils.ViewUtils.get_scroll()
+				@posts.setPostType("watched")
+				@changeActive(@$watching)
+				@changePostHeader "Watched"
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code
 
 	archivedPosts: =>
-		#window.scrollTo( 0, 0 );
-		#Slinggit.Utils.ViewUtils.set_scroll true
-		@posts.setPostType("archived")
-		@changeActive(@$archived)
-		@changePostHeader "Archived"
 		@posts.url = "/posts/filtered_list.json?id=#{@user.get('id')}&filter=archived"
 		@posts.fetch
 			success: =>
-				#Slinggit.Utils.ViewUtils.get_scroll()
+				@posts.setPostType("archived")
+				@changeActive(@$archived)
+				@changePostHeader "Archived"
 				@posts.restoreDefualtUrl()
 			error: =>
 				# error code

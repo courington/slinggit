@@ -19,4 +19,5 @@ class Slinggit.Views.Posts.PostListView extends Backbone.View
 		@$el.empty()
 		compiledTemplate = @template(posts: @collection)
 		@$el.append(compiledTemplate)
+		$(".postArticle").fadeIn()
 

@@ -1,4 +1,4 @@
-<% if @posts.empty?: %>
+<% if @posts.length is 0: %>
 
 	<% if @posts.getPostType() is "posted": %>
 		<p>You haven't created any posts yet. <%= @posts.getPostType() %></p> 
@@ -12,7 +12,7 @@
 
 	<% for post in @posts.models: %>
 
-		<article class="row postArticle">
+		<article class="row postArticle" style="display:none">
 		  <a href="/posts/<%= post.get("id_hash") %>">
 			  <div class="col1 pull_left">
 			    <div class="photo row">
