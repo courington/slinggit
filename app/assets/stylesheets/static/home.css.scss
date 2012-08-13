@@ -35,6 +35,9 @@
 
 	// CMK we'll need to refactor this, but for now..
 	.secondary_inner{
+		.ss-compose, .ss-notebook {
+			width: 47.5%;
+		}
 		.headline{
 			text-align: center;
 		}

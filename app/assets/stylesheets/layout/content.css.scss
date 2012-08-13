@@ -117,7 +117,7 @@ h1, h2, h3, h4, h5, h6 {
 .secondary_inner{
 	@include white-well;
 	vertical-align: top;
-	margin-bottom: $leading;
+	margin-bottom: $body-font;
 	@include box-shadow($wrapper-shadow);
 
 	// Not sure if we want this nested or not.  Leaving it for now

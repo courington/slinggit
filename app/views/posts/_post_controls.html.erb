@@ -51,11 +51,11 @@
         </div>
 
         <% if @post.open? %>
-          <%= link_to "Repost", edit_post_path(@post), class: "col6 btn_yellow" %>
+          <%= link_to "Repost", edit_post_path(@post), class: "ss-repeat col6 btn_yellow" %>
         <% end %>
 
         <div class="button-wrapper pull_left col3 first">
-          <button class="col6 btn_ltGrey" type="button" id="archivePrompt">
+          <button class="ss-folder col6 btn_ltGrey" type="button" id="archivePrompt">
             Archive
           </button>
         </div>

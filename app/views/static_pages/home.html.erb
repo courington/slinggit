@@ -56,14 +56,9 @@
     		</div>
 
     		<div class="secondary_inner">
-
-	    		<div class="row">
-					<h1 class="headline bottom_border">Welcome back <%= current_user.name %>!</h1>
-					<!-- <p class="pull_left headline"> Have something to Sling?</p> -->
-				</div>
 				<div class="row">
-					<%= link_to "Create New Post", new_post_path, class: "col6 btn_green" %>
-					<%= link_to "View My Posts", current_user, class: "col6 pull_right btn_ltGrey" %>
+					<%= link_to "New Post", new_post_path, class: "ss-compose col3 pull_left btn_green" %>
+					<%= link_to "My Posts", current_user, class: "ss-notebook col3 pull_right btn_ltGrey" %>
 				</div>
 				<div class="row wrong-user">
 					<%= link_to signout_path, method: "delete", class: "pull_right" do %>

@@ -8,18 +8,20 @@
 	position:relative;
 	z-index:1020;
 	padding-bottom: $leading;
-		nav,
-		nav + .col2.pull_right {
-			margin-top: $font-size;
+		.wrapper > .col3 {
+			margin-top: $body-font;
+			width: 100%;
+			display: block;
+		}
 			ul,
 			.row {
-				margin-bottom: $font-size;
+				margin-bottom: $body-font;
 				line-height: $leading;
+				//padding-left: 20%;
 			}
-		}
 		nav a {
 			color: $main-grey;
-			text-shadow: $txt-shdw;
+			//text-shadow: $txt-shdw;
 			@include transition;
 			&:hover,
 			&:focus {
@@ -28,9 +30,10 @@
 		}
 		nav >.row:first-child {
 			li {
-				min-width: ($sixCols * .5);
-				padding-right: ($sixCols * .25);
-				margin-right: ($sixCols * .25);
+				text-align: center;
+				//width: ($sixCols * .2);
+				padding-right: ($sixCols * .15);
+				margin-right: ($sixCols * .15);
 				border-right: 1px solid lighten($main-grey, 20%);
 				&:last-child {
 					border-right: none;	
@@ -39,18 +42,16 @@
 		}
 	.footerSignIn {
 		line-height: $leading;
-		text-align: right;
+
 		a {
 			color: $main-blue;
 		}
 	}
 	small {
 		color: $main-grey;
-		text-align: right;
 		line-height: $leading;
-		margin-left: $small-font;
+		margin-left: $smaller-font;
 		padding-left: $small-font;
-		border-left: 1px solid lighten($main-grey, 20%);
 	}
 	.facebookIconSmall,
 	.twitIconSmall_dark,
@@ -68,32 +69,26 @@
 	.coloradoIcon {
 		+ span {
 			color: $main-grey;
-			margin-left: $small-font;
+			margin-left: $smallest-font;
 		}
 	}
 }
 
-@media all and (max-width: 800px) and (min-width: 320px) {
+@media all and (min-width: 641px) {
 	.pageFoot {
-		nav,
-		nav + .col2.pull_right {
-			clear: left;
-			display: block;
-			width: 100%;
+		.wrapper > .col3 {
+			width: ($sixCols * 3);
+			display: inline-block;
 		}
-		nav + .col2.pull_right {
-			margin-top: 0;
+		.footerSignIn {
+			text-align: right;
 		}
-		nav > .row:last-child {
-			li {
-				width: $sixCols * 1.5;
+		small {
+			text-align: right;
+			border-left: 1px solid lighten($main-grey, 20%);
+			+ a.pull_left {
+				float: right;
 			}
-		}
-		.footerSignIn,
-		.footerSignIn + .row > .pull_right {
-			text-align: left;
-			float: none;
-			clear: left;
 		}
 	}
 }
