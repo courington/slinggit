@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   before_save :downcase_attributes
   before_save :create_remember_token
   after_create :create_limitation_records
+  after_create :create_email_preference_record
   after_update :send_profile_update_emails
 
   # Allows letters, numbers and underscore
@@ -183,6 +184,16 @@ class User < ActiveRecord::Base
   def downcase_attributes
     self.email = email.downcase
     self.name = name.downcase
+  end
+
+  def create_email_preference_record
+    if not EmailPreference.exists?(['user_id = ?', self.id])
+      EmailPreference.create(
+          :user_id => self.id,
+          :system_emails => true,
+          :marketing_emails => false
+      )
+    end
   end
 
   def create_limitation_records
