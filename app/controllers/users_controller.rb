@@ -224,19 +224,24 @@ class UsersController < ApplicationController
 
   def email_preferences
     @email_preference = EmailPreference.first(:conditions => ['user_id = ?', current_user.id])
-    if request.post?
-      if not params[:system_emails].blank? and params[:system_emails] == '1'
-        @email_preference.system_emails = true
-      else
-        @email_preference.system_emails = false
+    if not @email_preference.blank?
+      if request.post?
+        if not params[:system_emails].blank? and params[:system_emails] == '1'
+          @email_preference.system_emails = true
+        else
+          @email_preference.system_emails = false
+        end
+        if not params[:marketing_emails].blank? and params[:marketing_emails] == '1'
+          @email_preference.marketing_emails = true
+        else
+          @email_preference.marketing_emails = false
+        end
+        @email_preference.save
+        flash[:success] = "Email preferences updates"
       end
-      if not params[:marketing_emails].blank? and params[:marketing_emails] == '1'
-        @email_preference.marketing_emails = true
-      else
-        @email_preference.marketing_emails = false
-      end
-      @email_preference.save
-      flash[:success] = "Email preferences updates"
+    else
+      flash[:error] = "Oops, something has gone wrong.  Please try again later."
+      redirect_to @user
     end
   end
 
