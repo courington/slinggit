@@ -75,4 +75,11 @@ class UserMailer < ActionMailer::Base
     @posts_closed = posts_closed
     mail(:to => EXECUTIVES, :from => 'Post Monitor <reports@slinggit.com>', :subject => "Daily post monitor report")
   end
+
+  def comment_notifier(user_id, todays_comments)
+    if user = User.first(:conditions => ['id = ?', user_id], :select => 'email')
+      @todays_comments = todays_comments
+      mail(:to => user.email, :subject => "Daily comment digest")
+    end
+  end
 end
