@@ -103,7 +103,7 @@ SlinggitWebapp::Application.routes.draw do
   match 'test(/:action)(/:id)', :to => 'test#action#id'
 
   ##BACKEND CONTROLLER##
-  match 'backend/post_monitor', :to => 'backend#post_monitor'
+  match 'backend/daily_jobs', :to => 'backend#daily_jobs'
 
   ##SITE MODES##
   match '/maintenence', to: 'static_pages#maintenence', :as => 'maintenence'
