@@ -114,7 +114,7 @@ class PostsController < ApplicationController
     search_terms = []
     @posts = []
     if not params[:id].blank?
-      @search_terms_entered = params[:id]
+      @search_terms_entered = params[:id].gsub!('#','')
       search_terms = params[:id].split(' ')
       if search_terms.length > 1
         @posts = Post.all(:conditions => ["(content in (?) OR hashtag_prefix in (?) OR location in (?)) AND open = ? AND status = ?", search_terms, search_terms, search_terms, true, STATUS_ACTIVE], :order => 'created_at desc')
