@@ -26,8 +26,8 @@ class UserMailer < ActionMailer::Base
   end
 
   def terms_violation_notification(user, violation_reason)
-    @violation_reason = violation_reason
     @user = user
+    @violation_reason = violation_reason
     mail(:to => user.email, :subject => "Your account has been suspended")
   end
 
@@ -77,9 +77,10 @@ class UserMailer < ActionMailer::Base
   end
 
   def comment_notifier(user_id, todays_comments)
-    if user = User.first(:conditions => ['id = ?', user_id], :select => 'email')
+    if user = User.first(:conditions => ['id = ?', user_id], :select => 'email,id')
       @todays_comments = todays_comments
       mail(:to => user.email, :subject => "Daily comment digest")
     end
   end
+
 end

@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account, :edit_user_email_for_verification,  :update_email_and_send_verification]
+  before_filter :signed_in_user, only: [:edit, :update, :destroy, :delete_account, :edit_user_email_for_verification, :update_email_and_send_verification, :email_preferences]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :user_verified, only: [:edit, :update, :destroy]
-  
+
   # Method is in application_controller
   before_filter :set_cache_buster, only: [:edit_user_email_for_verification]
 
@@ -97,7 +97,7 @@ class UsersController < ApplicationController
     @passes_limitation = passes_limitations?(:total_posts)
     if signed_in? and params[:id] == current_user.name and not current_user.is_considered_deleted?
       @user = current_user
-      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, false])     
+      @posts = Post.paginate(page: params[:page], :per_page => 20, :conditions => ['user_id = ? AND status = ? AND open = ?', @user.id, STATUS_ACTIVE, false])
       render 'show'
     else
       redirect_to signin_path
@@ -219,6 +219,24 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render 'edit'
+    end
+  end
+
+  def email_preferences
+    @email_preference = EmailPreference.first(:conditions => ['user_id = ?', current_user.id])
+    if request.post?
+      if not params[:system_emails].blank? and params[:system_emails] == '1'
+        @email_preference.system_emails = true
+      else
+        @email_preference.system_emails = false
+      end
+      if not params[:marketing_emails].blank? and params[:marketing_emails] == '1'
+        @email_preference.marketing_emails = true
+      else
+        @email_preference.marketing_emails = false
+      end
+      @email_preference.save
+      flash[:success] = "Email preferences updates"
     end
   end
 

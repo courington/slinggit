@@ -48,8 +48,20 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}, :if => lambda { new_record? || !password.nil? }
   validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.nil? }
 
+  def email_preferences(preference_type)
+    if email_preference = EmailPreference.first(:conditions => ['user_id = ?', self.id])
+      if preference_type == 'system_emails'
+        return email_preference.system_emails
+      elsif preference_type == 'marketing_emails'
+        return email_preference.marketing_emails
+      end
+    else
+      return false
+    end
+  end
+
   def active_post_count
-    Post.count(:conditions => ['status = ? and user_id = ?', STATUS_ACTIVE, self.id], :select => 'id')
+    Post.count(:conditions => [' status = ? and user_id = ?', STATUS_ACTIVE, self.id], :select => 'id')
   end
 
   def open_post_count
@@ -120,7 +132,7 @@ class User < ActiveRecord::Base
     elsif self.photo_source == FACEBOOK_PHOTO_SOURCE
       if not self.primary_facebook_account.blank?
         url = self.primary_facebook_account.image_url
-      end 
+      end
     elsif self.photo_source == GRAVATAR_PHOTO_SOURCE
       url = gravatar_img_url(self)
     end

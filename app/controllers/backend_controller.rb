@@ -40,7 +40,9 @@ class BackendController < ApplicationController
 
       #send email to each user to inform them they have comments on their posts with links to the post
       comments_by_user.each do |user_id, todays_comments|
-        UserMailer.comment_notifier(user_id, todays_comments).deliver
+        if EmailPreference.exists?(['user_id = ? AND system_emails = ?', user_id, true])
+          UserMailer.comment_notifier(user_id, todays_comments).deliver
+        end
       end
     end
 

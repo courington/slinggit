@@ -10,6 +10,7 @@ SlinggitWebapp::Application.routes.draw do
   # CMK -> I really don't like this design, need to come back and refactor this.
   match 'posts/filtered_list', :to => 'posts#filtered_list'
 
+  match 'users/email_preferences', :to => 'users#email_preferences'
   match 'users/enter_new_password/(:id)', :to => 'users#enter_new_password#id'
   match 'users/password_reset', :to => 'users#password_reset'
   match 'users/reactivate(/:id)', :to => 'users#reactivate#id', via: :get

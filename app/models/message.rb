@@ -53,7 +53,7 @@ class Message < ActiveRecord::Base
   end
 
   def send_new_message_email
-    if send_email
+    if send_email and EmailPreference.exists?(['user_id = ? AND system_emails = ?', self.user_id, true])
       UserMailer.new_message(self).deliver
     end
   end
