@@ -9,6 +9,7 @@ Slinggit.Models ||= {}
 class Slinggit.Controllers.Users.Show extends Backbone.Router
 	initialize: (options)->
 		@json = $("#userJson").data('user')
+		console.log @json
 		@posts = new Slinggit.Collections.Posts(post_list_type: "posted")
 		@postListView = new Slinggit.Views.Posts.PostListView( collection: @posts )
 		@user = new Slinggit.Models.User(id: @json.id, name: @json.name, current_user: @json.current_user)

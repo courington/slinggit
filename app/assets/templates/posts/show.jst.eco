@@ -34,13 +34,13 @@
 			    
 			    <div class="row secondary">
 			      <div class="col5 pull_left">
-			        <small class="timestamp">Posted ago.</small>
+			        <small class="timestamp">Posted <%= post.get("postedAgo") %> ago.</small>
 			      </div>  
 			      <div class="col1 pull_right">
-			          <% if post.get("open") is true: %>
+			          <% if post.get("open?") is true: %>
 			            <span class="text_green">Open</span>
 			          <% else: %>
-			            <span class="text_red">Closed</span>
+			            <span class="text_yellow">Closed</span>
 			          <% end %>
 			      </div>
 			    </div>

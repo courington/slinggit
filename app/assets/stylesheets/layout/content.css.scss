@@ -14,14 +14,14 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Bree Serif', verdana, arial, sans-serif;
 }
 
-.postArticle {
-	a:link, a:visited, a:active {
-		color: darken($main-blue, 10%);
-	}
-	a:hover, a:focus {
-		color: darken($main-blue, 20%);
-	}
-}
+// .postArticle {
+// 	a:link, a:visited, a:active {
+// 		color: darken($main-blue, 10%);
+// 	}
+// 	a:hover, a:focus {
+// 		color: darken($main-blue, 20%);
+// 	}
+// }
 
 //END
 //COLUMNS and OFFSETS
@@ -279,4 +279,12 @@ line-height: $leading;
   dd {
     margin-left: 130px;
   }
+}
+.text_green{
+	color: darken($main-green, 20%);
+	font-size: $small-font;
+}
+.text_yellow{
+	color: darken($main-yellow, 20%);
+	font-size: $small-font;
 }

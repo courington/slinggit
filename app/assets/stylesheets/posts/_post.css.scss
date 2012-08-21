@@ -4,7 +4,7 @@
   padding: 8px 0 8px;
 
   &:hover{
-    background-color: lighten($lt-grey, 12%) !important;
+    background-color: lighten($lt-grey, 11%) !important;
   }
 
   &> a{
@@ -36,10 +36,20 @@
 
     .secondary{
       margin-top: 10px;
+
+      .col5{
+        padding-left: 0px;
+      }
     }
   }
 }
 
+.timestamp {
+  //display: block;
+  color: lighten($dk-grey, 12%);
+  font-size: $smaller-font;
+  line-height: $smaller-font * 1.2;
+}
 
 // HEADS UP!  I'm only keeping this here for now because I'm not sure
 // if it's used for anything anymore.  I can't find it's use, but want to 
