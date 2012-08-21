@@ -29,7 +29,7 @@
               <% else %>
                 <p class="col4 pull_left title">To: <%= history_message.recipient_user_name %> </p>
                 <p class="col2 pull_right timestamp"><%= time_ago_in_words(history_message.created_at) %> ago.</p>
-                <p class="col6 body"><%= history_message.body %></p>
+                <p class="col6 pull_left grey_well"><%= history_message.body %></p>
 
               <% end %>
 
