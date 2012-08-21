@@ -14,9 +14,27 @@
     dl {
       border-bottom: 1px solid $lt-grey;
     }
+  }
+}
 
-    p.title{
-      font-weight: bold;
-    }
+.link_to_post{
+  margin-top: 4px;
+  margin-left: 8px;
+  color: darken($main-blue, 20%);
+}
+
+.subject_row{
+  padding-bottom: 6px;
+  border-bottom: 1px solid $lt-grey;
+  margin-bottom: 12px;
+}
+
+.message_row{
+  .title{
+    padding-left: 6px;
+    margin-bottom: 8px;
+  }
+  .timestamp{
+    margin-top: 4px;
   }
 }

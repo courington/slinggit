@@ -12,18 +12,27 @@
 
   <section class="main">
 
-      <div class="row">
-        <p class="col1 pull_left title"><strong>Subect:</strong></p>
+      <div class="row subject_row">
+        <h4 class="pull_left title">Subject:</h4>
 
-        <p class="col2 pull_left"><%= link_to @message.source_object.hashtag_prefix, :controller => :posts, :action => :show, :id => @message.source_object.id_hash %></p>
+        <%= link_to @message.source_object.hashtag_prefix, {:controller => :posts, :action => :show, :id => @message.source_object.id_hash}, :class => "pull_left link_to_post" %>
       </div>
 
-      <div class="row">
+      <div class="row message_row">
         <% if not @message.thread_history(current_user).blank? %>
             <% @message.thread_history(current_user).each do |history_message| %>
-                <p class="col6 pull_left title"><%= history_message.recipient_user_id == current_user.id ? "From " + history_message.from : "To " + history_message.recipient_user_name %></p>
-                (<%= time_ago_in_words(history_message.created_at) %> ago.)
-                <p class="col6"><%= history_message.body %></p>
+
+              <% if history_message.recipient_user_id == current_user.id %>
+                <p class="col4 pull_left title"><strong>From:</strong> <%= history_message.from %> </p>
+                <p class="col2 pull_right timestamp"><%= time_ago_in_words(history_message.created_at) %> ago.</p>
+                <p class="col6 pull_left grey_well"><%= history_message.body %></p>
+              <% else %>
+                <p class="col4 pull_left title">To: <%= history_message.recipient_user_name %> </p>
+                <p class="col2 pull_right timestamp"><%= time_ago_in_words(history_message.created_at) %> ago.</p>
+                <p class="col6 body"><%= history_message.body %></p>
+
+              <% end %>
+
             <% end %>
         <% end %>
       </div>
