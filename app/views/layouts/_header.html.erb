@@ -51,16 +51,20 @@
 					
 					<ul class="nav_dropDown dropdown-menu">	
 						<li class="<%= 'active' if current_page?(edit_user_path(current_user)) %>">
-            	<%= link_to "Profile", edit_user_path(current_user) %>
-            </li>
+            				<%= link_to "Profile", edit_user_path(current_user) %>
+            			</li>
                     	
 						<li class="<%= 'active' if current_page?(networks_path) %>">
 							<%= link_to "Social Networks", networks_path %>
-            </li>
+            			</li>
+
+            			<li>
+                			<%= link_to "Email Preferences", :action => 'email_preferences', :controller => 'users' %>
+              			</li>
                     	
 						<li>
-               <%= link_to "Sign Out", signout_path, method: "delete" %>
-            </li>
+               				<%= link_to "Sign Out", signout_path, method: "delete" %>
+            			</li>
 
 						<% if current_user.is_admin? %>
 							<li class="<%= 'active' if current_page?(users_path) %>">
