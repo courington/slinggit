@@ -164,7 +164,7 @@ class MessagesController < ApplicationController
                 if not request.referer.blank?
                   redirect_to request.referer
                 else
-                  redirect_to :controller => :posts, :action => :sent
+                  redirect_to root_path
                 end
               end
             else
