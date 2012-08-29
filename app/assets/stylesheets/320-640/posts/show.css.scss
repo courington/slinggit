@@ -1,6 +1,5 @@
-/*
- *  FILENAME: 320-640/posts/show
- */
+//FILENAME: 320-640/posts/show
+
 
 // Using until we decide on offcanvas implementation
 // .main, .secondary {
@@ -29,28 +28,28 @@
 		width: 65%;
 		}
 		#postInfo{
-			.col2, .col3{
-				width: auto;
-				float: left;
-			}
-			dl{
-				font-size: $font-size * .8;
-				padding-top: 0px;
-				padding-left: 0px;
-				dt.col2{
-					padding: 3px 3px;
-					width: 54%;
-				}
-				dd{
-					padding: 3px 3px;
-				}
-			}
+			//.col2, .col3{
+			//	width: auto;
+			//	float: left;
+			//}
+			//dl{
+				//font-size: $body-font;
+				//padding-top: 0px;
+				//padding-left: 0px;
+				//dt.col2{
+				//	padding: 0;
+				//	width: 54%;
+				//}
+				//dd{
+				//	padding: 0;
+				//}
+			//}
 		}
 
 		#postDescription{
 			width: 100%;
 			p{
-				font-size: $font-size * .9;
+				//font-size: $font-size * .9;
 			}
 			a{
 				width: 30%;
@@ -84,13 +83,13 @@
 
 	#commentContent{
 		p{
-			font-size: $font-size * .7;
+			//font-size: $font-size * .7;
 		}
 
 	}
 	#signUpWrapper{
 		p{
-			font-size: $font-size * .8;
+			//font-size: $font-size * .8;
 		}
 		.col2{
 			.offset1{

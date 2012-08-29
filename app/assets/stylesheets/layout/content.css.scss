@@ -81,7 +81,6 @@ h1, h2, h3, h4, h5, h6 {
 .show {
   display: block;
 }
-
 .invisible {
   visibility: hidden;
 }
@@ -177,29 +176,37 @@ h1, h2, h3, h4, h5, h6 {
 .title_row{
   margin-bottom: 20px;
 }
-
+form > fieldset.row {
+	@extend .row;
+	margin-bottom: $big-font;
+}
 //BASIC TYPOGRAPHY
 h1 {
   font-size: $biggest-font;
   //font-weight: 600;
   line-height: $leading;
 }
-
 h2, h3 {
   font-size: $bigger-font;
   line-height: $leading;
 }
-
 h4, h5 {
   font-size: $big-font;
 	line-height: $leading;
 }
-
 h6, p {
   font-size: $body-font;
   line-height: $leading;
 }
-
+strong {
+	font-weight: 600;
+}
+em {
+	font-style: italic;
+}
+small {
+	font-size: $smaller-font;
+}
 .wrapper {
   width: 100%;
   max-width: 1024px;

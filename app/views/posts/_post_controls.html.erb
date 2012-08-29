@@ -55,13 +55,13 @@
         <% end %>
 
         <div class="button-wrapper pull_left col3 first">
-          <button class="ss-folder col6 btn_ltGrey" type="button" id="archivePrompt">
+          <button class="ss-folder row btn_ltGrey" type="button" id="archivePrompt">
             Archive
           </button>
         </div>
 
         <div class="button-wrapper pull_right col3 last">
-          <%= button_to "Delete", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Delete Post? This action cannot be undone!", class: "col6 btn_red" %>
+          <%= button_to "Delete", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Delete Post? This action cannot be undone!", class: "ss-trash row btn_red" %>
         </div>
 
     <% else %>

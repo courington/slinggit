@@ -44,6 +44,9 @@
 }
 .secondary{
 	padding-right: 0px;
+	&:last-child {
+		margin-top: $body-font;
+	}
 }
 
 // Adjustments to font

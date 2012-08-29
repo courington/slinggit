@@ -1,21 +1,17 @@
 #newSessionWrapper {
 	#forgot_password {
-		margin-top: $leading;
-		font-size: $font-size * .75;
-		line-height: $leading;
+		margin-top: $smallest-font;
+		font-size: $smaller-font;
 		text-align: right;
 	}
-	#orSignupActions {
-		margin-top: $leading;
-		p {
-			font-size: $font-size;
-			line-height: $leading;
-			a {
-				color: $main-blue;
-				border-left: 1px solid $main-grey;
-				padding: .375em;
-				margin-left: .275em;
-			}
-		}
-	}
+	//#orSignupActions {
+		//a {
+			//background: lighten($main-blue, 15%);
+			//color: $white;
+			//margin-left: ($smallest-font * .75);
+			//font-weight: 600;
+			//@include rounded-corners($smallest-font);
+			//padding: ($smallest-font * .25) ($smallest-font * .75);
+		//}
+	//}
 }

@@ -77,10 +77,11 @@
 
 <!-- ELSE IF signed_in? -->
       <% else %>
+
         <div class="col4 pull_left" id="header_signIn">
               <div class="row">
 				<%= link_to signin_path, class: "col2 pull_left" do%>
-					<span class="ss-connection"></span>
+					<span class="ss-user"></span>
 					Sign In
 				<% end %>
 				<!-- SEARCH ICON -->
@@ -99,7 +100,7 @@
 <!-- QUICK SEARCH -->
       <div class="hideSearch row" id="quickSearchWrapper">
         <div class="col3 pull_right">
-			<span class="ss-search"></span>
+			<span class="ss-search pull_left"></span>
           <%= text_field_tag :quickSearch, nil, :placeholder => 'Quick Search', :name => 'quickSearch', :size => 'auto' %>
         </div>
       </div>

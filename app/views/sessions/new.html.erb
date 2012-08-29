@@ -1,13 +1,13 @@
 <% provide(:title, "Sign in") %>
 
-<section id="newSessionWrapper" class="wrapper">
+<section id="newSessionWrapper" class="wrapper white_well">
 
   <header class="row">
     <h1 class="bottom_border">Sign in</h1>
   </header>
 
   <div class ="row">
-  	<div class="col3 white_well">
+  	<div class="col3 well">
     <%= form_tag(sessions_path, :novalidate => 'novalidate') do |f| %>
 
         <fieldset class="row">
@@ -25,17 +25,17 @@
           <%= link_to "Forgot your password?", {:controller => :users, :action => :password_reset}, class: "col3 pull_right", :id => 'forgot_password' %>
         </fieldset>
 
-		<div class="row termsOfService">
-			<small>By signing into Slinggit. You agree to our <%= link_to "Terms of Service", terms_of_service_path %>.</small>
-		</div>
-
     	<% end %>
+      <div class="row termsOfService">
+        <small>By signing into Slinggit. You agree to our <%= link_to "Terms of Service", terms_of_service_path %>.</small>
+      </div>
+      <div id="orSignupActions" class="row">
+        <small>New User? <%= link_to "Sign Up", signup_path, class: "btn_blue" %></small>
+      </div>
   	</div>
   </div>
 
-  <div id="orSignupActions" class="row">
-    <p>New Users <%= link_to "Sign Up", signup_path %></p>
-  </div>
+  
 
 </section>
 

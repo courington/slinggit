@@ -18,6 +18,9 @@
 			top: -9999px;
 			left: -9999px;
 		}
+		img {
+			margin-top: $smallest-font;
+		}
 	}
 	.col2 {
 		font-size: $smaller-font;
@@ -85,8 +88,9 @@
 			font-size: $small-font;
 		}
 	}
-	.ss-home, .ss-inbox, .ss-search, .ss-settings, .ss-connection {
+	.ss-home, .ss-inbox, .ss-search, .ss-settings, .ss-user {
 			display: block;
+			font-size: $big-font;
 		}
 	//SIGN IN LINK
 	#header_signIn {

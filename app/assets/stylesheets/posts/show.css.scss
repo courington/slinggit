@@ -1,6 +1,4 @@
-/*
- *  FILENAME: posts/show
- */
+//FILENAME: posts/show
 
 .editGraphic{
   width: 16px;
@@ -20,7 +18,8 @@
 
 		#postStatus{
 			text-align: right;
-			padding-top: 3px;
+			font-size: $small-font;
+			margin-top: $bigger-font;
 		}
 		#postStatus.true{
 			color: darken($main_green, 20%);
@@ -53,17 +52,18 @@
 		vertical-align: top;
 
 		dl{
-			margin-top: 10px;
-			font-size: $font-size * 1.1;
+			margin-top: $small-font;
+			font-size: $small-font;
+			//font-size: $font-size * 1.1;
 
 			dt{
-				padding: 5px 5px;
+				//padding: 5px 5px;
 				font-weight: 600;
 			}
 
 			dd{
-				text-align: right;
-				padding: 5px 5px;
+				//text-align: right;
+				//padding: 5px 5px;
 			}
 		}
 	}
@@ -71,10 +71,10 @@
 	#postDescription {
 		p{
 			padding: 15px 5px 5px 5px;
-			font-size: $font-size;
+			font-size: $body-font;
 		}
 		a{
-			font-size: $font-size * .7;
+			font-size: $body-font;
 		}
 
 	}
@@ -96,7 +96,7 @@
 		#commentContent {
 
 			&> div > p{
-				font-size: $font-size * 1.1;
+				font-size: $body-font;
 			}
 
 			h3{
@@ -177,7 +177,7 @@
 
 #closedPost{
 	@include white-well;
-	margin-top: 1em;
+	margin-top: $body-font;
 	padding: 20px;
 	text-align: center;
 
@@ -186,7 +186,7 @@
 	}
 
 	p{
-		font-size: $font-size * 1.1;
+		font-size: $body-font;
 		line-height: 22px;
 	}
 
@@ -198,7 +198,7 @@
 #networkActions{
 	margin-top: 12px;
 	a{
-		font-size: $font-size * 1;
+		font-size: $body-font;
 		color: darken($main-blue, 20%);
 		text-align: center;
 		background-color: lighten($lt-grey, 12%);

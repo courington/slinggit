@@ -64,22 +64,26 @@
 
     <div id="postInfo" class="col3 pull_left">
       <dl>
-        <dt class="col2">Location</dt>
-        <% if signed_in? and @post.user_id == current_user.id %>
-            <dd class="col3 editable" edit_field="location" id="editable_location"><%= @post.location %></dd>
-        <% else %>
-            <dd class="col3" edit_field="location"><%= @post.location %></dd>
-        <% end %>
-
-        <dt class="col2">Price</dt>
-        <% if signed_in? and @post.user_id == current_user.id %>
-            <dd class="col3 editable" edit_field="price" id="editable_price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
-        <% else %>
-            <dd class="col3" edit_field="price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
-        <% end %>
-
-        <dt class="col2">Interested</dt>
-        <dd class="col3"><%= @post.interested %></dd>
+        <div class="row">
+          <dt class="col2 pull_left">Location</dt>
+          <% if signed_in? and @post.user_id == current_user.id %>
+              <dd class="col3 pull_right editable" edit_field="location" id="editable_location"><%= @post.location %></dd>
+          <% else %>
+              <dd class="col3 pull_right" edit_field="location"><%= @post.location %></dd>
+          <% end %>
+        </div>
+        <div class="row">
+          <dt class="col2 pull_left">Price</dt>
+          <% if signed_in? and @post.user_id == current_user.id %>
+              <dd class="col3 pull_right editable" edit_field="price" id="editable_price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
+          <% else %>
+              <dd class="col3 pull_right" edit_field="price">$<%= number_with_delimiter(@post.price, :delimiter => ',') %></dd>
+          <% end %>
+        </div>
+        <div class="row">
+          <dt class="col2 pull_left">Interested</dt>
+          <dd class="col3 pull_right"><%= @post.interested %></dd>
+        </div>
       </dl>
     </div>
     <!-- postInfo End -->

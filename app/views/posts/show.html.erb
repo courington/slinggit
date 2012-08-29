@@ -1,9 +1,9 @@
 <% provide(:title, @post.hashtag_prefix) %>
 <section id="post" class="wrapper">
 
-	<section class="secondary">
+	<article class="secondary">
 		<div class="secondary_inner">
-			<aside class="userInfo row">
+			<div class="userInfo row">
 		        <a href="<%= user_path(@user) %>" class="col2 pull_left">      
 		          <%= image_tag @user.profile_photo_url, :height => "auto", :width => "100%", class: "profile_pic" %>
 		        </a>
@@ -20,11 +20,11 @@
 		                <%= link_to "Admin", {:controller => :admin, :action => :go_to_admin_resource, :id => @user.id, :resource => "user"} %>
 		            </div>
 		          <% end %>
-		    </aside>
+		    </div>
 		</div>
-	</section>
+	</article>
 
-	<section id="postContent" class="main">
+	<article id="postContent" class="main">
 
 		<div class="row">
 			<%= render 'posts/post_details' %>
@@ -60,13 +60,13 @@
 			</div>
 		</div>
 
-	</section>
+	</article>
 
 
-	<section class="secondary">
+	<article class="secondary">
 		<div class="secondary_inner">
 
-		    <section class="secondary_actions">
+		    <div class="secondary_actions">
 				<% if @post.open? %>
 					<% if current_user?(@post.user) %>
 						<%= render 'posts/post_controls' %>
@@ -76,9 +76,9 @@
 				<% else %>
 					<%= render 'posts/post_closed_sidebar' %>
 				<% end %>
-			</section>
+			</div>
 		</div>
-	</section>
+	</article>
 
 		
 	<% if is_signed_in_and_admin? && !current_user?(@user) %>
