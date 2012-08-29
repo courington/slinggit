@@ -22,4 +22,4 @@ class JankyHeaderHider extends Backbone.View
 		
 ## Export
 $(document).ready ->
-	new JankyHeaderHider
+	#new JankyHeaderHider
