@@ -65,18 +65,24 @@
           </div>
         </fieldset>
 
-        <aside class="col3 pull_right postSocialAccount">
-        <header>Social network(s) to post to:</header>
+        <div class="col3 pull_right postSocialAccount">
+        <header class="row top_border bottom_border">Post to:</header>
           <fieldset class="row">
             <%= check_box_tag "selected_networks[#{@slinggit_account_id}]", 'post', true, class: "pull_left" %>
-            <label for="selected_networks[#{@slinggit_account_id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span>Slinggit</label>
+            <label for="selected_networks[#{@slinggit_account_id}]" class="col5 pull_left">
+              <span class="ss-twitter ss-social"></span>
+               Slinggit
+             </label>
           </fieldset>
 
         <% if not @twitter_accounts.blank? %>
         <% @twitter_accounts.each do |twitter_account| %>
           <fieldset class="row">
             <%= check_box_tag "selected_networks[#{twitter_account.id}]", 'post', true, class: "pull_left" %>
-            <label for="selected_networks[#{twitter_account.id}]" class="col5 pull_left"><span class="twitIconSmall_dark"></span><%= twitter_account.user_name %></label>
+            <label for="selected_networks[#{twitter_account.id}]" class="col5 pull_left">
+               <span class="ss-twitter ss-social"></span>
+               <%= twitter_account.user_name %>
+             </label>
           </fieldset>
         <% end %>
         <% end %>
@@ -85,12 +91,15 @@
         <% @facebook_accounts.each do |facebook_account| %>
             <fieldset class="row">
             <%= check_box_tag "selected_networks[#{facebook_account.id}]", 'post', true, class: "pull_left" %>
-            <label for="selected_networks[#{facebook_account.id}]" class="col5 pull_left"><span class="facebookIconSmall"></span><%= facebook_account.user_name %></label>
+            <label for="selected_networks[#{facebook_account.id}]" class="col5 pull_left">
+              <span class="ss-facebook ss-social"></span>
+              <%= facebook_account.user_name %>
+            </label>
           </fieldset>
         <% end %>
         <% end %>
 
-      </aside>
+      </div>
 
       </div>
       <!-- end photo and twitter -->
@@ -98,7 +107,7 @@
 
       <fieldset class="row">
             <%= f.button "Repost Item", type: "submit", class: "col3 btn_green", id: "submitNewPost" %>
-            <%= link_to "Cancel", user_path(current_user), class: "col1 pull_right btn_ltGrey" %>
+            <%= link_to "Cancel", user_path(current_user), class: "col2 pull_right btn_ltGrey" %>
       </fieldset>
   <% end %>
   
