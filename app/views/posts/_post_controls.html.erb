@@ -51,7 +51,7 @@
         </div>
 
         <% if @post.open? %>
-          <%= link_to "Repost", edit_post_path(@post), class: "ss-repeat col6 btn_yellow" %>
+          <%= link_to "Repost", edit_post_path(@post), class: "ss-repeat col6 btn_green" %>
         <% end %>
 
         <div class="button-wrapper pull_left col3 first">
@@ -61,7 +61,7 @@
         </div>
 
         <div class="button-wrapper pull_right col3 last">
-          <%= button_to "Delete", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, confirm: "Delete Post? This action cannot be undone!", class: "ss-trash row btn_red" %>
+          <%= link_to "Delete", {:controller => :posts, :action => :delete_post, :id => @post.id, :status => "DEL"}, style: "height: 32px", confirm: "Delete Post? This action cannot be undone!", class: "ss-trash row btn_ltGrey" %>
         </div>
 
     <% else %>

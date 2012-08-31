@@ -85,6 +85,8 @@ class PostsController < ApplicationController
   def update
     # Don't need to find Post here because of correct_user filter
     social_networks = params[:selected_networks]
+    params.delete(:selected_networks)
+    
     if @post.update_attributes(params[:post])
       repost @post, social_networks unless social_networks.blank?
       flash[:success] = "Successfully Reposted"
@@ -272,7 +274,7 @@ class PostsController < ApplicationController
   end
 
   def get_id_for_slinggit_api_account
-    slinggit_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, "gitnsling_test"], :select => 'id')
+    slinggit_api_account = ApiAccount.first(:conditions => ['user_id = ? AND user_name = ?', 0, SLINGGIT_HANDEL_USERNAME], :select => 'id')
     @slinggit_account_id = slinggit_api_account.blank? ? nil : slinggit_api_account.id
   end
 

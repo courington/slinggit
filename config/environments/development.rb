@@ -61,6 +61,9 @@ SlinggitWebapp::Application.configure do
   config.slinggit_client_asecret = 't6dzy6YrrG0I0STKvRRCyAqWrVqZiRNfqfzWNGbdxYI'
   config.slinggit_username = 'gitnsling_test'
 
+   ## Twitter handles not tied to users ##
+  SLINGGIT_HANDEL_USERNAME = 'gitnsling_test'
+
   ## Photo sources ##
   SLINGGIT_PHOTO_SOURCE = "SPS"
   TWITTER_PHOTO_SOURCE = "TPS"
