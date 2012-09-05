@@ -9,6 +9,7 @@
     <table class="admin_table table_bordered table-striped">
       <thead>
         <tr>
+          <th>ID</th>
           <th></th>
           <th>Username</th>
           <th>Posts</th>
@@ -19,6 +20,7 @@
       <tbody>
         <% @users.each do |user| %>
           <tr>
+            <td><%= user.id %>
             <td><%= image_tag user.profile_photo_url %></td>
             <td><%= link_to user.name, {:controller => :admin, :action => :view_user, :id => user.id} %></td>
             <td>Posts (<%= user.posts.count %>)</td>
