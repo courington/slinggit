@@ -9,7 +9,7 @@
         <div class="col6">
           <%= f.text_field :hashtag_prefix, class: "col4 pull_left", placeholder: "shortAndSweet", maxLength: "15", counterMax: "15" %>
           <span class="pull_left add_on">forsale</span>
-          <small class="row">ie: bike, snowboard, broncostickets, car, etc.</small>
+          <small class="row">For example, bike, snowboard, broncostickets, car, etc.</small>
         </div>
 
       </fieldset>
@@ -73,24 +73,31 @@
                    Slinggit
                  </label>
          			</fieldset>
-         		<% @twitter_accounts.each do |twitter_account| %>
-         			<fieldset class="row">
-         				<%= check_box_tag "selected_networks[#{twitter_account.id}]", 'post', true, class: "pull_left" %>
-         				<label for="selected_networks[#{twitter_account.id}]" class="col5 pull_left">
-                   <span class="ss-twitter ss-social"></span>
-                   <%= twitter_account.user_name %>
-                 </label>
-         			</fieldset>
-         		<% end %>
-         		<% @facebook_accounts.each do |facebook_account| %>
+              
+            <% if not @twitter_accounts.blank? %>
+           		<% @twitter_accounts.each do |twitter_account| %>
            			<fieldset class="row">
-          				<%= check_box_tag "selected_networks[#{facebook_account.id}]", 'post', true, class: "pull_left" %>
-           				<label for="selected_networks[#{facebook_account.id}]" class="col5 pull_left">
-                   <span class="ss-facebook ss-social"></span>
-                   <%= facebook_account.user_name %>
-                  </label>
-         			</fieldset>
-         		<% end %>
+           				<%= check_box_tag "selected_networks[#{twitter_account.id}]", 'post', true, class: "pull_left" %>
+           				<label for="selected_networks[#{twitter_account.id}]" class="col5 pull_left">
+                     <span class="ss-twitter ss-social"></span>
+                     <%= twitter_account.user_name %>
+                   </label>
+           			</fieldset>
+           		<% end %>
+            <% end %>
+
+            <% if not @facebook_accounts.blank? %>
+           		<% @facebook_accounts.each do |facebook_account| %>
+             			<fieldset class="row">
+            				<%= check_box_tag "selected_networks[#{facebook_account.id}]", 'post', true, class: "pull_left" %>
+             				<label for="selected_networks[#{facebook_account.id}]" class="col5 pull_left">
+                     <span class="ss-facebook ss-social"></span>
+                     <%= facebook_account.user_name %>
+                    </label>
+           			</fieldset>
+           		<% end %>
+            <% end %>
+
          	</div>
       </fieldset>
       <!-- end photo and twitter -->

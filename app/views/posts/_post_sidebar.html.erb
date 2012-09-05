@@ -1,7 +1,7 @@
 <div id="postReplyActions" class="row">
 
   <div class="row">
-    <%= link_to "Contact Using Slinggit", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
+    <%= link_to "Contact Seller", {:controller => :messages, :action => :new, :id => @post.id_hash}, class: "col6 btn_green" %>
   </div>
 
   <% if (@twitter_posts.any? or @facebook_posts.any?) %>
