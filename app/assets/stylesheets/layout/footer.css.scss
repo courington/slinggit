@@ -8,6 +8,7 @@
 	position:relative;
 	z-index:1020;
 	padding-bottom: $leading;
+	margin-top: -16em;
 		.wrapper > .col3 {
 			margin-top: $body-font;
 			width: 100%;
@@ -49,7 +50,7 @@
 	}
 	small {
 		color: $main-grey;
-		line-height: $leading;
+		//line-height: $leading;
 		margin-left: $smaller-font;
 		padding-left: $small-font;
 	}
@@ -68,7 +69,6 @@
 	}
 	.coloradoIcon {
 		+ span {
-			color: $main-grey;
 			margin-left: $smallest-font;
 		}
 	}
@@ -85,7 +85,9 @@
 		}
 		small {
 			text-align: right;
-			border-left: 1px solid lighten($main-grey, 20%);
+			&:first-child {
+				border-left: 1px solid lighten($main-grey, 20%);
+			}
 			+ a.pull_left {
 				float: right;
 			}

@@ -27,7 +27,8 @@ textarea {
 .btn {
 	cursor: pointer;
 	padding: ($smallest-font * .5) $smallest-font;
-	margin: ($smallest-font * .5) auto;
+	margin-top: ($smallest-font * .5);
+	margin-bottom: ($smallest-font * .5);
 	color: $wht;
 	font-size: $small-font;
 	font-family: $main-font;

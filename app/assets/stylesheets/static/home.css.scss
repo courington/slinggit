@@ -23,16 +23,6 @@
 			}
 		}
 	}
-	.homeNotSignedIn {
-		h1 {
-			#{$ff}text-shadow: 0 1px 0 rgba($black, .15);
-			#{$wk}text-shadow: 0 1px 0 rgba($black, .15);
-			text-shadow: 0 1px 0 rgba($black, .15);
-			text-align: center;
-			padding-bottom: 0;
-		}
-	}
-
 	// CMK we'll need to refactor this, but for now..
 	.secondary_inner{
 		.ss-compose, .ss-notebook {
@@ -54,9 +44,115 @@
 		}
 	}
 }
-
 .app-link{
-	margin-top: 40px;
-	margin-bottom: 20px;
-	text-align: center;
+	margin-top: $smaller-font;
+	font-size: $smaller-font;
+}
+//not signed in
+.homepage > .wrapper {
+	position: relative;
+	z-index: 2222;
+	top: -16em;
+	overflow: visible;
+	figure > img {
+		padding-right: 5%;
+	}	
+	h1 {
+		#{$ff}text-shadow: 0 1px 0 rgba($black, .15);
+		#{$wk}text-shadow: 0 1px 0 rgba($black, .15);
+		text-shadow: 0 1px 0 rgba($black, .15);
+		font-size: $bigger-font;
+		text-align: center;
+		margin-bottom: $smallest-font;
+		span {
+			display: block;
+			color: $main-blue;
+		}
+	}
+	article { 
+		&.col3.pull_right {
+			margin-top: $body-font;
+		}
+		> header {
+			margin-bottom: $body-font;
+			h1 {
+				text-align: left;
+				font-size: $body-font;
+			}
+			p {
+				font-size: $small-font;
+				color: $main-grey;
+			}
+		}
+	}
+	aside {
+		.col2 {
+			width: $sixCols * 6;
+			margin: $smallest-font auto;
+			figure{
+				span[class*="ss-"] {
+					width: 50%;
+					text-align: center;
+					font-size: 4em;
+					margin-left: 35%;
+				}
+				span[class*="ss-social"]:first-child {
+					margin-left: 5%;
+				}
+				.ss-facebook {
+					color: $fb-blue;
+				}
+				.ss-twitter {
+					color: $twitter-blue;
+				}
+				.ss-location {
+					color: $main-yellow;
+				}
+				.ss-globe {
+					color: $main-green;
+				}
+			}
+		}
+	}
+}
+.grey_back{
+	background: $lt-grey;
+	height: 16em;
+	position: relative;
+	z-index: 1111;
+	top: ($leading * 4);
+	}
+.darkGrey_back {
+	@extend .grey_back;
+	background: darken($lt-grey, 10%);
+	top: -16em;
+}
+
+@media all and (min-width: 641px) {
+	.homepage > .wrapper {
+		h1 {
+			font-size: $biggest-font;
+		}
+		aside {
+			.col2 {
+				width: $sixCols * 2;
+				@extend .well_padding;
+			}
+		}
+	} 
+	.homepage > .wrapper article.col3.pull_right, .homepage > .wrapper article.col3.main {
+		margin-top: $biggest-font;
+	}
+	.homepage > .wrapper article > header h1 {
+		font-size: $big-font;
+	}
+	.homepage > .wrapper article > header p {
+		font-size: $body-font;
+	}
+	.homepage figure.col3.pull_left {
+		width: ($sixCols * 2);
+	}
+	.grey_back{
+	top: 8em;
+	}
 }

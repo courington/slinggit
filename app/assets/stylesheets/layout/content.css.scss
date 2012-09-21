@@ -104,16 +104,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 // Top and bottom I don't really have a use for yet
 // but keeping them for a few
-.secondary-top{
+.secondary-top {
 	margin-top: 1em;
 
 }
-.secondary-bottom{
+.secondary-bottom {
 	margin-top: 1em;
 }
 // Top and bottom end
 
-.secondary_inner{
+.secondary_inner {
 	@include white-well;
 	vertical-align: top;
 	margin-bottom: $body-font;
@@ -124,8 +124,10 @@ h1, h2, h3, h4, h5, h6 {
 		//margin-top: 1.8em;
 	}
 }
-
-.well{
+.well_padding {
+	padding: $small-font;
+}
+.well {
 	@include white-well;
 	border: none;
   	background-color: transparent;
@@ -197,6 +199,9 @@ h4, h5 {
 h6, p {
   font-size: $body-font;
   line-height: $leading;
+}
+p + p {
+	margin-top: $leading;
 }
 strong {
 	font-weight: 600;
