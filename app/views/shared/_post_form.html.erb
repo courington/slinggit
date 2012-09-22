@@ -78,7 +78,7 @@
            		<% @twitter_accounts.each do |twitter_account| %>
            			<fieldset class="row">
            				<%= check_box_tag "selected_networks[#{twitter_account.id}]", 'post', true, class: "pull_left" %>
-           				<label for="selected_networks[#{twitter_account.id}]" class="col5 pull_left">
+           				<label for="selected_networks[<%= twitter_account.id %>]" class="col5 pull_left">
                      <span class="ss-twitter ss-social"></span>
                      <%= twitter_account.user_name %>
                    </label>
@@ -90,7 +90,7 @@
            		<% @facebook_accounts.each do |facebook_account| %>
              			<fieldset class="row">
             				<%= check_box_tag "selected_networks[#{facebook_account.id}]", 'post', true, class: "pull_left" %>
-             				<label for="selected_networks[#{facebook_account.id}]" class="col5 pull_left">
+             				<label for="selected_networks[<%= facebook_account.id %>]" class="col5 pull_left">
                      <span class="ss-facebook ss-social"></span>
                      <%= facebook_account.user_name %>
                     </label>
