@@ -131,16 +131,19 @@ class TwitterPost < ActiveRecord::Base
 
 # Logic for constructing twitter message.
   def tweet_constructor(client)
-    content = self.post.content.truncate(54, :omission => "...")
+    content = self.post.content.truncate(45, :omission => "...")
     redirect = Redirect.get_or_create(
         :target_uri => "#{BASEURL}/posts/#{self.post.id_hash}"
     )
     #changed to use our url shortner... if twitter does it for us great... but this will track the number of clicks if we use our own
     #NOTE... if testing on localhost, the link wont be clickable in twitter... but once a .com is added it will be.
+
+    update_string = "#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}"
+
     if self.post.photo_file_name.blank?
-      return client.update("#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}")
+      return client.update(update_string.truncate(140, :omission => "..."))
     else
-      return client.update_with_media("#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}", File.new(self.post.photo.path(:medium)))
+      return client.update_with_media(update_string.truncate(140, :omission => "..."), File.new(self.post.photo.path(:medium)))
     end
   end
 
