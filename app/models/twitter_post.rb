@@ -131,19 +131,37 @@ class TwitterPost < ActiveRecord::Base
 
 # Logic for constructing twitter message.
   def tweet_constructor(client)
-    content = self.post.content.truncate(45, :omission => "...")
     redirect = Redirect.get_or_create(
         :target_uri => "#{BASEURL}/posts/#{self.post.id_hash}"
     )
     #changed to use our url shortner... if twitter does it for us great... but this will track the number of clicks if we use our own
     #NOTE... if testing on localhost, the link wont be clickable in twitter... but once a .com is added it will be.
 
-    update_string = "#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}"
-
     if self.post.photo_file_name.blank?
-      return client.update(update_string.truncate(140, :omission => "..."))
+      update_string = ("#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content.truncate(54, :omission => "...")} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}").truncate(140, :omission => "...")
+      return client.update(update_string)
     else
-      return client.update_with_media(update_string.truncate(140, :omission => "..."), File.new(self.post.photo.path(:medium)))
+      require 'fileutils'
+
+      ####twitter includes the file name in the tweet length, so we need to create a smaller temp file to post then delete it
+
+      image_path = self.post.photo.path(:medium)
+      image_name = image_path[image_path.rindex('/') + 1, image_path.length]
+
+      temp_image_path = "#{Rails.root}/tmp/#{Digest::SHA1.hexdigest(image_name)[0, 4] + '.' + image_name[image_name.rindex('.') + 1, image_name.length]}"
+
+      FileUtils.cp(self.post.photo.path(:medium), temp_image_path)
+
+      update_string = ("#forsale ##{self.post.hashtag_prefix} ##{self.post.location} #{content.truncate(47, :omission => "...")} - $#{"%.0f" % self.post.price} | #{redirect.get_short_url}").truncate(132, :omission => "...")
+      image_file_object = File.new(temp_image_path)
+
+      update_response = client.update_with_media(update_string, image_file_object)
+
+      image_file_object.close
+
+      FileUtils.rm(temp_image_path)
+
+      return update_response
     end
   end
 
