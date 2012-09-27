@@ -54,7 +54,7 @@ $input-txt-shading: inset 0 1px 1px rgba($dk-grey, .15), 0 1px 0 rgba($white, .5
 $input-focus-shdw: 0 0 8px rgba($main-blue, .5);
 $btn-shading: 0 1px 1px rgba($black, .25), inset 0 1px 1px rgba($white, .25);
 $btn-txt-shading: 0 -1px 0 rgba($black, .25), 0 0 8px rgba($white, .25);
-$btn-focus: inset 0 0 1px rgba($black, .25), inset 0 3px 10px rgba($black, .1) , 0 0 2px rgba($white, .75);
+$btn-focus: inset 0 1px 2px ($white, .65), 0 0 2px 1px ($black, .2);
 $btn-focus-txt: 0 1px 0 rgba($black, .25), 0 0 8px rgba($black, .25);
 $btn-active: inset 0 0 1px rgba($black, .5), 0 0 2px rgba($white, .75);
 $btn-active-txt: 0 0 8px rgba($black, .75);

@@ -42,19 +42,19 @@ textarea {
 	&:hover,
 	&:focus {
 		//box-shadow: $btn-focus;
-		color: $wht;
+		color: $white;
 		outline:none;
 	}
 	&:active {
 		//box-shadow: $btn-active;
-		color: $wht;
+		color: $lt-grey;
 	}
 }
 
 .btn_green {
 	@extend .btn;
 	background: darken($main-green, 10%);
-	color: $white;
+	border: 1px solid darken($main-green, 15%);
 }
 .btn_blue {
 	@extend .btn;
@@ -70,7 +70,6 @@ textarea {
 }
 .btn_red {
 	@extend .btn;
-	color: $white;
 	background: darken($main-red, 17%);
 }
 .btn_yellow {

@@ -3,7 +3,7 @@
 <!-- if user is not signed in -->
     <% if current_user.blank? %>
 <section class="homepage row">
-		<div class="row grey_back"></div>
+		<!-- <div class="row grey_back"></div> -->
     	<div class="wrapper">
     		<h1 class="row">Sell to people you know. <span>Buy from people you trust.</span></h1>
     		<section class="row">
@@ -19,23 +19,17 @@
 					<a href="http://itunes.apple.com/us/app/slinggit/id543458895?mt=8&uo=4" target="itunes_store" title="iOS App Store" class="app-link btn_darkGrey row">
 						<span class="col1 pull_left ss-cell"></span>
 						<span class="col5 pull_right">Get the iPhone App</span>
-						<!-- <img src="http://r.mzstatic.com/images/web/linkmaker/badge_appstore-lrg.gif" width="100%" height="auto" title="iOS App Store" alt="Slinggit in the Apple App Store"/> -->
 					</a>
 					<!--</div>-->
 				</article>
 				<figure class="col3 pull_left">
 					<%= image_tag "heroimages/iOS_safari_bike_320x621.png", width: "100%", height: "auto", title: "Slinggit on your mobile device", alt: "Slinggit on iOS Safari" %>
 				</figure>
+				<p class="row">No more dealing with scammers and strangers. With Slinggit you can quickly sell to your friends or the greater community. It's up to you.</p>
 			</section>
 			<section class="row">
 				<div class="col6 well_padding">
-					<!-- <article class="row white_well">
-						<h1>How it works:</h1>
-						<p>Cleaning out the closet? Need to get rid of tickets for the game? Don't want to deal with strangers and scammers? Slinggit allows you to connect your Facebook and Twitter accounts to quickly post your item for sale to your network.</p>
-						<p>If you choose you can broadcast your item for sale out to the larger Slinggit social network. All communication is handled within Slinggit, no need to respond with your personal email address or phone number.</p>
-					</article> -->
 					<aside class="row">
-						<p>No more dealing with scammers and strangers. With Slinggit you can quickly sell to your friends or the greater community. It's up to you.</p>
 						<div class="col2 pull_left">
 							<figure class="white_well row">
 								<span class="ss-facebook ss-social-circle"></span>
@@ -51,8 +45,9 @@
 						</div>
 						<div class="col2 pull_left">
 							<figure class="white_well row">
-								<span class="ss-globe"></span>
-								<figcaption class="col6">Slinggit is built with web standards. This means Slinggit is available to anyone, regardless of device, anywhere there is internet. We love the web!</figcaption>
+								<span class="ss-cell"></span>
+								<span class="ss-desktop"></span>
+								<figcaption class="col6">Slinggit is built with web standards. This means Slinggit is available to anyone with internet, regardless of device. We love the web!</figcaption>
 							</figure>
 						</div>
 					</aside>
@@ -93,4 +88,5 @@
 		    <% end %>
     	</section>
 	<% end %>
+	<div class="color_block"></div>
 </section>
