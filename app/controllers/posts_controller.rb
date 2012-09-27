@@ -86,10 +86,14 @@ class PostsController < ApplicationController
     # Don't need to find Post here because of correct_user filter
     social_networks = params[:selected_networks]
     params.delete(:selected_networks)
-    
+
     if @post.update_attributes(params[:post])
-      repost @post, social_networks unless social_networks.blank?
-      flash[:success] = "Successfully Reposted"
+      if params[:post] and params[:post][:open] == 'false'
+        flash[:success] = "Post Closed"
+      else
+        repost @post, social_networks unless social_networks.blank?
+        flash[:success] = "Successfully Reposted"
+      end
       redirect_back_or post_path(@path)
     else
       render 'edit'
@@ -116,7 +120,7 @@ class PostsController < ApplicationController
     search_terms = []
     @posts = []
     if not params[:id].blank?
-      @search_terms_entered = params[:id].gsub!('#','')
+      @search_terms_entered = params[:id].gsub!('#', '')
       search_terms = params[:id].split(' ')
       if search_terms.length > 1
         @posts = Post.all(:conditions => ["(content in (?) OR hashtag_prefix in (?) OR location in (?)) AND open = ? AND status = ?", search_terms, search_terms, search_terms, true, STATUS_ACTIVE], :order => 'created_at desc')
@@ -197,9 +201,9 @@ class PostsController < ApplicationController
             when 'content'
               post.content = params[:value]
               if post.save
-               render :text => "#{params[:value]}", :status => 200
+                render :text => "#{params[:value]}", :status => 200
               else
-               render :text => "#{content_before_save}", :status => 500
+                render :text => "#{content_before_save}", :status => 500
               end
           end
         end
@@ -250,7 +254,7 @@ class PostsController < ApplicationController
           end
         end
       end
-    end  
+    end
 
     if not recipient_api_account_ids.blank?
       post.update_attribute(:recipient_api_account_ids, recipient_api_account_ids.join(','))
