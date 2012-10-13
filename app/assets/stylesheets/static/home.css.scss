@@ -91,28 +91,11 @@
 			margin: $smallest-font auto;
 			figure{
 				span[class*="ss-"] {
-					//width: 50%;
-					//text-align: center;
 					font-size: 4em;
-					margin-left: 15%;
+					text-align: center;
 				}
-				.ss-location {
-					padding-left: 20%;
-				}
-				//.ss-facebook {
-				//	color: $fb-blue;
-				//}
-				//.ss-twitter {
-				//	color: $twitter-blue;
-				//}
 				//.ss-location {
-				//	color: $main-red;
-				//}
-				//.ss-cell {
-				//	color: $main-green;
-				//}
-				//.ss-desktop {
-				//	color: $main-yellow;
+				//	padding-left: 20%;
 				//}
 			}
 		}
