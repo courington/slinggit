@@ -6,7 +6,7 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
 gem "paperclip", "3.0.2"
-gem "twitter", "2.2.3"
+gem "twitter", "4.6.2"
 gem "oauth", "0.4.6"
 gem "friendly_id", "4.0.6"
 gem "mail", "2.4.4"
