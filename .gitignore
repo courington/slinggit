@@ -9,7 +9,7 @@
 /tmp
 
 # Ignore all confir changes
-#/config
+/config
 
 # Ignore sample photos
 public/assets/posts/
