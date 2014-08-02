@@ -42,27 +42,27 @@ SlinggitWebapp::Application.configure do
   POST_PHOTO_URL = "/uploads"
 
   #  Our consumer key and secret for our twitter app (DEV)
-  config.twitter_consumer_key = 'uVUtXqE5xN5yVtZgLd5u3w'
-  config.twitter_consumer_secret = 'TmguQ0JOAs0a3ILREjvlhSEM2Igi5S4hF86cQdxtG0'
+  config.twitter_consumer_key = ''
+  config.twitter_consumer_secret = ''
 
   #  Facebook app id and secret
-  config.facebook_app_id = '187772238018779'
-  config.facebook_app_secret = 'a9665d164c1de339c773bfcb55368604'
+  config.facebook_app_id = ''
+  config.facebook_app_secret = ''
 
   # @slinggit's authentication token and password, generated from the above consumer
   # Probably won't need this again in dev, but just commenting out for now.
   # key and secret.
-  # config.slinggit_client_atoken = '561831843-mHAqcKLJfFyCSQOXvlyH5fCvHRlRhRqMFDPNMS9h'
-  # config.slinggit_client_asecret = 'T7yvd3FfhpVJacLS6zjFO3yrXl8HDurhfXLq3AQL8'
+  # config.slinggit_client_atoken = ''
+  # config.slinggit_client_asecret = ''
 
   # @gitnsling_test's authentication token and password, generated from the above consumer
   # key and secret.
-  config.slinggit_client_atoken = '571885574-lYr8br0gkmLOaPSB5GRxGssQhpVlxZavksjFFWbQ'
-  config.slinggit_client_asecret = 't6dzy6YrrG0I0STKvRRCyAqWrVqZiRNfqfzWNGbdxYI'
-  config.slinggit_username = 'gitnsling_test'
+  config.slinggit_client_atoken = ''
+  config.slinggit_client_asecret = ''
+  config.slinggit_username = ''
 
    ## Twitter handles not tied to users ##
-  SLINGGIT_HANDEL_USERNAME = 'gitnsling_test'
+  SLINGGIT_HANDEL_USERNAME = ''
 
   ## Photo sources ##
   SLINGGIT_PHOTO_SOURCE = "SPS"

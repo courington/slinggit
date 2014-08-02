@@ -73,21 +73,21 @@ SlinggitWebapp::Application.configure do
   POST_PHOTO_DIR = "/home/slinggit/webapps/slinggit/shared/uploads" # I'll be switching this shortly
 
   #  Our consumer key and secret for our twitter app (PROD)
-  config.twitter_consumer_key = 'exOxe0rmGNEBBGsyW9nCA'
-  config.twitter_consumer_secret = 'rwN7VmydrgRlRdb0kev1XxRi30YSpXHI7oXQEpPgUE'
+  config.twitter_consumer_key = ''
+  config.twitter_consumer_secret = ''
 
   #  Facebook app id and secret
-  config.facebook_app_id = '392096110827698'
-  config.facebook_app_secret = '14b1c6a62167d04c87f08bb90b61b7b8'
+  config.facebook_app_id = ''
+  config.facebook_app_secret = ''
 
   # @slinggit's authentication token and password, generated from the above consumer
   # key and secret.
-  config.slinggit_client_atoken = '561831843-GXxjNVqaA1mTId1g61VXEyywDNBIUnsZ6mbUsvUa'
-  config.slinggit_client_asecret = 'yOe5hXiG5vNLGWkJc11UFTiQyFC7ciH5OsFLMFSJfI'
-  config.slinggit_username = 'slinggit'
+  config.slinggit_client_atoken = ''
+  config.slinggit_client_asecret = ''
+  config.slinggit_username = ''
 
   ## Twitter handles not tied to users ##
-  SLINGGIT_HANDEL_USERNAME = 'slinggit'
+  SLINGGIT_HANDEL_USERNAME = ''
 
   ## Photo sources ##
   SLINGGIT_PHOTO_SOURCE = "SPS"
